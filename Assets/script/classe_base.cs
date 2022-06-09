@@ -34,7 +34,7 @@ public class blocco
     public int attivo;
     public int arrivo;
     public int disattiva_coll;
-
+    public int distruzione_oggetto;
 
     public float valore_dissolve;
 

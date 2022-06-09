@@ -37,6 +37,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     public int inversione_camera = 1;
 
+    public float velocita_sparo = 20;
+    public int numero_spari = 300;
+
     public GameObject astronave;
 
 
@@ -111,7 +114,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float aumento_salto = 1;
 
+   
 
+    GameObject sparo;
+    float attivo_tempo_sparo;
 
 
     // Start is called before the first frame update
@@ -226,16 +232,44 @@ public class gioco_ruota_cilindro : MonoBehaviour
     }
 
 
+    void crea_sparo()
+    {
+
+
+        Debug.Log("sparo creato ");
+
+        numero_spari = numero_spari - 1;
+
+        sparo = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere", typeof(GameObject))) as GameObject;
+
+        Vector3 pos_astronave = astronave.transform.position;
+
+        sparo.transform.position =new Vector3(pos_astronave.x, pos_astronave.y, pos_astronave.z+ 2);
+
+
+
+        sparo.name = "sparo" ;
+
+        attivo_tempo_sparo = 5;
+
+
+    }
+
+
 
     void controllo()
     {
 
        float pressione_tasto_up = Input.GetAxis("Vertical");
 
+        if (pressione_tasto_up < 0  && attivo_tempo_sparo<-1 && numero_spari>0)
+        {
+            crea_sparo();
 
-      
+        }
 
-        if (pressione_tasto_up > 0 && playerVelocity.y <= 0)
+
+            if (pressione_tasto_up > 0 && playerVelocity.y <= 0)
         {
             aumento_salto = .6f;
            
@@ -280,6 +314,13 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
             }
 
+            if (inversione_camera == 0)
+            {
+                molt_inversione = molt_inversione * -1;
+
+            }
+
+
 
             rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime* molt_inversione;
 
@@ -312,7 +353,42 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         astronave_rz_calcolo = astronave_rz_calcolo * .9f;
 
+
+        gestione_sparo();
+
+
+
     }
+
+
+    void gestione_sparo()
+    {
+
+        attivo_tempo_sparo = attivo_tempo_sparo - Time.deltaTime;
+
+        if (sparo != null)
+        {
+           
+
+            if (attivo_tempo_sparo > 0)
+            {
+
+
+                sparo.transform.Translate(new Vector3(0, 0, velocita_sparo * Time.deltaTime));
+
+                gestione_collisione_sparo();
+
+            }
+            else
+            {
+                DestroyImmediate(sparo);
+            }
+
+        }
+
+    }
+
+
 
 
     void gestione_camera()
@@ -322,7 +398,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-
+        float altezza_cam = 3.5f;
 
 
         if (inversione_camera == 0)
@@ -335,14 +411,16 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         if (inversione_camera == 1)
         {
-            cam_pos.z = Mathf.Lerp(cam_pos.z, 13, Time.deltaTime * 5);
+            cam_pos.z = Mathf.Lerp(cam_pos.z, 27, Time.deltaTime * 5);
 
             cam_rot.y = Mathf.Lerp(cam_rot.y, 180, Time.deltaTime * 50);
+
+            altezza_cam = 12;
 
         }
 
 
-        cam0.transform.localPosition = new Vector3(0,c_save.crea_cilindro[0].raggio+3.81f, cam_pos.z);
+        cam0.transform.localPosition = new Vector3(0,c_save.crea_cilindro[0].raggio+ altezza_cam, cam_pos.z);
         cam0.transform.localEulerAngles = cam_rot;
 
     }
@@ -432,6 +510,29 @@ public class gioco_ruota_cilindro : MonoBehaviour
             {
 
                 float zz2 = c_save.crea_blocco[n].mesh.transform.position.z;
+
+
+                if (c_save.crea_blocco[n].distruzione_oggetto == 1)
+                {
+
+
+                    c_save.crea_blocco[n].valore_dissolve = c_save.crea_blocco[n].valore_dissolve + 4 * Time.deltaTime;
+
+                    //  Debug.Log("entra " + n+"  "+ c_save.crea_blocco[n].valore_dissolve);
+
+                    aggiorna_oggetto_dissolto_singolo(n, c_save.crea_blocco[n].valore_dissolve);
+
+                    if (c_save.crea_blocco[n].valore_dissolve > 1)
+                    {
+                        c_save.crea_blocco[n].valore_dissolve = 1;
+                        c_save.crea_blocco[n].attivo = 0;
+
+                        DestroyImmediate(c_save.crea_blocco[n].mesh);
+                    }
+
+
+                }
+
 
 
                 if (c_save.crea_blocco[n].arrivo == 0 && zz2< distanza_disolve)
@@ -817,7 +918,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                 float altezza = 0;
 
-                altezza = k + .5f;
+                altezza = k * .5f + .5f;
 
                 if (k == 0)
                 {
@@ -1428,7 +1529,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         DestroyImmediate(ogg.GetComponent<MeshCollider>());
 
 
-      //  ogg.AddComponent<MeshCollider>();
+       ogg.AddComponent<MeshCollider>();
 
         ogg.transform.localScale = new Vector3(1, 1, 1);
 
@@ -1562,6 +1663,98 @@ public class gioco_ruota_cilindro : MonoBehaviour
                         Destroy(hit_collider.transform.gameObject);
 
                     }
+
+
+                }
+
+            }
+
+        }
+
+
+    }
+
+    void gestione_collisione_sparo()
+    {
+
+        RaycastHit hit_collider;
+
+        Vector3 pos_ray_direction = new Vector3(0, 0, 10);
+
+        Vector3 pos;
+
+        Vector3[] pos_direction = new Vector3[10];
+
+        pos_direction[0] = new Vector3(0, 0, 0);
+        
+        for (int n = 0; n <= 0; n++)
+        {
+
+            pos = sparo.transform.position + pos_direction[n];
+
+
+          
+
+            if (Physics.Raycast(pos, pos_ray_direction, out hit_collider, 15))
+            {
+
+                float dis = hit_collider.distance;
+
+
+                if (dis < 3.6f)
+                {
+
+
+                    if (hit_collider.collider.name.IndexOf("blocco") > -1)
+                    {
+
+
+
+
+                        string str_block = "" + hit_collider.collider.name;
+
+                        Debug.Log("" + str_block);
+
+                        int num_block = -1;
+
+
+                        int indice = str_block.IndexOf("blocco_mesh");
+
+
+                        if (indice == -1)
+                        {
+                            str_block = str_block.Replace("blocco ", "");
+
+                            num_block = int.Parse(str_block);
+
+                            c_save.crea_blocco[num_block].distruzione_oggetto = 1;
+
+                            attivo_tempo_sparo = 0;
+                            DestroyImmediate(sparo);
+
+                        }
+
+                        if (indice > -1)
+                        {
+
+                            str_block = str_block.Replace("blocco_mesh ", "");
+
+                            num_block = int.Parse(str_block);
+
+                            attivo_tempo_sparo = 0;
+                            DestroyImmediate(sparo);
+
+                            c_save.crea_blocco[num_block].distruzione_oggetto = 1;
+                        }
+
+
+
+
+
+                    }
+
+
+                   
 
 
                 }

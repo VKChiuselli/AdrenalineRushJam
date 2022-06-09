@@ -814,7 +814,7 @@ public class crea_livello : MonoBehaviour
 
                 float altezza = 0;
 
-                altezza = k + .5f;
+                altezza = k*.5f + .5f;
 
                 if (k == 0)
                 {
@@ -2352,7 +2352,7 @@ public class crea_livello : MonoBehaviour
     {
         string struttura = "";
 
-        for (int nk = 0; nk < 100; nk++)
+        for (int nk = 0; nk < 1000; nk++)
         {
 
             struttura = "";
