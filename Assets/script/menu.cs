@@ -522,6 +522,18 @@ void aggiorna_menu()
 
         }
 
+
+        if (pulsante[1] != null)  //settings
+{
+            float dx2 = dy * .8f / 2;
+            float dy2 = dx2 * (76f / 72f);
+            pos_x = risoluzione_x * -.5f + dx2;
+            pos_y = risoluzione_y * 0.45f;
+            pulsante[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            pulsante[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
         if (grafica[11] != null)  //coin
   {
 
@@ -540,8 +552,8 @@ void aggiorna_menu()
 
             float dx2 = dy * .8f;
             float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * .5f - dx2 * .5f;
-            pos_y = risoluzione_y * 0.5f - dy2 * .55f;
+            pos_x = risoluzione_x * .5f - dx2 / 2 * 2;
+            pos_y = risoluzione_y * 0.5f - dy2 * .9f;
 
             grafica[12].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
             grafica[12].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -552,16 +564,7 @@ void aggiorna_menu()
 
         }
 
-        if (pulsante[1] != null)  //settings
-{
-            float dx2 = dy * .8f / 2;
-            float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * -.5f + dx2;
-            pos_y = risoluzione_y * 0.45f;
-            pulsante[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-            pulsante[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
-        }
+  
 
         if (grafica[13] != null)  //gem
       {
@@ -573,6 +576,23 @@ void aggiorna_menu()
 
             grafica[13].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
             grafica[13].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+        if (grafica[14] != null)  //gem  txt
+{
+
+            float dx2 = dy * .8f;
+            float dy2 = dx2 * (76f / 72f);
+            pos_x = 0;
+            pos_y = risoluzione_y * 0.5f - dy2 * .9f;
+
+            grafica[14].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[14].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[14].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            grafica_testo[14].GetComponent<TextMeshProUGUI>().text = "99999";
+
 
         }
 
@@ -599,42 +619,6 @@ void aggiorna_menu()
             pulsante_testo[0].GetComponent<TextMeshProUGUI>().fontSize = font_size;
 
         }
-
-
-
-
-
-        //   if (grafica[13] != null)  //gem
-        //    {
-
-        //    float dx2 = dy * .8f;
-        //    float dy2 = dx2 * (76f / 72f);
-        //    pos_x = risoluzione_x * .5f - dx2 * .5f;
-        //    pos_y = risoluzione_y * 0.5f - dy2 * .55f;
-
-        //    grafica[13].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-        //    grafica[13].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
-
-
-        //}
-        //if (grafica[14] != null)  //gem text
-        //{
-
-        //    float dx2 = dy * .8f;
-        //    float dy2 = dx2 * (76f / 72f);
-        //    pos_x = risoluzione_x * .5f - dx2 * .5f;
-        //    pos_y = risoluzione_y * 0.5f - dy2 * .55f;
-
-        //    grafica[14].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-        //    grafica[14].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
-
-        //    grafica_testo[14].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-        //    grafica_testo[14].GetComponent<TextMeshProUGUI>().text = "99999";
-
-
-        //}
-
-
 
 
     }
@@ -737,7 +721,7 @@ void aggiorna_menu()
         crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
         crea_button_text(4, "UPGRADE", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
         crea_grafica_text(13, new Color(1, 1, 1, 1), "", "UI/grafica_UI/StatusBarIcon_Gem");
-
+        crea_grafica_text(14, new Color(1, 1, 1, 0), "", "");
 
 
     }
