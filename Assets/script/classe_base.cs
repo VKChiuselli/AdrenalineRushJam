@@ -25,10 +25,16 @@ public class blocco
 
     public Renderer mesh_renderer;
 
+    public string struttura_procedurale;
+    public string struttura_procedurale_dz;
+
+
     public int tipo;
 
     public int attivo;
     public int arrivo;
+    public int disattiva_coll;
+
 
     public float valore_dissolve;
 

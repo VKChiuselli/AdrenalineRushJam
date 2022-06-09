@@ -35,16 +35,22 @@ public class menu : MonoBehaviour {
     float spostamento_sx2;
 
     float spostamento_x = 0;
+    public float scroll_verticale_sx;
+    float scroll_verticale_dx;
 
-    GameObject[] pulsante = new GameObject[100];
-    GameObject[] pulsante_testo = new GameObject[100];
+    static int num_ogg = 200;
 
-    GameObject[] grafica = new GameObject[100];
-    GameObject[] grafica_testo = new GameObject[100];
+    GameObject[] pulsante = new GameObject[num_ogg];
+    GameObject[] pulsante_testo = new GameObject[num_ogg];
 
-    GameObject[] pulsante_field = new GameObject[100];
-    GameObject[] pulsante_field_testo = new GameObject[100];
-    GameObject[] pulsante_field_testo2 = new GameObject[100];
+    GameObject[] grafica = new GameObject[num_ogg];
+    GameObject[] grafica_testo = new GameObject[num_ogg];
+
+    GameObject[] pulsante_field = new GameObject[num_ogg];
+    GameObject[] pulsante_field_testo = new GameObject[num_ogg];
+    GameObject[] pulsante_field_testo2 = new GameObject[num_ogg];
+
+    
 
 
     struttura_dati script_struttura_dati;
@@ -54,6 +60,9 @@ public class menu : MonoBehaviour {
     int font_size = 14;
 
     int pagina = 0;
+
+    float limite_verticale_sx = 0;
+    float limite_verticale_dx = 0;
 
 
     void Start() {
@@ -96,8 +105,66 @@ public class menu : MonoBehaviour {
     }
 
 
-    void aggiorna_menu()
+     
+
+
+void aggiorna_menu()
     {
+
+        if (pagina == -1)
+        {
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                scroll_verticale_sx = scroll_verticale_sx - risoluzione_y * .025f;
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                scroll_verticale_sx = scroll_verticale_sx + risoluzione_y * .025f;
+            }
+        }
+
+        if (pagina == 1)
+        {
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                scroll_verticale_dx = scroll_verticale_dx - risoluzione_y * .025f;
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                scroll_verticale_dx = scroll_verticale_dx + risoluzione_y * .025f;
+            }
+        }
+
+
+
+        if (scroll_verticale_sx < 0)
+        {
+            scroll_verticale_sx = 0;
+        }
+
+        float limite_sy = -limite_verticale_sx - risoluzione_y * .15f;
+
+        if (scroll_verticale_sx> limite_sy)
+        {
+            scroll_verticale_sx = limite_sy;
+        }
+
+
+        if (scroll_verticale_dx < 0)
+        {
+            scroll_verticale_dx = 0;
+        }
+
+        float limite_dy = -limite_verticale_dx - risoluzione_y * .15f;
+
+        if (scroll_verticale_dx > limite_dy)
+        {
+            scroll_verticale_dx = limite_dy;
+        }
+
+
 
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
@@ -184,15 +251,55 @@ public class menu : MonoBehaviour {
             pos_x = -risoluzione_x;
             pos_y = risoluzione_y * -0.15f;
 
-            pulsante[10].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
-            pulsante[10].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
+            pulsante[10].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            pulsante[10].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y+scroll_verticale_sx);
 
             pulsante_testo[10].GetComponent<TextMeshProUGUI>().fontSize = font_size;
 
         }
 
-  
-     
+        int aumento_pos_x = -1;
+        int aumento_pos_y = 0;
+
+        for (int n = 0; n < 9; n++)
+        {
+
+            float dx2 = risoluzione_x * .4f;
+            float dy2 = dx2 ;
+
+            aumento_pos_x = aumento_pos_x + 1;
+
+
+            if (aumento_pos_x > 1)
+            {
+                aumento_pos_x = 0;
+                aumento_pos_y = aumento_pos_y + 1;
+            }
+
+            pos_x = -risoluzione_x-risoluzione_x*.25f+aumento_pos_x*risoluzione_x*.5f;
+
+            
+
+
+            pos_y = risoluzione_y * .2f- aumento_pos_y*dy2*1.25f;
+
+            if (pulsante[100 + n] != null)
+            {
+
+                pulsante[100 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                pulsante[100 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y+scroll_verticale_sx);
+
+
+                limite_verticale_sx = pos_y  - dy2*.55f;
+            }
+
+
+
+
+        }
+
+
+
 
 
     }
@@ -212,10 +319,10 @@ public class menu : MonoBehaviour {
             float dx2 = risoluzione_x * .333f;
             float dy2 = dx2 * (55f / 145f);
             pos_x =   risoluzione_x;
-            pos_y = risoluzione_y * 0.35f;
+            pos_y = risoluzione_y * 0.25f;
            
             pulsante[20].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
-            pulsante[20].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+spostamento_x, pos_y);
+            pulsante[20].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+spostamento_x, pos_y + scroll_verticale_dx);
             
             pulsante_testo[20].GetComponent<TextMeshProUGUI>().fontSize = font_size;
 
@@ -227,14 +334,59 @@ public class menu : MonoBehaviour {
             float dx2 = dy * .8f;
             float dy2 = dx2 * (76f / 72f);
             pos_x =  risoluzione_x;
-            pos_y = risoluzione_y * 0.2f ;
+            pos_y = risoluzione_y * 0.05f ;
             
             pulsante[21].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            pulsante[21].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+spostamento_x, pos_y);
+            pulsante[21].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+spostamento_x, pos_y + scroll_verticale_dx);
           
         }
 
-        
+
+
+        int aumento_pos_x = -1;
+        int aumento_pos_y = 0;
+
+        for (int n = 0; n < 9; n++)
+        {
+
+            float dx2 = risoluzione_x * .4f;
+            float dy2 = dx2;
+
+            aumento_pos_x = aumento_pos_x + 1;
+
+
+            if (aumento_pos_x > 1)
+            {
+                aumento_pos_x = 0;
+                aumento_pos_y = aumento_pos_y + 1;
+            }
+
+            pos_x = risoluzione_x - risoluzione_x * .25f + aumento_pos_x * risoluzione_x * .5f;
+
+
+
+
+            pos_y = risoluzione_y * -.2f - aumento_pos_y * dy2 * 1.25f;
+
+            if (pulsante[150 + n] != null)
+            {
+
+                pulsante[150 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                pulsante[150 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
+
+
+                limite_verticale_dx = pos_y - dy2 * .55f;
+            }
+
+
+
+
+        }
+
+
+
+
+
     }
 
     public void controllo_risoluzione() {
@@ -527,28 +679,64 @@ public class menu : MonoBehaviour {
         crea_grafica_text(1, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
         crea_grafica_text(2, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
 
-        // pagina centrale
-        crea_grafica_text(3, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
-        crea_grafica_text(4, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
 
-        crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), "UI/grafica_UI/Btn_MainButton_Blue");
-    
-        crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
-        crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
-        crea_button_text(4, "UPGRADE", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
+       
 
 
         // pagina sinistra
-        crea_button_text(10, "sinistra", new Color(1, 1, 1, 1), "UI/grafica_UI/Btn_MainButton_Blue");
-        crea_grafica_text(11, new Color(1, 1, 1, 1), "", "UI/grafica_UI/StatusBarIcon_Gold");
-        crea_grafica_text(12, new Color(1, 1, 1, 0), "", "");
-        crea_button_text(1, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Icon_PictoIcon_Setting");
-        crea_grafica_text(13, new Color(1, 1, 1, 1), "", "UI/grafica_UI/StatusBarIcon_Gem");
+
+
+        crea_button_text(100, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(101, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(102, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(103, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+
+        crea_button_text(104, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+
+        crea_button_text(105, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+
+        crea_button_text(106, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+
+        crea_button_text(107, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+
+        crea_button_text(108, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+
+
 
 
         // pagina a destra
         crea_button_text(20, "DESTRA", new Color(1, 1, 1, 1), "UI/grafica_UI/Btn_MainButton_Blue");
         crea_button_text(21, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Icon_PictoIcon_Setting");
+
+
+        crea_button_text(150, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(151, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(152, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(153, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+
+        crea_button_text(154, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+
+        crea_button_text(155, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+
+
+
+        // pagina centrale
+        crea_grafica_text(3, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(4, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+
+
+       
+        crea_grafica_text(11, new Color(1, 1, 1, 1), "", "UI/grafica_UI/StatusBarIcon_Gold");
+        crea_grafica_text(12, new Color(1, 1, 1, 0), "", "");
+        crea_button_text(1, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Icon_PictoIcon_Setting");
+
+
+        crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), "UI/grafica_UI/Btn_MainButton_Blue");
+
+        crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
+        crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
+        crea_button_text(4, "UPGRADE", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
+        crea_grafica_text(13, new Color(1, 1, 1, 1), "", "UI/grafica_UI/StatusBarIcon_Gem");
 
 
 
@@ -657,6 +845,15 @@ public class menu : MonoBehaviour {
 
 
     void pressione_pulsante(int num) {
+
+#if UNITY_EDITOR
+
+        Debug.Log("pulsante "+num );
+
+#endif
+
+
+
         if (num == 0) {
             SceneManager.LoadScene("gioco");
         }

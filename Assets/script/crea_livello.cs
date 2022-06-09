@@ -23,6 +23,16 @@ public class crea_livello : MonoBehaviour
 
     float xm, ym, xm_old, ym_old;
 
+    public float distanza_partenza_blocchi = 20;
+    public float distanza_blocchi = 26;
+    public float distanza_random = 3;
+    public int numero_aperture_minimo = 8;
+    public int numero_aperture_massimo = 12;
+    public int fila_monete_cirolari = 6;
+    public int numero_monete_linea = 8;
+
+    public float percentuale_monete= 60;
+    public float percentuale_altri_blocchi = 79;
 
 
     float[] touch_x = new float[15];
@@ -34,9 +44,6 @@ public class crea_livello : MonoBehaviour
     float[] touch_xo = new float[15];
     float[] touch_yo = new float[15];
 
-    public float umo_x;
-    public float umo_y;
-    public float umo_z;
 
     float diff_xm;
     float diff_ym;
@@ -71,9 +78,9 @@ public class crea_livello : MonoBehaviour
 
     public int attivo_funzione = 0;
 
-    string[] lista_nome_blocco = new string[20];
-    string[] lista_nome_bonus = new string[20];
-    string[] lista_nome_malus = new string[20];
+    string[] lista_nome_blocco = new string[200];
+    string[] lista_nome_bonus = new string[200];
+    string[] lista_nome_malus = new string[200];
 
     GameObject blocco_base;
     GameObject gemma_base;
@@ -98,9 +105,20 @@ public class crea_livello : MonoBehaviour
 
     int crea_snap = 0;
 
+    int difficolta_livello_generato = 0;
+
+    string[] lista_difficolta = new string[20];
+
+    string struttura_generata_dz = "";
+
+    GameObject rif2;
+
+
     // Start is called before the first frame update
     void Start()
     {
+
+        rif2 = GameObject.Find("Rif2");
 
         cilindro = GameObject.Find("cilindro_esatto");
         partenza = GameObject.Find("partenza");
@@ -120,23 +138,7 @@ public class crea_livello : MonoBehaviour
         moneta_base = carica_oggetto(moneta_base, "moneta_", tipo_moneta);
         malus_base = carica_oggetto(malus_base, "malus_", tipo_malus);
 
-        for (int k = 0; k <= 9; k++)
-        {
-
-            for (int n = 0; n < 40; n++)
-            {
-
-                snap_rif[n+k*50] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere_rif", typeof(GameObject))) as GameObject;
-
-                snap_rif[n+k*50].name = "snap_rif " + n;
-
-                snap_rif2[n + k * 50] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere_rif", typeof(GameObject))) as GameObject;
-
-                snap_rif2[n + k * 50].name = "snap_rif2 " + n;
-
-            }
-
-        }
+       
 
        
 
@@ -155,6 +157,8 @@ public class crea_livello : MonoBehaviour
         oggetto_base = Instantiate(Resources.Load($"grafica_3d/Prefabs_space/{nome_oggetto}{tipo_oggetto}", typeof(GameObject))) as GameObject;
 
         oggetto_base.transform.SetParent(cilindro.transform);
+
+        oggetto_base.name = nome_oggetto;
 
         return oggetto_base;
 
@@ -193,6 +197,10 @@ public class crea_livello : MonoBehaviour
         crea_button_text(7, "+ bonus");
 
         crea_button_text(8, "raggio_cilindro");
+
+        crea_button_text(15, "crea_monete");
+     
+        crea_button_text(17, "genera livello");
 
         crea_button_text(18, "delete level");
         crea_button_text(19, "save");
@@ -274,7 +282,28 @@ public class crea_livello : MonoBehaviour
 
         }
 
+        if (num == 15)
+        {
+            crea_genera_monete();
+        }
 
+
+        if (num == 16)
+        {
+            difficolta_livello_generato = difficolta_livello_generato + 1;
+
+            if (difficolta_livello_generato > 5)
+            {
+                difficolta_livello_generato = 0;
+            }
+                
+        }
+
+
+        if (num == 17)
+        {
+            genera_livello();
+        }
 
 
         if (num == 18)
@@ -350,6 +379,21 @@ public class crea_livello : MonoBehaviour
         pulsante_testo[6].GetComponent<Text>().text = "" + lista_nome_bonus[tipo_bonus];
 
         pulsante_testo[8].GetComponent<Text>().text = "raggio" +c_save.crea_cilindro[0].raggio ;
+
+
+
+        lista_difficolta[0] = "molto facile";
+        lista_difficolta[1] = "facile";
+        lista_difficolta[2] = "medio";
+        lista_difficolta[3] = "difficile";
+        lista_difficolta[4] = "molto difficile";
+        lista_difficolta[5] = "impossibile";
+
+
+
+
+
+     //   pulsante_testo[16].GetComponent<Text>().text = "difficoltà " +lista_difficolta[ difficolta_livello_generato];
 
 
     }
@@ -722,13 +766,42 @@ public class crea_livello : MonoBehaviour
     }
 
 
-    void calcolo_snap()
+    void calcolo_snap(int aggiorna=0)
     {
+
+        Debug.Log("aggiorna "+ aggiorna);
+
+        if (aggiorna == 1)
+        {
+            for (int k = 0; k < snap_rif.Length; k++)
+            {
+
+                if (snap_rif[k] != null)
+                {
+                    DestroyImmediate(snap_rif[k]);
+
+                }
+
+                if (snap_rif2[k] != null)
+                {
+                    DestroyImmediate(snap_rif2[k]);
+
+                }
+
+
+            }
+        }
+
+
+
         GameObject rif = GameObject.Find("cilindro_esatto/rif");
       
         float rad2 = Mathf.PI / 18.0f;
 
         float rad_cilindro = cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
+
+        Vector3[] pos_vn = new Vector3[3000];
+
 
         for (int k = 0; k <= 9; k++)
         {
@@ -756,21 +829,37 @@ public class crea_livello : MonoBehaviour
 
                 Vector3 pos = new Vector3(xx, yy, 0);
 
+                pos_vn[n + k * 50] = pos;
 
-                if (crea_snap == 0)
+                if (aggiorna==1)
                 {
-                   
+
+                    
+
+                            snap_rif[n + k * 50] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere_rif", typeof(GameObject))) as GameObject;
+
+                            snap_rif[n + k * 50].name = "snap_rif " + n;
+
+                            snap_rif2[n + k * 50] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere_rif", typeof(GameObject))) as GameObject;
+
+                            snap_rif2[n + k * 50].name = "snap_rif2 " + n;
+
+
+
+
                     snap_rif[n+k*50].transform.position = pos;
 
                     snap_rif2[n + k * 50].transform.position = pos;
 
-                         snap_rif2[n + k * 50].transform.SetParent(rif.transform);
+                   //      snap_rif[n + k * 50].transform.SetParent(rif.transform);
+                    snap_rif2[n + k * 50].transform.SetParent(rif.transform);
+
                 }
             }
 
         }
 
-        distanza_corda = Vector3.Distance(snap_rif[0].transform.position, snap_rif[1].transform.position);
+        distanza_corda = Vector3.Distance(pos_vn[0], pos_vn[1]);
 
         crea_snap = 1;
     }
@@ -849,7 +938,7 @@ public class crea_livello : MonoBehaviour
                         }
                         else
                         {
-                            crea_blocco_mesh2(num,tipo_blocco);
+                            crea_blocco_mesh2(num,tipo_blocco, c_save.crea_blocco[num].struttura_procedurale, c_save.crea_blocco[num].struttura_procedurale_dz);
                         }
 
                         float rad_calcolo = rad;
@@ -1013,6 +1102,9 @@ public class crea_livello : MonoBehaviour
 
                         c_save.crea_malus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/malus_"+tipo_malus, typeof(GameObject))) as GameObject;
 
+
+                        modifica_base(c_save.crea_malus[num].mesh);
+
                         rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
                         c_save.crea_malus[num].altezza = c_save.crea_cilindro[0].raggio;// Vector3.Distance(m_ray, new Vector3(0, 0, m_ray.z));
@@ -1059,6 +1151,9 @@ public class crea_livello : MonoBehaviour
                         int num = c_save.crea_bonus.Count - 1;
 
                         c_save.crea_bonus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/bonus_" + tipo_bonus, typeof(GameObject))) as GameObject;
+
+                        modifica_base(c_save.crea_bonus[num].mesh);
+
 
                         rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
@@ -1297,7 +1392,7 @@ public class crea_livello : MonoBehaviour
 
                 cilindro.transform.localEulerAngles = new Vector3(0, 0, 0);
 
-                calcolo_snap();
+                calcolo_snap(1);
 
 
                 scala_cilindro();
@@ -1478,7 +1573,7 @@ public class crea_livello : MonoBehaviour
         }
         else
         {
-            crea_blocco_mesh2(num, tipo_blocco);
+            crea_blocco_mesh2(num, tipo_blocco, c_save.crea_blocco[num].struttura_procedurale, c_save.crea_blocco[num].struttura_procedurale_dz);
         }
 
 
@@ -1580,6 +1675,8 @@ public class crea_livello : MonoBehaviour
 
         c_save.crea_malus[num].mesh.name = "crea_malus " + tipo_malus;
 
+        modifica_base(c_save.crea_malus[num].mesh);
+
         c_save.crea_malus[num].mesh.transform.SetParent(cilindro.transform);
 
         c_save.crea_malus[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
@@ -1608,6 +1705,8 @@ public class crea_livello : MonoBehaviour
         c_save.crea_bonus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/bonus_" + tipo_bonus, typeof(GameObject))) as GameObject;
 
         c_save.crea_bonus[num].mesh.name = "crea_bonus " + tipo_bonus;
+
+        modifica_base(c_save.crea_bonus[num].mesh);
 
         c_save.crea_bonus[num].mesh.transform.SetParent(cilindro.transform);
 
@@ -1664,14 +1763,115 @@ public class crea_livello : MonoBehaviour
 
 
 
+        modifica_base(malus_base);
+        modifica_base(bonus_base);
+
+
+
+
+
+    }
+
+
+    void modifica_base(GameObject ogg)
+    {
+
+
+        Debug.Log(""+ogg.name);
+
+
+
+        Vector3[] pos_v = new Vector3[50];
+
+
+        float rad2 = Mathf.PI / 18.0f;
+
+        float altezza = .05f;
+
+        for (int n = 0; n < 49; n++)
+        {
+
+            float rad = rad2 * n;
+
+           
+
+            float xx = Mathf.Sin(rad) * (c_save.crea_cilindro[0].raggio + altezza);
+            float yy = Mathf.Cos(rad) * (c_save.crea_cilindro[0].raggio + altezza)- c_save.crea_cilindro[0].raggio;
+
+            pos_v[n] = new Vector3(xx,yy,0);
+
+
+            }
+
+
+            Mesh mesh = ogg.GetComponent<MeshFilter>().mesh;
+
+        mesh.Clear();
+
+        int num_v = 5;
+        int num_tria = num_v-1;
+
+        Vector3[] vertices = new Vector3[num_v*2];
+        Vector2[] uvs = new Vector2[num_v * 2];
+        int[] tria = new int[num_tria*6];
+
+
+        float raggio = c_save.crea_cilindro[0].raggio;
+
+        float u = 1.0f / (num_v-1);
+
+
+
+        for (int n = 0; n < num_v; n++)
+        {
+            vertices[n] = pos_v[34+n];
+
+            vertices[n+num_v] = vertices[n];
+            vertices[n + num_v].z = vertices[n + num_v].z + 6;
+
+            uvs[n] = new Vector2(u*n, 0);
+            uvs[n + num_v] = new Vector2(u * n, 1);
+        }
+
+
+        for (int n = 0; n < num_v-1; n++)
+        {
+            int num_t = n * 6;
+
+            tria[num_t+0] = 0+n;
+            tria[num_t+1] = 5 + n;
+            tria[num_t+2] = 6 + n;
+
+            tria[num_t+3] = 0 + n;
+            tria[num_t+4] = 6 + n;
+            tria[num_t+5] = 1 + n;
+
+        }
+
+
+
 
       
 
 
-       
+        mesh.vertices = vertices;
+        mesh.uv = uvs;
+        mesh.triangles = tria;
+
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
+
+
+           DestroyImmediate(ogg.GetComponent<MeshCollider>());
+
+
+           ogg.AddComponent<MeshCollider>();
+
 
 
     }
+
 
 
     void crea_sfera(Vector3 pos,string str="")
@@ -1710,7 +1910,7 @@ public class crea_livello : MonoBehaviour
 
     }
 
-    void crea_blocco_mesh2(int num, int tipo)
+    void crea_blocco_mesh2(int num, int tipo, string struttura, string struttura_dz)
     {
 
 
@@ -1724,13 +1924,13 @@ public class crea_livello : MonoBehaviour
 
        
 
-        scala_blocco(c_save.crea_blocco[num].mesh, tipo);
+        scala_blocco(c_save.crea_blocco[num].mesh, tipo, struttura,struttura_dz);
 
         c_save.crea_blocco[num].mesh.transform.SetParent(cilindro.transform);
     }
 
 
-    void scala_blocco(GameObject ogg, int tipo)
+    void scala_blocco(GameObject ogg, int tipo, string struttura="",string struttura_dz="")
     {
 
         Vector3 scale = new Vector3(distanza_corda * 2, 1.0f, 2);
@@ -1759,7 +1959,7 @@ public class crea_livello : MonoBehaviour
         if (tipo >= 9)
         {
 
-            ristruttura_blocco(ogg, tipo);
+            ristruttura_blocco(ogg, tipo, struttura,struttura_dz);
 
         }
 
@@ -1767,12 +1967,14 @@ public class crea_livello : MonoBehaviour
     }
 
 
-    void ristruttura_blocco(GameObject ogg, int tipo)
+    void ristruttura_blocco(GameObject ogg, int tipo, string struttura, string struttura_dz)
     {
 
        
 
         string testo_ogg = "696";
+
+        string testo_ogg_dz = "22222222222222222";
 
         Vector3 dz = new Vector3(0, 0, 2);
 
@@ -1815,11 +2017,42 @@ public class crea_livello : MonoBehaviour
             dz = new Vector3(0, 0, 6);
         }
 
+        if (tipo == 14)
+        {
+            //-----------012345678901234567
+            testo_ogg = "1234321";
+            dz = new Vector3(0, 0, 6);
+        }
+
+        if (tipo == 15)
+        {
+            //-----------012345678901234567
+            testo_ogg = "23956236847532532354235";
+            dz = new Vector3(0, 0, 22);
+        }
+
+
+
+
+        if (tipo == 100)
+        {
+            testo_ogg = ""+struttura;
+           testo_ogg_dz = ""+ struttura_dz;
+
+          //  Debug.Log("testo_ogg_dz "+ testo_ogg_dz);
+        }
+
 
 
         Mesh mesh = ogg.GetComponent<MeshFilter>().mesh;
 
         mesh.Clear();
+
+        int lung_dz = testo_ogg_dz.Length;
+        if (lung_dz > 18)
+        {
+            lung_dz = 18;
+        }
 
 
         int lung = testo_ogg.Length;
@@ -1830,16 +2063,21 @@ public class crea_livello : MonoBehaviour
 
         float[] mesh_v = new float[37];
 
+        float[] mesh_v_dz = new float[37];
+
         for (var n = 0; n < lung; n++)
         {
             string str = testo_ogg.Substring(n, 1);
-
-           
                 mesh_v[n] = int.Parse(str);
-            
+        }
 
+        for (var n = 0; n < lung_dz; n++)
+        {
+            string str = testo_ogg_dz.Substring(n, 1);
+            mesh_v_dz[n] = int.Parse(str);
 
         }
+
 
         int num_v = 0;
 
@@ -1862,6 +2100,8 @@ public class crea_livello : MonoBehaviour
 
         int aum_v = -1;
         int aum_t = -1;
+
+        Vector3 dz_base = dz;
 
 
         for (var n = 0; n < 19; n++)
@@ -1895,37 +2135,46 @@ public class crea_livello : MonoBehaviour
                 }
 
 
+                dz = dz_base;
 
-                vertices[nv+0] =snap_n ;
-                vertices[nv + 1] = snap_up_n;
-                vertices[nv + 2] = snap_up_n1;
-                vertices[nv + 3] = snap_n1;
+                if (mesh_v_dz[n] > 0)
+                {
+                    dz = new Vector3(0,0, mesh_v_dz[n]);
 
-                vertices[nv + 4] = snap_n+dz;
-                vertices[nv + 5] = snap_up_n + dz;
-                vertices[nv + 6] = snap_up_n1 + dz;
-                vertices[nv + 7] = snap_n1 + dz;
-
-                vertices[nv + 8] = snap_n;
-                vertices[nv + 9] = snap_up_n;
-                vertices[nv + 10] = snap_up_n+dz;
-                vertices[nv + 11] = snap_n+dz;
-
-                vertices[nv + 12] = snap_n1;
-                vertices[nv + 13] = snap_up_n1;
-                vertices[nv + 14] = snap_up_n1 + dz;
-                vertices[nv + 15] = snap_n1 + dz;
+                }
 
 
-                vertices[nv + 16] = snap_up_n;
-                vertices[nv + 17] = snap_up_n + dz;
-                vertices[nv + 18] = snap_up_n1 + dz;
-                vertices[nv + 19] = snap_up_n1;
 
-                vertices[nv +20] = snap_n;
-                vertices[nv + 21] = snap_n + dz;
-                vertices[nv + 22] = snap_n1 + dz;
-                vertices[nv + 23] = snap_n1;
+                vertices[nv+0] =snap_n - dz*.5f;
+                vertices[nv + 1] = snap_up_n - dz * .5f;
+                vertices[nv + 2] = snap_up_n1 - dz * .5f;
+                vertices[nv + 3] = snap_n1 - dz * .5f;
+
+                vertices[nv + 4] = snap_n+dz * .5f;
+                vertices[nv + 5] = snap_up_n + dz * .5f;
+                vertices[nv + 6] = snap_up_n1 + dz * .5f;
+                vertices[nv + 7] = snap_n1 + dz * .5f;
+
+                vertices[nv + 8] = snap_n - dz * .5f;
+                vertices[nv + 9] = snap_up_n - dz * .5f;
+                vertices[nv + 10] = snap_up_n+dz * .5f;
+                vertices[nv + 11] = snap_n+dz * .5f;
+
+                vertices[nv + 12] = snap_n1 - dz * .5f;
+                vertices[nv + 13] = snap_up_n1 - dz * .5f;
+                vertices[nv + 14] = snap_up_n1 + dz * .5f;
+                vertices[nv + 15] = snap_n1 + dz * .5f;
+
+
+                vertices[nv + 16] = snap_up_n - dz * .5f;
+                vertices[nv + 17] = snap_up_n + dz * .5f;
+                vertices[nv + 18] = snap_up_n1 + dz * .5f;
+                vertices[nv + 19] = snap_up_n1 - dz * .5f;
+
+                vertices[nv +20] = snap_n - dz * .5f;
+                vertices[nv + 21] = snap_n + dz * .5f;
+                vertices[nv + 22] = snap_n1 + dz*.5f;
+                vertices[nv + 23] = snap_n1 - dz * .5f;
 
 
                 for (int k = 0; k < 6; k++)
@@ -2020,7 +2269,469 @@ public class crea_livello : MonoBehaviour
         ogg.transform.localScale = new Vector3(1,1,1);
 
 
-     //   Debug.Break();
+        float red = UnityEngine.Random.Range(.0f, 1.0f);
+        float green = UnityEngine.Random.Range(.0f, 1.0f);
+        float blu = UnityEngine.Random.Range(.0f, 1.0f);
+
+
+       // ogg.GetComponent<Renderer>().material.SetColor("_Color", new Color(red,green, blu));
+
+        //   Debug.Break();
+
+    }
+
+
+
+    void genera_livello()
+    {
+
+        float raggio = c_save.crea_cilindro[0].raggio;
+
+        delete_project();
+
+
+        c_save = null;
+        c_save = new classe_save();
+
+        c_save.crea_cilindro.Add(new cilindro());
+
+       
+
+        c_save.crea_cilindro[0].raggio = raggio;
+
+
+            genera_livello(distanza_partenza_blocchi,distanza_blocchi,distanza_random);
+      
+
+       
+
+
+    }
+
+
+    void genera_livello(float distanza_partenza, float distanza, float distanza_rnd)
+    {
+
+
+        float rad_base = Mathf.PI * 2 / 36.0f;
+
+
+        for (int n = 0; n < 30; n++)
+        {
+
+            string struttura = struttura_generata(numero_aperture_minimo, numero_aperture_massimo, 1,8,1);
+
+            c_save.crea_blocco.Add(new blocco());
+
+            int num = c_save.crea_blocco.Count - 1;
+
+            c_save.crea_blocco[num].tipo = 100;
+            c_save.crea_blocco[num].rad = rad_base;
+
+            float pos_z = distanza_partenza + n * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd);
+
+            c_save.crea_blocco[num].pos = pos_z;
+
+
+            c_save.crea_blocco[num].struttura_procedurale = struttura;
+            c_save.crea_blocco[num].struttura_procedurale_dz = struttura_generata_dz;
+
+            genera_altri_blocchi(n,4, distanza, distanza_rnd, distanza_partenza);
+
+        }
+
+        genera_livello_dati();
+
+
+    }
+
+
+
+
+    string struttura_generata(int numero_minimo_buchi, int numero_massimo_buchi, int min, int maxx, int genera_porta)
+    {
+        string struttura = "";
+
+        for (int nk = 0; nk < 100; nk++)
+        {
+
+            struttura = "";
+            struttura_generata_dz = "";
+
+            for (int n = 0; n < 19; n++)
+            {
+
+                int bb = (int)(UnityEngine.Random.Range(min,maxx+ .49f));
+
+                struttura = struttura + "" + bb;
+
+
+            }
+
+            for (int n = 0; n < 19; n++)
+            {
+
+                int bb = (int)(UnityEngine.Random.Range(2, 7));
+
+                struttura_generata_dz = struttura_generata_dz + "" + bb;
+
+
+            }
+
+
+
+            int vuoto_creato = 0;
+
+
+            string struttura_controllo = "";
+
+            string[] struc = new string[40];
+
+            for (int n = 0; n < struttura.Length; n++)
+            {
+
+                string str = struttura.Substring(n, 1);
+
+                if (UnityEngine.Random.Range(0.0f, 10.0f) > 5)
+                {
+                    str = "0";
+
+                        vuoto_creato = vuoto_creato + 1;
+                }
+
+                struc[n] = str;
+
+                struttura_controllo = struttura_controllo + str;
+
+
+            }
+
+           
+
+
+            if (genera_porta > 0)
+            {
+
+                for (int n = 1; n < 18; n++)
+                {
+
+                    if (UnityEngine.Random.Range(0.0f, 10.0f) > 8.5f)
+                    {
+                        if (struc[n] == "0")
+                        {
+                            struc[n - 1] = "6";
+                            struc[n] = "9";
+                            struc[n + 1] = "6";
+                        }
+
+                    }
+
+                }
+
+                struttura_controllo = "";
+
+
+                for (int n = 0; n < 19; n++)
+                {
+                    struttura_controllo = struttura_controllo + struc[n];
+
+                }
+
+
+
+            }
+
+
+
+            if (vuoto_creato>= numero_minimo_buchi && vuoto_creato <= numero_massimo_buchi)
+            {
+
+                return struttura_controllo;
+
+
+
+            }
+
+        }
+
+
+        return struttura;
+
+
+    }
+
+
+
+    void crea_genera_monete()
+    {
+
+        int num_moneta2 = c_save.crea_moneta.Count;
+
+        for (int k = 0; k < num_moneta2; k++)
+        {
+            if (c_save.crea_moneta[k].mesh != null)
+            {
+                DestroyImmediate(c_save.crea_moneta[k].mesh);
+
+            }
+
+        }
+
+
+
+        c_save.crea_moneta.Clear();
+
+
+
+
+        for (int n = 0; n < 30; n++)
+        {
+
+            genera_monete(n, fila_monete_cirolari, numero_monete_linea, distanza_blocchi, .25f, 5);
+
+        }
+
+
+       
+
+
+
+        int num_monete = c_save.crea_moneta.Count;
+
+        for (int k = 0; k < num_monete; k++)
+        {
+            crea_moneta(k);
+        }
+
+
+
+    }
+
+
+
+
+
+    void genera_livello_dati()
+    {
+
+        cilindro.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+        calcolo_snap(1);
+
+
+        scala_cilindro();
+
+
+        partenza.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio + .51f, 0);
+
+        int num_blocchi = c_save.crea_blocco.Count;
+
+        for (int k = 0; k < num_blocchi; k++)
+        {
+            crea_blocco(k);
+        }
+
+
+     
+
+        int num_gemme = c_save.crea_gemma.Count;
+
+        for (int k = 0; k < num_gemme; k++)
+        {
+            crea_gemma(k);
+        }
+
+
+        int num_monete = c_save.crea_moneta.Count;
+
+        for (int k = 0; k < num_monete; k++)
+        {
+            crea_moneta(k);
+        }
+
+        int num_malus = c_save.crea_malus.Count;
+
+        for (int k = 0; k < num_malus; k++)
+        {
+            crea_malus(k);
+        }
+
+        int num_bonus = c_save.crea_bonus.Count;
+
+        for (int k = 0; k < num_bonus; k++)
+        {
+            crea_bonus(k);
+        }
+
+
+
+    }
+
+
+
+    void genera_monete(int pos, int numero_monete, int max_monete_linea, float distanza, float distanza_rnd, float distanza_partenza)
+    {
+
+
+        int max_monete_ciclo = (int)(UnityEngine.Random.Range(max_monete_linea*.5f, max_monete_linea+1));
+       
+
+        for (int n = 0; n <= numero_monete; n++)
+        {
+            if (UnityEngine.Random.Range(0, 100.0f) < percentuale_monete)
+            {
+
+                float rad = UnityEngine.Random.Range(0.0f, 6.28f);
+
+
+                float ok_linea= UnityEngine.Random.Range(-10.0f, 10.0f);
+
+                int direzione = 0;
+
+                if (ok_linea < -4)
+                {
+                    direzione = -1;
+                }
+
+                if (ok_linea > 4)
+                {
+                    direzione = 1;
+                }
+
+
+                for (int kn = 0; kn <= max_monete_ciclo; kn++)
+                {
+
+
+                    float pos_moneta = distanza_partenza + pos * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd) + distanza * .5f+kn*2 ;
+
+
+                   // Debug.Log(distanza_partenza+" pos_moneta " + pos_moneta+" "+ distanza+" pos "+pos);
+
+                    float rad_direzione = direzione * 1.5f/c_save.crea_cilindro[0].raggio*kn;
+
+                 //   Debug.Log(""+ rad_direzione);
+
+                    int ok_moneta = 1;
+
+
+                    ok_moneta = controllo_coll(pos_moneta, rad+ rad_direzione);
+
+
+                    if (ok_moneta == 1)
+                    {
+
+                        c_save.crea_moneta.Add(new moneta());
+
+                        int num = c_save.crea_moneta.Count - 1;
+
+                        c_save.crea_moneta[num].tipo = 0;
+                        c_save.crea_moneta[num].rad = rad + rad_direzione;
+
+                        c_save.crea_moneta[num].pos = pos_moneta;
+
+
+                    }
+                    else
+                    {
+                        kn = 1000;
+                    }
+
+                }
+
+            }
+
+        }
+
+
+
+
+    }
+
+
+    int controllo_coll(float pos_moneta,float rad)
+    {
+        int ok = 1;
+
+
+        float valore_rnd = .5f / c_save.crea_cilindro[0].raggio;
+
+        for (int n = 0; n < 20; n++)
+        {
+
+            float pos_rnd = UnityEngine.Random.Range(-1.5f,1.5f);
+
+
+
+
+            float rad_rnd= UnityEngine.Random.Range(-valore_rnd, valore_rnd);
+
+            float xx = Mathf.Sin(rad+ rad_rnd) * 50;
+            float yy = Mathf.Cos(rad+ rad_rnd) * 50;
+
+            Vector3 pos = new Vector3(xx, yy, pos_moneta+ pos_rnd);
+
+
+            RaycastHit hit_collider;
+
+            Vector3 pos_ray_direction = new Vector3(-xx, -yy, 0);
+
+        //    Debug.DrawRay(pos, pos_ray_direction, new Color(1, 0, 0, 1), 5);
+
+
+
+            if (Physics.Raycast(pos, pos_ray_direction, out hit_collider, 50))
+            {
+                if (hit_collider.collider.name != "cilindro_esatto")
+                {
+                    ok = 0;
+
+                }
+              //  Debug.Log(""+hit_collider.collider.name);
+
+
+
+            }
+
+        }
+
+        return ok;
+
+
+    }
+
+
+
+
+
+
+    void genera_altri_blocchi(int pos, int numero_blocchi,float distanza,float distanza_rnd, float distanza_partenza)
+    {
+
+        float molt_rad = Mathf.PI * 2 / numero_blocchi;
+
+
+        for (int n = 0; n <= numero_blocchi; n++)
+        {
+            if (UnityEngine.Random.Range(0, 100.0f) < percentuale_altri_blocchi)
+            {
+
+                c_save.crea_blocco.Add(new blocco());
+
+                int num = c_save.crea_blocco.Count - 1;
+
+                c_save.crea_blocco[num].tipo = (int) (UnityEngine.Random.Range(0, 1.49f)+3);
+                c_save.crea_blocco[num].rad = molt_rad * n+ UnityEngine.Random.Range(-.12f, .12f);
+
+                c_save.crea_blocco[num].pos = distanza_partenza+ pos * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd) + distanza * .5f;
+               
+                c_save.crea_blocco[num].struttura_procedurale = "";
+                c_save.crea_blocco[num].struttura_procedurale_dz = "";
+
+            }
+
+        }
+
 
     }
 
