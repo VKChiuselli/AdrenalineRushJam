@@ -23,18 +23,13 @@ public class crea_livello : MonoBehaviour
 
     float xm, ym, xm_old, ym_old;
 
-    [Header("Quanto distante partiranno i blocchi dallo start del giocatore")]
     public float distanza_partenza_blocchi = 20;
-    [Header("Distanza tra un fascio di blocchi e l'altro")]
     public float distanza_blocchi = 26;
-    [Header("Scarto di posizionamento somma e sottrai questo valore")]
     public float distanza_random = 3;
     public int numero_aperture_minimo = 8;
     public int numero_aperture_massimo = 12;
     public int fila_monete_cirolari = 6;
     public int numero_monete_linea = 8;
-    [Header("Distanza tra una moneta e l'altra")]
-    public int distanza_monete = 5;
 
     public float percentuale_monete= 60;
     public float percentuale_altri_blocchi = 79;
@@ -2492,7 +2487,7 @@ public class crea_livello : MonoBehaviour
         for (int n = 0; n < 30; n++)
         {
 
-            genera_monete(n, fila_monete_cirolari, numero_monete_linea, distanza_blocchi, .25f, distanza_monete);
+            genera_monete(n, fila_monete_cirolari, numero_monete_linea, distanza_blocchi, .25f, 5);
 
         }
 

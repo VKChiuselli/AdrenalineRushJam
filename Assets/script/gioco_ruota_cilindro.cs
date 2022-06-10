@@ -38,9 +38,14 @@ public class gioco_ruota_cilindro : MonoBehaviour
     public int inversione_camera = 1;
 
     public float velocita_sparo = 20;
+    public float velocita_sparo_boss = 20;
+
     public int numero_spari = 300;
 
     public GameObject astronave;
+
+    public GameObject boss_mesh;
+    public GameObject boss_mesh_sparo;
 
 
     public float jump = 15;
@@ -114,10 +119,17 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float aumento_salto = 1;
 
-   
+    GameObject boss;
+    float boss_rad;
+
+    float[] attivo_tempo_sparo_boss= new float[5];
+
+    GameObject[] sparo_boss = new GameObject[5];
 
     GameObject sparo;
     float attivo_tempo_sparo;
+    float attivo_tempo_sparo_boss2 = 0;
+
 
 
     // Start is called before the first frame update
@@ -126,6 +138,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         cilindro = GameObject.Find("cilindro_esatto");
+
+        boss = GameObject.Find("boss");
 
         cam0 = GameObject.Find("Main Camera");
 
@@ -174,6 +188,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
         controllo();
 
         gestione_camera();
+
+        gestione_boss();
 
         aggiorna_blocco();
 
@@ -271,7 +287,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
             if (pressione_tasto_up > 0 && playerVelocity.y <= 0)
         {
-            aumento_salto = .6f;
+    //        aumento_salto = .6f;
            
 
         }
@@ -339,6 +355,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
             }
 
+
+            boss_rad = boss_rad + rotazione_cilindro * .035f;
+
             cilindro.transform.Rotate(new Vector3(0, 0, rotazione_cilindro));
 
         }
@@ -382,6 +401,41 @@ public class gioco_ruota_cilindro : MonoBehaviour
             else
             {
                 DestroyImmediate(sparo);
+            }
+
+        }
+
+    }
+
+
+
+    void gestione_sparo_boss()
+    {
+
+        for (int n = 0; n < 5; n++)
+        {
+            attivo_tempo_sparo_boss[n] = attivo_tempo_sparo_boss[n] - Time.deltaTime;
+
+
+
+            if (sparo_boss[n] != null)
+            {
+
+
+                if (attivo_tempo_sparo_boss[n] > 0)
+                {
+
+
+                    sparo_boss[n].transform.Translate(new Vector3(0, 0, velocita_sparo_boss * Time.deltaTime));
+
+                  //  gestione_collisione_sparo_boss();
+
+                }
+                else
+                {
+                    DestroyImmediate(sparo_boss[n]);
+                }
+
             }
 
         }
@@ -516,7 +570,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
                 {
 
 
-                    c_save.crea_blocco[n].valore_dissolve = c_save.crea_blocco[n].valore_dissolve + 4 * Time.deltaTime;
+                    c_save.crea_blocco[n].valore_dissolve = c_save.crea_blocco[n].valore_dissolve + 25 * Time.deltaTime;
 
                     //  Debug.Log("entra " + n+"  "+ c_save.crea_blocco[n].valore_dissolve);
 
@@ -918,7 +972,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                 float altezza = 0;
 
-                altezza = k * .5f + .5f;
+                altezza = k * .25f + .5f;
 
                 if (k == 0)
                 {
@@ -1766,6 +1820,79 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     }
 
+
+    void gestione_boss()
+    {
+
+        float raggio = c_save.crea_cilindro[0].raggio;
+
+
+        boss_rad = Mathf.MoveTowards(boss_rad, 0, Time.deltaTime);
+
+
+        float xx = Mathf.Sin(boss_rad) * raggio;
+        float yy = Mathf.Cos(boss_rad) * raggio;
+
+        float rad_angle = Mathf.Atan2(xx,yy);
+
+        float angle = rad_angle * Mathf.Rad2Deg;
+
+        boss.transform.position = new Vector3(xx,yy,-75);
+
+        boss.transform.localEulerAngles = new Vector3(0, 0, -angle);
+
+
+        float diff = boss_rad;
+
+
+        attivo_tempo_sparo_boss2 = attivo_tempo_sparo_boss2 - Time.deltaTime;
+
+        if (attivo_tempo_sparo_boss2 < 0)
+        {
+
+            if (Mathf.Abs(diff) < .1f)
+            {
+                int num_sparo_boss = -1;
+
+                for (int n = 0; n < 5; n++)
+                {
+
+                    if (attivo_tempo_sparo_boss[n] < -1)
+                    {
+                        num_sparo_boss = n;
+
+                        attivo_tempo_sparo_boss[n] = 15;
+
+
+                        sparo_boss[n] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere", typeof(GameObject))) as GameObject;
+
+                        Vector3 pos_sparo_boss = boss_mesh_sparo.transform.position;
+
+                        sparo_boss[n].transform.position = new Vector3(pos_sparo_boss.x, pos_sparo_boss.y, pos_sparo_boss.z);
+
+
+
+                        sparo_boss[n].name = "sparo_boss " + n;
+
+                        attivo_tempo_sparo_boss2 = 5;
+
+                        n = 1000;
+
+
+                    }
+
+
+
+                }
+
+
+            }
+
+        }
+
+        gestione_sparo_boss();
+
+    }
 
 
 }
