@@ -104,6 +104,10 @@ public class menu : MonoBehaviour, IPointerDownHandler {
         if (Input.GetKeyUp(KeyCode.M)) {
 
             crea_menu();
+
+            distruggi_menu_popup();
+
+           
         }
 
 #endif
@@ -450,6 +454,8 @@ public class menu : MonoBehaviour, IPointerDownHandler {
         float pos_x = 0;
         float pos_y = 0;
 
+        float dime_panel_x = 0;
+        float dime_panel_y = 0;
 
         for (int n = 0; n <= 10; n++)
         {
@@ -473,8 +479,12 @@ public class menu : MonoBehaviour, IPointerDownHandler {
             if (grafica[200] != null)  //pannello
             {
 
-                float dx2 = dy * .125f;
-                float dy2 = dx2;
+                float dx2 = dx * .8f;
+                float dy2 = dy*.8f;
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
                 pos_x = 0;
                 pos_y = 0;
 
@@ -501,8 +511,8 @@ public class menu : MonoBehaviour, IPointerDownHandler {
             if (pulsante[200] != null)  //buy
             {
                 float dx2 = risoluzione_x * 0.333f ;
-                float dy2 = dx2;
-                pos_x = risoluzione_x * 0.5f - dx2 * 0.5f;
+                float dy2 = risoluzione_y * 0.1f;
+                pos_x = 0;
                 pos_y = risoluzione_y *-0.5f + dy2;
                 pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -511,14 +521,19 @@ public class menu : MonoBehaviour, IPointerDownHandler {
 
             if (pulsante[201] != null)  //exit
             {
-                float dx2 = risoluzione_x * 0.333f ;
+                float dx2 = risoluzione_x * 0.12f ;
                 float dy2 = dx2;
-                pos_x = risoluzione_x * 0.5f - dx2 * 0.5f;
-                pos_y = risoluzione_y *+0.5f - dy2 * 1.2f;
+                pos_x = dime_panel_x*.5f;
+                pos_y = dime_panel_y*.5f;
+
+
                 pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             }
+
+
+            uscita_popup(dime_panel_x, dime_panel_y);
 
         }
 
@@ -526,6 +541,32 @@ public class menu : MonoBehaviour, IPointerDownHandler {
     }
 
 
+
+    void uscita_popup(float dime_panel_x,float dime_panel_y)
+    {
+
+        if (Input.GetMouseButtonUp(0))
+        {
+
+            float dx=(risoluzione_x-dime_panel_x)*.5f;
+            float dy = (risoluzione_y - dime_panel_y) * .5f;
+
+
+            if (xm<dx || xm > risoluzione_x - dx)
+            {
+                distruggi_menu_popup();
+            }
+
+
+            if (ym < dy || ym > risoluzione_y - dy)
+            {
+                distruggi_menu_popup();
+            }
+
+        }
+
+
+    }
 
 
 
@@ -753,6 +794,8 @@ public class menu : MonoBehaviour, IPointerDownHandler {
     void distruggi_menu_popup()
     {
 
+        canvas_popup.SetActive(false);
+
         for (int n = 200; n < pulsante.Length; n++)
         {
             if (pulsante[n] != null)
@@ -868,8 +911,8 @@ public class menu : MonoBehaviour, IPointerDownHandler {
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup,"Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
-        crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup,"Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_carta_1");
 
         crea_button_text(200, "BUY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
@@ -1022,6 +1065,11 @@ public class menu : MonoBehaviour, IPointerDownHandler {
             crea_popup(1);
         }
 
+
+        if (num == 201)
+        {
+            distruggi_menu_popup();
+        }
 
     }
 

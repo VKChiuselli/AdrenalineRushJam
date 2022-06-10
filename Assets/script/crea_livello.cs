@@ -1345,7 +1345,10 @@ public class crea_livello : MonoBehaviour
 
         File.WriteAllText(path_data, jsonData, Encoding.UTF8);
 
+#if UNITY_EDITOR
         AssetDatabase.Refresh();
+
+#endif
 
 
 

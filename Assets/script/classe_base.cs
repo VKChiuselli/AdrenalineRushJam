@@ -109,3 +109,18 @@ public class moneta
     public float pos;
 
 }
+
+[Serializable]
+public class upgrade
+{
+    string path_sprite;
+    string titolo;
+    string descrizione;
+
+    string costo_monete;
+
+    public int effetto;
+
+   
+
+}
