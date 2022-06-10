@@ -38,7 +38,7 @@ public class menu : MonoBehaviour {
     public float scroll_verticale_sx;
     float scroll_verticale_dx;
 
-    static int num_ogg = 200;
+    static int num_ogg = 300;
 
     GameObject[] pulsante = new GameObject[num_ogg];
     GameObject[] pulsante_testo = new GameObject[num_ogg];
@@ -56,6 +56,7 @@ public class menu : MonoBehaviour {
     struttura_dati script_struttura_dati;
 
     GameObject canvas;
+    GameObject canvas_popup;
 
     int font_size = 14;
 
@@ -64,9 +65,13 @@ public class menu : MonoBehaviour {
     float limite_verticale_sx = 0;
     float limite_verticale_dx = 0;
 
+    int attivo_popUP = 0;
 
     void Start() {
         canvas = GameObject.Find("Canvas");
+        canvas_popup = GameObject.Find("Canvas_popup/Panel");
+
+        canvas_popup.SetActive(false);
 
         GameObject ogg_struttura_dati = GameObject.Find("base_struttura");
 
@@ -90,7 +95,7 @@ public class menu : MonoBehaviour {
 
         aggiorna_menu();
 
-
+        aggiorna_menu_popup();
 
 
 #if UNITY_EDITOR
@@ -426,6 +431,89 @@ void aggiorna_menu()
 
     }
 
+
+
+
+    void aggiorna_menu_popup()
+    {
+
+
+        float dy = risoluzione_y ;
+        float dx = risoluzione_x ;
+
+        float pos_x = 0;
+        float pos_y = 0;
+
+
+        for (int n = 0; n <= 10; n++)
+        {
+            if (grafica[200+n] != null)  
+            {
+                grafica[200+n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
+            }
+
+            if (pulsante[200 + n] != null)
+            {
+                pulsante[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
+            }
+        }
+
+
+
+
+        if (attivo_popUP == 1)
+        {
+
+            if (grafica[200] != null)  //pannello
+            {
+
+                Debug.Log("dsfsdf");
+
+                float dx2 = dy * .8f;
+                float dy2 = dx2;
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+
+            if (grafica[201] != null)  //mmagine
+            {
+
+                float dx2 = dy * .6f;
+                float dy2 = dx2;
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+
+
+
+            if (pulsante[200] != null)  //settings
+            {
+                float dx2 = dy * .8f ;
+                float dy2 = dy*.125f;
+                pos_x = 0;
+                pos_y = dy * -0.4f;
+                pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+
+        }
+
+
+    }
+
+
+
+
+
     void aggiorna_menu_fix()
     {
 
@@ -627,14 +715,14 @@ void aggiorna_menu()
 
     void distruggi_menu() {
 
-        for (int n = 0; n < pulsante.Length; n++) {
+        for (int n = 0; n < 200; n++) {
             if (pulsante[n] != null) {
                 DestroyImmediate(pulsante[n]);
             }
 
         }
 
-        for (int n = 0; n < grafica.Length; n++)
+        for (int n = 0; n < 200; n++)
         {
             if (grafica[n] != null)
             {
@@ -647,7 +735,31 @@ void aggiorna_menu()
     }
 
 
-   
+    void distruggi_menu_popup()
+    {
+
+        for (int n = 200; n < pulsante.Length; n++)
+        {
+            if (pulsante[n] != null)
+            {
+                DestroyImmediate(pulsante[n]);
+            }
+
+        }
+
+        for (int n = 200; n < grafica.Length; n++)
+        {
+            if (grafica[n] != null)
+            {
+                DestroyImmediate(grafica[n]);
+            }
+
+        }
+
+
+    }
+
+
 
     void crea_menu() {
 
@@ -659,9 +771,9 @@ void aggiorna_menu()
 
         // sfondi
 
-        crea_grafica_text(0, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
-        crea_grafica_text(1, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
-        crea_grafica_text(2, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(0, new Color(1, 1, 1, 1), "",canvas,"Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(2, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
 
 
        
@@ -670,71 +782,96 @@ void aggiorna_menu()
         // pagina sinistra
 
 
-        crea_button_text(100, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(101, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(102, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(103, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(100, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(101, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(102, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(103, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
 
-        crea_button_text(104, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(104, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
 
-        crea_button_text(105, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(105, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
 
-        crea_button_text(106, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(106, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
 
-        crea_button_text(107, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(107, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
 
-        crea_button_text(108, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(108, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
 
 
 
 
         // pagina a destra
-        crea_button_text(20, "DESTRA", new Color(1, 1, 1, 1), "UI/grafica_UI/Btn_MainButton_Blue");
-        crea_button_text(21, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Icon_PictoIcon_Setting");
+        crea_button_text(20, "DESTRA", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
+        crea_button_text(21, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
 
 
-        crea_button_text(150, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(151, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(152, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(153, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(150, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(151, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(152, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(153, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
 
-        crea_button_text(154, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(154, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
 
-        crea_button_text(155, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(155, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
 
 
 
         // pagina centrale
-        crea_grafica_text(3, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
-        crea_grafica_text(4, new Color(1, 1, 1, 1), "", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(4, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
 
 
        
-        crea_grafica_text(11, new Color(1, 1, 1, 1), "", "UI/grafica_UI/StatusBarIcon_Gold");
-        crea_grafica_text(12, new Color(1, 1, 1, 0), "", "");
-        crea_button_text(1, "", new Color(1, 1, 1, 1), "UI/grafica_UI/Icon_PictoIcon_Setting");
+        crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
+        crea_grafica_text(12, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+        crea_button_text(1, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
 
 
-        crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), "UI/grafica_UI/Btn_MainButton_Blue");
+        crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
 
-        crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
-        crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
-        crea_button_text(4, "UPGRADE", new Color(0, 0, 0, 1), "UI/grafica_UI/Btn_MainButton_White");
-        crea_grafica_text(13, new Color(1, 1, 1, 1), "", "UI/grafica_UI/StatusBarIcon_Gem");
-        crea_grafica_text(14, new Color(1, 1, 1, 0), "", "");
+        crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
+        crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
+        crea_button_text(4, "UPGRADE", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
+        crea_grafica_text(13, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gem");
+        crea_grafica_text(14, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
     }
 
 
 
-    void crea_button_text(int num, string txt, Color colore_testo, string path_sprite = "") {
+
+
+
+
+    void crea_popup(int num=0)
+    {
+
+        attivo_popUP = num ;
+
+        distruggi_menu_popup();
+
+        canvas_popup.SetActive(true);
+
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup,"Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
+        crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+
+        crea_button_text(200, "SHOP", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
+
+
+
+    }
+
+
+
+
+    void crea_button_text(int num, string txt, Color colore_testo,GameObject parent, string path="Canvas", string path_sprite = "") {
 
         pulsante[num] = Instantiate(Resources.Load("UI/Button_text", typeof(GameObject))) as GameObject;
 
         pulsante[num].name = "pulsante_text" + num;
 
-        pulsante[num].transform.SetParent(canvas.transform);
+        pulsante[num].transform.SetParent(parent.transform);
 
         pulsante[num].GetComponent<Button>().onClick.AddListener(() => pressione_pulsante(num));
 
@@ -751,7 +888,7 @@ void aggiorna_menu()
         pulsante[num].GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
 
 
-        pulsante_testo[num] = GameObject.Find("Canvas/pulsante_text" + num + "/Text_TMP");
+        pulsante_testo[num] = GameObject.Find(path+"/pulsante_text" + num + "/Text_TMP");
 
         pulsante_testo[num].GetComponent<TextMeshProUGUI>().text = "" + txt;
 
@@ -796,7 +933,7 @@ void aggiorna_menu()
 
 
 
-    void crea_grafica_text(int num,Color colore, string txt, string path_sprite = "") {
+    void crea_grafica_text(int num,Color colore, string txt, GameObject parent, string path="Canvas", string path_sprite = "") {
 
         //    Debug.Log("entratooo");
 
@@ -805,7 +942,7 @@ void aggiorna_menu()
 
         grafica[num].name = "grafica_text" + num;
 
-        grafica[num].transform.SetParent(canvas.transform);
+        grafica[num].transform.SetParent(parent.transform);
 
         grafica[num].GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
 
@@ -818,7 +955,12 @@ void aggiorna_menu()
 
         grafica[num].GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
 
-        grafica_testo[num] = GameObject.Find("Canvas/grafica_text" + num + "/Text");
+
+
+
+        grafica_testo[num] = GameObject.Find(path+"/grafica_text" + num + "/Text");
+
+
 
         grafica_testo[num].GetComponent<TextMeshProUGUI>().text = "" + txt;
 
@@ -856,6 +998,12 @@ void aggiorna_menu()
         if (num == 4)
         {
             pagina = 1;
+        }
+
+
+        if (num == 100)
+        {
+            crea_popup(1);
         }
 
 
