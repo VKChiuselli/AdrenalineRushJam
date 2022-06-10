@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using UnityEngine.EventSystems;
 
-public class menu : MonoBehaviour {
+public class menu : MonoBehaviour, IPointerDownHandler {
 
 
     float xm, ym, xm_old, ym_old;
@@ -110,10 +111,15 @@ public class menu : MonoBehaviour {
     }
 
 
-     
+    public virtual void OnPointerDown(PointerEventData eventData) {
+        Debug.Log("entro");
+        canvas_popup.SetActive(false);
+        attivo_popUP = 0;
+    }
 
 
-void aggiorna_menu()
+
+    void aggiorna_menu()
     {
 
         if (pagina == -1)
@@ -467,9 +473,7 @@ void aggiorna_menu()
             if (grafica[200] != null)  //pannello
             {
 
-                Debug.Log("dsfsdf");
-
-                float dx2 = dy * .8f;
+                float dx2 = dy * .125f;
                 float dy2 = dx2;
                 pos_x = 0;
                 pos_y = 0;
@@ -479,10 +483,10 @@ void aggiorna_menu()
 
             }
 
-            if (grafica[201] != null)  //mmagine
+            if (grafica[201] != null)  //immagine
             {
 
-                float dx2 = dy * .6f;
+                float dx2 = dy * .45f;
                 float dy2 = dx2;
                 pos_x = 0;
                 pos_y = 0;
@@ -494,14 +498,25 @@ void aggiorna_menu()
 
 
 
-            if (pulsante[200] != null)  //settings
+            if (pulsante[200] != null)  //buy
             {
-                float dx2 = dy * .8f ;
-                float dy2 = dy*.125f;
-                pos_x = 0;
-                pos_y = dy * -0.4f;
+                float dx2 = risoluzione_x * 0.333f ;
+                float dy2 = dx2;
+                pos_x = risoluzione_x * 0.5f - dx2 * 0.5f;
+                pos_y = risoluzione_y *-0.5f + dy2;
                 pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+
+            if (pulsante[201] != null)  //exit
+            {
+                float dx2 = risoluzione_x * 0.333f ;
+                float dy2 = dx2;
+                pos_x = risoluzione_x * 0.5f - dx2 * 0.5f;
+                pos_y = risoluzione_y *+0.5f - dy2 * 1.2f;
+                pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             }
 
@@ -856,7 +871,8 @@ void aggiorna_menu()
         crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup,"Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
         crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
 
-        crea_button_text(200, "SHOP", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
+        crea_button_text(200, "BUY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
+        crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
 
 
