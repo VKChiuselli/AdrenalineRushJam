@@ -52,6 +52,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     public float distanza_disolve = -15;
 
     public float energia = 100;
+    public int monete_partita_corrente = 0;
 
     int barriera = 0;
 
@@ -663,7 +664,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
             if (ogg_struttura_dati != null)
             {
                 script_struttura_dati.monete = script_struttura_dati.monete + 1;
-           
+                monete_partita_corrente = monete_partita_corrente + 1;
 
             Debug.Log(" script_struttura_dati.monete " + script_struttura_dati.monete);
             }

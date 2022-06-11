@@ -1166,6 +1166,11 @@ public class menu : MonoBehaviour {
         }
 
 
+        if (num == 200)
+        {
+           acquista_oggetto();
+        }
+
         if (num == 201)
         {
             distruggi_menu_popup();
@@ -1173,7 +1178,10 @@ public class menu : MonoBehaviour {
 
     }
 
-
+    private void acquista_oggetto() {
+        //TODO da creare, prende in ingresso il costo (int), valuta (enum/string/int)
+        Debug.Log("Oggetto acquistato");
+    }
 
     void pressione_input_text(int num, InputField tog) {
 
