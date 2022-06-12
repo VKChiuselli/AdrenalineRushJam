@@ -51,7 +51,7 @@ public class menu : MonoBehaviour {
     GameObject[] pulsante_field_testo = new GameObject[num_ogg];
     GameObject[] pulsante_field_testo2 = new GameObject[num_ogg];
 
-    
+
 
 
     struttura_dati script_struttura_dati;
@@ -77,8 +77,7 @@ public class menu : MonoBehaviour {
         GameObject ogg_struttura_dati = GameObject.Find("base_struttura");
 
 
-        if (ogg_struttura_dati != null)
-        {
+        if (ogg_struttura_dati != null) {
             script_struttura_dati = ogg_struttura_dati.GetComponent<struttura_dati>();
 
             Debug.Log("" + script_struttura_dati.caratteristiche_forza);
@@ -88,7 +87,7 @@ public class menu : MonoBehaviour {
         controllo_risoluzione();
 
         crea_menu();
-        
+
     }
 
     void Update() {
@@ -107,109 +106,93 @@ public class menu : MonoBehaviour {
 
             distruggi_menu_popup();
 
-           
+
         }
 
 #endif
 
     }
 
-    void aggiorna_menu()
-    {
+    void aggiorna_menu() {
 
-        if (pagina == -1)
-        {
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
+        if (pagina == -1) {
+            if (Input.GetKey(KeyCode.UpArrow)) {
                 scroll_verticale_sx = scroll_verticale_sx - risoluzione_y * .025f;
             }
 
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
+            if (Input.GetKey(KeyCode.DownArrow)) {
                 scroll_verticale_sx = scroll_verticale_sx + risoluzione_y * .025f;
             }
         }
 
-        if (pagina == 1)
-        {
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
+        if (pagina == 1) {
+            if (Input.GetKey(KeyCode.UpArrow)) {
                 scroll_verticale_dx = scroll_verticale_dx - risoluzione_y * .025f;
             }
 
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
+            if (Input.GetKey(KeyCode.DownArrow)) {
                 scroll_verticale_dx = scroll_verticale_dx + risoluzione_y * .025f;
             }
         }
 
 
 
-        if (scroll_verticale_sx < 0)
-        {
+        if (scroll_verticale_sx < 0) {
             scroll_verticale_sx = 0;
         }
 
         float limite_sy = -limite_verticale_sx - risoluzione_y * .15f;
 
-        if (scroll_verticale_sx> limite_sy)
-        {
+        if (scroll_verticale_sx > limite_sy) {
             scroll_verticale_sx = limite_sy;
         }
 
 
-        if (scroll_verticale_dx < 0)
-        {
+        if (scroll_verticale_dx < 0) {
             scroll_verticale_dx = 0;
         }
 
         float limite_dy = -limite_verticale_dx - risoluzione_y * .15f;
 
-        if (scroll_verticale_dx > limite_dy)
-        {
+        if (scroll_verticale_dx > limite_dy) {
             scroll_verticale_dx = limite_dy;
         }
 
 
 
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
+        if (Input.GetKeyUp(KeyCode.LeftArrow)) {
             pagina = pagina - 1;
         }
 
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
+        if (Input.GetKeyUp(KeyCode.RightArrow)) {
             pagina = pagina + 1;
         }
 
-        if (pagina < -1)
-        {
+        if (pagina < -1) {
             pagina = -1;
         }
-        if (pagina > 1)
-        {
+        if (pagina > 1) {
             pagina = 1;
         }
 
 
-        scroll_x = Mathf.MoveTowards(scroll_x, pagina, Time.deltaTime*5);
+        scroll_x = Mathf.MoveTowards(scroll_x, pagina, Time.deltaTime * 5);
 
 
         aggiorna_menu_sfondo();
         aggiorna_menu_fix();
 
         aggiorna_menu_centrale();
-       
+
         aggiorna_menu_sinistra();
         aggiorna_menu_destra();
     }
 
-    private void aggiorna_menu_sfondo()
-    {
+    private void aggiorna_menu_sfondo() {
         float dy = risoluzione_y * .125f;
         float dx = risoluzione_x * .7f;
 
-        float pos_x=0;
+        float pos_x = 0;
         float pos_y = 0;
 
         font_size = (int)(risoluzione_x / 25);
@@ -217,18 +200,17 @@ public class menu : MonoBehaviour {
         spostamento_x = -scroll_x * risoluzione_x;
 
 
-        for (int n = 0; n <= 2; n++)
-        {
+        for (int n = 0; n <= 2; n++) {
 
             if (grafica[n] != null)  //frame top
             {
                 float dx2 = risoluzione_x;
                 float dy2 = risoluzione_y;
-                pos_x = -risoluzione_x+risoluzione_x*n;
+                pos_x = -risoluzione_x + risoluzione_x * n;
                 pos_y = risoluzione_y * 0.5f - dy2 * 0.5f;
 
                 grafica[n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-                grafica[n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+ spostamento_x, pos_y);
+                grafica[n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
 
 
             }
@@ -240,8 +222,7 @@ public class menu : MonoBehaviour {
 
     }
 
-    private void aggiorna_menu_sinistra()
-    {
+    private void aggiorna_menu_sinistra() {
 
         float dy = risoluzione_y * .125f;
         float dx = risoluzione_x * .7f;
@@ -250,15 +231,14 @@ public class menu : MonoBehaviour {
         float pos_y = risoluzione_y * .3f;
 
 
-        if (pulsante[10] != null)
-        { //shop
+        if (pulsante[10] != null) { //shop
             float dx2 = risoluzione_x * .333f;
             float dy2 = dx2 * (55f / 145f);
             pos_x = -risoluzione_x;
             pos_y = risoluzione_y * -0.15f;
 
             pulsante[10].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            pulsante[10].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y+scroll_verticale_sx);
+            pulsante[10].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_sx);
 
             pulsante_testo[10].GetComponent<TextMeshProUGUI>().fontSize = font_size;
 
@@ -267,36 +247,33 @@ public class menu : MonoBehaviour {
         int aumento_pos_x = -1;
         int aumento_pos_y = 0;
 
-        for (int n = 0; n < 9; n++)
-        {
+        for (int n = 0; n < 9; n++) {
 
             float dx2 = risoluzione_x * .4f;
-            float dy2 = dx2 ;
+            float dy2 = dx2;
 
             aumento_pos_x = aumento_pos_x + 1;
 
 
-            if (aumento_pos_x > 1)
-            {
+            if (aumento_pos_x > 1) {
                 aumento_pos_x = 0;
                 aumento_pos_y = aumento_pos_y + 1;
             }
 
-            pos_x = -risoluzione_x-risoluzione_x*.25f+aumento_pos_x*risoluzione_x*.5f;
-
-            
+            pos_x = -risoluzione_x - risoluzione_x * .25f + aumento_pos_x * risoluzione_x * .5f;
 
 
-            pos_y = risoluzione_y * .2f- aumento_pos_y*dy2*1.25f;
 
-            if (pulsante[100 + n] != null)
-            {
+
+            pos_y = risoluzione_y * .2f - aumento_pos_y * dy2 * 1.25f;
+
+            if (pulsante[100 + n] != null) {
 
                 pulsante[100 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-                pulsante[100 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y+scroll_verticale_sx);
+                pulsante[100 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_sx);
 
 
-                limite_verticale_sx = pos_y  - dy2*.55f;
+                limite_verticale_sx = pos_y - dy2 * .55f;
             }
 
 
@@ -324,12 +301,12 @@ public class menu : MonoBehaviour {
         if (pulsante[20] != null) { //shop
             float dx2 = risoluzione_x * .333f;
             float dy2 = dx2 * (55f / 145f);
-            pos_x =   risoluzione_x;
+            pos_x = risoluzione_x;
             pos_y = risoluzione_y * 0.25f;
-           
+
             pulsante[20].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
-            pulsante[20].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+spostamento_x, pos_y + scroll_verticale_dx);
-            
+            pulsante[20].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
+
             pulsante_testo[20].GetComponent<TextMeshProUGUI>().fontSize = font_size;
 
         }
@@ -339,12 +316,12 @@ public class menu : MonoBehaviour {
 
             float dx2 = dy * .8f;
             float dy2 = dx2 * (76f / 72f);
-            pos_x =  risoluzione_x;
-            pos_y = risoluzione_y * 0.05f ;
-            
+            pos_x = risoluzione_x;
+            pos_y = risoluzione_y * 0.05f;
+
             pulsante[21].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            pulsante[21].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+spostamento_x, pos_y + scroll_verticale_dx);
-          
+            pulsante[21].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
+
         }
 
 
@@ -352,8 +329,7 @@ public class menu : MonoBehaviour {
         int aumento_pos_x = -1;
         int aumento_pos_y = 0;
 
-        for (int n = 0; n < 9; n++)
-        {
+        for (int n = 0; n < 9; n++) {
 
             float dx2 = risoluzione_x * .4f;
             float dy2 = dx2;
@@ -361,8 +337,7 @@ public class menu : MonoBehaviour {
             aumento_pos_x = aumento_pos_x + 1;
 
 
-            if (aumento_pos_x > 1)
-            {
+            if (aumento_pos_x > 1) {
                 aumento_pos_x = 0;
                 aumento_pos_y = aumento_pos_y + 1;
             }
@@ -374,8 +349,7 @@ public class menu : MonoBehaviour {
 
             pos_y = risoluzione_y * -.2f - aumento_pos_y * dy2 * 1.25f;
 
-            if (pulsante[150 + n] != null)
-            {
+            if (pulsante[150 + n] != null) {
 
                 pulsante[150 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 pulsante[150 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
@@ -435,12 +409,11 @@ public class menu : MonoBehaviour {
 
 
 
-    void aggiorna_menu_popup()
-    {
+    void aggiorna_menu_popup() {
 
 
-        float dy = risoluzione_y ;
-        float dx = risoluzione_x ;
+        float dy = risoluzione_y;
+        float dx = risoluzione_x;
 
         float pos_x = 0;
         float pos_y = 0;
@@ -448,15 +421,12 @@ public class menu : MonoBehaviour {
         float dime_panel_x = 0;
         float dime_panel_y = 0;
 
-        for (int n = 0; n <= 10; n++)
-        {
-            if (grafica[200+n] != null)  
-            {
-                grafica[200+n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
+        for (int n = 0; n <= 10; n++) {
+            if (grafica[200 + n] != null) {
+                grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
 
-            if (pulsante[200 + n] != null)
-            {
+            if (pulsante[200 + n] != null) {
                 pulsante[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
         }
@@ -464,13 +434,12 @@ public class menu : MonoBehaviour {
 
 
 
-        if (attivo_popup == 1)
-        {
+        if (attivo_popup == 1) {
             if (grafica[200] != null)  //pannello
             {
 
                 float dx2 = dx * .8f;
-                float dy2 = dy*.8f;
+                float dy2 = dy * .8f;
 
                 dime_panel_x = dx2;
                 dime_panel_y = dy2;
@@ -500,10 +469,10 @@ public class menu : MonoBehaviour {
 
             if (pulsante[200] != null)  //buy
             {
-                float dx2 = risoluzione_x * 0.333f ;
+                float dx2 = risoluzione_x * 0.333f;
                 float dy2 = risoluzione_y * 0.1f;
                 pos_x = 0;
-                pos_y = risoluzione_y *-0.5f + dy2;
+                pos_y = risoluzione_y * -0.5f + dy2;
                 pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
@@ -511,10 +480,10 @@ public class menu : MonoBehaviour {
 
             if (pulsante[201] != null)  //exit
             {
-                float dx2 = risoluzione_x * 0.12f ;
+                float dx2 = risoluzione_x * 0.12f;
                 float dy2 = dx2;
-                pos_x = dime_panel_x*.5f;
-                pos_y = dime_panel_y*.5f;
+                pos_x = dime_panel_x * .5f;
+                pos_y = dime_panel_y * .5f;
 
 
                 pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -526,13 +495,12 @@ public class menu : MonoBehaviour {
             uscita_popup(dime_panel_x, dime_panel_y);
 
         } //popup shop
-        else  if (attivo_popup == 2)
-        {
+        else if (attivo_popup == 2) {
             if (grafica[200] != null)  //pannello
             {
 
                 float dx2 = dx * .8f;
-                float dy2 = dy*.8f;
+                float dy2 = dy * .8f;
 
                 dime_panel_x = dx2;
                 dime_panel_y = dy2;
@@ -566,7 +534,7 @@ public class menu : MonoBehaviour {
             if (grafica[202] != null)  //immagine oggetto
             {
 
-                float dx2 = dy * .45f/2;
+                float dx2 = dy * .45f / 2;
                 float dy2 = dx2;
                 pos_x = 0;
                 pos_y = 0;
@@ -589,13 +557,13 @@ public class menu : MonoBehaviour {
                 grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "Costo Oggetto";
 
             }
-            
+
             if (grafica[204] != null)  //immagine valuta
 {
-                float dx2 = dy * .8f * .125f/2;
+                float dx2 = dy * .8f * .125f / 2;
                 float dy2 = dx2 * (76f / 72f);
                 pos_x = 0;
-                pos_y = risoluzione_y * -0.5f + dy2*6f;
+                pos_y = risoluzione_y * -0.5f + dy2 * 6f;
 
                 grafica[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -606,10 +574,10 @@ public class menu : MonoBehaviour {
 
             if (pulsante[200] != null)  //buy tasto
             {
-                float dx2 = risoluzione_x * 0.333f ;
+                float dx2 = risoluzione_x * 0.333f;
                 float dy2 = risoluzione_y * 0.1f;
                 pos_x = 0;
-                pos_y = risoluzione_y *-0.5f + dy2;
+                pos_y = risoluzione_y * -0.5f + dy2;
                 pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[200].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -617,10 +585,10 @@ public class menu : MonoBehaviour {
 
             if (pulsante[201] != null)  //exit tasto
             {
-                float dx2 = risoluzione_x * 0.12f ;
+                float dx2 = risoluzione_x * 0.12f;
                 float dy2 = dx2;
-                pos_x = dime_panel_x*.5f;
-                pos_y = dime_panel_y*.5f;
+                pos_x = dime_panel_x * .5f;
+                pos_y = dime_panel_y * .5f;
 
 
                 pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -632,13 +600,13 @@ public class menu : MonoBehaviour {
             uscita_popup(dime_panel_x, dime_panel_y);
 
         } //popup upgrade
-        else  if (attivo_popup == 3)//popup opzioni
-        {
+        else if (attivo_popup == 3)//popup opzioni
+       {
             if (grafica[200] != null)  //pannello opzioni
             {
 
                 float dx2 = dx * .8f;
-                float dy2 = dy*.8f;
+                float dy2 = dy * .8f;
 
                 dime_panel_x = dx2;
                 dime_panel_y = dy2;
@@ -653,27 +621,26 @@ public class menu : MonoBehaviour {
 
             if (grafica[201] != null)  //txt musica
 {
-
                 float dx2 = dy * .8f;
                 float dy2 = dx2 * (76f / 72f);
-                pos_x = risoluzione_x * 0.5f - dx2;
+                pos_x = dx2 * -0.5f + dy2 * 0.333f;
                 pos_y = risoluzione_y * 0.5f - dy2 * .25f;
 
                 grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "Titolo oggetto prova";
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "Musica";
 
 
             }
 
             if (pulsante[200] != null)  //musica tasto
             {
-                float dx2 = risoluzione_x * 0.333f;
-                float dy2 = risoluzione_y * 0.1f;
-                pos_x = 0;
-                pos_y = risoluzione_y * -0.5f + dy2;
+                float dx2 = risoluzione_x * 0.333f/2;
+                float dy2 = risoluzione_y * 0.1f/2;
+                pos_x = dy * .8f * -0.5f + dy * .8f * (76f / 72f) * 0.333f;
+                pos_y = dy2 * 0.5f + dx * 0.8f  / 2;
                 pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[200].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -684,24 +651,24 @@ public class menu : MonoBehaviour {
 
                 float dx2 = dy * .8f;
                 float dy2 = dx2 * (76f / 72f);
-                pos_x = 0;
+                pos_x = dx2 * 0.5f - dy2 * 0.333f;
                 pos_y = risoluzione_y * 0.5f - dy2 * .25f;
 
                 grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 grafica_testo[202].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = "Titolo oggetto prova";
+                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = "SFX";
 
 
             }
 
             if (pulsante[201] != null)  //tasto sfx
             {
-                float dx2 = risoluzione_x * 0.333f;
-                float dy2 = risoluzione_y * 0.1f;
-                pos_x = 0;
-                pos_y = risoluzione_y * -0.5f + dy2;
+                float dx2 = risoluzione_x * 0.333f/2;
+                float dy2 = risoluzione_y * 0.1f/2;
+                pos_x = dy * .8f * +0.5f - dy * .8f * (76f / 72f) * 0.333f;
+                pos_y = dy2 * 0.5f + dx * 0.8f / 2;
                 pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[201].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -714,7 +681,7 @@ public class menu : MonoBehaviour {
                 float dx2 = dy * .8f;
                 float dy2 = dx2 * (76f / 72f);
                 pos_x = 0;
-                pos_y = risoluzione_y * 0.5f - dy2 * .25f;
+                pos_y = risoluzione_y * 0.5f - dy2 * 0.40f;
 
                 grafica[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -730,7 +697,7 @@ public class menu : MonoBehaviour {
                 float dx2 = risoluzione_x * 0.333f;
                 float dy2 = risoluzione_y * 0.1f;
                 pos_x = 0;
-                pos_y = risoluzione_y * -0.5f + dy2;
+                pos_y = risoluzione_y * 0.5f - dy * .8f * (76f / 72f) * 0.50f;
                 pulsante[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[202].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -739,10 +706,11 @@ public class menu : MonoBehaviour {
             if (grafica[204] != null)  //txt credits
 {
 
+
                 float dx2 = dy * .8f;
                 float dy2 = dx2 * (76f / 72f);
                 pos_x = 0;
-                pos_y = risoluzione_y * 0.5f - dy2 * .25f;
+                pos_y = risoluzione_y * -0.5f + dy2 * 0.40f;
 
                 grafica[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -758,7 +726,7 @@ public class menu : MonoBehaviour {
                 float dx2 = risoluzione_x * 0.333f;
                 float dy2 = risoluzione_y * 0.1f;
                 pos_x = 0;
-                pos_y = risoluzione_y * -0.5f + dy2;
+                pos_y = risoluzione_y * -0.5f + dx2 * 1.5f;
                 pulsante[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[203].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -766,10 +734,10 @@ public class menu : MonoBehaviour {
 
             if (pulsante[204] != null)  //exit tasto
             {
-                float dx2 = risoluzione_x * 0.12f ;
+                float dx2 = risoluzione_x * 0.12f;
                 float dy2 = dx2;
-                pos_x = dime_panel_x*.5f;
-                pos_y = dime_panel_y*.5f;
+                pos_x = dime_panel_x * .5f;
+                pos_y = dime_panel_y * .5f;
 
 
                 pulsante[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -785,26 +753,22 @@ public class menu : MonoBehaviour {
 
     }
 
-   float resetTimerPopup=0;
+    float resetTimerPopup = 0;
 
-    void uscita_popup(float dime_panel_x,float dime_panel_y)
-    {
+    void uscita_popup(float dime_panel_x, float dime_panel_y) {
         resetTimerPopup += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && resetTimerPopup>0.5f)
-        {
+        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f) {
             resetTimerPopup = 0;
-            float dx=(risoluzione_x-dime_panel_x)*.5f;
+            float dx = (risoluzione_x - dime_panel_x) * .5f;
             float dy = (risoluzione_y - dime_panel_y) * .5f;
 
 
-            if (xm<dx || xm > risoluzione_x - dx)
-            {
+            if (xm < dx || xm > risoluzione_x - dx) {
                 distruggi_menu_popup();
             }
 
 
-            if (ym < dy || ym > risoluzione_y - dy)
-            {
+            if (ym < dy || ym > risoluzione_y - dy) {
                 distruggi_menu_popup();
             }
 
@@ -815,8 +779,7 @@ public class menu : MonoBehaviour {
 
 
 
-    void aggiorna_menu_fix()
-    {
+    void aggiorna_menu_fix() {
 
 
         float dy = risoluzione_y * .125f;
@@ -827,25 +790,25 @@ public class menu : MonoBehaviour {
 
         if (grafica[3] != null) // banda bot
         {
-            float dx2 = risoluzione_x ;
+            float dx2 = risoluzione_x;
             float dy2 = dy;
             pos_x = 0;
             pos_y = risoluzione_y * -0.5f + dy2 * 0.5f;
             grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            
+
         }
         if (grafica[4] != null) // banda top
         {
-            float dx2 = risoluzione_x ;
+            float dx2 = risoluzione_x;
             float dy2 = dy;
             pos_x = 0;
             pos_y = risoluzione_y * 0.5f - dy2 * 0.5f;
             grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            
+
         }
 
 
@@ -855,8 +818,8 @@ public class menu : MonoBehaviour {
             float dy2 = dx2 * (55f / 145f);
             pos_x = risoluzione_x * 0.5f - dx2 * 0.5f;
             pos_y = risoluzione_y * -0.5f + dy2 * 0.5f;
-            pulsante[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*.97f, dy2);
-            pulsante[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x , pos_y);
+            pulsante[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            pulsante[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
 
 
             pulsante_testo[2].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -868,7 +831,7 @@ public class menu : MonoBehaviour {
             pos_x = 0;
             pos_y = risoluzione_y * -0.5f + dy2 * 0.5f;
             pulsante[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-            pulsante[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x , pos_y);
+            pulsante[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
 
             pulsante_testo[3].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -880,27 +843,23 @@ public class menu : MonoBehaviour {
             pos_x = risoluzione_x * 0.5f - dx2 * 0.5f;
             pos_y = risoluzione_y * -0.5f + dy2 * 0.5f;
             pulsante[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-            pulsante[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x , pos_y);
+            pulsante[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             pulsante_testo[4].GetComponent<TextMeshProUGUI>().fontSize = font_size;
         }
 
-        for (int n = 0; n <= 2; n++)
-        {
-            pulsante[n+2].GetComponent<Image>().color = new Color(1,1,1,1);
+        for (int n = 0; n <= 2; n++) {
+            pulsante[n + 2].GetComponent<Image>().color = new Color(1, 1, 1, 1);
 
-            if (pagina == -1)
-            {
+            if (pagina == -1) {
                 pulsante[2].GetComponent<Image>().color = newColor;
             }
 
-            if (pagina == 0)
-            {
+            if (pagina == 0) {
                 pulsante[3].GetComponent<Image>().color = newColor;
             }
 
-            if (pagina == 1)
-            {
+            if (pagina == 1) {
                 pulsante[4].GetComponent<Image>().color = newColor;
             }
 
@@ -920,10 +879,10 @@ public class menu : MonoBehaviour {
         if (grafica[11] != null)  //coin
   {
 
-            float dx2 = dy * .8f/2;
+            float dx2 = dy * .8f / 2;
             float dy2 = dx2 * (76f / 72f);
             pos_x = risoluzione_x * .5f - dx2 * 2;
-            pos_y = risoluzione_y * 0.45f ;
+            pos_y = risoluzione_y * 0.45f;
 
             grafica[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
             grafica[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -949,8 +908,8 @@ public class menu : MonoBehaviour {
         if (grafica[13] != null)  //gem
       {
 
-            float dx2 = dy * .8f/2 ;
-            float dy2 = dx2 * (84f / 70f) ;
+            float dx2 = dy * .8f / 2;
+            float dy2 = dx2 * (84f / 70f);
             pos_x = 0;
             pos_y = risoluzione_y * 0.45f;
 
@@ -988,13 +947,13 @@ public class menu : MonoBehaviour {
         float pos_x = 0;
         float pos_y = risoluzione_y * .3f;
 
-       
+
 
         if (pulsante[0] != null) { //play
             pos_y = risoluzione_y * -.2f;
 
             pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
-            pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+spostamento_x, pos_y);
+            pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
 
             pulsante_testo[0].GetComponent<TextMeshProUGUI>().fontSize = font_size;
 
@@ -1014,10 +973,8 @@ public class menu : MonoBehaviour {
 
         }
 
-        for (int n = 0; n < 200; n++)
-        {
-            if (grafica[n] != null)
-            {
+        for (int n = 0; n < 200; n++) {
+            if (grafica[n] != null) {
                 DestroyImmediate(grafica[n]);
             }
 
@@ -1027,24 +984,19 @@ public class menu : MonoBehaviour {
     }
 
 
-    void distruggi_menu_popup()
-    {
+    void distruggi_menu_popup() {
 
         canvas_popup.SetActive(false);
 
-        for (int n = 200; n < pulsante.Length; n++)
-        {
-            if (pulsante[n] != null)
-            {
+        for (int n = 200; n < pulsante.Length; n++) {
+            if (pulsante[n] != null) {
                 DestroyImmediate(pulsante[n]);
             }
 
         }
 
-        for (int n = 200; n < grafica.Length; n++)
-        {
-            if (grafica[n] != null)
-            {
+        for (int n = 200; n < grafica.Length; n++) {
+            if (grafica[n] != null) {
                 DestroyImmediate(grafica[n]);
             }
 
@@ -1064,12 +1016,12 @@ public class menu : MonoBehaviour {
 
         // sfondi
 
-        crea_grafica_text(0, new Color(1, 1, 1, 1), "",canvas,"Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(0, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
         crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
         crea_grafica_text(2, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
 
 
-       
+
 
 
         // pagina sinistra
@@ -1114,7 +1066,7 @@ public class menu : MonoBehaviour {
         crea_grafica_text(4, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
 
 
-       
+
         crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
         crea_grafica_text(12, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
         crea_button_text(1, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
@@ -1131,33 +1083,31 @@ public class menu : MonoBehaviour {
 
     }
 
-    void crea_popup(int num=1)
-    {
+    void crea_popup(int num = 1) {
 
-        attivo_popup = num ;
+        attivo_popup = num;
 
         distruggi_menu_popup();
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup,"Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello shop
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello shop
         crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_carta_1");  //testo/titolo oggetto shop
 
         crea_button_text(200, "BUY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
-         
-    }
-    
-    void crea_popup_upgrade(int num=2)
-    {
 
-        attivo_popup = num ;
+    }
+
+    void crea_popup_upgrade(int num = 2) {
+
+        attivo_popup = num;
 
         distruggi_menu_popup();
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup,"Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello upgrade
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello upgrade
         crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
         crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_carta_1"); //immagine upgrade
         crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/prezzo oggetto upgrade
@@ -1166,34 +1116,33 @@ public class menu : MonoBehaviour {
         crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
 
-    }  
-    void crea_popup_opzioni(int num=3)
-    {
+    }
+    void crea_popup_opzioni(int num = 3) {
 
-        attivo_popup = num ;
+        attivo_popup = num;
 
         distruggi_menu_popup();
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup,"Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello OPZIONI
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello OPZIONI
         crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo musica
         crea_button_text(200, "ON", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto MUSICA
         crea_grafica_text(202, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo sfx
         crea_button_text(201, "ON", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto SFX
-        
+
         crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo facebook
         crea_button_text(202, "Facebook Login", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto facebook
 
-        
+
         crea_grafica_text(204, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo credits
         crea_button_text(203, "Credits", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto credits
 
         crea_button_text(204, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
 
     }
-     
-    void crea_button_text(int num, string txt, Color colore_testo,GameObject parent, string path="Canvas", string path_sprite = "") {
+
+    void crea_button_text(int num, string txt, Color colore_testo, GameObject parent, string path = "Canvas", string path_sprite = "") {
 
         pulsante[num] = Instantiate(Resources.Load("UI/Button_text", typeof(GameObject))) as GameObject;
 
@@ -1216,7 +1165,7 @@ public class menu : MonoBehaviour {
         pulsante[num].GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
 
 
-        pulsante_testo[num] = GameObject.Find(path+"/pulsante_text" + num + "/Text_TMP");
+        pulsante_testo[num] = GameObject.Find(path + "/pulsante_text" + num + "/Text_TMP");
 
         pulsante_testo[num].GetComponent<TextMeshProUGUI>().text = "" + txt;
 
@@ -1227,7 +1176,7 @@ public class menu : MonoBehaviour {
 
     }
 
-      
+
 
     void crea_button_input_text(int num, string str = "") {
 
@@ -1261,7 +1210,7 @@ public class menu : MonoBehaviour {
 
 
 
-    void crea_grafica_text(int num,Color colore, string txt, GameObject parent, string path="Canvas", string path_sprite = "") {
+    void crea_grafica_text(int num, Color colore, string txt, GameObject parent, string path = "Canvas", string path_sprite = "") {
 
         //    Debug.Log("entratooo");
 
@@ -1286,13 +1235,13 @@ public class menu : MonoBehaviour {
 
 
 
-        grafica_testo[num] = GameObject.Find(path+"/grafica_text" + num + "/Text");
+        grafica_testo[num] = GameObject.Find(path + "/grafica_text" + num + "/Text");
 
 
 
         grafica_testo[num].GetComponent<TextMeshProUGUI>().text = "" + txt;
 
-        grafica_testo[num].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x/20);
+        grafica_testo[num].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
 
 
     }
@@ -1302,7 +1251,7 @@ public class menu : MonoBehaviour {
 
 #if UNITY_EDITOR
 
-        Debug.Log("pulsante "+num );
+        Debug.Log("pulsante " + num);
 
 #endif
 
@@ -1313,50 +1262,41 @@ public class menu : MonoBehaviour {
         }
 
 
-        if (num == 1)
-        {
+        if (num == 1) {
             crea_popup_opzioni(3);
         }
 
-        if (num == 20)
-        {
+        if (num == 20) {
             crea_popup_opzioni(3);
         }
 
-        if (num == 2)
-        {
+        if (num == 2) {
             pagina = -1;
         }
 
-        if (num == 3)
-        {
+        if (num == 3) {
             pagina = 0;
         }
 
-        if (num == 4)
-        {
+        if (num == 4) {
             pagina = 1;
         }
 
 
-        if (num == 100)
-        {
+        if (num == 100) {
             crea_popup(1);
         }
 
-        if (num == 150)
-        {
+        if (num == 150) {
             crea_popup_upgrade(2);
         }
 
 
-        if (num == 200)
-        {
-           acquista_oggetto();
+        if (num == 200) {
+            acquista_oggetto();
         }
 
-        if (num == 201)
-        {
+        if (num == 201) {
             distruggi_menu_popup();
         }
 
@@ -1374,13 +1314,9 @@ public class menu : MonoBehaviour {
 
             Debug.Log("pressione!" + tog.text + "!!");
 
-
-
         }
 
 
     }
-
-
 
 }
