@@ -48,11 +48,14 @@ public class gioco_ruota_cilindro : MonoBehaviour
     public GameObject boss_mesh;
     public GameObject boss_mesh_sparo;
 
+    public float spostamento_boss_rotazione = .01f;
+
 
     public float jump = 15;
     public float distanza_disolve = -15;
 
     public float energia = 100;
+    public int monete_partita_corrente = 0;
 
     int barriera = 0;
 
@@ -373,7 +376,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
             }
 
 
-            boss_rad = boss_rad + rotazione_cilindro * .01f;
+            boss_rad = boss_rad + rotazione_cilindro * spostamento_boss_rotazione;
 
 
             for (int n = 0; n < 5; n++)
@@ -382,7 +385,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
                 if (sparo_boss[n] != null)
                 {
 
-                    sparo_boss_rad[n]= sparo_boss_rad[n] + rotazione_cilindro * .01f;
+                    sparo_boss_rad[n]= sparo_boss_rad[n] + rotazione_cilindro * spostamento_boss_rotazione;
 
                 }
 
@@ -712,6 +715,89 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     }
 
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+          Debug.Log(""+other.name);
+
+
+
+        if (other.name.IndexOf ("moneta")>-1)
+        {
+            if (ogg_struttura_dati != null)
+            {
+                script_struttura_dati.monete = script_struttura_dati.monete + 1;
+                monete_partita_corrente = monete_partita_corrente + 1;
+
+            Debug.Log(" script_struttura_dati.monete " + script_struttura_dati.monete);
+            }
+
+
+            Destroy(other.gameObject);
+        }
+
+        if (other.name.IndexOf("gemma") > -1)
+        {
+            Destroy(other.gameObject);
+
+        }
+
+
+        if (other.name.IndexOf("Cube")>-1)
+        {
+
+            blocco_velocita = 0;
+
+        }
+
+        if (other.name.IndexOf("blocco") > -1)
+        {
+
+            blocco_velocita = 0;
+
+        }
+
+
+        if (other.name.IndexOf("bonus_0") > -1)
+        {
+
+            Debug.Log("entra speed ");
+
+            velocita_bonus = velocita_bonus_base;
+
+        }
+
+        if (other.name.IndexOf("malus_") > -1)
+        {
+
+            string nome = other.name;
+
+            nome = nome.Replace("malus_","");
+
+            int numero_malus_inversion = int.Parse(nome);
+
+
+          //  Debug.Log("entra "+ numero_malus_inversion);
+
+            if (c_save.crea_malus[numero_malus_inversion].tipo == 0)
+            {
+
+                if (c_save.crea_malus[numero_malus_inversion].inversion_controller == 0)
+                {
+                    c_save.crea_malus[numero_malus_inversion].inversion_controller = 1;
+                    inversione_controllo = 1 - inversione_controllo;
+
+                }
+
+            }
+
+        }
+
+
+
+
+    }
 
 
 
