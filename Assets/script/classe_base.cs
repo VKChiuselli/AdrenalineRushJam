@@ -115,16 +115,31 @@ public class moneta
 }
 
 [Serializable]
-public class upgrade
+public class carte_shop
 {
     string path_sprite;
     string titolo;
     string descrizione;
 
-    string costo_monete;
+    string costo;
 
     public int effetto;
 
-   
+}
+
+
+[Serializable]
+public class carte_upgrade
+{
+    string path_sprite;
+    string titolo;
+    string descrizione;
+
+    int costo_monete;
+
+    public int effetto;
+
+    public int livello;
+    public int tipologia;
 
 }
