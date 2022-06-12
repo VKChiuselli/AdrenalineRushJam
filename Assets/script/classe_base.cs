@@ -11,7 +11,8 @@ public class cilindro
 {
 
     public float raggio=20;
-
+    public float spostamento_z = 1;
+    public float spostamento_z2 = .75f;
 }
 
 
@@ -28,6 +29,9 @@ public class blocco
     public string struttura_procedurale;
     public string struttura_procedurale_dz;
 
+    public Vector3 punto_impatto;
+
+    public float forza_impatto;
 
     public int tipo;
 

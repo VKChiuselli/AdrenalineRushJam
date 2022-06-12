@@ -34,6 +34,9 @@ public class crea_livello : MonoBehaviour
     public float percentuale_monete= 60;
     public float percentuale_altri_blocchi = 79;
 
+    public float spostamento_z = 1;
+    public float spostamento_z2 = .75f;
+
 
     float[] touch_x = new float[15];
     float[] touch_y = new float[15];
@@ -814,7 +817,7 @@ public class crea_livello : MonoBehaviour
 
                 float altezza = 0;
 
-                altezza = k*.5f + .5f;
+                altezza = k*.25f + .75f;
 
                 if (k == 0)
                 {
@@ -1009,7 +1012,7 @@ public class crea_livello : MonoBehaviour
 
                         c_save.crea_gemma[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/gemma_0", typeof(GameObject))) as GameObject;
 
-                        rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
+                  //      rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
                         c_save.crea_gemma[num].altezza = c_save.crea_cilindro[0].raggio;
 
@@ -1056,7 +1059,7 @@ public class crea_livello : MonoBehaviour
 
                         c_save.crea_moneta[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/moneta_0", typeof(GameObject))) as GameObject;
 
-                        rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
+                    //    rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
                         c_save.crea_moneta[num].altezza = c_save.crea_cilindro[0].raggio;
 
@@ -1105,7 +1108,7 @@ public class crea_livello : MonoBehaviour
 
                         modifica_base(c_save.crea_malus[num].mesh);
 
-                        rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
+                    //    rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
                         c_save.crea_malus[num].altezza = c_save.crea_cilindro[0].raggio;// Vector3.Distance(m_ray, new Vector3(0, 0, m_ray.z));
 
@@ -1155,7 +1158,7 @@ public class crea_livello : MonoBehaviour
                         modifica_base(c_save.crea_bonus[num].mesh);
 
 
-                        rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
+                     //   rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
                         c_save.crea_bonus[num].altezza = c_save.crea_cilindro[0].raggio;
 
@@ -1298,7 +1301,9 @@ public class crea_livello : MonoBehaviour
         yy = snap_rif[num_dis].transform.position.y;
 
 
-        float rad = Mathf.Atan2(xx, yy);
+        float rad = Mathf.Atan2(xx, yy) + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
+
+
 
         float angolo = rad * Mathf.Rad2Deg;
 
@@ -2142,42 +2147,42 @@ public class crea_livello : MonoBehaviour
 
                 if (mesh_v_dz[n] > 0)
                 {
-                    dz = new Vector3(0,0, mesh_v_dz[n]);
+                    dz = new Vector3(0,0, mesh_v_dz[n])* spostamento_z;
 
                 }
 
+                Vector3 dz2 = dz * spostamento_z2;
+
+                vertices[nv+0] =snap_n + dz2;
+                vertices[nv + 1] = snap_up_n + dz2;
+                vertices[nv + 2] = snap_up_n1 + dz2;
+                vertices[nv + 3] = snap_n1 + dz2;
+
+                vertices[nv + 4] = snap_n+dz;
+                vertices[nv + 5] = snap_up_n + dz ;
+                vertices[nv + 6] = snap_up_n1 + dz ;
+                vertices[nv + 7] = snap_n1 + dz ;
+
+                vertices[nv + 8] = snap_n + dz2;
+                vertices[nv + 9] = snap_up_n + dz2;
+                vertices[nv + 10] = snap_up_n+dz;
+                vertices[nv + 11] = snap_n+dz ;
+
+                vertices[nv + 12] = snap_n1 + dz2;
+                vertices[nv + 13] = snap_up_n1 + dz2;
+                vertices[nv + 14] = snap_up_n1 + dz ;
+                vertices[nv + 15] = snap_n1 + dz ;
 
 
-                vertices[nv+0] =snap_n - dz*.5f;
-                vertices[nv + 1] = snap_up_n - dz * .5f;
-                vertices[nv + 2] = snap_up_n1 - dz * .5f;
-                vertices[nv + 3] = snap_n1 - dz * .5f;
+                vertices[nv + 16] = snap_up_n + dz2;
+                vertices[nv + 17] = snap_up_n + dz ;
+                vertices[nv + 18] = snap_up_n1 + dz ;
+                vertices[nv + 19] = snap_up_n1 + dz2;
 
-                vertices[nv + 4] = snap_n+dz * .5f;
-                vertices[nv + 5] = snap_up_n + dz * .5f;
-                vertices[nv + 6] = snap_up_n1 + dz * .5f;
-                vertices[nv + 7] = snap_n1 + dz * .5f;
-
-                vertices[nv + 8] = snap_n - dz * .5f;
-                vertices[nv + 9] = snap_up_n - dz * .5f;
-                vertices[nv + 10] = snap_up_n+dz * .5f;
-                vertices[nv + 11] = snap_n+dz * .5f;
-
-                vertices[nv + 12] = snap_n1 - dz * .5f;
-                vertices[nv + 13] = snap_up_n1 - dz * .5f;
-                vertices[nv + 14] = snap_up_n1 + dz * .5f;
-                vertices[nv + 15] = snap_n1 + dz * .5f;
-
-
-                vertices[nv + 16] = snap_up_n - dz * .5f;
-                vertices[nv + 17] = snap_up_n + dz * .5f;
-                vertices[nv + 18] = snap_up_n1 + dz * .5f;
-                vertices[nv + 19] = snap_up_n1 - dz * .5f;
-
-                vertices[nv +20] = snap_n - dz * .5f;
-                vertices[nv + 21] = snap_n + dz * .5f;
-                vertices[nv + 22] = snap_n1 + dz*.5f;
-                vertices[nv + 23] = snap_n1 - dz * .5f;
+                vertices[nv +20] = snap_n + dz2;
+                vertices[nv + 21] = snap_n + dz;
+                vertices[nv + 22] = snap_n1 + dz;
+                vertices[nv + 23] = snap_n1 + dz2;
 
 
                 for (int k = 0; k < 6; k++)
@@ -2301,9 +2306,10 @@ public class crea_livello : MonoBehaviour
        
 
         c_save.crea_cilindro[0].raggio = raggio;
+        c_save.crea_cilindro[0].spostamento_z = spostamento_z;
+        c_save.crea_cilindro[0].spostamento_z2 = spostamento_z2;
 
-
-            genera_livello(distanza_partenza_blocchi,distanza_blocchi,distanza_random);
+        genera_livello(distanza_partenza_blocchi,distanza_blocchi,distanza_random);
       
 
        
@@ -2322,7 +2328,7 @@ public class crea_livello : MonoBehaviour
         for (int n = 0; n < 30; n++)
         {
 
-            string struttura = struttura_generata(numero_aperture_minimo, numero_aperture_massimo, 1,8,1);
+            string struttura = struttura_generata(numero_aperture_minimo, numero_aperture_massimo, 1,4,1);
 
             c_save.crea_blocco.Add(new blocco());
 
@@ -2422,9 +2428,9 @@ public class crea_livello : MonoBehaviour
                     {
                         if (struc[n] == "0")
                         {
-                            struc[n - 1] = "6";
+                            struc[n - 1] = "8";
                             struc[n] = "9";
-                            struc[n + 1] = "6";
+                            struc[n + 1] = "8";
                         }
 
                     }
@@ -2711,7 +2717,7 @@ public class crea_livello : MonoBehaviour
     void genera_altri_blocchi(int pos, int numero_blocchi,float distanza,float distanza_rnd, float distanza_partenza)
     {
 
-        float molt_rad = Mathf.PI * 2 / numero_blocchi;
+        float molt_rad = Mathf.PI * 2 / (numero_blocchi+1);
 
 
         for (int n = 0; n <= numero_blocchi; n++)
@@ -2719,17 +2725,63 @@ public class crea_livello : MonoBehaviour
             if (UnityEngine.Random.Range(0, 100.0f) < percentuale_altri_blocchi)
             {
 
-                c_save.crea_blocco.Add(new blocco());
+                float rad= molt_rad * n + UnityEngine.Random.Range(-.12f, .12f);
+                float pos_z = distanza_partenza + pos * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd) + distanza * .5f;
 
-                int num = c_save.crea_blocco.Count - 1;
+                float xx = Mathf.Sin(rad) * c_save.crea_cilindro[0].raggio;
+                float yy = Mathf.Cos(rad) * c_save.crea_cilindro[0].raggio;
 
-                c_save.crea_blocco[num].tipo = (int) (UnityEngine.Random.Range(0, 1.49f)+3);
-                c_save.crea_blocco[num].rad = molt_rad * n+ UnityEngine.Random.Range(-.12f, .12f);
+                float zz = pos_z;
 
-                c_save.crea_blocco[num].pos = distanza_partenza+ pos * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd) + distanza * .5f;
-               
-                c_save.crea_blocco[num].struttura_procedurale = "";
-                c_save.crea_blocco[num].struttura_procedurale_dz = "";
+                Vector3 pos0 = new Vector3(xx, yy, zz);
+
+                int ok = 1;
+
+                for (int k = 0; k < c_save.crea_blocco.Count; k++)
+                {
+                    if (c_save.crea_blocco[k].tipo==3 || c_save.crea_blocco[k].tipo == 4)
+                    {
+                        float rad_p = c_save.crea_blocco[k].rad;
+
+
+                        float px = Mathf.Sin(rad_p) * c_save.crea_cilindro[0].raggio;
+                        float py = Mathf.Cos(rad_p) * c_save.crea_cilindro[0].raggio;
+
+                        float pz = c_save.crea_blocco[k].pos;
+
+                        float dis = Vector3.Distance(pos0, new Vector3(px,py,pz));
+
+                        if (dis < 3)
+                        {
+                            ok = 0;
+                            k = 100000;
+
+                            Debug.Log("vicinooo");
+                        }
+
+                    }
+
+                }
+
+
+
+                if (ok == 1)
+                {
+
+                    c_save.crea_blocco.Add(new blocco());
+
+                    int num = c_save.crea_blocco.Count - 1;
+
+                    c_save.crea_blocco[num].tipo = (int)(UnityEngine.Random.Range(0, 1.49f) + 3);
+                    c_save.crea_blocco[num].rad = rad;
+
+                    c_save.crea_blocco[num].pos = pos_z;
+
+                    c_save.crea_blocco[num].struttura_procedurale = "";
+                    c_save.crea_blocco[num].struttura_procedurale_dz = "";
+
+                }
+
 
             }
 

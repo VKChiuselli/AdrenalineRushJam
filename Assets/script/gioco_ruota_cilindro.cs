@@ -31,6 +31,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     public float potenza_tasto = 1;
     public float velocita_personaggio = 1;
+    public float aumento_velo = 1;
 
     public float velocita_bonus_base = 2;
     public float velocita_bonus = 1;
@@ -87,7 +88,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     CharacterController characterController;
 
     GameObject cilindro;
- 
+
 
 
 
@@ -105,7 +106,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     Vector3 playerVelocity = new Vector3(0, 0, 0);
 
-    float astronave_rx=0;
+    float astronave_rx = 0;
     float astronave_rx_calcolo = 0;
 
     float astronave_rz = 0;
@@ -122,14 +123,20 @@ public class gioco_ruota_cilindro : MonoBehaviour
     GameObject boss;
     float boss_rad;
 
-    float[] attivo_tempo_sparo_boss= new float[5];
+    float[] attivo_tempo_sparo_boss = new float[10];
 
-    GameObject[] sparo_boss = new GameObject[5];
+    GameObject[] sparo_boss = new GameObject[10];
 
-    GameObject sparo;
-    float attivo_tempo_sparo;
+    float[] sparo_boss_rad = new float[10];
+
+    GameObject[] sparo= new GameObject[10];
+    float[] attivo_tempo_sparo= new float[10];
+
+    float attivo_tempo_sparo_personaggio = 0;
     float attivo_tempo_sparo_boss2 = 0;
 
+    float spostamento_z = 1;
+    float spostamento_z2 = 1;
 
 
     // Start is called before the first frame update
@@ -157,7 +164,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                 snap_rif[n + k * 50].name = "snap_rif " + n;
 
-             
+
             }
 
         }
@@ -176,7 +183,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         }
 
 
-        cam_pos = new Vector3(0,1.35f,13.0f);
+        cam_pos = new Vector3(0, 1.35f, 13.0f);
         cam_rot = new Vector3(23, 180, 0);
 
     }
@@ -256,17 +263,36 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         numero_spari = numero_spari - 1;
 
-        sparo = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere", typeof(GameObject))) as GameObject;
 
-        Vector3 pos_astronave = astronave.transform.position;
+        int num_sparo = -1;
 
-        sparo.transform.position =new Vector3(pos_astronave.x, pos_astronave.y, pos_astronave.z+ 2);
+        for (int n = 0; n < 5; n++)
+        {
+
+            if (attivo_tempo_sparo[n] < -1)
+            {
+                num_sparo = n;
+
+                attivo_tempo_sparo[n] = 5;
 
 
+                sparo[n] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sparo_personaggio", typeof(GameObject))) as GameObject;
 
-        sparo.name = "sparo" ;
+                Vector3 pos_astronave = astronave.transform.position;
 
-        attivo_tempo_sparo = 5;
+                sparo[n].transform.position = new Vector3(pos_astronave.x, pos_astronave.y, pos_astronave.z + 2);
+
+
+                sparo[n].name = "sparo_personaggio " + n;
+
+                attivo_tempo_sparo_personaggio = .5f;
+
+                n = 1000;
+
+
+            }
+
+        }
 
 
     }
@@ -276,50 +302,41 @@ public class gioco_ruota_cilindro : MonoBehaviour
     void controllo()
     {
 
-       float pressione_tasto_up = Input.GetAxis("Vertical");
+        if (energia < 0)
+        {
+            blocco_velocita = 0;
 
-        if (pressione_tasto_up < 0  && attivo_tempo_sparo<-1 && numero_spari>0)
+        }
+
+
+        float pressione_tasto_up = Input.GetAxis("Vertical");
+
+        attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio - Time.deltaTime;
+
+
+        if (pressione_tasto_up < 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita == 1)
         {
             crea_sparo();
 
         }
 
 
-            if (pressione_tasto_up > 0 && playerVelocity.y <= 0)
+        if (pressione_tasto_up > 0 )
         {
-    //        aumento_salto = .6f;
-           
+         //   aumento_velo = aumento_velo +.25f;
+
 
         }
 
 
-        aumento_salto = aumento_salto - Time.deltaTime;
-        if (aumento_salto > 0)
-        {
-            playerVelocity.y += jump * Time.deltaTime;
 
-        }
-
-
-        playerVelocity.y += -20.0f * Time.deltaTime;
-
-        if (playerVelocity.y > 3)
-        {
-            playerVelocity.y = 3;
-        }
-
-        if (playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0;
-        }
-
-        astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio+ playerVelocity.y+1, 0);
+        astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio  + .5f, 0);
 
 
 
         pressione_tasto = Input.GetAxis("Horizontal");
 
-        if (Mathf.Abs(pressione_tasto) > 0 && blocco_velocita==1)
+        if (Mathf.Abs(pressione_tasto) > 0 && blocco_velocita == 1)
         {
 
             int molt_inversione = 1;
@@ -338,7 +355,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-            rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime* molt_inversione;
+            rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione;
 
 
             astronave_rz_calcolo = astronave_rz_calcolo + pressione_tasto;
@@ -356,19 +373,33 @@ public class gioco_ruota_cilindro : MonoBehaviour
             }
 
 
-            boss_rad = boss_rad + rotazione_cilindro * .035f;
+            boss_rad = boss_rad + rotazione_cilindro * .01f;
 
-            cilindro.transform.Rotate(new Vector3(0, 0, rotazione_cilindro));
+
+            for (int n = 0; n < 5; n++)
+            {
+
+                if (sparo_boss[n] != null)
+                {
+
+                    sparo_boss_rad[n]= sparo_boss_rad[n] + rotazione_cilindro * .01f;
+
+                }
+
+            }
+
+
+                        cilindro.transform.Rotate(new Vector3(0, 0, rotazione_cilindro));
 
         }
 
 
-        astronave_rx = playerVelocity.y * -2;
+       
 
-        astronave_rz = Mathf.LerpAngle(astronave_rz, astronave_rz_calcolo, Time.deltaTime*15);
+        astronave_rz = Mathf.LerpAngle(astronave_rz, astronave_rz_calcolo, Time.deltaTime * 15);
 
 
-        astronave.transform.localEulerAngles = new Vector3(astronave_rx,0,astronave_rz);
+        astronave.transform.localEulerAngles = new Vector3(0, 0, astronave_rz);
 
         astronave_rz_calcolo = astronave_rz_calcolo * .9f;
 
@@ -383,24 +414,29 @@ public class gioco_ruota_cilindro : MonoBehaviour
     void gestione_sparo()
     {
 
-        attivo_tempo_sparo = attivo_tempo_sparo - Time.deltaTime;
 
-        if (sparo != null)
+        for (int n = 0; n < 5; n++)
         {
-           
+            attivo_tempo_sparo[n] = attivo_tempo_sparo[n] - Time.deltaTime;
 
-            if (attivo_tempo_sparo > 0)
+            if (sparo[n] != null)
             {
+                
+
+                if (attivo_tempo_sparo[n] > 0)
+                {
 
 
-                sparo.transform.Translate(new Vector3(0, 0, velocita_sparo * Time.deltaTime));
+                    sparo[n].transform.Translate(new Vector3(0, 0, velocita_sparo * Time.deltaTime));
 
-                gestione_collisione_sparo();
+                    gestione_collisione_sparo(n, sparo[n]);
 
-            }
-            else
-            {
-                DestroyImmediate(sparo);
+                }
+                else
+                {
+                    DestroyImmediate(sparo[n]);
+                }
+
             }
 
         }
@@ -425,10 +461,29 @@ public class gioco_ruota_cilindro : MonoBehaviour
                 if (attivo_tempo_sparo_boss[n] > 0)
                 {
 
+                    float xx = Mathf.Sin(sparo_boss_rad[n]) * (c_save.crea_cilindro[0].raggio+1);
+                    float yy = Mathf.Cos(sparo_boss_rad[n]) * (c_save.crea_cilindro[0].raggio+1);
 
-                    sparo_boss[n].transform.Translate(new Vector3(0, 0, velocita_sparo_boss * Time.deltaTime));
+                    float zz = sparo_boss[n].transform.position.z;
 
-                  //  gestione_collisione_sparo_boss();
+                    sparo_boss[n].transform.position = new Vector3(xx, yy, zz+ velocita_sparo_boss * Time.deltaTime);
+
+                    //  sparo_boss[n].transform.Translate(new Vector3(0, 0, velocita_sparo_boss * Time.deltaTime));
+
+                    //  sparo_boss[n].transform
+
+                    float px = sparo_boss[n].transform.position.x-astronave.transform.position.x;
+                    float py = sparo_boss[n].transform.position.y - astronave.transform.position.y;
+
+                   
+                    
+
+                    gestione_collisione_sparo(n, sparo_boss[n],1);
+
+
+                    
+
+
 
                 }
                 else
@@ -469,12 +524,12 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
             cam_rot.y = Mathf.Lerp(cam_rot.y, 180, Time.deltaTime * 50);
 
-            altezza_cam = 12;
+            altezza_cam = 3;
 
         }
 
 
-        cam0.transform.localPosition = new Vector3(0,c_save.crea_cilindro[0].raggio+ altezza_cam, cam_pos.z);
+        cam0.transform.localPosition = new Vector3(0, c_save.crea_cilindro[0].raggio + altezza_cam, cam_pos.z);
         cam0.transform.localEulerAngles = cam_rot;
 
     }
@@ -486,10 +541,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
     void gestione_cilindro()
     {
 
-        velocita_bonus = Mathf.Lerp(velocita_bonus, 1, Time.deltaTime*.333f);
+        velocita_bonus = Mathf.Lerp(velocita_bonus, 1, Time.deltaTime * .333f);
+        aumento_velo = Mathf.Lerp(aumento_velo, 1, Time.deltaTime * .333f);
 
-
-        cilindro.transform.Translate(new Vector3(0,0,-velocita_personaggio*Time.deltaTime* blocco_velocita*velocita_bonus));
+        cilindro.transform.Translate(new Vector3(0, 0, -velocita_personaggio * Time.deltaTime * blocco_velocita * velocita_bonus* aumento_velo));
 
 
     }
@@ -501,13 +556,13 @@ public class gioco_ruota_cilindro : MonoBehaviour
     {
 
 
-            GameObject bonus_gemma = Instantiate(Resources.Load("grafica_3d/Prefabs_space/gemma")) as GameObject;
+        GameObject bonus_gemma = Instantiate(Resources.Load("grafica_3d/Prefabs_space/gemma")) as GameObject;
 
-            bonus_gemma.name = "bonus_gemma";
+        bonus_gemma.name = "bonus_gemma";
 
         bonus_gemma.transform.SetParent(cilindro.transform);
 
-        float rad = angolo*Mathf.Deg2Rad;
+        float rad = angolo * Mathf.Deg2Rad;
 
         float xx = Mathf.Sin(rad) * c_save.crea_cilindro[0].raggio;
         float yy = Mathf.Cos(rad) * c_save.crea_cilindro[0].raggio;
@@ -544,7 +599,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-  
+
 
 
 
@@ -566,11 +621,17 @@ public class gioco_ruota_cilindro : MonoBehaviour
                 float zz2 = c_save.crea_blocco[n].mesh.transform.position.z;
 
 
-                if (c_save.crea_blocco[n].distruzione_oggetto == 1)
+                if (c_save.crea_blocco[n].distruzione_oggetto > 0)
                 {
 
+                    c_save.crea_blocco[n].forza_impatto = c_save.crea_blocco[n].forza_impatto * .95f - .015f;
 
-                    c_save.crea_blocco[n].valore_dissolve = c_save.crea_blocco[n].valore_dissolve + 25 * Time.deltaTime;
+                    if (c_save.crea_blocco[n].forza_impatto > .025f)
+                    {
+                        spostamento_blocco(c_save.crea_blocco[n].mesh, c_save.crea_blocco[n].punto_impatto, c_save.crea_blocco[n].forza_impatto, c_save.crea_blocco[n].rad);
+                    }
+
+                    c_save.crea_blocco[n].valore_dissolve = c_save.crea_blocco[n].valore_dissolve + (2+ c_save.crea_blocco[n].distruzione_oggetto) * Time.deltaTime;
 
                     //  Debug.Log("entra " + n+"  "+ c_save.crea_blocco[n].valore_dissolve);
 
@@ -589,15 +650,15 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-                if (c_save.crea_blocco[n].arrivo == 0 && zz2< distanza_disolve)
+                if (c_save.crea_blocco[n].arrivo == 0 && zz2 < distanza_disolve)
                 {
 
 
-                    
+
 
                     c_save.crea_blocco[n].valore_dissolve = c_save.crea_blocco[n].valore_dissolve + 2 * Time.deltaTime;
 
-                  //  Debug.Log("entra " + n+"  "+ c_save.crea_blocco[n].valore_dissolve);
+                    //  Debug.Log("entra " + n+"  "+ c_save.crea_blocco[n].valore_dissolve);
 
                     aggiorna_oggetto_dissolto_singolo(n, c_save.crea_blocco[n].valore_dissolve);
 
@@ -606,7 +667,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
                         c_save.crea_blocco[n].valore_dissolve = 1;
                         c_save.crea_blocco[n].attivo = 0;
 
-                    //    Debug.Log("dovresti avere finito "+n);
+                        //    Debug.Log("dovresti avere finito "+n);
 
                         DestroyImmediate(c_save.crea_blocco[n].mesh);
                     }
@@ -615,7 +676,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-             //   gestione_pos(n);
+                //   gestione_pos(n);
 
 
 
@@ -638,7 +699,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         float rad = c_save.crea_blocco[num].rad;
 
 
-      //  float angolo = rad * Mathf.Rad2Deg;
+        //  float angolo = rad * Mathf.Rad2Deg;
 
         float xx = Mathf.Sin(rad) * c_save.crea_blocco[num].altezza;
         float yy = Mathf.Cos(rad) * c_save.crea_blocco[num].altezza;
@@ -651,88 +712,6 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-          Debug.Log(""+other.name);
-
-
-
-        if (other.name.IndexOf ("moneta")>-1)
-        {
-            if (ogg_struttura_dati != null)
-            {
-                script_struttura_dati.monete = script_struttura_dati.monete + 1;
-           
-
-            Debug.Log(" script_struttura_dati.monete " + script_struttura_dati.monete);
-            }
-
-
-            Destroy(other.gameObject);
-        }
-
-        if (other.name.IndexOf("gemma") > -1)
-        {
-            Destroy(other.gameObject);
-
-        }
-
-
-        if (other.name.IndexOf("Cube")>-1)
-        {
-
-            blocco_velocita = 0;
-
-        }
-
-        if (other.name.IndexOf("blocco") > -1)
-        {
-
-            blocco_velocita = 0;
-
-        }
-
-
-        if (other.name.IndexOf("bonus_0") > -1)
-        {
-
-            Debug.Log("entra speed ");
-
-            velocita_bonus = velocita_bonus_base;
-
-        }
-
-        if (other.name.IndexOf("malus_") > -1)
-        {
-
-            string nome = other.name;
-
-            nome = nome.Replace("malus_","");
-
-            int numero_malus_inversion = int.Parse(nome);
-
-
-          //  Debug.Log("entra "+ numero_malus_inversion);
-
-            if (c_save.crea_malus[numero_malus_inversion].tipo == 0)
-            {
-
-                if (c_save.crea_malus[numero_malus_inversion].inversion_controller == 0)
-                {
-                    c_save.crea_malus[numero_malus_inversion].inversion_controller = 1;
-                    inversione_controllo = 1 - inversione_controllo;
-
-                }
-
-            }
-
-        }
-
-
-
-
-    }
 
 
 
@@ -758,7 +737,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
             if (level_json != null)
             {
-               
+
 
                 if (c_save != null)
                 {
@@ -776,11 +755,17 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                 c_save = JsonUtility.FromJson<classe_save>(level_json.text);
 
+
+                spostamento_z = c_save.crea_cilindro[0].spostamento_z;
+                spostamento_z2 = c_save.crea_cilindro[0].spostamento_z2;
+
+
+
                 calcolo_snap(1);
 
                 scala_cilindro();
 
-              
+
                 int num_blocchi = c_save.crea_blocco.Count;
 
                 for (int k = 0; k < num_blocchi; k++)
@@ -972,7 +957,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                 float altezza = 0;
 
-                altezza = k * .25f + .5f;
+                altezza = k * .25f + .75f;
 
                 if (k == 0)
                 {
@@ -1049,6 +1034,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
         c_save.crea_blocco[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
 
 
+
+
         if (tipo_blocco <= 8)
         {
 
@@ -1081,6 +1068,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
             c_save.crea_blocco[num].mesh_renderer = c_save.crea_blocco[num].mesh_dissolve.GetComponent<Renderer>();
 
             c_save.crea_blocco[num].mesh_renderer.material.shader = Shader.Find("Custom/Dissolve");
+
+
+            rigenera_blocco(c_save.crea_blocco[num].mesh);
         }
 
 
@@ -1088,7 +1078,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     }
 
 
-  
+
 
     void crea_gemma(int num)
     {
@@ -1107,7 +1097,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         c_save.crea_gemma[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/gemma_0", typeof(GameObject))) as GameObject;
 
-        c_save.crea_gemma[num].mesh.name = "gemma" ;
+        c_save.crea_gemma[num].mesh.name = "gemma";
 
         c_save.crea_gemma[num].mesh.transform.SetParent(cilindro.transform);
 
@@ -1213,12 +1203,14 @@ public class gioco_ruota_cilindro : MonoBehaviour
     void aggiorna_oggetto_dissolto_singolo(int num, float dissolto)
     {
 
-   //     Debug.Log(num+" num "+ dissolto);
+           //  Debug.Log(num+" num "+ dissolto);
 
-      //  if (c_save.crea_blocco[num].mesh_renderer != null)
-      //  {
-            c_save.crea_blocco[num].mesh_renderer.material.SetFloat("_Amount", dissolto);
-      //  }
+          if (c_save.crea_blocco[num].mesh_renderer != null)
+          {
+        c_save.crea_blocco[num].mesh_renderer.material.SetFloat("_Amount", dissolto);
+
+
+         }
 
     }
 
@@ -1418,7 +1410,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         Vector3 dz_base = dz;
 
 
-       
+
 
         for (var n = 0; n < 19; n++)
         {
@@ -1455,48 +1447,48 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                 if (mesh_v_dz[n] > 0)
                 {
-                    dz = new Vector3(0, 0, mesh_v_dz[n]);
+                    dz = new Vector3(0, 0, mesh_v_dz[n]) * spostamento_z;
 
                 }
 
+                Vector3 dz2 = dz * spostamento_z2;
+
+                vertices[nv + 0] = snap_n + dz2;
+                vertices[nv + 1] = snap_up_n + dz2;
+                vertices[nv + 2] = snap_up_n1 + dz2;
+                vertices[nv + 3] = snap_n1 + dz2;
+
+                vertices[nv + 4] = snap_n + dz;
+                vertices[nv + 5] = snap_up_n + dz;
+                vertices[nv + 6] = snap_up_n1 + dz;
+                vertices[nv + 7] = snap_n1 + dz;
+
+                vertices[nv + 8] = snap_n + dz2;
+                vertices[nv + 9] = snap_up_n + dz2;
+                vertices[nv + 10] = snap_up_n + dz;
+                vertices[nv + 11] = snap_n + dz;
+
+                vertices[nv + 12] = snap_n1 + dz2;
+                vertices[nv + 13] = snap_up_n1 + dz2;
+                vertices[nv + 14] = snap_up_n1 + dz;
+                vertices[nv + 15] = snap_n1 + dz;
 
 
-                vertices[nv + 0] = snap_n - dz * .5f;
-                vertices[nv + 1] = snap_up_n - dz * .5f;
-                vertices[nv + 2] = snap_up_n1 - dz * .5f;
-                vertices[nv + 3] = snap_n1 - dz * .5f;
+                vertices[nv + 16] = snap_up_n + dz2;
+                vertices[nv + 17] = snap_up_n + dz;
+                vertices[nv + 18] = snap_up_n1 + dz;
+                vertices[nv + 19] = snap_up_n1 + dz2;
 
-                vertices[nv + 4] = snap_n + dz * .5f;
-                vertices[nv + 5] = snap_up_n + dz * .5f;
-                vertices[nv + 6] = snap_up_n1 + dz * .5f;
-                vertices[nv + 7] = snap_n1 + dz * .5f;
-
-                vertices[nv + 8] = snap_n - dz * .5f;
-                vertices[nv + 9] = snap_up_n - dz * .5f;
-                vertices[nv + 10] = snap_up_n + dz * .5f;
-                vertices[nv + 11] = snap_n + dz * .5f;
-
-                vertices[nv + 12] = snap_n1 - dz * .5f;
-                vertices[nv + 13] = snap_up_n1 - dz * .5f;
-                vertices[nv + 14] = snap_up_n1 + dz * .5f;
-                vertices[nv + 15] = snap_n1 + dz * .5f;
-
-
-                vertices[nv + 16] = snap_up_n - dz * .5f;
-                vertices[nv + 17] = snap_up_n + dz * .5f;
-                vertices[nv + 18] = snap_up_n1 + dz * .5f;
-                vertices[nv + 19] = snap_up_n1 - dz * .5f;
-
-                vertices[nv + 20] = snap_n - dz * .5f;
-                vertices[nv + 21] = snap_n + dz * .5f;
-                vertices[nv + 22] = snap_n1 + dz * .5f;
-                vertices[nv + 23] = snap_n1 - dz * .5f;
+                vertices[nv + 20] = snap_n + dz2;
+                vertices[nv + 21] = snap_n + dz;
+                vertices[nv + 22] = snap_n1 + dz;
+                vertices[nv + 23] = snap_n1 + dz2;
 
 
 
 
 
-                    for (int k = 0; k < 6; k++)
+                for (int k = 0; k < 6; k++)
                 {
                     uvs[nv + k * 4 + 0] = new Vector2(0, 0);
                     uvs[nv + k * 4 + 1] = new Vector2(0, 1);
@@ -1580,10 +1572,6 @@ public class gioco_ruota_cilindro : MonoBehaviour
         mesh.RecalculateTangents();
 
 
-        DestroyImmediate(ogg.GetComponent<MeshCollider>());
-
-
-       ogg.AddComponent<MeshCollider>();
 
         ogg.transform.localScale = new Vector3(1, 1, 1);
 
@@ -1606,34 +1594,62 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         RaycastHit hit_collider;
 
-        Vector3 pos_ray_direction = new Vector3(0, 0, 10);
+        Vector3[] pos_ray_direction = new Vector3[10];
+        float[] distanza_direction = new float[10];
 
-        Vector3 pos ;
+        Vector3 pos;
 
         Vector3[] pos_direction = new Vector3[10];
 
         pos_direction[0] = new Vector3(0, 0, 0);
-        pos_direction[1] = new Vector3(0, .6f, 0);
-        pos_direction[2] = new Vector3(0, -.5f, 0);
-        pos_direction[3] = new Vector3(-.8f, 0, 0);
-        pos_direction[4] = new Vector3(.8f, 0, 0);
+        pos_direction[1] = new Vector3(0, 0, -1);
+        pos_direction[2] = new Vector3(0, 0, -1);
 
-        for (int n = 0; n <= 4; n++)
+        pos_direction[3] = new Vector3(-.9f, 0, -.8f);
+        pos_direction[4] = new Vector3(.9f, 0, -.8f);
+
+        pos_direction[5] = new Vector3(0, 0, -.5f);
+        pos_direction[6] = new Vector3(0, 0, -.5f);
+
+        pos_ray_direction[0] = new Vector3(0,0,2.6f);
+        pos_ray_direction[1] = new Vector3(-1.5f, 0, .25f);
+        pos_ray_direction[2] = new Vector3(1.5f, 0, .25f);
+        pos_ray_direction[3] = new Vector3(0, 0, 2.6f);
+        pos_ray_direction[4] = new Vector3(0, 0, 2.6f);
+        pos_ray_direction[5] = new Vector3(-1.5f, 0, .75f);
+        pos_ray_direction[6] = new Vector3(1.5f, 0, .75f);
+
+        distanza_direction[0] = 2.6f;
+        distanza_direction[1] = 1.5f;
+        distanza_direction[2] = 1.5f;
+
+        distanza_direction[3] = 2.6f;
+        distanza_direction[4] = 2.6f;
+
+        distanza_direction[5] = 1.5f;
+        distanza_direction[6] = 1.5f;
+
+        int numero_coll = 0;
+        Vector3 punto_coll= new Vector3(0,0,0);
+
+        int num_block = -1;
+
+        for (int n = 0; n <= 6; n++)
         {
 
-            pos = astronave.transform.position+ pos_direction[n];
+            pos = astronave.transform.position + pos_direction[n];
 
 
-            Debug.DrawRay(pos, pos_ray_direction, new Color(1, 0, 0, 1));
+            Debug.DrawRay(pos, pos_ray_direction[n], new Color(1, n*.2f, 0, 1));
 
 
-            if (Physics.Raycast(pos, pos_ray_direction, out hit_collider, 15))
+            if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, 15))
             {
 
                 float dis = hit_collider.distance;
 
 
-                if (dis < 2.6f)
+                if (dis < distanza_direction[n])
                 {
 
 
@@ -1641,13 +1657,12 @@ public class gioco_ruota_cilindro : MonoBehaviour
                     {
 
 
-                      
 
                         string str_block = "" + hit_collider.collider.name;
 
-                        Debug.Log(""+str_block);
+                     //   Debug.Log("" + str_block);
 
-                        int num_block = -1;
+                      
 
 
                         int indice = str_block.IndexOf("blocco_mesh");
@@ -1659,12 +1674,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                             num_block = int.Parse(str_block);
 
-                            if (c_save.crea_blocco[num_block].disattiva_coll == 0)
-                            {
-                                c_save.crea_blocco[num_block].disattiva_coll = 1;
-                                energia = energia - 10;
+                            numero_coll = numero_coll+1;
 
-                            }
+                            punto_coll = punto_coll + hit_collider.point;
                         }
 
                         if (indice > -1)
@@ -1674,9 +1686,14 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                             num_block = int.Parse(str_block);
 
+                          
                             if (c_save.crea_blocco[num_block].disattiva_coll == 0)
                             {
-                                c_save.crea_blocco[num_block].disattiva_coll = 1;
+                                c_save.crea_blocco[num_block].distruzione_oggetto = 10;
+
+                                carica_particles("particles/CFXR Explosion 2", c_save.crea_blocco[num_block].mesh_dissolve.transform.position);
+
+                                    c_save.crea_blocco[num_block].disattiva_coll = 1;
                                 energia = energia - 30;
 
                             }
@@ -1684,15 +1701,11 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-                        Debug.Log("toccato blocco "+ num_block);
+                    //    Debug.Log("toccato blocco " + num_block);
 
-                       
 
-                        if (energia < 0)
-                        {
-                            blocco_velocita = 0;
 
-                        }
+                      
 
 
                     }
@@ -1723,12 +1736,62 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
             }
 
+
+            if (num_block > -1 && numero_coll>0)
+            {
+               
+
+                Vector3 punto_coll_uso = punto_coll / numero_coll;
+
+
+
+                
+
+               // crea_sfera(punto_coll_uso);
+
+               
+
+             //   Debug.Break();
+
+                if (c_save.crea_blocco[num_block].disattiva_coll == 0)
+                {
+                    c_save.crea_blocco[num_block].disattiva_coll = 1;
+                    energia = energia - 10;
+
+                    carica_particles("particles/CFXR Hit A", punto_coll_uso);
+
+                    c_save.crea_blocco[num_block].punto_impatto = punto_coll_uso;
+                    c_save.crea_blocco[num_block].forza_impatto = velocita_personaggio * 8;
+
+
+                    c_save.crea_blocco[num_block].distruzione_oggetto = 1;
+
+                }
+            }
+
+
+
         }
 
 
     }
 
-    void gestione_collisione_sparo()
+
+    void carica_particles(string path, Vector3 pos)
+    {
+
+        GameObject particles = Instantiate(Resources.Load(path, typeof(GameObject))) as GameObject;
+
+
+        particles.transform.position = pos;
+
+
+    }
+
+
+
+
+    void gestione_collisione_sparo(int num, GameObject ogg, int tipo = 0)
     {
 
         RaycastHit hit_collider;
@@ -1740,14 +1803,38 @@ public class gioco_ruota_cilindro : MonoBehaviour
         Vector3[] pos_direction = new Vector3[10];
 
         pos_direction[0] = new Vector3(0, 0, 0);
-        
-        for (int n = 0; n <= 0; n++)
+
+
+
+        pos = ogg.transform.position + pos_direction[0];
+
+        float distanza_coll = 0;
+
+
+        if (tipo == 0)
         {
+            distanza_coll = Vector3.Distance(sparo[num].transform.position, astronave.transform.position);
+        }
+        if (tipo == 1)
+        {
+            distanza_coll = Vector3.Distance(sparo_boss[num].transform.position, astronave.transform.position);
+        }
 
-            pos = sparo.transform.position + pos_direction[n];
+
+        int toccato_astronave = 0;
+
+        if (distanza_coll < 2 && tipo==1)
+        {
+            DestroyImmediate(ogg);
+
+            energia = energia - 50;
 
 
-          
+        }
+
+
+        if (toccato_astronave == 0)
+        {
 
             if (Physics.Raycast(pos, pos_ray_direction, out hit_collider, 15))
             {
@@ -1783,8 +1870,20 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                             c_save.crea_blocco[num_block].distruzione_oggetto = 1;
 
-                            attivo_tempo_sparo = 0;
-                            DestroyImmediate(sparo);
+                            c_save.crea_blocco[num_block].punto_impatto = hit_collider.point;
+                            c_save.crea_blocco[num_block].forza_impatto = velocita_personaggio * 5;
+
+                            carica_particles("particles/CFXR Hit A", hit_collider.point);
+
+                            if (tipo == 0)
+                            {
+                                attivo_tempo_sparo[num] = 0;
+                            }
+                            else
+                            {
+                                attivo_tempo_sparo_boss[num] = 0;
+                            }
+                            DestroyImmediate(ogg);
 
                         }
 
@@ -1795,8 +1894,20 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                             num_block = int.Parse(str_block);
 
-                            attivo_tempo_sparo = 0;
-                            DestroyImmediate(sparo);
+                            carica_particles("particles/CFXR Hit A", hit_collider.point);
+
+
+                            if (tipo == 0)
+                            {
+                                attivo_tempo_sparo[num] = 0;
+                            }
+                            else
+                            {
+                                attivo_tempo_sparo_boss[num] = 0;
+                            }
+
+
+                            DestroyImmediate(ogg);
 
                             c_save.crea_blocco[num_block].distruzione_oggetto = 1;
                         }
@@ -1808,17 +1919,18 @@ public class gioco_ruota_cilindro : MonoBehaviour
                     }
 
 
-                   
 
 
                 }
+
 
             }
 
         }
 
-
     }
+
+        
 
 
     void gestione_boss()
@@ -1833,11 +1945,11 @@ public class gioco_ruota_cilindro : MonoBehaviour
         float xx = Mathf.Sin(boss_rad) * raggio;
         float yy = Mathf.Cos(boss_rad) * raggio;
 
-        float rad_angle = Mathf.Atan2(xx,yy);
+        float rad_angle = Mathf.Atan2(xx, yy);
 
         float angle = rad_angle * Mathf.Rad2Deg;
 
-        boss.transform.position = new Vector3(xx,yy,-75);
+        boss.transform.position = new Vector3(xx, yy, -75);
 
         boss.transform.localEulerAngles = new Vector3(0, 0, -angle);
 
@@ -1847,7 +1959,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         attivo_tempo_sparo_boss2 = attivo_tempo_sparo_boss2 - Time.deltaTime;
 
-        if (attivo_tempo_sparo_boss2 < 0)
+        if (attivo_tempo_sparo_boss2 < -1)
         {
 
             if (Mathf.Abs(diff) < .1f)
@@ -1864,17 +1976,17 @@ public class gioco_ruota_cilindro : MonoBehaviour
                         attivo_tempo_sparo_boss[n] = 15;
 
 
-                        sparo_boss[n] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere", typeof(GameObject))) as GameObject;
+                        sparo_boss[n] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sparo_boss", typeof(GameObject))) as GameObject;
 
                         Vector3 pos_sparo_boss = boss_mesh_sparo.transform.position;
 
                         sparo_boss[n].transform.position = new Vector3(pos_sparo_boss.x, pos_sparo_boss.y, pos_sparo_boss.z);
 
-
+                        sparo_boss_rad[n] = 0;
 
                         sparo_boss[n].name = "sparo_boss " + n;
 
-                        attivo_tempo_sparo_boss2 = 5;
+                        attivo_tempo_sparo_boss2 = UnityEngine.Random.Range(6,10);
 
                         n = 1000;
 
@@ -1895,4 +2007,116 @@ public class gioco_ruota_cilindro : MonoBehaviour
     }
 
 
+    void rigenera_blocco(GameObject ogg)
+    {
+
+
+        Mesh mesh = ogg.GetComponent<MeshFilter>().mesh;
+
+        Vector3 pos = ogg.transform.position;
+
+        Vector3[] vertices_studio = mesh.vertices;
+        Vector3[] vertices = mesh.vertices;
+
+        for (int n = 0; n < vertices.Length; n++)
+        {
+            Vector3 pv = ogg.transform.TransformPoint(vertices[n]);
+
+
+            vertices[n] = new Vector3(pv.x, pv.y, pv.z - pos.z);
+
+
+        }
+
+
+
+        mesh.vertices = vertices;
+
+
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
+
+        ogg.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+        DestroyImmediate(ogg.GetComponent<MeshCollider>());
+
+
+        ogg.AddComponent<MeshCollider>();
+
+    }
+
+
+
+
+
+
+    void spostamento_blocco(GameObject ogg, Vector3 pi, float forza, float ogg_rad)
+    {
+
+    //    Debug.Log("blocco impatto ");
+
+        Mesh mesh = ogg.GetComponent<MeshFilter>().mesh;
+
+
+        Vector3[] vertices = mesh.vertices;
+
+        Vector3 pos = ogg.transform.position;
+
+     //   crea_sfera(pi,"coll");
+
+        float rad = -ogg.transform.localEulerAngles.z*Mathf.Deg2Rad;
+
+        for (int n = 0; n < vertices.Length; n++)
+        {
+
+            Vector3 pv = ogg.transform.TransformPoint(vertices[n]);
+
+
+
+       //     crea_sfera(pv);
+
+            float xx = pv.x - pi.x;
+            float zz = pv.z - pi.z;
+
+            float dis = Mathf.Sqrt(xx * xx + zz * zz);
+
+        //    float rad = Mathf.Atan2(xx, zz);
+
+            float molt = (6 - dis)/6.0f;
+
+            if (molt < 0)
+            {
+                molt = 0;
+            }
+
+          //  float px = vertices[n].x - Mathf.Sin(rad) * forza*molt;
+            float pz = pv.z+   forza*molt*Time.deltaTime-pos.z;
+
+
+
+            vertices[n] = new Vector3(vertices[n].x, vertices[n].y, pz);
+
+
+        }
+
+
+
+        mesh.vertices = vertices;
+
+
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
+
+   //    Debug.Break();
+
+    }
+
+
+
+
 }
+
+
+

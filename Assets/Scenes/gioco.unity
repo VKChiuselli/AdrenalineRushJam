@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657654, g: 0.49641246, b: 0.57481754, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657582, g: 0.4964118, b: 0.5748169, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -235,7 +235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ff9d3c580bfa6245a70e42e9972bc17, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12
+      value: 4.32
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ff9d3c580bfa6245a70e42e9972bc17, type: 3}
       propertyPath: m_LocalPosition.z
@@ -275,7 +275,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 34a89e11d4565cb42889340cf1a85dfc, type: 2}
     - target: {fileID: 919132149155446097, guid: 8ff9d3c580bfa6245a70e42e9972bc17, type: 3}
       propertyPath: m_Name
-      value: boss
+      value: boss_mesh
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ff9d3c580bfa6245a70e42e9972bc17, type: 3}
@@ -515,14 +515,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0.9563048, z: -0.29237175, w: 0}
+  m_LocalRotation: {x: 0, y: 0.9880273, z: -0.15427929, w: 0}
   m_LocalPosition: {x: 0, y: 18, z: 27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 34, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 17.75, y: 180, z: 0}
 --- !u!1001 &1025342167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -891,7 +891,8 @@ MonoBehaviour:
     crea_gemma: []
   level_json: {fileID: 4900000, guid: 3a85bfba77b3ae7459a6f4ce38a92365, type: 3}
   potenza_tasto: -250
-  velocita_personaggio: 15
+  velocita_personaggio: 11
+  aumento_velo: 1
   velocita_bonus_base: 4
   velocita_bonus: 1
   inversione_camera: 1
