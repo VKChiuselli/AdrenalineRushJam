@@ -525,7 +525,7 @@ public class menu : MonoBehaviour {
 
             uscita_popup(dime_panel_x, dime_panel_y);
 
-        } 
+        } //popup shop
         else  if (attivo_popup == 2)
         {
             if (grafica[200] != null)  //pannello
@@ -631,19 +631,168 @@ public class menu : MonoBehaviour {
 
             uscita_popup(dime_panel_x, dime_panel_y);
 
+        } //popup upgrade
+        else  if (attivo_popup == 3)//popup opzioni
+        {
+            if (grafica[200] != null)  //pannello opzioni
+            {
+
+                float dx2 = dx * .8f;
+                float dy2 = dy*.8f;
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+
+            if (grafica[201] != null)  //txt musica
+{
+
+                float dx2 = dy * .8f;
+                float dy2 = dx2 * (76f / 72f);
+                pos_x = risoluzione_x * 0.5f - dx2;
+                pos_y = risoluzione_y * 0.5f - dy2 * .25f;
+
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "Titolo oggetto prova";
+
+
+            }
+
+            if (pulsante[200] != null)  //musica tasto
+            {
+                float dx2 = risoluzione_x * 0.333f;
+                float dy2 = risoluzione_y * 0.1f;
+                pos_x = 0;
+                pos_y = risoluzione_y * -0.5f + dy2;
+                pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                pulsante_testo[200].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            }
+
+            if (grafica[202] != null)  //txt sfx
+{
+
+                float dx2 = dy * .8f;
+                float dy2 = dx2 * (76f / 72f);
+                pos_x = 0;
+                pos_y = risoluzione_y * 0.5f - dy2 * .25f;
+
+                grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                grafica_testo[202].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = "Titolo oggetto prova";
+
+
+            }
+
+            if (pulsante[201] != null)  //tasto sfx
+            {
+                float dx2 = risoluzione_x * 0.333f;
+                float dy2 = risoluzione_y * 0.1f;
+                pos_x = 0;
+                pos_y = risoluzione_y * -0.5f + dy2;
+                pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                pulsante_testo[201].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            }
+
+
+            if (grafica[203] != null)  //txt facebook
+{
+
+                float dx2 = dy * .8f;
+                float dy2 = dx2 * (76f / 72f);
+                pos_x = 0;
+                pos_y = risoluzione_y * 0.5f - dy2 * .25f;
+
+                grafica[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "Facebook";
+
+
+            }
+
+            if (pulsante[202] != null)  //tasto facebook
+            {
+                float dx2 = risoluzione_x * 0.333f;
+                float dy2 = risoluzione_y * 0.1f;
+                pos_x = 0;
+                pos_y = risoluzione_y * -0.5f + dy2;
+                pulsante[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                pulsante_testo[202].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            }
+
+            if (grafica[204] != null)  //txt credits
+{
+
+                float dx2 = dy * .8f;
+                float dy2 = dx2 * (76f / 72f);
+                pos_x = 0;
+                pos_y = risoluzione_y * 0.5f - dy2 * .25f;
+
+                grafica[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                grafica[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                grafica_testo[204].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+                grafica_testo[204].GetComponent<TextMeshProUGUI>().text = "Credits";
+
+
+            }
+
+            if (pulsante[203] != null)  //tasto credits
+            {
+                float dx2 = risoluzione_x * 0.333f;
+                float dy2 = risoluzione_y * 0.1f;
+                pos_x = 0;
+                pos_y = risoluzione_y * -0.5f + dy2;
+                pulsante[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                pulsante_testo[203].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            }
+
+            if (pulsante[204] != null)  //exit tasto
+            {
+                float dx2 = risoluzione_x * 0.12f ;
+                float dy2 = dx2;
+                pos_x = dime_panel_x*.5f;
+                pos_y = dime_panel_y*.5f;
+
+
+                pulsante[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+
+
+            uscita_popup(dime_panel_x, dime_panel_y);
+
         }
 
 
     }
 
-
+   float resetTimerPopup=0;
 
     void uscita_popup(float dime_panel_x,float dime_panel_y)
     {
-
-        if (Input.GetMouseButtonUp(0))
+        resetTimerPopup += Time.deltaTime;
+        if (Input.GetMouseButtonDown(0) && resetTimerPopup>0.5f)
         {
-
+            resetTimerPopup = 0;
             float dx=(risoluzione_x-dime_panel_x)*.5f;
             float dy = (risoluzione_y - dime_panel_y) * .5f;
 
@@ -786,7 +935,7 @@ public class menu : MonoBehaviour {
 
             float dx2 = dy * .8f;
             float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * .5f - dx2 / 2 * 2;
+            pos_x = risoluzione_x * .5f - dx2;
             pos_y = risoluzione_y * 0.5f - dy2 * .9f;
 
             grafica[12].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -982,7 +1131,7 @@ public class menu : MonoBehaviour {
 
     }
 
-    void crea_popup(int num=0)
+    void crea_popup(int num=1)
     {
 
         attivo_popup = num ;
@@ -999,7 +1148,7 @@ public class menu : MonoBehaviour {
          
     }
     
-    void crea_popup_upgrade(int num=0)
+    void crea_popup_upgrade(int num=2)
     {
 
         attivo_popup = num ;
@@ -1016,6 +1165,31 @@ public class menu : MonoBehaviour {
 
         crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
+
+    }  
+    void crea_popup_opzioni(int num=3)
+    {
+
+        attivo_popup = num ;
+
+        distruggi_menu_popup();
+
+        canvas_popup.SetActive(true);
+
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup,"Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello OPZIONI
+        crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo musica
+        crea_button_text(200, "ON", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto MUSICA
+        crea_grafica_text(202, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo sfx
+        crea_button_text(201, "ON", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto SFX
+        
+        crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo facebook
+        crea_button_text(202, "Facebook Login", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto facebook
+
+        
+        crea_grafica_text(204, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo credits
+        crea_button_text(203, "Credits", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto credits
+
+        crea_button_text(204, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
 
     }
      
@@ -1138,6 +1312,16 @@ public class menu : MonoBehaviour {
             SceneManager.LoadScene("gioco");
         }
 
+
+        if (num == 1)
+        {
+            crea_popup_opzioni(3);
+        }
+
+        if (num == 20)
+        {
+            crea_popup_opzioni(3);
+        }
 
         if (num == 2)
         {
