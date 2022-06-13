@@ -215,6 +215,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         controllo();
 
+        controllo_monete();
+
         gestione_camera();
 
         gestione_boss();
@@ -322,6 +324,69 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
+    void controllo_monete()
+    {
+
+        int num_monete = c_save.crea_moneta.Count;
+
+        Vector3 pos_astronave = astronave.transform.position;
+        pos_astronave.z += pos_astronave.z + 2.0f;
+
+
+        float distanza = 6;
+        float distanza_cattura = .75f;
+
+        float velocita_calamita_animazione = velocita_personaggio * 1.5f;
+
+
+        for (int k = 0; k < num_monete; k++)
+        {
+
+            if (c_save.crea_moneta[k].presa == 0)
+            {
+                float dis = Vector3.Distance(pos_astronave, c_save.crea_moneta[k].mesh.transform.position);
+
+                if (dis < distanza)
+                {
+                    c_save.crea_moneta[k].presa = 1;
+                }
+
+            }
+
+            if (c_save.crea_moneta[k].presa == 1)
+            {
+
+                c_save.crea_moneta[k].mesh.transform.position = Vector3.Lerp(c_save.crea_moneta[k].mesh.transform.position, pos_astronave, Time.deltaTime * velocita_calamita_animazione);
+
+
+                float dis = Vector3.Distance(pos_astronave, c_save.crea_moneta[k].mesh.transform.position);
+
+                if (dis < distanza_cattura)
+                {
+                    c_save.crea_moneta[k].presa = 2;
+
+                    Destroy(c_save.crea_moneta[k].mesh);
+
+                      monete_partita_corrente = monete_partita_corrente + 1;
+
+                    if (ogg_struttura_dati != null)
+                    {
+                        script_struttura_dati.monete = script_struttura_dati.monete + 1;
+                        
+
+                        Debug.Log(" script_struttura_dati.monete " + script_struttura_dati.monete);
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+
     void controllo()
     {
 
@@ -353,7 +418,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-        astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio  + .5f, 0);
+        astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio  + 1.0f, 0);
 
 
 
@@ -737,77 +802,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-          Debug.Log(""+other.name);
-
-        /*
-
-        if (other.name.IndexOf ("moneta")>-1)
-        {
-            if (ogg_struttura_dati != null)
-            {
-                script_struttura_dati.monete = script_struttura_dati.monete + 1;
-                monete_partita_corrente = monete_partita_corrente + 1;
-
-            Debug.Log(" script_struttura_dati.monete " + script_struttura_dati.monete);
-            }
 
 
-            Destroy(other.gameObject);
-        }
-
-        if (other.name.IndexOf("gemma") > -1)
-        {
-            Destroy(other.gameObject);
-
-        }
-
-
-      
-
-        if (other.name.IndexOf("malus_") > -1)
-        {
-
-            string nome = other.name;
-
-            nome = nome.Replace("malus_","");
-
-            int numero_malus_inversion = int.Parse(nome);
-
-
-          //  Debug.Log("entra "+ numero_malus_inversion);
-
-            if (c_save.crea_malus[numero_malus_inversion].tipo == 0)
-            {
-
-                if (c_save.crea_malus[numero_malus_inversion].inversion_controller == 0)
-                {
-                    c_save.crea_malus[numero_malus_inversion].inversion_controller = 1;
-                    inversione_controllo = 1 - inversione_controllo;
-
-                }
-
-            }
-
-        }
-
-    */
-
-
-    }
-
-
-
-    void OnCollisionEnter(Collision collision)
-    {
-
-
-        Debug.Log("collision " + collision.collider.name);
-
-        blocco_velocita = 0;
-
-    }
 
 
     void load_project()
@@ -1795,25 +1791,6 @@ public class gioco_ruota_cilindro : MonoBehaviour
                     }
 
 
-                    if (hit_collider.collider.name.IndexOf("moneta") > -1)
-                    {
-                        if (ogg_struttura_dati != null)
-                        {
-                            script_struttura_dati.monete = script_struttura_dati.monete + 1;
-
-
-                            Debug.Log(" script_struttura_dati.monete " + script_struttura_dati.monete);
-                        }
-
-
-                        Destroy(hit_collider.transform.gameObject);
-                    }
-
-                    if (hit_collider.collider.name.IndexOf("gemma") > -1)
-                    {
-                        Destroy(hit_collider.transform.gameObject);
-
-                    }
 
 
                 }

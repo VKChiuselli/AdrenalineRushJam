@@ -71,6 +71,7 @@ public class crea_livello : MonoBehaviour
     GameObject canvas;
     GameObject cilindro;
     GameObject partenza;
+    GameObject finale;
 
     int tipo_blocco = 0;
     int tipo_moneta = 0;
@@ -125,6 +126,7 @@ public class crea_livello : MonoBehaviour
 
         cilindro = GameObject.Find("cilindro_esatto");
         partenza = GameObject.Find("partenza");
+        finale = GameObject.Find("finale");
 
         leggi_vertici_cilindro();
 
@@ -1330,6 +1332,9 @@ public class crea_livello : MonoBehaviour
     void save_project()
     {
 
+        c_save.crea_cilindro[0].pos_finale = finale.transform.position;
+
+
 
         string jsonData = JsonUtility.ToJson(c_save, true);
 
@@ -2324,6 +2329,7 @@ public class crea_livello : MonoBehaviour
 
         float rad_base = Mathf.PI * 2 / 36.0f;
 
+        float pz_ultimo = 0;
 
         for (int n = 0; n < 30; n++)
         {
@@ -2341,6 +2347,7 @@ public class crea_livello : MonoBehaviour
 
             c_save.crea_blocco[num].pos = pos_z;
 
+            pz_ultimo = pos_z;
 
             c_save.crea_blocco[num].struttura_procedurale = struttura;
             c_save.crea_blocco[num].struttura_procedurale_dz = struttura_generata_dz;
@@ -2348,6 +2355,10 @@ public class crea_livello : MonoBehaviour
             genera_altri_blocchi(n,4, distanza, distanza_rnd, distanza_partenza);
 
         }
+
+
+        finale.transform.position =new Vector3(0,0, pz_ultimo + distanza*2);
+
 
         genera_livello_dati();
 

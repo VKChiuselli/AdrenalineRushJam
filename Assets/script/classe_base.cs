@@ -13,6 +13,8 @@ public class cilindro
     public float raggio=20;
     public float spostamento_z = 1;
     public float spostamento_z2 = .75f;
+
+    public Vector3 pos_finale ;
 }
 
 
@@ -90,6 +92,7 @@ public class gemma
 
     public GameObject mesh;
 
+    public int presa;
 
     public int tipo;
 
@@ -107,6 +110,8 @@ public class moneta
 
 
     public int tipo;
+
+    public int presa;
 
     public float altezza;
     public float rad;
