@@ -28,8 +28,5 @@ public class rotazione_oggetto : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, rotazione, 0);
 
 
-
-
-
     }
 }

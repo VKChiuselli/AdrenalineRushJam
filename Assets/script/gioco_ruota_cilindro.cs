@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using System;
+using UnityEngine.UI;
+using TMPro;
 
 public class gioco_ruota_cilindro : MonoBehaviour
 {
@@ -50,6 +52,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     public float spostamento_boss_rotazione = .01f;
 
+    public Color newColor = new Color(0, 1, 1, 1);
 
     public float jump = 15;
     public float distanza_disolve = -15;
@@ -57,17 +60,17 @@ public class gioco_ruota_cilindro : MonoBehaviour
     public float energia = 100;
     public int monete_partita_corrente = 0;
 
-    int barriera = 0;
-
-    float diff_xm;
-    float diff_ym;
-
     float risoluzione_x;
     float risoluzione_y;
 
     float rapporto_risoluzione;
     float spostamento_sx;
     float spostamento_sx2;
+
+    float diff_xm;
+    float diff_ym;
+
+    int barriera = 0;
 
     float pressione_tasto = 0;
 
@@ -85,6 +88,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     struttura_dati script_struttura_dati;
 
     GameObject canvas;
+    GameObject canvas_popup;
 
     GameObject ogg_struttura_dati;
 
@@ -141,10 +145,17 @@ public class gioco_ruota_cilindro : MonoBehaviour
     float spostamento_z = 1;
     float spostamento_z2 = 1;
 
+    int font_size = 15;
+
+    int gemme_prese = 0;
+  
+
 
     // Start is called before the first frame update
     void Start()
     {
+
+        controllo_risoluzione();
 
         characterController = GetComponent<CharacterController>();
         cilindro = GameObject.Find("cilindro_esatto");
@@ -167,7 +178,6 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                 snap_rif[n + k * 50].name = "snap_rif " + n;
 
-
             }
 
         }
@@ -176,6 +186,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
         load_project();
 
         canvas = GameObject.Find("Canvas");
+        canvas_popup = GameObject.Find("Canvas_popup/Panel");
+
+        canvas_popup.SetActive(false);
+
 
         ogg_struttura_dati = GameObject.Find("base_struttura");
 
@@ -189,11 +203,15 @@ public class gioco_ruota_cilindro : MonoBehaviour
         cam_pos = new Vector3(0, 1.35f, 13.0f);
         cam_rot = new Vector3(23, 180, 0);
 
+
+        crea_menu();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        controllo_risoluzione();
 
         controllo();
 
@@ -205,8 +223,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         gestione_cilindro();
 
-
         gestione_collisione();
+
+
+        aggiorna_menu();
 
     }
 
@@ -721,7 +741,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     {
           Debug.Log(""+other.name);
 
-
+        /*
 
         if (other.name.IndexOf ("moneta")>-1)
         {
@@ -744,29 +764,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         }
 
 
-        if (other.name.IndexOf("Cube")>-1)
-        {
-
-            blocco_velocita = 0;
-
-        }
-
-        if (other.name.IndexOf("blocco") > -1)
-        {
-
-            blocco_velocita = 0;
-
-        }
-
-
-        if (other.name.IndexOf("bonus_0") > -1)
-        {
-
-            Debug.Log("entra speed ");
-
-            velocita_bonus = velocita_bonus_base;
-
-        }
+      
 
         if (other.name.IndexOf("malus_") > -1)
         {
@@ -794,7 +792,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         }
 
-
+    */
 
 
     }
@@ -2200,6 +2198,286 @@ public class gioco_ruota_cilindro : MonoBehaviour
     }
 
 
+    void crea_button_input_text(int num, string str = "")
+    {
+
+        pulsante_field[num] = Instantiate(Resources.Load("UI/InputField_txt", typeof(GameObject))) as GameObject;
+
+        pulsante_field[num].name = "pulsante_field_" + num;
+
+        pulsante_field[num].GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+
+        pulsante_field[num].transform.SetParent(canvas.transform);
+
+        pulsante_field_testo[num] = GameObject.Find("Canvas_pannello/pulsante_field_" + num);
+        pulsante_field_testo2[num] = GameObject.Find("Canvas_pannello/pulsante_field_" + num + "/Text");
+
+
+
+        pulsante_field_testo[num].GetComponent<InputField>().text = "" + str;
+
+
+        InputField m_Toggle2 = pulsante_field[num].GetComponent<InputField>();
+
+        m_Toggle2.onEndEdit.AddListener(delegate {
+            pressione_input_text(num, m_Toggle2);
+        });
+
+
+
+
+    }
+
+
+    void crea_button_text(int num, string txt, Color colore_testo, GameObject parent, string path = "Canvas", string path_sprite = "")
+    {
+
+        pulsante[num] = Instantiate(Resources.Load("UI/Button_text", typeof(GameObject))) as GameObject;
+
+        pulsante[num].name = "pulsante_text" + num;
+
+        pulsante[num].transform.SetParent(parent.transform);
+
+        pulsante[num].GetComponent<Button>().onClick.AddListener(() => pressione_pulsante(num));
+
+        ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
+        cb.selectedColor = newColor;
+        pulsante[num].GetComponent<Button>().colors = cb;
+
+
+        if (path_sprite != "")
+        {
+            pulsante[num].GetComponent<Image>().sprite = Resources.Load<Sprite>(path_sprite);
+        }
+
+
+        pulsante[num].GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+
+
+        pulsante_testo[num] = GameObject.Find(path + "/pulsante_text" + num + "/Text_TMP");
+
+        pulsante_testo[num].GetComponent<TextMeshProUGUI>().text = "" + txt;
+
+        pulsante_testo[num].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_y / 20);
+
+
+        pulsante_testo[num].GetComponent<TextMeshProUGUI>().color = colore_testo;
+
+    }
+
+
+    void crea_grafica_text(int num, Color colore, string txt, GameObject parent, string path = "Canvas", string path_sprite = "")
+    {
+
+        //    Debug.Log("entratooo");
+
+
+        grafica[num] = Instantiate(Resources.Load("UI/Image_text", typeof(GameObject))) as GameObject;
+
+        grafica[num].name = "grafica_text" + num;
+
+        grafica[num].transform.SetParent(parent.transform);
+
+        grafica[num].GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+
+        grafica[num].GetComponent<Image>().color = colore;
+
+        if (path_sprite != "")
+        {
+            grafica[num].GetComponent<Image>().sprite = Resources.Load<Sprite>(path_sprite);
+        }
+
+
+        grafica[num].GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+
+
+
+
+        grafica_testo[num] = GameObject.Find(path + "/grafica_text" + num + "/Text");
+
+
+
+        grafica_testo[num].GetComponent<TextMeshProUGUI>().text = "" + txt;
+
+        grafica_testo[num].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
+
+
+    }
+
+
+    void pressione_pulsante(int num)
+    {
+
+#if UNITY_EDITOR
+
+        Debug.Log("pulsante " + num);
+
+#endif
+
+    }
+
+
+
+        void pressione_input_text(int num, InputField tog)
+    {
+
+
+        if (tog.text != null || tog.text != "" && tog.text != "-" && tog.text != ".")
+        {
+
+            Debug.Log("pressione!" + tog.text + "!!");
+
+        }
+
+
+    }
+
+
+    void crea_menu()
+    {
+
+        crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
+
+        crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gem");
+        crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+
+        crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
+        crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+
+
+
+
+    }
+
+
+    void aggiorna_menu()
+    {
+        font_size = (int)(risoluzione_x / 25);
+
+
+        float dy = risoluzione_y * .125f;
+        float dx = risoluzione_x * .7f;
+
+        float pos_x = 0;
+        float pos_y = risoluzione_y * .3f;
+
+     
+
+
+      
+
+        if (pulsante[0] != null)  //settings
+        {
+            float dx2 = dy * .8f / 2;
+            float dy2 = dx2 * (76f / 72f);
+            pos_x = risoluzione_x * -.5f + dx2;
+            pos_y = risoluzione_y * 0.45f;
+            pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+        if (grafica[3] != null)  //coin
+        {
+
+            float dx2 = dy * .8f / 2;
+            float dy2 = dx2 * (76f / 72f);
+            pos_x = risoluzione_x * .5f - dx2 * 2;
+            pos_y = risoluzione_y * 0.45f;
+
+            grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+        if (grafica[4] != null)  //coin  txt
+        {
+
+            float dx2 = dy * .8f;
+            float dy2 = dx2 * (76f / 72f);
+            pos_x = risoluzione_x * .5f - dx2;
+            pos_y = risoluzione_y * 0.5f - dy2 * .9f;
+
+            grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            grafica_testo[4].GetComponent<TextMeshProUGUI>().text = ""+ monete_partita_corrente;
+
+        }
+
+        if (grafica[1] != null)  //gem
+        {
+
+            float dx2 = dy * .8f / 2;
+            float dy2 = dx2 * (84f / 70f);
+            pos_x = 0;
+            pos_y = risoluzione_y * 0.45f;
+
+            grafica[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+        if (grafica[2] != null)  //gem  txt
+        {
+
+            float dx2 = dy * .8f;
+            float dy2 = dx2 * (76f / 72f);
+            pos_x = 0;
+            pos_y = risoluzione_y * 0.5f - dy2 * .9f;
+
+            grafica[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[2].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            grafica_testo[2].GetComponent<TextMeshProUGUI>().text = ""+gemme_prese;
+
+
+        }
+
+    }
+
+
+
+    public void controllo_risoluzione()
+    {
+
+        risoluzione_x = Screen.width;
+        risoluzione_y = Screen.height;
+
+
+
+        float xx = risoluzione_x;
+
+        rapporto_risoluzione = xx / risoluzione_y;
+
+        spostamento_sx = (rapporto_risoluzione / 1.333333f);
+        spostamento_sx2 = (rapporto_risoluzione - 1.333333f);
+
+
+        if (rapporto_risoluzione < 1)
+        {
+
+            spostamento_sx = (rapporto_risoluzione / .75f);
+            spostamento_sx2 = (rapporto_risoluzione - .75f);
+
+        }
+
+
+        xm_old = xm;
+        ym_old = ym;
+
+
+        xm = Input.mousePosition.x;
+        ym = Input.mousePosition.y;
+
+
+        diff_xm = xm - xm_old;
+        diff_ym = ym - ym_old;
+
+
+    }
 
 
 }
