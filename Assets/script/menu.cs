@@ -265,10 +265,12 @@ public class menu : MonoBehaviour {
         int aumento_pos_x = -1;
         int aumento_pos_y = 0;
 
-        for (int n = 0; n < 9; n++) {
+        for (int n = 0; n < 10; n++) {
 
             float dx2 = risoluzione_x * .4f;
             float dy2 = dx2 * (670.0f / 450.0f);
+
+            
 
             aumento_pos_x = aumento_pos_x + 1;
 
@@ -294,6 +296,8 @@ public class menu : MonoBehaviour {
                 limite_verticale_sx = pos_y - dy2 * .15f;
             }
 
+
+           
 
 
 
@@ -352,6 +356,9 @@ public class menu : MonoBehaviour {
             float dx2 = risoluzione_x * .4f;
             float dy2 = dx2 * (670 / 450.0f);
 
+            float dx_image = dx2 * .8f;
+
+
             aumento_pos_x = aumento_pos_x + 1;
 
 
@@ -376,6 +383,17 @@ public class menu : MonoBehaviour {
                 limite_verticale_dx = pos_y - dy2 * .15f;
             }
 
+
+
+            if (pulsante[160 + n] != null)
+            {
+
+                Debug.Log(n+" "+(160 + n));
+
+                pulsante[160 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_image, dx_image);
+                pulsante[160 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
+
+            }
 
 
 
@@ -1047,22 +1065,13 @@ public class menu : MonoBehaviour {
 
         // pagina sinistra
 
+        for (int n = 0; n <10; n++)
+        {
+            
 
-        crea_button_text(100, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-        crea_button_text(101, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-        crea_button_text(102, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-        crea_button_text(103, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-
-        crea_button_text(104, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-
-        crea_button_text(105, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-
-        crea_button_text(106, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-
-        crea_button_text(107, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-
-        crea_button_text(108, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-
+            crea_button_text(100 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_shop "+(n+1));
+           
+        }
 
 
 
@@ -1071,15 +1080,12 @@ public class menu : MonoBehaviour {
         crea_button_text(21, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
 
 
-        crea_button_text(150, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-        crea_button_text(151, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-        crea_button_text(152, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-        crea_button_text(153, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+        for (int n = 0; n < 6; n++)
+        {
+            crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+            crea_button_text(160 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/upgrade_carta " + (n+1));
 
-        crea_button_text(154, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-
-        crea_button_text(155, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-
+        }
 
 
         // pagina centrale
@@ -1360,6 +1366,9 @@ public class menu : MonoBehaviour {
 
 
             c_save_dati = JsonUtility.FromJson<classe_save_dati_menu>(dati_upgrade_shop.text);
+
+
+
 
             aggiorna_player_prefs();
         }
