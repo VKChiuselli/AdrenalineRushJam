@@ -138,10 +138,12 @@ public class carte_shop
 [Serializable]
 public class carte_upgrade
 {
+
   public  string path_sprite;
   public  string titolo;
   public  string descrizione;
     public int[] costo_monete = new int[10];
+
 
     public int effetto;
 
