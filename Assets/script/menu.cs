@@ -2,14 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using TMPro;
+using UnityEditor;
+using System.IO;
+using System.Text;
 using System;
-using UnityEngine.EventSystems;
+using System.Globalization;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class menu : MonoBehaviour
 {
 
+
+#if UNITY_EDITOR
+    [SerializeField]
+#endif
+    public classe_save c_save_dati;
+
+ 
 
     float xm, ym, xm_old, ym_old;
 
@@ -88,6 +98,8 @@ public class menu : MonoBehaviour
         }
 
         controllo_risoluzione();
+
+        carica_dati();
 
         crea_menu();
 
@@ -1406,5 +1418,54 @@ public class menu : MonoBehaviour
 
 
     }
+
+
+
+    void carica_dati()
+    {
+
+
+        try
+        {
+
+            c_save_dati = null;
+
+            c_save_dati = new classe_save();
+
+
+            c_save_dati = JsonUtility.FromJson<classe_save>("data_level/dati_upgrade_shop");
+
+
+        }
+        catch (Exception e)
+        {
+            print("error " + e.ToString());
+        }
+
+
+    }
+
+
+
+
+    void salva_dati()
+    {
+
+#if UNITY_EDITOR
+
+        string jsonData = JsonUtility.ToJson(c_save_dati, true);
+
+        string path_data = "Assets/Resources/data_level/dati_upgrade_shop.json";
+
+        File.WriteAllText(path_data, jsonData, Encoding.UTF8);
+
+        AssetDatabase.Refresh();
+
+#endif
+
+    }
+
+
+
 
 }
