@@ -275,7 +275,7 @@ public class menu : MonoBehaviour
         {
 
             float dx2 = risoluzione_x * .4f;
-            float dy2 = dx2;
+            float dy2 = dx2*(670.0f/450.0f);
 
             aumento_pos_x = aumento_pos_x + 1;
 
@@ -291,7 +291,7 @@ public class menu : MonoBehaviour
 
 
 
-            pos_y = risoluzione_y * .2f - aumento_pos_y * dy2 * 1.25f;
+            pos_y = risoluzione_y * .1f - aumento_pos_y * dy2 * 1.05f;
 
             if (pulsante[100 + n] != null)
             {
@@ -300,7 +300,7 @@ public class menu : MonoBehaviour
                 pulsante[100 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_sx);
 
 
-                limite_verticale_sx = pos_y - dy2 * .55f;
+                limite_verticale_sx = pos_y - dy2 * .15f;
             }
 
 
@@ -362,7 +362,7 @@ public class menu : MonoBehaviour
         {
 
             float dx2 = risoluzione_x * .4f;
-            float dy2 = dx2;
+            float dy2 = dx2*(670/450.0f);
 
             aumento_pos_x = aumento_pos_x + 1;
 
@@ -378,7 +378,7 @@ public class menu : MonoBehaviour
 
 
 
-            pos_y = risoluzione_y * -.2f - aumento_pos_y * dy2 * 1.25f;
+            pos_y = risoluzione_y * -.2f - aumento_pos_y * dy2 * 1.05f;
 
             if (pulsante[150 + n] != null)
             {
@@ -387,7 +387,7 @@ public class menu : MonoBehaviour
                 pulsante[150 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
 
 
-                limite_verticale_dx = pos_y - dy2 * .55f;
+                limite_verticale_dx = pos_y - dy2 * .15f;
             }
 
 
@@ -511,7 +511,7 @@ public class menu : MonoBehaviour
                 float dx2 = risoluzione_x * 0.333f;
                 float dy2 = risoluzione_y * 0.1f;
                 pos_x = 0;
-                pos_y = risoluzione_y * -0.5f + dy2;
+                pos_y = dime_panel_y * -0.5f + dy2*.85f;
                 pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
@@ -521,8 +521,8 @@ public class menu : MonoBehaviour
             {
                 float dx2 = risoluzione_x * 0.12f;
                 float dy2 = dx2;
-                pos_x = dime_panel_x * .5f;
-                pos_y = dime_panel_y * .5f;
+                pos_x = dime_panel_x * .465f;
+                pos_y = dime_panel_y * .465f;
 
 
                 pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -841,7 +841,7 @@ public class menu : MonoBehaviour
             float dx2 = risoluzione_x;
             float dy2 = dy;
             pos_x = 0;
-            pos_y = risoluzione_y * -0.5f + dy2 * 0.5f;
+            pos_y = risoluzione_y * -0.5f + dy2 * 0.35f;
             grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
@@ -1081,9 +1081,9 @@ public class menu : MonoBehaviour
 
         // sfondi
 
-        crea_grafica_text(0, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
-        crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
-        crea_grafica_text(2, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/Frame_BarFrame_Top02_Navy");
+        crea_grafica_text(0, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/sfondo_menu");
+        crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/sfondo_menu");
+        crea_grafica_text(2, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/sfondo_menu");
 
 
 
@@ -1092,20 +1092,20 @@ public class menu : MonoBehaviour
         // pagina sinistra
 
 
-        crea_button_text(100, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(101, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(102, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(103, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(100, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+        crea_button_text(101, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+        crea_button_text(102, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+        crea_button_text(103, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
 
-        crea_button_text(104, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(104, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
 
-        crea_button_text(105, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(105, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
 
-        crea_button_text(106, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(106, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
 
-        crea_button_text(107, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(107, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
 
-        crea_button_text(108, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(108, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
 
 
 
@@ -1115,14 +1115,14 @@ public class menu : MonoBehaviour
         crea_button_text(21, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
 
 
-        crea_button_text(150, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(151, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(152, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
-        crea_button_text(153, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(150, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+        crea_button_text(151, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+        crea_button_text(152, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+        crea_button_text(153, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
 
-        crea_button_text(154, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(154, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
 
-        crea_button_text(155, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Frame_carta_1");
+        crea_button_text(155, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
 
 
 
@@ -1157,7 +1157,7 @@ public class menu : MonoBehaviour
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello shop
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello shop
         crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_carta_1");  //testo/titolo oggetto shop
 
         crea_button_text(200, "BUY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
@@ -1174,7 +1174,7 @@ public class menu : MonoBehaviour
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello upgrade
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello upgrade
         crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
         crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_carta_1"); //immagine upgrade
         crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/prezzo oggetto upgrade
@@ -1193,7 +1193,7 @@ public class menu : MonoBehaviour
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_BarFrame_Top02_Navy"); //pannello OPZIONI
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello OPZIONI
         crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo musica
         crea_button_text(200, "ON", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto MUSICA
         crea_grafica_text(202, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo sfx

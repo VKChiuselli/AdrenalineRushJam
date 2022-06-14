@@ -227,6 +227,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         gestione_collisione();
 
+        gestione_coll_special_bonus_malus();
+
 
         aggiorna_menu();
 
@@ -1239,7 +1241,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         c_save.crea_malus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/malus_" + tipo_malus, typeof(GameObject))) as GameObject;
 
-        c_save.crea_malus[num].mesh.name = "malus_" + num;
+        c_save.crea_malus[num].mesh.name = "malus"+tipo_malus+"_" + num;
 
         c_save.crea_malus[num].mesh.transform.SetParent(cilindro.transform);
 
@@ -1247,6 +1249,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         c_save.crea_malus[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
 
+        if (tipo_malus == 0)
+        {
+            modifica_base(c_save.crea_malus[num].mesh);
+        }
 
     }
 
@@ -1268,7 +1274,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         c_save.crea_bonus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/bonus_" + tipo_bonus, typeof(GameObject))) as GameObject;
 
-        c_save.crea_bonus[num].mesh.name = "bonus_" + tipo_bonus;
+        c_save.crea_bonus[num].mesh.name = "bonus"+tipo_bonus+"_" + num;
 
         c_save.crea_bonus[num].mesh.transform.SetParent(cilindro.transform);
 
@@ -1276,6 +1282,11 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         c_save.crea_bonus[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
 
+
+        if (tipo_bonus == 0)
+        {
+            modifica_base(c_save.crea_bonus[num].mesh);
+        }
 
     }
 
@@ -1835,7 +1846,81 @@ public class gioco_ruota_cilindro : MonoBehaviour
         }
 
 
+
+
     }
+
+
+    void gestione_coll_special_bonus_malus()
+    {
+        RaycastHit hit_collider;
+
+
+        Vector3 pos = astronave.transform.position;
+
+
+        Vector3 pos_astronave = new Vector3(pos.x, pos.y, pos.z + 1.2f);
+
+        if (Physics.Raycast(pos_astronave, new Vector3(0, -1, 0), out hit_collider, 15))
+        {
+
+            if (hit_collider.collider.name.IndexOf("bonus0_") > -1)
+            {
+                string str_bonus = hit_collider.collider.name;
+
+
+                str_bonus = str_bonus.Replace("bonus0_", "");
+
+                int num_bonus = int.Parse(str_bonus);
+
+                if (c_save.crea_bonus[num_bonus].attivo == 0)
+                {
+
+                    c_save.crea_bonus[num_bonus].attivo = 1;
+
+                    velocita_bonus = velocita_bonus_base;
+
+                }
+
+            }
+
+            if (hit_collider.collider.name.IndexOf("malus0_") > -1)
+            {
+                string str_malus = hit_collider.collider.name;
+
+
+                str_malus = str_malus.Replace("malus0_", "");
+
+                int num_malus = int.Parse(str_malus);
+
+                if (c_save.crea_malus[num_malus].attivo == 0)
+                {
+
+                    c_save.crea_malus[num_malus].attivo = 1;
+
+                    inversione_controllo = 1 - inversione_controllo;
+
+                    Vector3 pos_P = c_save.crea_malus[num_malus].mesh.transform.position;
+
+                    Vector3 pos_p1 = new Vector3(pos_P.x,pos_P.y+4,pos.z);
+
+
+                    carica_particles("particles/CFX_Text_change", pos_p1);
+
+
+                }
+
+            }
+
+
+        }
+
+
+    }
+
+
+    
+
 
 
     void carica_particles(string path, Vector3 pos)
@@ -2455,6 +2540,108 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
     }
+
+
+
+    void modifica_base(GameObject ogg)
+    {
+
+
+        Debug.Log("" + ogg.name);
+
+
+
+        Vector3[] pos_v = new Vector3[50];
+
+
+        float rad2 = Mathf.PI / 18.0f;
+
+        float altezza = .05f;
+
+        for (int n = 0; n < 49; n++)
+        {
+
+            float rad = rad2 * n;
+
+
+
+            float xx = Mathf.Sin(rad) * (c_save.crea_cilindro[0].raggio + altezza);
+            float yy = Mathf.Cos(rad) * (c_save.crea_cilindro[0].raggio + altezza) - c_save.crea_cilindro[0].raggio;
+
+            pos_v[n] = new Vector3(xx, yy, 0);
+
+
+        }
+
+
+        Mesh mesh = ogg.GetComponent<MeshFilter>().mesh;
+
+        mesh.Clear();
+
+        int num_v = 5;
+        int num_tria = num_v - 1;
+
+        Vector3[] vertices = new Vector3[num_v * 2];
+        Vector2[] uvs = new Vector2[num_v * 2];
+        int[] tria = new int[num_tria * 6];
+
+
+        float raggio = c_save.crea_cilindro[0].raggio;
+
+        float u = 1.0f / (num_v - 1);
+
+
+
+        for (int n = 0; n < num_v; n++)
+        {
+            vertices[n] = pos_v[34 + n];
+
+            vertices[n + num_v] = vertices[n];
+            vertices[n + num_v].z = vertices[n + num_v].z + 6;
+
+            uvs[n] = new Vector2(u * n, 0);
+            uvs[n + num_v] = new Vector2(u * n, 1);
+        }
+
+
+        for (int n = 0; n < num_v - 1; n++)
+        {
+            int num_t = n * 6;
+
+            tria[num_t + 0] = 0 + n;
+            tria[num_t + 1] = 5 + n;
+            tria[num_t + 2] = 6 + n;
+
+            tria[num_t + 3] = 0 + n;
+            tria[num_t + 4] = 6 + n;
+            tria[num_t + 5] = 1 + n;
+
+        }
+
+
+
+
+
+
+
+        mesh.vertices = vertices;
+        mesh.uv = uvs;
+        mesh.triangles = tria;
+
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
+
+
+        DestroyImmediate(ogg.GetComponent<MeshCollider>());
+
+
+        ogg.AddComponent<MeshCollider>();
+
+
+
+    }
+
 
 
 }

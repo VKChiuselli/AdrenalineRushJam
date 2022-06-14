@@ -64,6 +64,8 @@ public class bonus
     public float rad;
     public float pos;
 
+    public int attivo;
+
 }
 
 
