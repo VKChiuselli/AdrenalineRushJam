@@ -1329,6 +1329,8 @@ public class menu : MonoBehaviour {
         salva_dati();
     }
 
+
+
     void pressione_input_text(int num, InputField tog) {
 
 
@@ -1343,20 +1345,26 @@ public class menu : MonoBehaviour {
 
 
 
-    void carica_dati() {
+    void carica_dati()
+    {
 
 
-        try {
+        try
+        {
 
             c_save_dati = null;
 
             c_save_dati = new classe_save_dati_menu();
 
-            c_save_dati = JsonUtility.FromJson<classe_save_dati_menu>("Assets/Resources/data_level/dati_upgrade_shop.json");
+            TextAsset dati_upgrade_shop = Resources.Load("data_level/dati_upgrade_shop") as TextAsset;
+
+
+            c_save_dati = JsonUtility.FromJson<classe_save_dati_menu>(dati_upgrade_shop.text);
 
             aggiorna_player_prefs();
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             carico_json_default_vuoto();
             aggiorna_player_prefs();
             print("error " + e.ToString());
