@@ -80,12 +80,18 @@ public class menu : MonoBehaviour {
     int attivo_popup = 0;
 
     void Start() {
-        PlayerPrefs.SetString("Upgrade1", "agilita");
-        PlayerPrefs.SetString("Upgrade2", "barriera");
-        PlayerPrefs.SetString("Upgrade3", "energia");
-        PlayerPrefs.SetString("Upgrade4", "spari");
-        PlayerPrefs.SetString("Upgrade5", "scafo");
-        PlayerPrefs.SetString("Upgrade6", "calamita");
+        PlayerPrefs.SetInt("Livello1", 100);
+        PlayerPrefs.SetInt("Livello2", 200);
+        PlayerPrefs.SetInt("Livello3", 400);
+        PlayerPrefs.SetInt("Livello4", 800);
+        PlayerPrefs.SetInt("Livello5", 1600);
+        PlayerPrefs.SetInt("Livello6", 3200);
+        PlayerPrefs.SetInt("Livello7", 6400);
+        PlayerPrefs.SetInt("Livello8", 10000);
+        PlayerPrefs.SetInt("Livello9", 11000);
+        PlayerPrefs.SetInt("Livello10", 12000);
+
+
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
 
@@ -395,13 +401,7 @@ public class menu : MonoBehaviour {
 
             }
 
-
-
         }
-
-
-
-
 
     }
 
@@ -409,8 +409,6 @@ public class menu : MonoBehaviour {
 
         risoluzione_x = Screen.width;
         risoluzione_y = Screen.height;
-
-
 
         float xx = risoluzione_x;
 
@@ -441,9 +439,6 @@ public class menu : MonoBehaviour {
 
 
     }
-
-
-
 
     void aggiorna_menu_popup() {
 
@@ -1318,7 +1313,7 @@ public class menu : MonoBehaviour {
 
 
         if (num == 200) {
-            acquista_oggetto(100);
+            acquista_oggetto(PlayerPrefs.GetInt($"costo_monete{upgrade_corrente}"));
         }
 
         if (num == 201) {
@@ -1331,15 +1326,15 @@ public class menu : MonoBehaviour {
         if (script_struttura_dati.monete >= costoUpgrade) {
 
             script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
-
-
-            //TODO da creare, prende in ingresso il costo (int), valuta (enum/string/int)
+            c_save_dati.crea_upgrade[upgrade_corrente].livello++;
+            c_save_dati.crea_upgrade[upgrade_corrente].costo_monete = PlayerPrefs.GetInt($"Livello{c_save_dati.crea_upgrade[upgrade_corrente].livello}");
+         
             Debug.Log("Oggetto acquistato");
             salva_dati();
+            aggiorna_player_prefs();
         }
 
     }
-
 
 
     void pressione_input_text(int num, InputField tog) {
@@ -1377,7 +1372,6 @@ public class menu : MonoBehaviour {
         }
         catch (Exception e) {
             carico_json_default_vuoto();
-            aggiorna_player_prefs();
             print("error " + e.ToString());
         }
 
@@ -1385,15 +1379,15 @@ public class menu : MonoBehaviour {
     }
 
     private void carico_json_default_vuoto() {
-        int[] myList = new int[] { 100, 200, 400, 800, 1600, 3200, 6400, 10000, 11000, 12000 };
         for (int i = 0; i < 6; i++) {
             carte_upgrade carte_Upgrade = new carte_upgrade();
 
             carte_Upgrade.path_sprite = $"UI/grafica_UI/upgrade_carta {i + 1}";
             carte_Upgrade.titolo = $"titolo{i}";
             carte_Upgrade.descrizione = $"descrizione{i}";
-            carte_Upgrade.costo_monete = myList;
+            carte_Upgrade.costo_monete = PlayerPrefs.GetInt("Livello1");
             carte_Upgrade.effetto = 0;
+            carte_Upgrade.livello = 1;
             carte_Upgrade.tipologia = 0;
             c_save_dati.crea_upgrade.Add(carte_Upgrade);
 
@@ -1402,20 +1396,19 @@ public class menu : MonoBehaviour {
 
 
         salva_dati();
-
+        aggiorna_player_prefs();
     }
 
     private void aggiorna_player_prefs() {
-        int[] myList = new int[] { 100, 200, 400, 800, 1600, 3200, 6400, 10000, 11000, 12000 }; //TODO capire quale livello di COSTO si è al momento, quando si salva
         for (int i = 0; i < c_save_dati.crea_upgrade.Count; i++) {
             if (c_save_dati.crea_upgrade[i] != null) {
                 PlayerPrefs.SetString($"path_sprite{i + 1}", $"{c_save_dati.crea_upgrade[i].path_sprite}");
                 PlayerPrefs.SetString($"titolo{i}", $"{c_save_dati.crea_upgrade[i].titolo}");
                 PlayerPrefs.SetString($"descrizione{i}", $"{c_save_dati.crea_upgrade[i].descrizione}");
 
-                for (int j = 0; j < 10; j++) {
-                    PlayerPrefs.SetInt($"costo_monete{i}", myList[j]);
-                }
+
+                PlayerPrefs.SetInt($"costo_monete{i}", c_save_dati.crea_upgrade[i].costo_monete);
+
 
                 PlayerPrefs.SetInt($"effetto{i}", c_save_dati.crea_upgrade[i].effetto);
                 PlayerPrefs.SetInt($"livello{i}", c_save_dati.crea_upgrade[i].livello);
