@@ -268,7 +268,7 @@ public class menu : MonoBehaviour {
         for (int n = 0; n < 10; n++) {
 
             float dx2 = risoluzione_x * .4f;
-            float dy2 = dx2 * (670.0f / 450.0f);
+            float dy2 = dx2 * (650.0f / 470.0f);
 
             
 
@@ -354,7 +354,7 @@ public class menu : MonoBehaviour {
         for (int n = 0; n < 9; n++) {
 
             float dx2 = risoluzione_x * .4f;
-            float dy2 = dx2 * (670 / 450.0f);
+            float dy2 = dx2 * (650 / 470.0f);
 
             float dx_image = dx2 * .8f;
 

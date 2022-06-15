@@ -74,15 +74,17 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float pressione_tasto = 0;
 
-    GameObject[] pulsante = new GameObject[100];
-    GameObject[] pulsante_testo = new GameObject[100];
+    static int max_ui = 300;
 
-    GameObject[] grafica = new GameObject[100];
-    GameObject[] grafica_testo = new GameObject[100];
+    GameObject[] pulsante = new GameObject[max_ui];
+    GameObject[] pulsante_testo = new GameObject[max_ui];
 
-    GameObject[] pulsante_field = new GameObject[100];
-    GameObject[] pulsante_field_testo = new GameObject[100];
-    GameObject[] pulsante_field_testo2 = new GameObject[100];
+    GameObject[] grafica = new GameObject[max_ui];
+    GameObject[] grafica_testo = new GameObject[max_ui];
+
+    GameObject[] pulsante_field = new GameObject[max_ui];
+    GameObject[] pulsante_field_testo = new GameObject[max_ui];
+    GameObject[] pulsante_field_testo2 = new GameObject[max_ui];
 
 
     struttura_dati script_struttura_dati;
@@ -136,8 +138,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float[] sparo_boss_rad = new float[10];
 
-    GameObject[] sparo= new GameObject[10];
-    float[] attivo_tempo_sparo= new float[10];
+    GameObject[] sparo = new GameObject[10];
+    float[] attivo_tempo_sparo = new float[10];
 
     float attivo_tempo_sparo_personaggio = 0;
     float attivo_tempo_sparo_boss2 = 0;
@@ -148,8 +150,17 @@ public class gioco_ruota_cilindro : MonoBehaviour
     int font_size = 15;
 
     int gemme_prese = 0;
-  
 
+    int attivo_popup = 0;
+
+    float resetTimerPopup = 0;
+
+    float[] grafica_tempo = new float[5];
+
+    float[] grafica_dime = new float[5];
+    float[] grafica_pos = new float[5];
+
+    int crea_popup_finale = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -229,8 +240,11 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         gestione_coll_special_bonus_malus();
 
+        gestione_fine_gioco();
 
         aggiorna_menu();
+
+        aggiorna_menu_popup();
 
     }
 
@@ -369,12 +383,12 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                     Destroy(c_save.crea_moneta[k].mesh);
 
-                      monete_partita_corrente = monete_partita_corrente + 1;
+                    monete_partita_corrente = monete_partita_corrente + 1;
 
                     if (ogg_struttura_dati != null)
                     {
                         script_struttura_dati.monete = script_struttura_dati.monete + 1;
-                        
+
 
                         Debug.Log(" script_struttura_dati.monete " + script_struttura_dati.monete);
                     }
@@ -411,16 +425,16 @@ public class gioco_ruota_cilindro : MonoBehaviour
         }
 
 
-        if (pressione_tasto_up > 0 )
+        if (pressione_tasto_up > 0)
         {
-         //   aumento_velo = aumento_velo +.25f;
+            //   aumento_velo = aumento_velo +.25f;
 
 
         }
 
 
 
-        astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio  + 1.0f, 0);
+        astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio + 1.0f, 0);
 
 
 
@@ -472,19 +486,19 @@ public class gioco_ruota_cilindro : MonoBehaviour
                 if (sparo_boss[n] != null)
                 {
 
-                    sparo_boss_rad[n]= sparo_boss_rad[n] + rotazione_cilindro * spostamento_boss_rotazione;
+                    sparo_boss_rad[n] = sparo_boss_rad[n] + rotazione_cilindro * spostamento_boss_rotazione;
 
                 }
 
             }
 
 
-                        cilindro.transform.Rotate(new Vector3(0, 0, rotazione_cilindro));
+            cilindro.transform.Rotate(new Vector3(0, 0, rotazione_cilindro));
 
         }
 
 
-       
+
 
         astronave_rz = Mathf.LerpAngle(astronave_rz, astronave_rz_calcolo, Time.deltaTime * 15);
 
@@ -511,7 +525,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
             if (sparo[n] != null)
             {
-                
+
 
                 if (attivo_tempo_sparo[n] > 0)
                 {
@@ -551,27 +565,27 @@ public class gioco_ruota_cilindro : MonoBehaviour
                 if (attivo_tempo_sparo_boss[n] > 0)
                 {
 
-                    float xx = Mathf.Sin(sparo_boss_rad[n]) * (c_save.crea_cilindro[0].raggio+1);
-                    float yy = Mathf.Cos(sparo_boss_rad[n]) * (c_save.crea_cilindro[0].raggio+1);
+                    float xx = Mathf.Sin(sparo_boss_rad[n]) * (c_save.crea_cilindro[0].raggio + 1);
+                    float yy = Mathf.Cos(sparo_boss_rad[n]) * (c_save.crea_cilindro[0].raggio + 1);
 
                     float zz = sparo_boss[n].transform.position.z;
 
-                    sparo_boss[n].transform.position = new Vector3(xx, yy, zz+ velocita_sparo_boss * Time.deltaTime);
+                    sparo_boss[n].transform.position = new Vector3(xx, yy, zz + velocita_sparo_boss * Time.deltaTime);
 
                     //  sparo_boss[n].transform.Translate(new Vector3(0, 0, velocita_sparo_boss * Time.deltaTime));
 
                     //  sparo_boss[n].transform
 
-                    float px = sparo_boss[n].transform.position.x-astronave.transform.position.x;
+                    float px = sparo_boss[n].transform.position.x - astronave.transform.position.x;
                     float py = sparo_boss[n].transform.position.y - astronave.transform.position.y;
 
-                   
-                    
-
-                    gestione_collisione_sparo(n, sparo_boss[n],1);
 
 
-                    
+
+                    gestione_collisione_sparo(n, sparo_boss[n], 1);
+
+
+
 
 
 
@@ -634,7 +648,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         velocita_bonus = Mathf.Lerp(velocita_bonus, 1, Time.deltaTime * .333f);
         aumento_velo = Mathf.Lerp(aumento_velo, 1, Time.deltaTime * .333f);
 
-        cilindro.transform.Translate(new Vector3(0, 0, -velocita_personaggio * Time.deltaTime * blocco_velocita * velocita_bonus* aumento_velo));
+        cilindro.transform.Translate(new Vector3(0, 0, -velocita_personaggio * Time.deltaTime * blocco_velocita * velocita_bonus * aumento_velo));
 
 
     }
@@ -721,7 +735,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
                         spostamento_blocco(c_save.crea_blocco[n].mesh, c_save.crea_blocco[n].punto_impatto, c_save.crea_blocco[n].forza_impatto, c_save.crea_blocco[n].rad);
                     }
 
-                    c_save.crea_blocco[n].valore_dissolve = c_save.crea_blocco[n].valore_dissolve + (2+ c_save.crea_blocco[n].distruzione_oggetto) * Time.deltaTime;
+                    c_save.crea_blocco[n].valore_dissolve = c_save.crea_blocco[n].valore_dissolve + (2 + c_save.crea_blocco[n].distruzione_oggetto) * Time.deltaTime;
 
                     //  Debug.Log("entra " + n+"  "+ c_save.crea_blocco[n].valore_dissolve);
 
@@ -1241,7 +1255,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         c_save.crea_malus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/malus_" + tipo_malus, typeof(GameObject))) as GameObject;
 
-        c_save.crea_malus[num].mesh.name = "malus"+tipo_malus+"_" + num;
+        c_save.crea_malus[num].mesh.name = "malus" + tipo_malus + "_" + num;
 
         c_save.crea_malus[num].mesh.transform.SetParent(cilindro.transform);
 
@@ -1274,7 +1288,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         c_save.crea_bonus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/bonus_" + tipo_bonus, typeof(GameObject))) as GameObject;
 
-        c_save.crea_bonus[num].mesh.name = "bonus"+tipo_bonus+"_" + num;
+        c_save.crea_bonus[num].mesh.name = "bonus" + tipo_bonus + "_" + num;
 
         c_save.crea_bonus[num].mesh.transform.SetParent(cilindro.transform);
 
@@ -1294,14 +1308,14 @@ public class gioco_ruota_cilindro : MonoBehaviour
     void aggiorna_oggetto_dissolto_singolo(int num, float dissolto)
     {
 
-           //  Debug.Log(num+" num "+ dissolto);
+        //  Debug.Log(num+" num "+ dissolto);
 
-          if (c_save.crea_blocco[num].mesh_renderer != null)
-          {
-        c_save.crea_blocco[num].mesh_renderer.material.SetFloat("_Amount", dissolto);
+        if (c_save.crea_blocco[num].mesh_renderer != null)
+        {
+            c_save.crea_blocco[num].mesh_renderer.material.SetFloat("_Amount", dissolto);
 
 
-         }
+        }
 
     }
 
@@ -1702,7 +1716,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         pos_direction[5] = new Vector3(0, 0, -.5f);
         pos_direction[6] = new Vector3(0, 0, -.5f);
 
-        pos_ray_direction[0] = new Vector3(0,0,2.6f);
+        pos_ray_direction[0] = new Vector3(0, 0, 2.6f);
         pos_ray_direction[1] = new Vector3(-1.5f, 0, .25f);
         pos_ray_direction[2] = new Vector3(1.5f, 0, .25f);
         pos_ray_direction[3] = new Vector3(0, 0, 2.6f);
@@ -1721,7 +1735,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         distanza_direction[6] = 1.5f;
 
         int numero_coll = 0;
-        Vector3 punto_coll= new Vector3(0,0,0);
+        Vector3 punto_coll = new Vector3(0, 0, 0);
 
         int num_block = -1;
 
@@ -1731,7 +1745,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
             pos = astronave.transform.position + pos_direction[n];
 
 
-            Debug.DrawRay(pos, pos_ray_direction[n], new Color(1, n*.2f, 0, 1));
+            Debug.DrawRay(pos, pos_ray_direction[n], new Color(1, n * .2f, 0, 1));
 
 
             if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, 15))
@@ -1751,9 +1765,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                         string str_block = "" + hit_collider.collider.name;
 
-                     //   Debug.Log("" + str_block);
+                        //   Debug.Log("" + str_block);
 
-                      
+
 
 
                         int indice = str_block.IndexOf("blocco_mesh");
@@ -1765,7 +1779,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                             num_block = int.Parse(str_block);
 
-                            numero_coll = numero_coll+1;
+                            numero_coll = numero_coll + 1;
 
                             punto_coll = punto_coll + hit_collider.point;
                         }
@@ -1777,14 +1791,14 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                             num_block = int.Parse(str_block);
 
-                          
+
                             if (c_save.crea_blocco[num_block].disattiva_coll == 0)
                             {
                                 c_save.crea_blocco[num_block].distruzione_oggetto = 10;
 
                                 carica_particles("particles/CFXR Explosion 2", c_save.crea_blocco[num_block].mesh_dissolve.transform.position);
 
-                                    c_save.crea_blocco[num_block].disattiva_coll = 1;
+                                c_save.crea_blocco[num_block].disattiva_coll = 1;
                                 energia = energia - 30;
 
                             }
@@ -1792,11 +1806,11 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-                    //    Debug.Log("toccato blocco " + num_block);
+                        //    Debug.Log("toccato blocco " + num_block);
 
 
 
-                      
+
 
 
                     }
@@ -1809,21 +1823,21 @@ public class gioco_ruota_cilindro : MonoBehaviour
             }
 
 
-            if (num_block > -1 && numero_coll>0)
+            if (num_block > -1 && numero_coll > 0)
             {
-               
+
 
                 Vector3 punto_coll_uso = punto_coll / numero_coll;
 
 
 
-                
 
-               // crea_sfera(punto_coll_uso);
 
-               
+                // crea_sfera(punto_coll_uso);
 
-             //   Debug.Break();
+
+
+                //   Debug.Break();
 
                 if (c_save.crea_blocco[num_block].disattiva_coll == 0)
                 {
@@ -1902,7 +1916,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                     Vector3 pos_P = c_save.crea_malus[num_malus].mesh.transform.position;
 
-                    Vector3 pos_p1 = new Vector3(pos_P.x,pos_P.y+4,pos.z);
+                    Vector3 pos_p1 = new Vector3(pos_P.x, pos_P.y + 4, pos.z);
 
 
                     carica_particles("particles/CFX_Text_change", pos_p1);
@@ -1919,7 +1933,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     }
 
 
-    
+
 
 
 
@@ -1969,7 +1983,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         int toccato_astronave = 0;
 
-        if (distanza_coll < 2 && tipo==1)
+        if (distanza_coll < 2 && tipo == 1)
         {
             DestroyImmediate(ogg);
 
@@ -2076,7 +2090,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     }
 
-        
+
 
 
     void gestione_boss()
@@ -2132,7 +2146,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                         sparo_boss[n].name = "sparo_boss " + n;
 
-                        attivo_tempo_sparo_boss2 = UnityEngine.Random.Range(6,10);
+                        attivo_tempo_sparo_boss2 = UnityEngine.Random.Range(6, 10);
 
                         n = 1000;
 
@@ -2200,7 +2214,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     void spostamento_blocco(GameObject ogg, Vector3 pi, float forza, float ogg_rad)
     {
 
-    //    Debug.Log("blocco impatto ");
+        //    Debug.Log("blocco impatto ");
 
         Mesh mesh = ogg.GetComponent<MeshFilter>().mesh;
 
@@ -2209,9 +2223,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         Vector3 pos = ogg.transform.position;
 
-     //   crea_sfera(pi,"coll");
+        //   crea_sfera(pi,"coll");
 
-        float rad = -ogg.transform.localEulerAngles.z*Mathf.Deg2Rad;
+        float rad = -ogg.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
         for (int n = 0; n < vertices.Length; n++)
         {
@@ -2220,24 +2234,24 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-       //     crea_sfera(pv);
+            //     crea_sfera(pv);
 
             float xx = pv.x - pi.x;
             float zz = pv.z - pi.z;
 
             float dis = Mathf.Sqrt(xx * xx + zz * zz);
 
-        //    float rad = Mathf.Atan2(xx, zz);
+            //    float rad = Mathf.Atan2(xx, zz);
 
-            float molt = (6 - dis)/6.0f;
+            float molt = (6 - dis) / 6.0f;
 
             if (molt < 0)
             {
                 molt = 0;
             }
 
-          //  float px = vertices[n].x - Mathf.Sin(rad) * forza*molt;
-            float pz = pv.z+   forza*molt*Time.deltaTime-pos.z;
+            //  float px = vertices[n].x - Mathf.Sin(rad) * forza*molt;
+            float pz = pv.z + forza * molt * Time.deltaTime - pos.z;
 
 
 
@@ -2255,7 +2269,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         mesh.RecalculateNormals();
         mesh.RecalculateTangents();
 
-   //    Debug.Break();
+        //    Debug.Break();
 
     }
 
@@ -2281,7 +2295,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         InputField m_Toggle2 = pulsante_field[num].GetComponent<InputField>();
 
-        m_Toggle2.onEndEdit.AddListener(delegate {
+        m_Toggle2.onEndEdit.AddListener(delegate
+        {
             pressione_input_text(num, m_Toggle2);
         });
 
@@ -2380,7 +2395,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-        void pressione_input_text(int num, InputField tog)
+    void pressione_input_text(int num, InputField tog)
     {
 
 
@@ -2407,7 +2422,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
-
+    
 
     }
 
@@ -2423,10 +2438,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
         float pos_x = 0;
         float pos_y = risoluzione_y * .3f;
 
-     
 
 
-      
+
+
 
         if (pulsante[0] != null)  //settings
         {
@@ -2464,7 +2479,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
             grafica[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-            grafica_testo[4].GetComponent<TextMeshProUGUI>().text = ""+ monete_partita_corrente;
+            grafica_testo[4].GetComponent<TextMeshProUGUI>().text = "" + monete_partita_corrente;
 
         }
 
@@ -2493,7 +2508,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
             grafica[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             grafica_testo[2].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-            grafica_testo[2].GetComponent<TextMeshProUGUI>().text = ""+gemme_prese;
+            grafica_testo[2].GetComponent<TextMeshProUGUI>().text = "" + gemme_prese;
 
 
         }
@@ -2637,6 +2652,263 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
         ogg.AddComponent<MeshCollider>();
+
+
+
+    }
+
+
+
+    void crea_popup(int num = 1)
+    {
+
+
+        attivo_popup = num;
+
+        distruggi_menu_popup();
+
+        canvas_popup.SetActive(true);
+
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popup_gioco"); //pannello shop
+
+        crea_grafica_text(201, new Color(1, 1, 1, 0), "LEVEL", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
+        string num_livello = "1";
+
+
+
+        crea_grafica_text(202, new Color(1, 1, 1, 0), ""+ num_livello, canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+        crea_grafica_text(203, new Color(1, 1, 1, 0), "COMPLETED", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+        grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
+
+        grafica[203].transform.localEulerAngles = new Vector3(0,0,30);
+
+
+   grafica_tempo[1] = .5f;
+        grafica_tempo[2] = 1;
+        grafica_tempo[3] = 1.5f;
+
+
+        grafica_dime[1] = 4;
+
+        grafica_dime[2] = 4;
+
+       
+        grafica_dime[3] = 4;
+
+
+    }
+
+
+    void crea_popup_raddoppio_monete(int num = 2)
+    {
+
+
+        attivo_popup = num;
+
+        distruggi_menu_popup();
+
+        canvas_popup.SetActive(true);
+
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_menu"); //pannello shop
+
+        crea_button_text(200, "DOUBLE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
+
+    }
+
+
+
+    void aggiorna_menu_popup()
+    {
+
+
+        float dy = risoluzione_y;
+        float dx = risoluzione_x;
+
+        float pos_x = 0;
+        float pos_y = 0;
+
+        float dime_panel_x = 0;
+        float dime_panel_y = 0;
+
+        int font_size = (int)(risoluzione_x / 5);
+        int font_size2 = (int)(risoluzione_x / 5);
+        int font_size3 = (int)(risoluzione_x / 8);
+
+
+        for (int n = 0; n <= 10; n++)
+        {
+            if (grafica[200 + n] != null)
+            {
+                grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
+            }
+
+            if (pulsante[200 + n] != null)
+            {
+                pulsante[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
+            }
+        }
+
+
+
+
+        if (attivo_popup == 1)
+        {
+            if (grafica[200] != null)  //pannello
+            {
+
+                float dx2 = dx * .8f;
+                float dy2 = dy * .8f;
+
+                float dy_t = dy * .2f;
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
+                
+                grafica_pos[1] = .3f;
+                grafica_pos[2] = .1f;
+                grafica_pos[3] = -.25f;
+
+
+                for (int n = 1; n <= 3; n++)
+                {
+                    grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
+
+
+                    if (grafica_tempo[n] < 0)
+                    {
+
+                      //  grafica_pos[n] = Mathf.MoveTowards(grafica_pos[n], 1, Time.deltaTime);
+
+                        grafica_dime[n] = Mathf.MoveTowards(grafica_dime[n], 1, Time.deltaTime*5);
+
+
+                        pos_y = dime_panel_y  * grafica_pos[n];
+
+                        grafica[200+n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy_t );
+                        grafica[200+n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                        grafica[200 + n].transform.localScale= new Vector3(grafica_dime[n], grafica_dime[n], grafica_dime[n]);
+
+
+
+                        if (n == 1)
+                        {
+                            grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+                        }
+                        if (n == 2)
+                        {
+                            grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size2;
+                        }
+                        if (n == 3)
+                        {
+                            grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
+                        }
+
+
+                    }
+
+                }
+
+
+
+            }
+
+            uscita_popup(dime_panel_x, dime_panel_y);
+
+        }
+
+    }
+
+    void uscita_popup(float dime_panel_x, float dime_panel_y)
+    {
+        resetTimerPopup += Time.deltaTime;
+
+
+
+        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f)
+        {
+            resetTimerPopup = 0;
+            float dx = (risoluzione_x - dime_panel_x) * .5f;
+            float dy = (risoluzione_y - dime_panel_y) * .5f;
+
+
+            if (xm < dx || xm > risoluzione_x - dx)
+            {
+                distruggi_menu_popup();
+            }
+
+
+            if (ym < dy || ym > risoluzione_y - dy)
+            {
+                distruggi_menu_popup();
+            }
+
+        }
+
+
+    }
+
+    void distruggi_menu_popup()
+    {
+
+        canvas_popup.SetActive(false);
+
+        for (int n = 200; n < pulsante.Length; n++)
+        {
+            if (pulsante[n] != null)
+            {
+                DestroyImmediate(pulsante[n]);
+            }
+
+        }
+
+        for (int n = 200; n < grafica.Length; n++)
+        {
+            if (grafica[n] != null)
+            {
+                DestroyImmediate(grafica[n]);
+            }
+
+        }
+
+
+    }
+
+
+    void gestione_fine_gioco()
+    {
+
+        if (crea_popup_finale == 0)
+        {
+
+            Vector3 pos_finale = c_save.crea_cilindro[0].pos_finale;
+
+            //  Debug.Log(pos_finale +" "+ cilindro.transform.position.z);
+
+
+
+            if (cilindro.transform.position.z < -pos_finale.z)
+            {
+
+                blocco_velocita = 0;
+
+
+                crea_popup_finale = 1;
+                crea_popup(1);
+            }
+
+        }
 
 
 
