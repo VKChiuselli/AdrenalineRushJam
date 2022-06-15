@@ -7,22 +7,20 @@ using UnityEngine;
 
 
 [Serializable]
-public class cilindro
-{
+public class cilindro {
 
-    public float raggio=20;
+    public float raggio = 20;
     public float spostamento_z = 1;
     public float spostamento_z2 = .75f;
 
-    public Vector3 pos_finale ;
+    public Vector3 pos_finale;
 }
 
 
 
 [Serializable]
-public class blocco
-{
-   
+public class blocco {
+
     public GameObject mesh;
     public GameObject mesh_dissolve;
 
@@ -52,8 +50,7 @@ public class blocco
 
 
 [Serializable]
-public class bonus
-{
+public class bonus {
 
     public GameObject mesh;
 
@@ -70,8 +67,7 @@ public class bonus
 
 
 [Serializable]
-public class malus
-{
+public class malus {
 
     public GameObject mesh;
 
@@ -89,8 +85,7 @@ public class malus
 }
 
 [Serializable]
-public class gemma
-{
+public class gemma {
 
     public GameObject mesh;
 
@@ -105,8 +100,7 @@ public class gemma
 }
 
 [Serializable]
-public class moneta
-{
+public class moneta {
 
     public GameObject mesh;
 
@@ -122,8 +116,7 @@ public class moneta
 }
 
 [Serializable]
-public class carte_shop
-{
+public class carte_shop {
     string path_sprite;
     string titolo;
     string descrizione;
@@ -136,13 +129,12 @@ public class carte_shop
 
 
 [Serializable]
-public class carte_upgrade
-{
+public class carte_upgrade {
 
-  public  string path_sprite;
-  public  string titolo;
-  public  string descrizione;
-    public int costo_monete;
+    public string path_sprite;
+    public string titolo;
+    public string descrizione;
+    public int Costo_Upgrade;
 
 
     public int effetto;

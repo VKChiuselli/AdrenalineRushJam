@@ -16,9 +16,6 @@ public class menu : MonoBehaviour {
 #if UNITY_EDITOR
     [SerializeField]
 #endif
-    public classe_save_dati_menu c_save_dati;
-
-
 
     float xm, ym, xm_old, ym_old;
 
@@ -65,7 +62,7 @@ public class menu : MonoBehaviour {
 
 
     struttura_dati script_struttura_dati;
-    private int upgrade_corrente;
+    public int indice_upgrade_corrente;
 
     GameObject canvas;
     GameObject canvas_popup;
@@ -80,17 +77,14 @@ public class menu : MonoBehaviour {
     int attivo_popup = 0;
 
     void Start() {
-        PlayerPrefs.SetInt("Livello1", 100);
-        PlayerPrefs.SetInt("Livello2", 200);
-        PlayerPrefs.SetInt("Livello3", 400);
-        PlayerPrefs.SetInt("Livello4", 800);
-        PlayerPrefs.SetInt("Livello5", 1600);
-        PlayerPrefs.SetInt("Livello6", 3200);
-        PlayerPrefs.SetInt("Livello7", 6400);
-        PlayerPrefs.SetInt("Livello8", 10000);
-        PlayerPrefs.SetInt("Livello9", 11000);
-        PlayerPrefs.SetInt("Livello10", 12000);
 
+
+        if (PlayerPrefs.HasKey("PrimoLogin")) {
+            PlayerPrefs.SetString("PrimoLogin", "effettuato");
+        }
+  
+        if(PlayerPrefs.GetString("PrimoLogin")== "init")
+        inizializzazione_dati();
 
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
@@ -109,10 +103,59 @@ public class menu : MonoBehaviour {
 
         controllo_risoluzione();
 
-        carica_dati();
-
         crea_menu();
 
+    }
+
+    private static void inizializzazione_dati() {
+
+        PlayerPrefs.SetInt("Livello1", 100);
+        PlayerPrefs.SetInt("Livello2", 200);
+        PlayerPrefs.SetInt("Livello3", 400);
+        PlayerPrefs.SetInt("Livello4", 800);
+        PlayerPrefs.SetInt("Livello5", 1600);
+        PlayerPrefs.SetInt("Livello6", 3200);
+        PlayerPrefs.SetInt("Livello7", 6400);
+        PlayerPrefs.SetInt("Livello8", 10000);
+        PlayerPrefs.SetInt("Livello9", 11000);
+        PlayerPrefs.SetInt("Livello10", 12000);
+
+        for(int i=1; i<7; i++) {
+            PlayerPrefs.SetInt($"LivelloUpgrade{i}", 1);
+            PlayerPrefs.SetString($"path_sprite{i}", $"UI/grafica_UI/upgrade_carta {i}");
+            PlayerPrefs.SetInt($"Costo_Upgrade{i}", PlayerPrefs.GetInt($"Livello{PlayerPrefs.GetInt($"LivelloUpgrade{i}")}"));
+        }
+
+        PlayerPrefs.SetString("UpgradeTitolo1", "agilita");
+        PlayerPrefs.SetString("UpgradeTitolo2", "barriera");
+        PlayerPrefs.SetString("UpgradeTitolo3", "energia");
+        PlayerPrefs.SetString("UpgradeTitolo4", "spari");
+        PlayerPrefs.SetString("UpgradeTitolo5", "scafo");
+        PlayerPrefs.SetString("UpgradeTitolo6", "calamita");
+
+        PlayerPrefs.SetString("UpgradeDescrizione1", "Descrizione!agilita");
+        PlayerPrefs.SetString("UpgradeDescrizione2", "Descrizione!barriera");
+        PlayerPrefs.SetString("UpgradeDescrizione3", "Descrizione!energia");
+        PlayerPrefs.SetString("UpgradeDescrizione4", "Descrizione!spari");
+        PlayerPrefs.SetString("UpgradeDescrizione5", "Descrizione!scafo");
+        PlayerPrefs.SetString("UpgradeDescrizione6", "Descrizione!calamita");
+
+        //ammontare di quanto cambia l'effetto del potere, ognuno avrà una sua singolarità
+        PlayerPrefs.SetInt("UpgradeEffetto1", 1);
+        PlayerPrefs.SetInt("UpgradeEffetto2", 1);
+        PlayerPrefs.SetInt("UpgradeEffetto3", 1);
+        PlayerPrefs.SetInt("UpgradeEffetto4", 1);
+        PlayerPrefs.SetInt("UpgradeEffetto5", 1);
+        PlayerPrefs.SetInt("UpgradeEffetto6", 1);
+
+        //TBD
+        PlayerPrefs.SetInt("UpgradeTipologia1", 1);
+        PlayerPrefs.SetInt("UpgradeTipologia2", 1);
+        PlayerPrefs.SetInt("UpgradeTipologia3", 1);
+        PlayerPrefs.SetInt("UpgradeTipologia4", 1);
+        PlayerPrefs.SetInt("UpgradeTipologia5", 1);
+        PlayerPrefs.SetInt("UpgradeTipologia6", 1);
+     
     }
 
     void Update() {
@@ -556,7 +599,7 @@ public class menu : MonoBehaviour {
                 grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetString($"titolo{upgrade_corrente}");
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetString($"UpgradeTitolo{indice_upgrade_corrente}");
 
 
             }
@@ -585,7 +628,7 @@ public class menu : MonoBehaviour {
                 grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt($"costo_monete{upgrade_corrente}");
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt($"Costo_Upgrade{indice_upgrade_corrente}");
 
             }
 
@@ -1127,9 +1170,9 @@ public class menu : MonoBehaviour {
         canvas_popup.SetActive(true);
 
         crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello upgrade
-        crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"titolo{upgrade_corrente}")); //testo/titolo oggetto upgrade
-        crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"path_sprite{upgrade_corrente + 1}")); //immagine upgrade
-        crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", "" + PlayerPrefs.GetInt($"costo_monete{upgrade_corrente}")); //testo/prezzo oggetto upgrade
+        crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"UpgradeTitolo{indice_upgrade_corrente}")); //testo/titolo oggetto upgrade
+        crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"path_sprite{indice_upgrade_corrente}")); //immagine upgrade
+        crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", "" + PlayerPrefs.GetInt($"Costo_Upgrade{indice_upgrade_corrente}")); //testo/prezzo oggetto upgrade
         crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/StatusBarIcon_Gold"); //immagine valuta
 
         crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
@@ -1307,13 +1350,35 @@ public class menu : MonoBehaviour {
         }
 
         if (num == 150) {
-            upgrade_corrente = 0;
+            indice_upgrade_corrente = 1;
+            crea_popup_upgrade(2);
+        }
+        if (num == 151) {
+            indice_upgrade_corrente = 2;
+            crea_popup_upgrade(2);
+        }
+        if (num == 152) {
+            indice_upgrade_corrente = 3;
+            crea_popup_upgrade(2);
+        }
+        
+        if (num == 153) {
+            indice_upgrade_corrente = 4;
+            crea_popup_upgrade(2);
+        }
+        if (num == 154) {
+            indice_upgrade_corrente = 5;
+            crea_popup_upgrade(2);
+        }
+        
+        if (num == 155) {
+            indice_upgrade_corrente = 6;
             crea_popup_upgrade(2);
         }
 
 
         if (num == 200) {
-            acquista_oggetto(PlayerPrefs.GetInt($"costo_monete{upgrade_corrente}"));
+            acquista_oggetto(PlayerPrefs.GetInt($"Costo_Upgrade{indice_upgrade_corrente}"));
         }
 
         if (num == 201) {
@@ -1326,12 +1391,12 @@ public class menu : MonoBehaviour {
         if (script_struttura_dati.monete >= costoUpgrade) {
 
             script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
-            c_save_dati.crea_upgrade[upgrade_corrente].livello++;
-            c_save_dati.crea_upgrade[upgrade_corrente].costo_monete = PlayerPrefs.GetInt($"Livello{c_save_dati.crea_upgrade[upgrade_corrente].livello}");
-         
+            int livello_attuale = PlayerPrefs.GetInt($"LivelloUpgrade{indice_upgrade_corrente}");
+            PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (livello_attuale+1));
+            int costo_upgrade = PlayerPrefs.GetInt($"Livello{livello_attuale+1}");
+            PlayerPrefs.SetInt($"Costo_Upgrade{indice_upgrade_corrente}", costo_upgrade);
+
             Debug.Log("Oggetto acquistato");
-            salva_dati();
-            aggiorna_player_prefs();
         }
 
     }
@@ -1348,93 +1413,5 @@ public class menu : MonoBehaviour {
 
 
     }
-
-
-
-    void carica_dati() {
-
-
-        try {
-
-            c_save_dati = null;
-
-            c_save_dati = new classe_save_dati_menu();
-
-            TextAsset dati_upgrade_shop = Resources.Load("data_level/dati_upgrade_shop") as TextAsset;
-
-
-            c_save_dati = JsonUtility.FromJson<classe_save_dati_menu>(dati_upgrade_shop.text);
-
-
-
-
-            aggiorna_player_prefs();
-        }
-        catch (Exception e) {
-            carico_json_default_vuoto();
-            print("error " + e.ToString());
-        }
-
-
-    }
-
-    private void carico_json_default_vuoto() {
-        for (int i = 0; i < 6; i++) {
-            carte_upgrade carte_Upgrade = new carte_upgrade();
-
-            carte_Upgrade.path_sprite = $"UI/grafica_UI/upgrade_carta {i + 1}";
-            carte_Upgrade.titolo = $"titolo{i}";
-            carte_Upgrade.descrizione = $"descrizione{i}";
-            carte_Upgrade.costo_monete = PlayerPrefs.GetInt("Livello1");
-            carte_Upgrade.effetto = 0;
-            carte_Upgrade.livello = 1;
-            carte_Upgrade.tipologia = 0;
-            c_save_dati.crea_upgrade.Add(carte_Upgrade);
-
-        }
-
-
-
-        salva_dati();
-        aggiorna_player_prefs();
-    }
-
-    private void aggiorna_player_prefs() {
-        for (int i = 0; i < c_save_dati.crea_upgrade.Count; i++) {
-            if (c_save_dati.crea_upgrade[i] != null) {
-                PlayerPrefs.SetString($"path_sprite{i + 1}", $"{c_save_dati.crea_upgrade[i].path_sprite}");
-                PlayerPrefs.SetString($"titolo{i}", $"{c_save_dati.crea_upgrade[i].titolo}");
-                PlayerPrefs.SetString($"descrizione{i}", $"{c_save_dati.crea_upgrade[i].descrizione}");
-
-
-                PlayerPrefs.SetInt($"costo_monete{i}", c_save_dati.crea_upgrade[i].costo_monete);
-
-
-                PlayerPrefs.SetInt($"effetto{i}", c_save_dati.crea_upgrade[i].effetto);
-                PlayerPrefs.SetInt($"livello{i}", c_save_dati.crea_upgrade[i].livello);
-                PlayerPrefs.SetInt($"tipologia{i}", c_save_dati.crea_upgrade[i].tipologia);
-            }
-        }
-
-    }
-
-    void salva_dati() {
-
-#if UNITY_EDITOR
-
-        string jsonData = JsonUtility.ToJson(c_save_dati, true);
-
-        string path_data = "Assets/Resources/data_level/dati_upgrade_shop.json";
-
-        File.WriteAllText(path_data, jsonData, Encoding.UTF8);
-
-        AssetDatabase.Refresh();
-
-#endif
-
-    }
-
-
-
 
 }
