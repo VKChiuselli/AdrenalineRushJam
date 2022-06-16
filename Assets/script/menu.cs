@@ -362,8 +362,12 @@ public class menu : MonoBehaviour {
                 grafica[100 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[100 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_sx + dy2 * -.33f);
                 grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
-                grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "BUY";
-
+                if (100 + n == 100)
+                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "FREE";
+                else if (100 + n == 101)
+                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "AD";
+                else
+                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "BUY";
 
             }
 
@@ -372,7 +376,7 @@ public class menu : MonoBehaviour {
                 grafica[120 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[120 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_sx + dy2 * 0.33f);
                 grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
-                grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().text = "" + shop_quantita_monete[n+1];
+                grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().text = "" + shop_quantita_monete[n + 1];
 
 
             }
@@ -477,7 +481,7 @@ public class menu : MonoBehaviour {
 
 
             if (grafica[170 + n] != null) {
-                         
+
                 grafica[170 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2 * .1f);
                 grafica[170 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 1.15f, pos_y + scroll_verticale_dx + dy2 * 0.37f);
                 grafica_testo[170 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
@@ -1213,7 +1217,7 @@ public class menu : MonoBehaviour {
 
             grafica[160 + n].GetComponent<Image>().raycastTarget = false;
             grafica_testo[160 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
-            
+
             grafica[170 + n].GetComponent<Image>().raycastTarget = false;
             grafica_testo[170 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
 
@@ -1523,16 +1527,47 @@ public class menu : MonoBehaviour {
 
 
         if (num == 200) {
-            acquista_oggetto(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
+            if (attivo_popup == 1) {
+                acquista_shop();
+            }
+            else if (attivo_popup == 2) { 
+            
+            acquista_upgrade(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
+            
+            }
+
         }
 
         if (num == 201) {
             distruggi_menu_popup();
         }
-
+        
     }
 
-    private void acquista_oggetto(int costoUpgrade) {
+    private void acquista_shop() {
+        if (indice_shop_corrente == 1) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 2) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 3) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 4) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 5) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+    }
+
+    private void acquista_upgrade(int costoUpgrade) {
         if (script_struttura_dati.monete >= costoUpgrade) {
 
             script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
