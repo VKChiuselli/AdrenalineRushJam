@@ -9,7 +9,7 @@ public class struttura_dati : MonoBehaviour
     public int livello_in_uso;
     public int monete;
     public int gemme;
-    public int[] livello_upgrade= new int[10];
+    public int[] livello_upgrade= new int[20];
     public int[] costo_livello= new int[50];
     public int stelle_battle_pass;
     public float caratteristiche_forza;

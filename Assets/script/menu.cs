@@ -79,15 +79,22 @@ public class menu : MonoBehaviour {
 
     int attivo_popup = 0;
 
+
+    string[] upgrade_titolo = new string[20];
+    string[] upgrade_descrittore = new string[20];
+
+
+
     void Start() {
 
 
-        if (PlayerPrefs.HasKey("PrimoLogin")) {
+        if (!PlayerPrefs.HasKey("PrimoLogin"))
+        {
+            inizializzazione_dati();
             PlayerPrefs.SetString("PrimoLogin", "effettuato");
         }
-  
-        if(PlayerPrefs.GetString("PrimoLogin")== "init")
-        inizializzazione_dati();
+
+      
 
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
@@ -406,7 +413,7 @@ public class menu : MonoBehaviour {
 
         for (int n = 0; n < 9; n++) {
 
-            float dx2 = risoluzione_x * .4f;
+            float dx2 = risoluzione_x * .44f;
             float dy2 = dx2 * (650 / 470.0f);
 
             float dx_image = dx2 * .8f;
@@ -438,22 +445,20 @@ public class menu : MonoBehaviour {
             
             if (grafica[150 + n] != null) {
 
-                grafica[150 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-                grafica[150 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
-                grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 8f;
-                grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.livello_upgrade[n + 1];
+                grafica[150 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2*.1f);
+                grafica[150 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx+dy2*-.37f);
+                grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
+              //  grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().text = "titolo" ;
 
 
-
-                limite_verticale_dx = pos_y - dy2 * .15f;
             }
 
 
 
-            if (pulsante[160 + n] != null) {
+            if (grafica[160 + n] != null) {
 
-                pulsante[160 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_image, dx_image);
-                pulsante[160 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
+                grafica[160 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_image, dx_image);
+                grafica[160 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
 
             }
 
@@ -650,7 +655,6 @@ public class menu : MonoBehaviour {
                 float dy2 = dx2 * (118f / 596f);
                 pos_x = 0;
                 pos_y = dime_panel_y * -0.18f;
-                grafica[204].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/upgrade_popUP_barra {script_struttura_dati.livello_upgrade[indice_upgrade_corrente]}"); //immagine progresso barra
                 grafica[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
@@ -673,8 +677,8 @@ public class menu : MonoBehaviour {
             {
                 float dx2 = risoluzione_x * 0.12f;
                 float dy2 = dx2;
-                pos_x = dime_panel_x * .5f;
-                pos_y = dime_panel_y * .5f;
+                pos_x = dime_panel_x * .46f;
+                pos_y = dime_panel_y * .48f;
 
 
                 pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -751,7 +755,7 @@ public class menu : MonoBehaviour {
 
             if (pulsante[201] != null)  //tasto sfx
             {
-                float dx2 = risoluzione_x * 0.333f / 2;
+                float dx2 = risoluzione_x * 0.333f ;
                 float dy2 = risoluzione_y * 0.1f / 2;
                 pos_x = dy * .8f * +0.5f - dy * .8f * (76f / 72f) * 0.333f;
                 pos_y = dy2 * 0.5f + dx * 0.8f / 2;
@@ -780,7 +784,7 @@ public class menu : MonoBehaviour {
 
             if (pulsante[202] != null)  //tasto facebook
             {
-                float dx2 = risoluzione_x * 0.333f;
+                float dx2 = dime_panel_x*.7f;
                 float dy2 = risoluzione_y * 0.1f;
                 pos_x = 0;
                 pos_y = risoluzione_y * 0.5f - dy * .8f * (76f / 72f) * 0.50f;
@@ -809,7 +813,7 @@ public class menu : MonoBehaviour {
 
             if (pulsante[203] != null)  //tasto credits
             {
-                float dx2 = risoluzione_x * 0.333f;
+                float dx2 = dime_panel_x * .7f;
                 float dy2 = risoluzione_y * 0.1f;
                 pos_x = 0;
                 pos_y = risoluzione_y * -0.5f + dx2 * 1.5f;
@@ -822,8 +826,8 @@ public class menu : MonoBehaviour {
             {
                 float dx2 = risoluzione_x * 0.12f;
                 float dy2 = dx2;
-                pos_x = dime_panel_x * .5f;
-                pos_y = dime_panel_y * .5f;
+                pos_x = dime_panel_x * .46f;
+                pos_y = dime_panel_y * .48f;
 
 
                 pulsante[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -1128,11 +1132,32 @@ public class menu : MonoBehaviour {
         crea_button_text(20, "DESTRA", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
         crea_button_text(21, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
 
+        // agilità 0
+        // barriera 1
+        // energia 2
+        // spari 3
+        // scafo 4
+        // calamita 5
+
+        upgrade_titolo[1] = "AGILITY";
+        upgrade_titolo[2] = "BARRIER";
+        upgrade_titolo[3] = "ENERGY";
+        upgrade_titolo[4] = "AMMO";
+        upgrade_titolo[5] = "SHIELD";
+        upgrade_titolo[6] = "CALAMITY";
+
 
         for (int n = 0; n < 6; n++) {
             crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-            crea_grafica_text(150+n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
-            crea_button_text(160 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", PlayerPrefs.GetString($"path_sprite{n + 1}"));
+            crea_grafica_text(150+n, new Color(1, 1, 1, 0), "" + upgrade_titolo[n + 1], canvas, "Canvas", "");
+            crea_grafica_text(160 + n, new Color(1, 1, 1, 1),"", canvas, "Canvas", "UI/grafica_UI/upgrade_carta " +(n+1));
+
+            grafica[150 + n].GetComponent<Image>().raycastTarget = false;
+            grafica[160 + n].GetComponent<Image>().raycastTarget = false;
+
+            grafica[150 + n].GetComponent<Image>().maskable = false;
+            grafica[160 + n].GetComponent<Image>().maskable = false;
+
         }
 
 
@@ -1183,10 +1208,10 @@ public class menu : MonoBehaviour {
         canvas_popup.SetActive(true);
 
         crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello upgrade
-        crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"UpgradeTitolo{indice_upgrade_corrente}")); //testo/titolo oggetto upgrade
-        crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"path_sprite{indice_upgrade_corrente}")); //immagine upgrade
-        crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/prezzo oggetto upgrade
-        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", ""); //immagine valuta
+        crea_grafica_text(201, new Color(1, 1, 1, 0), "titolo", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
+        crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_carta "+ indice_upgrade_corrente); //immagine upgrade
+        crea_grafica_text(203, new Color(1, 1, 1, 0), "prezzo", canvas_popup, "Canvas_popup/Panel", ""); //testo/prezzo oggetto upgrade
+        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra "+ script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
 
         crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
@@ -1200,7 +1225,7 @@ public class menu : MonoBehaviour {
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello OPZIONI
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello OPZIONI
         crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo musica
         crea_button_text(200, "ON", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto MUSICA
         crea_grafica_text(202, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo sfx
@@ -1407,11 +1432,16 @@ public class menu : MonoBehaviour {
             PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
             script_struttura_dati.livello_upgrade[indice_upgrade_corrente] = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] + 1;
             PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (script_struttura_dati.livello_upgrade[indice_upgrade_corrente]));
-        
 
-       //int costo_upgrade = script_struttura_dati.costo_livello[livello_attuale];
-       //    PlayerPrefs.SetInt($"Costo_Upgrade{indice_upgrade_corrente}", costo_upgrade);
-       
+
+            if (grafica[204] != null)
+            {
+                Destroy(grafica[204]);
+            }
+
+            crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra "+ script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
+
+
             Debug.Log("Oggetto acquistato");
         }
 

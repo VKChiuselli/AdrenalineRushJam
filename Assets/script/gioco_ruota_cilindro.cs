@@ -2689,7 +2689,7 @@ void leggi_vertici_cilindro()
             float pos_x2 = pos_x + dx2 * .5f;
            pos_y = pos_y2;
 
-            grafica[5].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[5].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*1.02f, dy2);
             grafica[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x2, pos_y);
 
             float dx6 = risoluzione_x * .25f* frazionario;
