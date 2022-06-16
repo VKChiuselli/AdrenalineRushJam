@@ -43,7 +43,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     public float velocita_sparo = 20;
     public float velocita_sparo_boss = 20;
 
-    public int numero_spari = 300;
+
 
     public GameObject astronave;
 
@@ -54,10 +54,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     public Color newColor = new Color(0, 1, 1, 1);
 
-    public float jump = 15;
+ 
     public float distanza_disolve = -15;
 
-    public float energia = 100;
+
     public int monete_partita_corrente = 0;
 
     float risoluzione_x;
@@ -70,7 +70,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     float diff_xm;
     float diff_ym;
 
-    int numero_barriera = 0;
+
 
     float pressione_tasto = 0;
 
@@ -127,7 +127,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float distanza_corda = 0;
 
-    float aumento_salto = 1;
+
 
     GameObject boss;
     float boss_rad;
@@ -162,7 +162,19 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     int crea_popup_finale = 0;
 
-    float upgrade_rotazione = 0;
+    // upgrade
+
+    float agilita = 1;
+
+    float tempo_barriera = 3;
+    float energia = 100;
+    int numero_spari = 3;
+    
+    float scafo = 0;
+    float calamita = 0;
+
+    float attiva_barriera = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -214,7 +226,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
         cam_pos = new Vector3(0, 1.35f, 13.0f);
-        cam_rot = new Vector3(23, 180, 0);
+        cam_rot = new Vector3(15, 180, 0);
 
 
         crea_menu();
@@ -227,8 +239,65 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     void inizializza_personaggio()
     {
-        upgrade_rotazione = 1.0f;
+        // agilità 0
+        // barriera 1
+        // energia 2
+        // spari 3
+        // scafo 4
+        // calamita 5
 
+
+        agilita = 1;
+
+        tempo_barriera = 2;
+        energia = 100;
+        numero_spari = 1;
+
+        scafo = 1.0f;
+        calamita = 1;
+
+
+
+        if (ogg_struttura_dati != null)
+        {
+
+            agilita =1.0f+ script_struttura_dati.livello_upgrade[0]*.1f;
+
+            tempo_barriera =2.0f+ script_struttura_dati.livello_upgrade[1] * .25f;
+
+            energia = 100.0f + script_struttura_dati.livello_upgrade[2] * 10;
+
+            numero_spari =1+ script_struttura_dati.livello_upgrade[3];
+
+            scafo = 1.0f + script_struttura_dati.livello_upgrade[4] * .1f;
+
+            calamita = 1.0f + script_struttura_dati.livello_upgrade[5] * .05f;
+
+
+        }
+
+        
+
+
+    }
+
+
+
+    void analisi_energia(float riduttore)
+    {
+
+        if (attiva_barriera < 0)
+        {
+            energia = energia - riduttore / scafo;
+
+        }
+
+
+        if (energia < 0)
+        {
+            blocco_velocita = 0;
+
+        }
 
     }
 
@@ -364,7 +433,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         pos_astronave.z += pos_astronave.z + 2.0f;
 
 
-        float distanza = 6;
+        float distanza = 6*calamita;
         float distanza_cattura = .75f;
 
         float velocita_calamita_animazione = velocita_personaggio * 1.5f;
@@ -421,11 +490,11 @@ public class gioco_ruota_cilindro : MonoBehaviour
     void controllo()
     {
 
-        if (energia < 0)
-        {
-            blocco_velocita = 0;
 
-        }
+        attiva_barriera = attiva_barriera - Time.deltaTime;
+
+
+       
 
 
         float pressione_tasto_up = Input.GetAxis("Vertical");
@@ -474,7 +543,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-            rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione*upgrade_rotazione;
+            rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione*agilita;
 
 
             astronave_rz_calcolo = astronave_rz_calcolo + pressione_tasto;
@@ -1814,7 +1883,11 @@ public class gioco_ruota_cilindro : MonoBehaviour
                                 carica_particles("particles/CFXR Explosion 2", c_save.crea_blocco[num_block].mesh_dissolve.transform.position);
 
                                 c_save.crea_blocco[num_block].disattiva_coll = 1;
-                                energia = energia - 30;
+
+
+                                analisi_energia(25);
+
+
 
                             }
                         }
@@ -1833,6 +1906,21 @@ public class gioco_ruota_cilindro : MonoBehaviour
                     //----------
 
 
+                    if (hit_collider.collider.name.IndexOf("bonus1_") > -1)
+                    {
+
+                        string str_bonus = "" + hit_collider.collider.name;
+
+                        //   Debug.Log("" + str_block);
+
+                        str_bonus = str_bonus.Replace("bonus1_", "");
+
+                            int num_bonus = int.Parse(str_bonus);
+
+                        numero_spari = numero_spari + 1;
+                    }
+
+
                     if (hit_collider.collider.name.IndexOf("bonus2_") > -1)
                     {
 
@@ -1842,11 +1930,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                         str_bonus = str_bonus.Replace("bonus2_", "");
 
-                            int num_bonus = int.Parse(str_bonus);
 
-                        numero_spari = numero_spari + 1;
+                        attiva_barriera = tempo_barriera;
+
                     }
-
 
 
                 }
@@ -1873,7 +1960,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
                 if (c_save.crea_blocco[num_block].disattiva_coll == 0)
                 {
                     c_save.crea_blocco[num_block].disattiva_coll = 1;
-                    energia = energia - 10;
+                    analisi_energia(20);
 
                     carica_particles("particles/CFXR Hit A", punto_coll_uso);
 
@@ -2018,7 +2105,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         {
             DestroyImmediate(ogg);
 
-            energia = energia - 50;
+            analisi_energia(50);
 
 
         }
@@ -2453,7 +2540,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
         crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
-    
+        crea_grafica_text(5, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
+        crea_grafica_text(6, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
+        crea_grafica_text(7, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
 
     }
 

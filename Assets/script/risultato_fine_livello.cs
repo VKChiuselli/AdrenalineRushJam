@@ -20,22 +20,6 @@ public class risultato_fine_livello : MonoBehaviour {
 
     }
 
-    public void calcolo_stelle() {
-        StellaFineLivello = 1;
-        if (personaggio.GetComponent<gioco_ruota_cilindro>().energia > SogliaDanniDaSuperare) {
-            StellaDanni = 1;
-        }
-        if (personaggio.GetComponent<gioco_ruota_cilindro>().monete_partita_corrente > SogliaMoneteDaSuperare) {
-            StellaMoneta = 1;
-        }
-        //TODO creare evento con i risultati
-    }
-
-    //creare un collider in fondo al tracciato
-    private void OnTriggerEnter(Collider other) {
-      if(  other.gameObject.tag == "Player") {
-            calcolo_stelle();
-        }
-    }
+   
 
 }
