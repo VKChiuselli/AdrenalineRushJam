@@ -70,7 +70,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     float diff_xm;
     float diff_ym;
 
-    int barriera = 0;
+    int numero_barriera = 0;
 
     float pressione_tasto = 0;
 
@@ -162,6 +162,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     int crea_popup_finale = 0;
 
+    float upgrade_rotazione = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -217,7 +219,20 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         crea_menu();
 
+        inizializza_personaggio();
+
+
     }
+
+
+    void inizializza_personaggio()
+    {
+        upgrade_rotazione = 1.0f;
+
+
+    }
+
+
 
     // Update is called once per frame
     void Update()
@@ -459,7 +474,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-            rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione;
+            rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione*upgrade_rotazione;
 
 
             astronave_rz_calcolo = astronave_rz_calcolo + pressione_tasto;
@@ -1815,6 +1830,22 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
                     }
 
+                    //----------
+
+
+                    if (hit_collider.collider.name.IndexOf("bonus2_") > -1)
+                    {
+
+                        string str_bonus = "" + hit_collider.collider.name;
+
+                        //   Debug.Log("" + str_block);
+
+                        str_bonus = str_bonus.Replace("bonus2_", "");
+
+                            int num_bonus = int.Parse(str_bonus);
+
+                        numero_spari = numero_spari + 1;
+                    }
 
 
 

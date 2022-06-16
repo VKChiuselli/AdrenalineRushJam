@@ -275,10 +275,13 @@ public class crea_livello : MonoBehaviour
 
             tipo_bonus = tipo_bonus + 1;
 
-            if (tipo_bonus > 3)
+            if (tipo_bonus > 2)
             {
                 tipo_bonus = 0;
             }
+
+
+            bonus_base = carica_oggetto(bonus_base, "bonus_", tipo_bonus);
 
         }
 
@@ -1127,8 +1130,11 @@ public class crea_livello : MonoBehaviour
 
                         c_save.crea_malus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/malus_"+tipo_malus, typeof(GameObject))) as GameObject;
 
+                        if (tipo_malus == 0)
+                        {
+                            modifica_base(c_save.crea_malus[num].mesh);
+                        }
 
-                        modifica_base(c_save.crea_malus[num].mesh);
 
                     //    rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
@@ -1177,9 +1183,10 @@ public class crea_livello : MonoBehaviour
 
                         c_save.crea_bonus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/bonus_" + tipo_bonus, typeof(GameObject))) as GameObject;
 
-                        if (tipo_malus)
-                        modifica_base(c_save.crea_bonus[num].mesh);
-
+                        if (tipo_bonus == 0)
+                        {
+                            modifica_base(c_save.crea_bonus[num].mesh);
+                        }
 
                      //   rad = rad + cilindro.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
@@ -1817,7 +1824,7 @@ public class crea_livello : MonoBehaviour
     {
 
 
-        Debug.Log(""+ogg.name);
+        Debug.Log("modifica "+ogg.name+" tipo bonus "+tipo_bonus);
 
 
 
