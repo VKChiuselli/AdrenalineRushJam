@@ -1565,6 +1565,26 @@ public class menu : MonoBehaviour {
             script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
             PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
         }
+        if (indice_shop_corrente == 6) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 7) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 8) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 9) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 10) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
     }
 
     private void acquista_upgrade(int costoUpgrade) {
