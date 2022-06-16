@@ -19,6 +19,9 @@ public class menu : MonoBehaviour {
 
     float xm, ym, xm_old, ym_old;
 
+    public float variabile_x;
+    public float variabile_y;
+
     public Color newColor = new Color(0, 1, 1, 1);
 
     float[] touch_x = new float[15];
@@ -437,8 +440,6 @@ public class menu : MonoBehaviour {
 
             if (pulsante[160 + n] != null) {
 
-                Debug.Log(n + " " + (160 + n));
-
                 pulsante[160 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_image, dx_image);
                 pulsante[160 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
 
@@ -482,7 +483,6 @@ public class menu : MonoBehaviour {
 
 
     }
-
     void aggiorna_menu_popup() {
 
 
@@ -598,7 +598,7 @@ public class menu : MonoBehaviour {
                 grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 8f;
                 grafica_testo[201].GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetString($"UpgradeTitolo{indice_upgrade_corrente}");
 
 
@@ -608,12 +608,12 @@ public class menu : MonoBehaviour {
             if (grafica[202] != null)  //immagine oggetto
             {
 
-                float dx2 = dy * .45f / 2;
+                float dx2 = dy * .333f ;
                 float dy2 = dx2;
                 pos_x = 0;
                 pos_y = 0;
 
-                grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             }
@@ -621,24 +621,24 @@ public class menu : MonoBehaviour {
             {
                 float dx2 = dy * .8f;
                 float dy2 = dx2 * (76f / 72f);
-                pos_x = 0;
-                pos_y = risoluzione_y * 0.5f - dy2 * .9f;
+                pos_x = dime_panel_x * 0.2f;
+                pos_y = dime_panel_y * -0.32f;
 
                 grafica[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-                grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
                 grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt($"Costo_Upgrade{indice_upgrade_corrente}");
 
             }
 
             if (grafica[204] != null)  //immagine valuta
             {
-                float dx2 = dy * .8f * .125f / 2;
-                float dy2 = dx2 * (76f / 72f);
+                float dx2 = dx * .8f;
+                float dy2 = dx2 * (118f / 596f);
                 pos_x = 0;
-                pos_y = risoluzione_y * -0.5f + dy2 * 6f;
-
+                pos_y = dime_panel_y * -0.18f;
+                grafica[204].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/upgrade_popUP_barra {PlayerPrefs.GetInt($"LivelloUpgrade{indice_upgrade_corrente}")}"); //immagine progresso barra
                 grafica[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
@@ -1173,7 +1173,7 @@ public class menu : MonoBehaviour {
         crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"UpgradeTitolo{indice_upgrade_corrente}")); //testo/titolo oggetto upgrade
         crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"path_sprite{indice_upgrade_corrente}")); //immagine upgrade
         crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", "" + PlayerPrefs.GetInt($"Costo_Upgrade{indice_upgrade_corrente}")); //testo/prezzo oggetto upgrade
-        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/StatusBarIcon_Gold"); //immagine valuta
+        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/upgrade_popUP_barra {PlayerPrefs.GetInt($"LivelloUpgrade{indice_upgrade_corrente}")}"); //immagine valuta
 
         crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
@@ -1391,6 +1391,7 @@ public class menu : MonoBehaviour {
         if (script_struttura_dati.monete >= costoUpgrade) {
 
             script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
             int livello_attuale = PlayerPrefs.GetInt($"LivelloUpgrade{indice_upgrade_corrente}");
             PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (livello_attuale+1));
             int costo_upgrade = PlayerPrefs.GetInt($"Livello{livello_attuale+1}");
