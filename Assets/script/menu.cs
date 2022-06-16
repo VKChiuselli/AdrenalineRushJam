@@ -435,6 +435,18 @@ public class menu : MonoBehaviour {
 
                 limite_verticale_dx = pos_y - dy2 * .15f;
             }
+            
+            if (grafica[150 + n] != null) {
+
+                grafica[150 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[150 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
+                grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 8f;
+                grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.livello_upgrade[n + 1];
+
+
+
+                limite_verticale_dx = pos_y - dy2 * .15f;
+            }
 
 
 
@@ -1119,6 +1131,7 @@ public class menu : MonoBehaviour {
 
         for (int n = 0; n < 6; n++) {
             crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+            crea_grafica_text(150+n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
             crea_button_text(160 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", PlayerPrefs.GetString($"path_sprite{n + 1}"));
         }
 
@@ -1349,29 +1362,29 @@ public class menu : MonoBehaviour {
             crea_popup(1);
         }
 
-        if (num == 150) {
+        if (num == 150 || num == 160) {
             indice_upgrade_corrente = 1;
             crea_popup_upgrade(2);
         }
-        if (num == 151) {
+        if (num == 151 || num == 161) {
             indice_upgrade_corrente = 2;
             crea_popup_upgrade(2);
         }
-        if (num == 152) {
+        if (num == 152 || num == 162) {
             indice_upgrade_corrente = 3;
             crea_popup_upgrade(2);
         }
-        
-        if (num == 153) {
+
+        if (num == 153 || num == 163) {
             indice_upgrade_corrente = 4;
             crea_popup_upgrade(2);
         }
-        if (num == 154) {
+        if (num == 154 || num == 164) {
             indice_upgrade_corrente = 5;
             crea_popup_upgrade(2);
         }
-        
-        if (num == 155) {
+
+        if (num == 155 || num == 165) {
             indice_upgrade_corrente = 6;
             crea_popup_upgrade(2);
         }
