@@ -20,7 +20,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float xm, ym, xm_old, ym_old;
 
-
+    public float variabile_x;
+    public float variabile_y;
 
     float[] touch_x = new float[15];
     float[] touch_y = new float[15];
@@ -1857,6 +1858,8 @@ void leggi_vertici_cilindro()
                 float dis = hit_collider.distance;
 
 
+                
+
                 if (dis < distanza_direction[n])
                 {
 
@@ -1868,7 +1871,7 @@ void leggi_vertici_cilindro()
 
                         string str_block = "" + hit_collider.collider.name;
 
-                        //   Debug.Log("" + str_block);
+                      
 
 
 
@@ -1937,6 +1940,12 @@ void leggi_vertici_cilindro()
                             int num_bonus = int.Parse(str_bonus);
 
                         numero_spari = numero_spari + 1;
+                        if (c_save.crea_bonus[num_bonus].attivo == 0)
+                        {
+                            c_save.crea_bonus[num_bonus].attivo = 1;
+                            Destroy(c_save.crea_bonus[num_bonus].mesh);
+
+                        }
                     }
 
 
@@ -1945,12 +1954,22 @@ void leggi_vertici_cilindro()
 
                         string str_bonus = "" + hit_collider.collider.name;
 
-                        //   Debug.Log("" + str_block);
+                     //     Debug.Log("" + str_bonus);
 
                         str_bonus = str_bonus.Replace("bonus2_", "");
 
+                        int num_bonus = int.Parse(str_bonus);
 
-                        attiva_barriera = tempo_barriera;
+                        if (c_save.crea_bonus[num_bonus].attivo == 0)
+                        {
+                            c_save.crea_bonus[num_bonus].attivo = 1;
+
+                            attiva_barriera = tempo_barriera;
+
+                            Destroy(c_save.crea_bonus[num_bonus].mesh);
+
+
+                        }
 
                     }
 
@@ -2556,18 +2575,21 @@ void leggi_vertici_cilindro()
 
         crea_grafica_text(0, new Color(0, 0, 0, .5f), "", canvas, "Canvas", "");
 
-        crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
+        crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/menu");
 
-        crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gem");
+        crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme");
         crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-        crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
+        crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete");
         crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
         crea_grafica_text(5, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
         crea_grafica_text(6, new Color(0, .5f, 1, 1), "", canvas, "Canvas", "");
         crea_grafica_text(7, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/energia");
+
+        crea_grafica_text(8, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/ammo");
+        crea_grafica_text(9, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
     }
 
@@ -2587,25 +2609,26 @@ void leggi_vertici_cilindro()
         {
 
             float dx2 = risoluzione_x;
-            float dy2 = dy*.6f;
+            float dy2 = dy*.5f;
             pos_x = 0;
-            pos_y = risoluzione_y * .5f-dy2*.5f;
+            pos_y = risoluzione_y * .455f;
+
 
             grafica[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            grafica[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            grafica[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, risoluzione_y);
 
         }
 
 
 
-        float pos_y2= pos_y = risoluzione_y * 0.46f;
+        float pos_y2= pos_y = risoluzione_y * 0.445f;
 
 
         if (pulsante[0] != null)  //settings
         {
             float dx2 = dy * .4f ;
             float dy2 = dx2 * (79f / 75f);
-            pos_x = risoluzione_x * -.5f + dx2;
+            pos_x = risoluzione_x * -.5f + dx2*.65f;
             pos_y = pos_y2;
             pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy2);
             pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -2615,9 +2638,9 @@ void leggi_vertici_cilindro()
         if (grafica[3] != null)  //coin
         {
 
-            float dx2 = dy * .4f;
-            float dy2 = dx2 * (83f / 76f);
-            pos_x = risoluzione_x * .5f - dx2*1.5f ;
+            float dx2 = dy * .8f;
+            float dy2 = dx2;
+            pos_x = risoluzione_x * .5f - dx2*.5f ;
             pos_y = pos_y2;
 
             grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy2);
@@ -2628,25 +2651,25 @@ void leggi_vertici_cilindro()
         if (grafica[4] != null)  //coin  txt
         {
 
-            float dx2 = dy * .4f;
+            float dx2 = dy * .8f;
             float dy2 = dx2 ;
-            pos_x = risoluzione_x * .5f - dx2*.5f;
+            pos_x = risoluzione_x * .5f - dx2*.31f;
             pos_y = pos_y2;
 
             grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-            grafica_testo[4].GetComponent<TextMeshProUGUI>().text = "" + monete_partita_corrente;
+            grafica_testo[4].GetComponent<TextMeshProUGUI>().text = "" + (monete_partita_corrente);
 
         }
 
         if (grafica[1] != null)  //gem
         {
 
-            float dx2 = dy * .4f ;
-            float dy2 = dx2 * (84f / 70f);
-            pos_x = risoluzione_x * .5f - dx2*4;
+            float dx2 = dy * .8f ;
+            float dy2 = dx2 ;
+            pos_x = risoluzione_x * .5f - dx2*1.5f;
             pos_y = pos_y2;
 
             grafica[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -2657,9 +2680,9 @@ void leggi_vertici_cilindro()
         if (grafica[2] != null)  //gem  txt
         {
 
-            float dx2 = dy * .4f;
+            float dx2 = dy * .8f;
             float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * 3.0f;
+            pos_x = risoluzione_x * .5f - dx2 * (1.5f - .17f);
             pos_y = pos_y2;
 
             grafica[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -2668,11 +2691,42 @@ void leggi_vertici_cilindro()
             grafica_testo[2].GetComponent<TextMeshProUGUI>().fontSize = font_size;
             grafica_testo[2].GetComponent<TextMeshProUGUI>().text = "" + gemme_prese;
 
+        }
+
+
+        if (grafica[8] != null)  //gem
+        {
+
+            float dx2 = dy * .8f;
+            float dy2 = dx2;
+            pos_x = risoluzione_x * .5f - dx2 * 2.5f;
+            pos_y = pos_y2;
+
+            grafica[8].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[8].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+        if (grafica[9] != null)  //ammo  txt
+        {
+
+            float dx2 = dy * .8f;
+            float dy2 = dx2;
+            pos_x = risoluzione_x * .5f - dx2 * (2.5f - .17f);
+            pos_y = pos_y2;
+
+            grafica[9].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[9].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[9].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            grafica_testo[9].GetComponent<TextMeshProUGUI>().text = "" + numero_spari;
 
         }
 
 
-        pos_x = risoluzione_x * -.225f;
+
+
+        pos_x = risoluzione_x * -.27f;
 
 
         
@@ -2683,7 +2737,7 @@ void leggi_vertici_cilindro()
 
             float frazionario = energia / energia_base;
 
-            float dx2 = risoluzione_x*.25f;
+            float dx2 = risoluzione_x*.2f;
             float dy2 = dy*.15f;
 
             float pos_x2 = pos_x + dx2 * .5f;
@@ -2692,7 +2746,7 @@ void leggi_vertici_cilindro()
             grafica[5].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*1.02f, dy2);
             grafica[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x2, pos_y);
 
-            float dx6 = risoluzione_x * .25f* frazionario;
+            float dx6 = risoluzione_x * .2f* frazionario;
             float pos_x6 = pos_x + dx6 * .5f;
 
             grafica[6].GetComponent<RectTransform>().sizeDelta = new Vector2(dx6, dy2*.8f);
