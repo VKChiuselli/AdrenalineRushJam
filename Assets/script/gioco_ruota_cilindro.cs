@@ -54,7 +54,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     public Color newColor = new Color(0, 1, 1, 1);
 
- 
+
     public float distanza_disolve = -15;
 
 
@@ -168,8 +168,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float tempo_barriera = 3;
     float energia = 100;
+    float energia_base = 100;
     int numero_spari = 3;
-    
+
     float scafo = 0;
     float calamita = 0;
 
@@ -251,6 +252,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         tempo_barriera = 2;
         energia = 100;
+
+
         numero_spari = 1;
 
         scafo = 1.0f;
@@ -261,13 +264,13 @@ public class gioco_ruota_cilindro : MonoBehaviour
         if (ogg_struttura_dati != null)
         {
 
-            agilita =1.0f+ script_struttura_dati.livello_upgrade[0]*.1f;
+            agilita = 1.0f + script_struttura_dati.livello_upgrade[0] * .1f;
 
-            tempo_barriera =2.0f+ script_struttura_dati.livello_upgrade[1] * .25f;
+            tempo_barriera = 2.0f + script_struttura_dati.livello_upgrade[1] * .25f;
 
             energia = 100.0f + script_struttura_dati.livello_upgrade[2] * 10;
 
-            numero_spari =1+ script_struttura_dati.livello_upgrade[3];
+            numero_spari = 1 + script_struttura_dati.livello_upgrade[3];
 
             scafo = 1.0f + script_struttura_dati.livello_upgrade[4] * .1f;
 
@@ -276,7 +279,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         }
 
-        
+        energia_base = energia;
 
 
     }
@@ -324,16 +327,32 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         gestione_coll_special_bonus_malus();
 
-        gestione_fine_gioco();
+    //    gestione_fine_gioco();
 
         aggiorna_menu();
 
         aggiorna_menu_popup();
 
-    }
 
 
-    void leggi_vertici_cilindro()
+
+#if UNITY_EDITOR
+
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+
+            crea_menu();
+
+        }
+
+
+#endif
+
+}
+
+
+
+void leggi_vertici_cilindro()
     {
 
 
@@ -2531,6 +2550,12 @@ public class gioco_ruota_cilindro : MonoBehaviour
     void crea_menu()
     {
 
+        distruggi_menu();
+
+
+
+        crea_grafica_text(0, new Color(0, 0, 0, .5f), "", canvas, "Canvas", "");
+
         crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
 
         crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gem");
@@ -2540,9 +2565,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
         crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
-        crea_grafica_text(5, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
-        crea_grafica_text(6, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
-        crea_grafica_text(7, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gold");
+        crea_grafica_text(5, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
+        crea_grafica_text(6, new Color(0, .5f, 1, 1), "", canvas, "Canvas", "");
+        crea_grafica_text(7, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/energia");
 
     }
 
@@ -2558,18 +2583,31 @@ public class gioco_ruota_cilindro : MonoBehaviour
         float pos_x = 0;
         float pos_y = risoluzione_y * .3f;
 
+        if (grafica[0] != null)  //top
+        {
+
+            float dx2 = risoluzione_x;
+            float dy2 = dy*.6f;
+            pos_x = 0;
+            pos_y = risoluzione_y * .5f-dy2*.5f;
+
+            grafica[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
 
 
 
+        float pos_y2= pos_y = risoluzione_y * 0.46f;
 
 
         if (pulsante[0] != null)  //settings
         {
-            float dx2 = dy * .8f / 2;
-            float dy2 = dx2 * (76f / 72f);
+            float dx2 = dy * .4f ;
+            float dy2 = dx2 * (79f / 75f);
             pos_x = risoluzione_x * -.5f + dx2;
-            pos_y = risoluzione_y * 0.45f;
-            pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            pos_y = pos_y2;
+            pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy2);
             pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
         }
@@ -2577,12 +2615,12 @@ public class gioco_ruota_cilindro : MonoBehaviour
         if (grafica[3] != null)  //coin
         {
 
-            float dx2 = dy * .8f / 2;
-            float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * .5f - dx2 * 2;
-            pos_y = risoluzione_y * 0.45f;
+            float dx2 = dy * .4f;
+            float dy2 = dx2 * (83f / 76f);
+            pos_x = risoluzione_x * .5f - dx2*1.5f ;
+            pos_y = pos_y2;
 
-            grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy2);
             grafica[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
         }
@@ -2590,12 +2628,12 @@ public class gioco_ruota_cilindro : MonoBehaviour
         if (grafica[4] != null)  //coin  txt
         {
 
-            float dx2 = dy * .8f;
-            float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * .5f - dx2;
-            pos_y = risoluzione_y * 0.5f - dy2 * .9f;
+            float dx2 = dy * .4f;
+            float dy2 = dx2 ;
+            pos_x = risoluzione_x * .5f - dx2*.5f;
+            pos_y = pos_y2;
 
-            grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -2606,10 +2644,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
         if (grafica[1] != null)  //gem
         {
 
-            float dx2 = dy * .8f / 2;
+            float dx2 = dy * .4f ;
             float dy2 = dx2 * (84f / 70f);
-            pos_x = 0;
-            pos_y = risoluzione_y * 0.45f;
+            pos_x = risoluzione_x * .5f - dx2*4;
+            pos_y = pos_y2;
 
             grafica[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
             grafica[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -2619,10 +2657,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
         if (grafica[2] != null)  //gem  txt
         {
 
-            float dx2 = dy * .8f;
-            float dy2 = dx2 * (76f / 72f);
-            pos_x = 0;
-            pos_y = risoluzione_y * 0.5f - dy2 * .9f;
+            float dx2 = dy * .4f;
+            float dy2 = dx2;
+            pos_x = risoluzione_x * .5f - dx2 * 3.0f;
+            pos_y = pos_y2;
 
             grafica[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
             grafica[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -2632,6 +2670,52 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
         }
+
+
+        pos_x = risoluzione_x * -.225f;
+
+
+        
+                    if (grafica[5] != null)  // energia base
+        {
+
+
+
+            float frazionario = energia / energia_base;
+
+            float dx2 = risoluzione_x*.25f;
+            float dy2 = dy*.15f;
+
+            float pos_x2 = pos_x + dx2 * .5f;
+           pos_y = pos_y2;
+
+            grafica[5].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x2, pos_y);
+
+            float dx6 = risoluzione_x * .25f* frazionario;
+            float pos_x6 = pos_x + dx6 * .5f;
+
+            grafica[6].GetComponent<RectTransform>().sizeDelta = new Vector2(dx6, dy2*.8f);
+            grafica[6].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x6, pos_y);
+
+
+        }
+
+        if (grafica[7] != null)  // energia
+        {
+
+            float dx2 = dy * .85f;
+            float dy2 = dx2 ;
+            
+            pos_y = pos_y2 ;
+
+            grafica[7].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[7].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+          
+
+        }
+
 
     }
 
@@ -2978,6 +3062,34 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
     }
+
+
+    void distruggi_menu()
+    {
+
+      
+
+        for (int n = 0; n < 200; n++)
+        {
+            if (pulsante[n] != null)
+            {
+                DestroyImmediate(pulsante[n]);
+            }
+
+        }
+
+        for (int n = 0; n < 200; n++)
+        {
+            if (grafica[n] != null)
+            {
+                DestroyImmediate(grafica[n]);
+            }
+
+        }
+
+
+    }
+
 
     void distruggi_menu_popup()
     {
