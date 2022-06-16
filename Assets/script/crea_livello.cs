@@ -260,12 +260,30 @@ public class crea_livello : MonoBehaviour
             attivo_funzione = 3;
         }
 
+
+
         if (num == 5)
         {
             attivo_funzione = 5;
         }
 
-        if (num == 7)
+
+        if (num == 6)
+        {
+
+            attivo_funzione = 7;
+
+            tipo_bonus = tipo_bonus + 1;
+
+            if (tipo_bonus > 3)
+            {
+                tipo_bonus = 0;
+            }
+
+        }
+
+
+            if (num == 7)
         {
             attivo_funzione = 7;
         }
@@ -348,6 +366,8 @@ public class crea_livello : MonoBehaviour
 
 
         lista_nome_bonus[0] = "speed";
+        lista_nome_bonus[1] = "missile";
+        lista_nome_bonus[2] = "barriera";
 
         lista_nome_malus[0] = "inversion";
 
@@ -1157,6 +1177,7 @@ public class crea_livello : MonoBehaviour
 
                         c_save.crea_bonus[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/bonus_" + tipo_bonus, typeof(GameObject))) as GameObject;
 
+                        if (tipo_malus)
                         modifica_base(c_save.crea_bonus[num].mesh);
 
 
@@ -1688,7 +1709,10 @@ public class crea_livello : MonoBehaviour
 
         c_save.crea_malus[num].mesh.name = "crea_malus " + tipo_malus;
 
-        modifica_base(c_save.crea_malus[num].mesh);
+        if (tipo_malus == 0)
+        {
+            modifica_base(c_save.crea_malus[num].mesh);
+        }
 
         c_save.crea_malus[num].mesh.transform.SetParent(cilindro.transform);
 
@@ -1719,7 +1743,10 @@ public class crea_livello : MonoBehaviour
 
         c_save.crea_bonus[num].mesh.name = "crea_bonus " + tipo_bonus;
 
-        modifica_base(c_save.crea_bonus[num].mesh);
+        if (tipo_bonus == 0)
+        {
+            modifica_base(c_save.crea_bonus[num].mesh);
+        }
 
         c_save.crea_bonus[num].mesh.transform.SetParent(cilindro.transform);
 
