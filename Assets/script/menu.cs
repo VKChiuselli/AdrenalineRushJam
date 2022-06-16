@@ -628,7 +628,7 @@ public class menu : MonoBehaviour {
                 grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
-                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt($"Costo_Upgrade{indice_upgrade_corrente}");
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]];
 
             }
 
@@ -638,7 +638,7 @@ public class menu : MonoBehaviour {
                 float dy2 = dx2 * (118f / 596f);
                 pos_x = 0;
                 pos_y = dime_panel_y * -0.18f;
-                grafica[204].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/upgrade_popUP_barra {PlayerPrefs.GetInt($"LivelloUpgrade{indice_upgrade_corrente}")}"); //immagine progresso barra
+                grafica[204].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/upgrade_popUP_barra {script_struttura_dati.livello_upgrade[indice_upgrade_corrente]}"); //immagine progresso barra
                 grafica[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
@@ -1172,8 +1172,8 @@ public class menu : MonoBehaviour {
         crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello upgrade
         crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"UpgradeTitolo{indice_upgrade_corrente}")); //testo/titolo oggetto upgrade
         crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", PlayerPrefs.GetString($"path_sprite{indice_upgrade_corrente}")); //immagine upgrade
-        crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", "" + PlayerPrefs.GetInt($"Costo_Upgrade{indice_upgrade_corrente}")); //testo/prezzo oggetto upgrade
-        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/upgrade_popUP_barra {PlayerPrefs.GetInt($"LivelloUpgrade{indice_upgrade_corrente}")}"); //immagine valuta
+        crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/prezzo oggetto upgrade
+        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", ""); //immagine valuta
 
         crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
@@ -1378,7 +1378,7 @@ public class menu : MonoBehaviour {
 
 
         if (num == 200) {
-            acquista_oggetto(PlayerPrefs.GetInt($"Costo_Upgrade{indice_upgrade_corrente}"));
+            acquista_oggetto(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
         }
 
         if (num == 201) {
@@ -1392,11 +1392,13 @@ public class menu : MonoBehaviour {
 
             script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
             PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
-            int livello_attuale = PlayerPrefs.GetInt($"LivelloUpgrade{indice_upgrade_corrente}");
-            PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (livello_attuale+1));
-            int costo_upgrade = PlayerPrefs.GetInt($"Livello{livello_attuale+1}");
-            PlayerPrefs.SetInt($"Costo_Upgrade{indice_upgrade_corrente}", costo_upgrade);
+            script_struttura_dati.livello_upgrade[indice_upgrade_corrente] = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] + 1;
+            PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (script_struttura_dati.livello_upgrade[indice_upgrade_corrente]));
+        
 
+       //int costo_upgrade = script_struttura_dati.costo_livello[livello_attuale];
+       //    PlayerPrefs.SetInt($"Costo_Upgrade{indice_upgrade_corrente}", costo_upgrade);
+       
             Debug.Log("Oggetto acquistato");
         }
 

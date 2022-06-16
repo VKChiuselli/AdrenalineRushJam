@@ -9,7 +9,8 @@ public class struttura_dati : MonoBehaviour
     public int livello_in_uso;
     public int monete;
     public int gemme;
-    public int[] upgrade= new int[10];
+    public int[] livello_upgrade= new int[10];
+    public int[] costo_livello= new int[50];
     public int stelle_battle_pass;
     public float caratteristiche_forza;
     public float caratteristiche_velocita;
@@ -30,9 +31,14 @@ public class struttura_dati : MonoBehaviour
         caratteristiche_velocita = PlayerPrefs.GetFloat("caratteristiche_velocita");
 
 
-        for (int i= 0; i < 9; i++) {
-            upgrade[i] = PlayerPrefs.GetInt($"Upgrade{i}");
-        }
+        for (int i= 1; i < 7; i++) {
+            livello_upgrade[i] = PlayerPrefs.GetInt($"LivelloUpgrade{i}");
+        } 
+
+        for (int i= 1; i <11; i++) {
+            costo_livello[i] = PlayerPrefs.GetInt($"Livello{i}");
+        } 
+     
         SceneManager.LoadScene("menu");
 
     }
