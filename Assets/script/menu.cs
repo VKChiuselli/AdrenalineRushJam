@@ -66,6 +66,7 @@ public class menu : MonoBehaviour {
 
     struttura_dati script_struttura_dati;
     public int indice_upgrade_corrente;
+    public int indice_shop_corrente;
 
     GameObject canvas;
     GameObject canvas_popup;
@@ -82,19 +83,19 @@ public class menu : MonoBehaviour {
 
     string[] upgrade_titolo = new string[20];
     string[] upgrade_descrittore = new string[20];
+    int[] shop_quantita_monete = new int[20];
 
 
 
     void Start() {
 
 
-        if (!PlayerPrefs.HasKey("PrimoLogin"))
-        {
+        if (!PlayerPrefs.HasKey("PrimoLogin")) {
             inizializzazione_dati();
             PlayerPrefs.SetString("PrimoLogin", "effettuato");
         }
 
-      
+
 
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
@@ -130,7 +131,7 @@ public class menu : MonoBehaviour {
         PlayerPrefs.SetInt("Livello9", 11000);
         PlayerPrefs.SetInt("Livello10", 12000);
 
-        for(int i=1; i<7; i++) {
+        for (int i = 1; i < 7; i++) {
             PlayerPrefs.SetInt($"LivelloUpgrade{i}", 1);
             PlayerPrefs.SetString($"path_sprite{i}", $"UI/grafica_UI/upgrade_carta {i}");
             PlayerPrefs.SetInt($"Costo_Upgrade{i}", PlayerPrefs.GetInt($"Livello{PlayerPrefs.GetInt($"LivelloUpgrade{i}")}"));
@@ -165,7 +166,7 @@ public class menu : MonoBehaviour {
         PlayerPrefs.SetInt("UpgradeTipologia4", 1);
         PlayerPrefs.SetInt("UpgradeTipologia5", 1);
         PlayerPrefs.SetInt("UpgradeTipologia6", 1);
-     
+
     }
 
     void Update() {
@@ -356,16 +357,31 @@ public class menu : MonoBehaviour {
                 limite_verticale_sx = pos_y - dy2 * .15f;
             }
 
+            if (grafica[100 + n] != null) {
+
+                grafica[100 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[100 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_sx + dy2 * -.33f);
+                grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
+                if (100 + n == 100)
+                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "FREE";
+                else if (100 + n == 101)
+                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "AD";
+                else
+                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "BUY";
+
+            }
+
+            if (grafica[120 + n] != null) {
+
+                grafica[120 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[120 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_sx + dy2 * 0.33f);
+                grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
+                grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().text = "" + shop_quantita_monete[n + 1];
 
 
-
-
+            }
 
         }
-
-
-
-
 
     }
 
@@ -442,13 +458,13 @@ public class menu : MonoBehaviour {
 
                 limite_verticale_dx = pos_y - dy2 * .15f;
             }
-            
+
             if (grafica[150 + n] != null) {
 
-                grafica[150 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2*.1f);
-                grafica[150 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx+dy2*-.37f);
+                grafica[150 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2 * .1f);
+                grafica[150 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx + dy2 * -.37f);
                 grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
-              //  grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().text = "titolo" ;
+                //  grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().text = "titolo" ;
 
 
             }
@@ -459,6 +475,18 @@ public class menu : MonoBehaviour {
 
                 grafica[160 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_image, dx_image);
                 grafica[160 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
+
+            }
+
+
+
+            if (grafica[170 + n] != null) {
+
+                grafica[170 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2 * .1f);
+                grafica[170 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 1.15f, pos_y + scroll_verticale_dx + dy2 * 0.37f);
+                grafica_testo[170 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
+                //  grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().text = "titolo" ;
+
 
             }
 
@@ -555,6 +583,18 @@ public class menu : MonoBehaviour {
                 grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             }
+            if (grafica[202] != null)  //quantita monete acquistabili
+            {
+
+                float dx2 = dy * .45f;
+                float dy2 = dx2;
+                pos_x = 0;
+                pos_y = dime_panel_y * 0.35f;
+
+                grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[202].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 5f;
+            }
 
 
 
@@ -616,7 +656,7 @@ public class menu : MonoBehaviour {
                 grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 8f;
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetString($"UpgradeTitolo{indice_upgrade_corrente}");
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = upgrade_titolo[indice_upgrade_corrente];
 
 
             }
@@ -625,7 +665,7 @@ public class menu : MonoBehaviour {
             if (grafica[202] != null)  //immagine oggetto
             {
 
-                float dx2 = dy * .333f ;
+                float dx2 = dy * .333f;
                 float dy2 = dx2;
                 pos_x = 0;
                 pos_y = 0;
@@ -755,7 +795,7 @@ public class menu : MonoBehaviour {
 
             if (pulsante[201] != null)  //tasto sfx
             {
-                float dx2 = risoluzione_x * 0.333f ;
+                float dx2 = risoluzione_x * 0.333f;
                 float dy2 = risoluzione_y * 0.1f / 2;
                 pos_x = dy * .8f * +0.5f - dy * .8f * (76f / 72f) * 0.333f;
                 pos_y = dy2 * 0.5f + dx * 0.8f / 2;
@@ -784,7 +824,7 @@ public class menu : MonoBehaviour {
 
             if (pulsante[202] != null)  //tasto facebook
             {
-                float dx2 = dime_panel_x*.7f;
+                float dx2 = dime_panel_x * .7f;
                 float dy2 = risoluzione_y * 0.1f;
                 pos_x = 0;
                 pos_y = risoluzione_y * 0.5f - dy * .8f * (76f / 72f) * 0.50f;
@@ -1123,7 +1163,13 @@ public class menu : MonoBehaviour {
 
 
             crea_button_text(100 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_shop " + (n + 1));
+            crea_grafica_text(100 + n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+            crea_grafica_text(120 + n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
+            grafica[100 + n].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+            grafica[120 + n].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
         }
 
 
@@ -1146,17 +1192,35 @@ public class menu : MonoBehaviour {
         upgrade_titolo[5] = "SHIELD";
         upgrade_titolo[6] = "CALAMITY";
 
+        shop_quantita_monete[1] = 100;
+        shop_quantita_monete[2] = 200;
+        shop_quantita_monete[3] = 1000;
+        shop_quantita_monete[4] = 2000;
+        shop_quantita_monete[5] = 5000;
+        shop_quantita_monete[6] = 10;
+        shop_quantita_monete[7] = 20;
+        shop_quantita_monete[8] = 40;
+        shop_quantita_monete[9] = 80;
+        shop_quantita_monete[10] = 120;
+
 
         for (int n = 0; n < 6; n++) {
             crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
-            crea_grafica_text(150+n, new Color(1, 1, 1, 0), "" + upgrade_titolo[n + 1], canvas, "Canvas", "");
-            crea_grafica_text(160 + n, new Color(1, 1, 1, 1),"", canvas, "Canvas", "UI/grafica_UI/upgrade_carta " +(n+1));
+            crea_grafica_text(150 + n, new Color(1, 1, 1, 0), "" + upgrade_titolo[n + 1], canvas, "Canvas", "");
+            crea_grafica_text(160 + n, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/upgrade_carta " + (n + 1));
+            crea_grafica_text(170 + n, new Color(1, 1, 1, 0), "" + script_struttura_dati.livello_upgrade[n + 1], canvas, "Canvas", "");
+
 
             grafica[150 + n].GetComponent<Image>().raycastTarget = false;
-            grafica[160 + n].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
 
-            grafica[150 + n].GetComponent<Image>().maskable = false;
-            grafica[160 + n].GetComponent<Image>().maskable = false;
+
+            grafica[160 + n].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[160 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+
+            grafica[170 + n].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[170 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+
 
         }
 
@@ -1191,10 +1255,19 @@ public class menu : MonoBehaviour {
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello shop
-        crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Frame_carta_1");  //testo/titolo oggetto shop
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
+        crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/carta_shop {indice_shop_corrente}");  //testo/titolo oggetto shop
+        crea_grafica_text(202, new Color(1, 1, 1, 0), $"{shop_quantita_monete[indice_shop_corrente]}", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
+        if (indice_shop_corrente == 1) {
+            crea_button_text(200, "FREE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
+        }
+        else if (indice_shop_corrente == 2) {
+            crea_button_text(200, "AD", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
+        }
+        else {
+            crea_button_text(200, "9.99€", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
+        }
 
-        crea_button_text(200, "BUY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
     }
@@ -1209,9 +1282,9 @@ public class menu : MonoBehaviour {
 
         crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello upgrade
         crea_grafica_text(201, new Color(1, 1, 1, 0), "titolo", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
-        crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_carta "+ indice_upgrade_corrente); //immagine upgrade
+        crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_carta " + indice_upgrade_corrente); //immagine upgrade
         crea_grafica_text(203, new Color(1, 1, 1, 0), "prezzo", canvas_popup, "Canvas_popup/Panel", ""); //testo/prezzo oggetto upgrade
-        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra "+ script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
+        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
 
         crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
@@ -1384,6 +1457,44 @@ public class menu : MonoBehaviour {
 
 
         if (num == 100) {
+            indice_shop_corrente = 1;
+            crea_popup(1);
+        }
+        if (num == 101) {
+            indice_shop_corrente = 2;
+            crea_popup(1);
+        }
+        if (num == 102) {
+            indice_shop_corrente = 3;
+            crea_popup(1);
+        }
+        if (num == 103) {
+            indice_shop_corrente = 4;
+            crea_popup(1);
+        }
+
+        if (num == 104) {
+            indice_shop_corrente = 5;
+            crea_popup(1);
+        }
+        if (num == 105) {
+            indice_shop_corrente = 6;
+            crea_popup(1);
+        }
+        if (num == 106) {
+            indice_shop_corrente = 7;
+            crea_popup(1);
+        }
+        if (num == 107) {
+            indice_shop_corrente = 8;
+            crea_popup(1);
+        }
+        if (num == 108) {
+            indice_shop_corrente = 9;
+            crea_popup(1);
+        }
+        if (num == 109) {
+            indice_shop_corrente = 10;
             crea_popup(1);
         }
 
@@ -1416,16 +1527,67 @@ public class menu : MonoBehaviour {
 
 
         if (num == 200) {
-            acquista_oggetto(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
+            if (attivo_popup == 1) {
+                acquista_shop();
+            }
+            else if (attivo_popup == 2) { 
+            
+            acquista_upgrade(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
+            
+            }
+
         }
 
         if (num == 201) {
             distruggi_menu_popup();
         }
-
+        
     }
 
-    private void acquista_oggetto(int costoUpgrade) {
+    private void acquista_shop() {
+        if (indice_shop_corrente == 1) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 2) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 3) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 4) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 5) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 6) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 7) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 8) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 9) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 10) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+    }
+
+    private void acquista_upgrade(int costoUpgrade) {
         if (script_struttura_dati.monete >= costoUpgrade) {
 
             script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
@@ -1433,20 +1595,17 @@ public class menu : MonoBehaviour {
             script_struttura_dati.livello_upgrade[indice_upgrade_corrente] = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] + 1;
             PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (script_struttura_dati.livello_upgrade[indice_upgrade_corrente]));
 
-
-            if (grafica[204] != null)
-            {
+            if (grafica[204] != null) {
                 Destroy(grafica[204]);
             }
 
-            crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra "+ script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
+            crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
 
 
             Debug.Log("Oggetto acquistato");
         }
 
     }
-
 
     void pressione_input_text(int num, InputField tog) {
 
