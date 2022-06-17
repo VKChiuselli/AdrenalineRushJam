@@ -5,6 +5,8 @@ using System.Text;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class gioco_ruota_cilindro : MonoBehaviour
 {
@@ -156,10 +158,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float resetTimerPopup = 0;
 
-    float[] grafica_tempo = new float[15];
+    float[] grafica_tempo = new float[25];
 
-    float[] grafica_dime = new float[15];
-    float[] grafica_pos = new float[15];
+    float[] grafica_dime = new float[25];
+    float[] grafica_pos = new float[25];
 
     int crea_popup_finale = 0;
 
@@ -173,6 +175,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     float energia = 100;
     float energia_base = 100;
     int numero_spari = 3;
+    int numero_spari_base = 0;
 
     float scafo = 0;
     float calamita = 0;
@@ -180,6 +183,12 @@ public class gioco_ruota_cilindro : MonoBehaviour
     float attiva_barriera = 0;
 
     float tempo_fire_work = 0;
+
+    int che_livello = 1;
+
+    bool visione_boss = false;
+
+    float sposta_uv_bonus = 0;
 
 
     // Start is called before the first frame update
@@ -192,6 +201,12 @@ public class gioco_ruota_cilindro : MonoBehaviour
         cilindro = GameObject.Find("cilindro_esatto");
 
         boss = GameObject.Find("boss");
+
+        if (visione_boss == false)
+        {
+            boss.SetActive(false);
+        }
+
 
         cam0 = GameObject.Find("Main Camera");
 
@@ -285,7 +300,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         }
 
         energia_base = energia;
-
+        numero_spari_base = numero_spari;
 
     }
 
@@ -521,6 +536,20 @@ void leggi_vertici_cilindro()
             if (blocco_velocita < .05f)
             {
                 blocco_velocita = 0;
+
+                if (energia <= 0)
+                {
+                   
+                       if ( crea_popup_finale == 0)
+                    {
+                        crea_popup_finale = 10;
+                        crea_popup(2);
+                    }
+                       
+                    
+                }
+
+
             }
 
         }
@@ -825,7 +854,28 @@ void leggi_vertici_cilindro()
     void aggiorna_blocco()
     {
 
-        float pos_z = cilindro.transform.position.z;
+        if (blocco_velocita > .99f)
+        {
+            sposta_uv_bonus = sposta_uv_bonus - Time.deltaTime;
+
+            int num_bonus = c_save.crea_bonus.Count;
+
+
+            for (int n = 0; n < num_bonus; n++)
+            {
+                if (c_save.crea_bonus[n].tipo == 0)
+                {
+                    c_save.crea_bonus[n].mesh.GetComponent<Renderer>().material.SetTextureOffset("_MainTex", new Vector2(0, sposta_uv_bonus));
+                }
+            }
+
+        }
+
+
+
+
+
+            float pos_z = cilindro.transform.position.z;
 
         int num_blocco = c_save.crea_blocco.Count;
 
@@ -839,7 +889,7 @@ void leggi_vertici_cilindro()
                 float zz2 = c_save.crea_blocco[n].mesh.transform.position.z;
 
 
-                if (c_save.crea_blocco[n].rotazione != 0)
+                if (c_save.crea_blocco[n].rotazione != 0 && blocco_velocita>.99f)
                 {
                     
                         c_save.crea_blocco[n].rad = c_save.crea_blocco[n].rad + c_save.crea_blocco[n].rotazione*Time.deltaTime;
@@ -1432,7 +1482,7 @@ void leggi_vertici_cilindro()
 
         if (tipo_bonus == 0)
         {
-            modifica_base(c_save.crea_bonus[num].mesh);
+            modifica_base(c_save.crea_bonus[num].mesh,1);
         }
 
     }
@@ -2298,74 +2348,85 @@ void leggi_vertici_cilindro()
     void gestione_boss()
     {
 
-        float raggio = c_save.crea_cilindro[0].raggio;
-
-
-        boss_rad = Mathf.MoveTowards(boss_rad, 0, Time.deltaTime);
-
-
-        float xx = Mathf.Sin(boss_rad) * raggio;
-        float yy = Mathf.Cos(boss_rad) * raggio;
-
-        float rad_angle = Mathf.Atan2(xx, yy);
-
-        float angle = rad_angle * Mathf.Rad2Deg;
-
-        boss.transform.position = new Vector3(xx, yy, -75);
-
-        boss.transform.localEulerAngles = new Vector3(0, 0, -angle);
-
-
-        float diff = boss_rad;
-
-
-        attivo_tempo_sparo_boss2 = attivo_tempo_sparo_boss2 - Time.deltaTime;
-
-        if (attivo_tempo_sparo_boss2 < -1 && blocco_velocita>.99f)
+        if (visione_boss == true)
         {
 
-            if (Mathf.Abs(diff) < .1f)
+            if (blocco_velocita > .99f)
             {
-                int num_sparo_boss = -1;
 
-                for (int n = 0; n < 5; n++)
+                float raggio = c_save.crea_cilindro[0].raggio;
+
+
+                boss_rad = Mathf.MoveTowards(boss_rad, 0, Time.deltaTime);
+
+
+                float xx = Mathf.Sin(boss_rad) * raggio;
+                float yy = Mathf.Cos(boss_rad) * raggio;
+
+                float rad_angle = Mathf.Atan2(xx, yy);
+
+                float angle = rad_angle * Mathf.Rad2Deg;
+
+                boss.transform.position = new Vector3(xx, yy, -75);
+
+                boss.transform.localEulerAngles = new Vector3(0, 0, -angle);
+
+
+                float diff = boss_rad;
+
+
+                attivo_tempo_sparo_boss2 = attivo_tempo_sparo_boss2 - Time.deltaTime;
+
+                if (attivo_tempo_sparo_boss2 < 0)
                 {
 
-                    if (attivo_tempo_sparo_boss[n] < -1)
+                    if (Mathf.Abs(diff) < .1f)
                     {
-                        num_sparo_boss = n;
+                        int num_sparo_boss = -1;
 
-                        attivo_tempo_sparo_boss[n] = 15;
+                        for (int n = 0; n < 5; n++)
+                        {
+
+                            if (attivo_tempo_sparo_boss[n] < -1)
+                            {
+                                num_sparo_boss = n;
+
+                                attivo_tempo_sparo_boss[n] = 6;
 
 
-                        sparo_boss[n] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sparo_boss", typeof(GameObject))) as GameObject;
+                                sparo_boss[n] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sparo_boss", typeof(GameObject))) as GameObject;
 
-                        Vector3 pos_sparo_boss = boss_mesh_sparo.transform.position;
+                                Vector3 pos_sparo_boss = boss_mesh_sparo.transform.position;
 
-                        sparo_boss[n].transform.position = new Vector3(pos_sparo_boss.x, pos_sparo_boss.y, pos_sparo_boss.z);
+                                sparo_boss[n].transform.position = new Vector3(pos_sparo_boss.x, pos_sparo_boss.y, pos_sparo_boss.z);
 
-                        sparo_boss_rad[n] = 0;
+                                sparo_boss_rad[n] = 0;
 
-                        sparo_boss[n].name = "sparo_boss " + n;
+                                sparo_boss[n].name = "sparo_boss " + n;
 
-                        attivo_tempo_sparo_boss2 = UnityEngine.Random.Range(6, 10);
+                                attivo_tempo_sparo_boss2 = UnityEngine.Random.Range(4f, 6.0f) - che_livello * .025f;
 
-                        n = 1000;
+
+
+                                n = 1000;
+
+
+                            }
+
+
+
+                        }
 
 
                     }
 
-
-
                 }
-
 
             }
 
+            gestione_sparo_boss();
+
         }
-
-        gestione_sparo_boss();
-
     }
 
 
@@ -2623,11 +2684,11 @@ void leggi_vertici_cilindro()
 
         crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/menu");
 
-        crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme");
-        crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+     //   crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme");
+     //   crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-        crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete");
-        crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+     //   crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete");
+    //    crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
         crea_grafica_text(5, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
@@ -2745,7 +2806,7 @@ void leggi_vertici_cilindro()
 
             float dx2 = dy * .8f;
             float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * 2.5f;
+            pos_x = risoluzione_x * .5f - dx2 * .5f;
             pos_y = pos_y2;
 
             grafica[8].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -2758,7 +2819,7 @@ void leggi_vertici_cilindro()
 
             float dx2 = dy * .8f;
             float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * (2.5f - .17f);
+            pos_x = risoluzione_x * .5f - dx2 * (.5f - .17f);
             pos_y = pos_y2;
 
             grafica[9].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -2772,7 +2833,7 @@ void leggi_vertici_cilindro()
 
 
 
-        pos_x = risoluzione_x * -.27f;
+        pos_x = risoluzione_x * -.1f;
 
 
         
@@ -2862,7 +2923,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void modifica_base(GameObject ogg)
+    void modifica_base(GameObject ogg, int t_bonus=0)
     {
 
 
@@ -2909,7 +2970,7 @@ void leggi_vertici_cilindro()
 
         float u = 1.0f / (num_v - 1);
 
-
+       
 
         for (int n = 0; n < num_v; n++)
         {
@@ -2973,47 +3034,121 @@ void leggi_vertici_cilindro()
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
-        crea_grafica_text(201, new Color(1, 1, 1, 0), "LEVEL", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
-
-
-        string num_livello = "1";
-
-
-
-        crea_grafica_text(202, new Color(1, 1, 1, 0), ""+ num_livello, canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
-        crea_grafica_text(203, new Color(1, 1, 1, 0), "COMPLETED", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
-
-        grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
-
-        grafica[203].transform.localEulerAngles = new Vector3(0,0,30);
-
-        for (int n = 0; n <= 2; n++)
+        if (num == 1)
         {
-            crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
-            crea_grafica_text(207 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1"); // stelle
 
-            grafica_dime[4 + n] = 1;
-            grafica_dime[7+n] = 2;
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
-            grafica_tempo[4 + n] = .0f;
-            grafica_tempo[7+n] = 2.0f+n*.25f;
+            string num_livello = "1";
+
+            crea_grafica_text(201, new Color(1, 1, 1, 0), "LEVEL "+ num_livello, canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
+           
+
+
+
+            crea_grafica_text(202, new Color(1, 1, 1, 0), "" , canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+            crea_grafica_text(203, new Color(1, 1, 1, 0), "WASTED", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+            grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
+
+            grafica[203].transform.localEulerAngles = new Vector3(0, 0, 10);
+
+            for (int n = 0; n <= 2; n++)
+            {
+                crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
+                crea_grafica_text(207 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1"); // stelle
+
+                grafica_dime[4 + n] = 1;
+                grafica_dime[7 + n] = 2;
+
+                grafica_tempo[4 + n] = .0f;
+                grafica_tempo[7 + n] = 2.0f + n * .25f;
+            }
+
+            crea_grafica_text(210, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_livello"); // stelle
+
+            crea_grafica_text(211, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_energia"); // stelle
+            crea_grafica_text(212, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_ammo"); // stelle
+
+            grafica_dime[10] = 2;
+            grafica_dime[11] = 2;
+            grafica_dime[12] = 2;
+
+            grafica_tempo[10] = 2.0f;
+            grafica_tempo[11] = 2.25f;
+            grafica_tempo[12] = 2.5f;
+
+            grafica_tempo[1] = .5f;
+            grafica_tempo[2] = 1;
+            grafica_tempo[3] = 1.5f;
+
+
+            grafica_dime[1] = 4;
+
+            grafica_dime[2] = 4;
+
+            grafica_dime[3] = 4;
+
         }
 
+        if (num == 2)
+        {
+
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
+
+            crea_grafica_text(201, new Color(1, 1, 1, 0), "TRY", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+            
+
+            crea_grafica_text(202, new Color(1, 1, 1, 0), "AGAIN" , canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
 
-        grafica_tempo[1] = .5f;
-        grafica_tempo[2] = 1;
-        grafica_tempo[3] = 1.5f;
+            crea_grafica_text(203, new Color(1, 1, 1, 0), "CLICK\nTO CONTINUE", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+            grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
 
 
-        grafica_dime[1] = 4;
 
-        grafica_dime[2] = 4;
+            for (int n = 0; n <= 2; n++)
+            {
+                crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
+                crea_grafica_text(207 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1"); // stelle
 
-        grafica_dime[3] = 4;
+                grafica_dime[4 + n] = 1;
+                grafica_dime[7 + n] = 2;
 
+                grafica_tempo[4 + n] = .0f;
+                grafica_tempo[7 + n] = 2.0f + n * .25f;
+            }
+
+            crea_grafica_text(210, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_livello"); // stelle
+
+            crea_grafica_text(211, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_energia"); // stelle
+            crea_grafica_text(212, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_ammo"); // stelle
+
+            grafica_dime[10] = 2;
+            grafica_dime[11] = 2;
+            grafica_dime[12] = 2;
+
+            grafica_tempo[10] = 2.0f;
+            grafica_tempo[11] = 2.25f;
+            grafica_tempo[12] = 2.5f;
+
+            grafica_tempo[1] = .5f;
+            grafica_tempo[2] = 1;
+            grafica_tempo[3] = 1.5f;
+
+
+            grafica_dime[1] = 4;
+
+            grafica_dime[2] = 4;
+
+            grafica_dime[3] = 4;
+
+        }
 
     }
 
@@ -3049,12 +3184,17 @@ void leggi_vertici_cilindro()
         float dime_panel_x = 0;
         float dime_panel_y = 0;
 
-        int font_size = (int)(risoluzione_x / 5);
+        int font_size = (int)(risoluzione_x / 5.5f);
         int font_size2 = (int)(risoluzione_x / 5);
-        int font_size3 = (int)(risoluzione_x / 8);
+        int font_size3 = (int)(risoluzione_x / 6);
 
+        if (attivo_popup == 2)
+        {
+            font_size3 = (int)(risoluzione_x / 11);
 
-        for (int n = 0; n <= 10; n++)
+        }
+
+            for (int n = 0; n <= 20; n++)
         {
             if (grafica[200 + n] != null)
             {
@@ -3070,7 +3210,7 @@ void leggi_vertici_cilindro()
 
 
 
-        if (attivo_popup == 1)
+        if (attivo_popup >= 1)
         {
             if (grafica[200] != null)  //pannello
             {
@@ -3078,7 +3218,7 @@ void leggi_vertici_cilindro()
                 float dx2 = dx * .8f;
                 float dy2 = dy * .8f;
 
-                float dx_stelle = dx2 * .25f;
+                float dx_stelle = dx2 * .275f;
                
 
 
@@ -3095,84 +3235,136 @@ void leggi_vertici_cilindro()
 
 
 
-                grafica_pos[1] = .3f;
-                grafica_pos[2] = .15f;
-                grafica_pos[3] = -.08f;
+                grafica_pos[1] = -.05f;
+                grafica_pos[2] = -.15f;
+                grafica_pos[3] = -.25f;
 
 
 
                 for (int n = 4; n <= 9; n++)
                 {
-                    grafica_pos[n] = -.32f;
+                    grafica_pos[n] = .35f;
+
+                }
+
+                for (int n = 10; n <= 12; n++)
+                {
+                    grafica_pos[n] = .15f;
+
+                }
+
+
+                if (crea_popup_finale >= 1)
+                {
+                    if (energia <= 0)
+                    {
+                        grafica_pos[1] = .25f;
+                        grafica_pos[2] = .1f;
+                        grafica_pos[3] = -.2f;
+
+
+                        for (int n = 4; n <= 12; n++)
+                        {
+                            grafica_pos[n] = 5.35f;
+
+                        }
+
+                    }
+
+
+                }
+
+
+                if (energia != energia_base)
+                {
+                    grafica_pos[8] = 5.35f;
+                    grafica_pos[11] = 5.35f;
+
+                }
+
+
+                if (numero_spari != numero_spari_base)
+                {
+                    grafica_pos[9] = 5.35f;
+                    grafica_pos[12] = 5.35f;
 
                 }
 
 
 
-                for (int n = 1; n <= 9; n++)
+
+
+                for (int n = 1; n <= 12; n++)
                 {
-                    grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
-
-
-                    if (grafica_tempo[n] < 0)
+                    if (grafica[200 + n] != null)
                     {
 
-                      //  grafica_pos[n] = Mathf.MoveTowards(grafica_pos[n], 1, Time.deltaTime);
-
-                        grafica_dime[n] = Mathf.MoveTowards(grafica_dime[n], 1, Time.deltaTime*5);
+                        grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
 
 
-                        pos_y = dime_panel_y  * grafica_pos[n];
-
-
-                        if (n <= 3)
-                        {
-                            grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy_t);
-                            grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
-                        }
-                        else
+                        if (grafica_tempo[n] < 0)
                         {
 
-                            if (n==4 || n == 7)
+                            //  grafica_pos[n] = Mathf.MoveTowards(grafica_pos[n], 1, Time.deltaTime);
+
+                            grafica_dime[n] = Mathf.MoveTowards(grafica_dime[n], 1, Time.deltaTime * 5);
+
+
+                            pos_y = dime_panel_y * grafica_pos[n];
+
+
+                            if (n <= 3)
                             {
-                                pos_x = dx2 * -.25f;
+
+                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy_t);
+                                grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                            }
+                            else
+                            {
+
+                                if (n == 4 || n == 7 || n == 10)
+                                {
+                                    pos_x = dx2 * -.3f;
+                                }
+
+                                if (n == 5 || n == 8 || n == 11)
+                                {
+                                    pos_x = 0;
+                                }
+
+                                if (n == 6 || n == 9 || n == 12)
+                                {
+                                    pos_x = dx2 * .3f;
+                                }
+
+
+                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stelle, dx_stelle);
+                                grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
+
                             }
 
-                            if (n == 5 || n == 8)
+
+                            grafica[200 + n].transform.localScale = new Vector3(grafica_dime[n], grafica_dime[n], 1);
+
+
+
+                            if (n == 1)
                             {
-                                pos_x = 0;
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+                            }
+                            if (n == 2)
+                            {
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size2;
+                            }
+                            if (n == 3)
+                            {
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
                             }
 
-                            if (n == 6 || n == 9)
-                            {
-                                pos_x = dx2 * .25f;
-                            }
-
-                            grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stelle, dx_stelle);
-                            grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
-
                         }
-
-
-                        grafica[200 + n].transform.localScale= new Vector3(grafica_dime[n], grafica_dime[n], 1);
-
-
-
-                        if (n == 1)
-                        {
-                            grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-                        }
-                        if (n == 2)
-                        {
-                            grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size2;
-                        }
-                        if (n == 3)
-                        {
-                            grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
-                        }
-
 
                     }
 
@@ -3180,9 +3372,14 @@ void leggi_vertici_cilindro()
 
             }
 
-            uscita_popup(dime_panel_x, dime_panel_y);
+            if (grafica_tempo[12] < -1)
+            {
+                uscita_popup(dime_panel_x, dime_panel_y);
 
+            }
         }
+
+  
 
     }
 
@@ -3190,9 +3387,18 @@ void leggi_vertici_cilindro()
     {
         resetTimerPopup += Time.deltaTime;
 
+        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f && energia <= 0)
+        {
+            if (crea_popup_finale == 10)
+            {
+
+                SceneManager.LoadScene("gioco");
+            }
+
+        }
 
 
-        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f)
+        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f && energia>0)
         {
             resetTimerPopup = 0;
             float dx = (risoluzione_x - dime_panel_x) * .5f;
@@ -3210,7 +3416,13 @@ void leggi_vertici_cilindro()
                 distruggi_menu_popup();
             }
 
+
+
+
         }
+
+
+      
 
 
     }
@@ -3285,12 +3497,10 @@ void leggi_vertici_cilindro()
             if (cilindro.transform.position.z < -pos_finale.z)
             {
 
-               
 
                 crea_popup_finale = 1;
                 crea_popup_finale_tempo = 1.5f;
 
-                
             }
 
         }

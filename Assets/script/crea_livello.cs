@@ -27,6 +27,8 @@ public class crea_livello : MonoBehaviour
 
     public bool buchi_doppi = true;
 
+    public bool solo_mine_e_ostacoli = true;
+
     public float distanza_partenza_blocchi = 20;
     public float distanza_blocchi = 26;
     public float distanza_random = 3;
@@ -34,6 +36,7 @@ public class crea_livello : MonoBehaviour
     public int numero_aperture_massimo = 12;
     public int fila_monete_cirolari = 6;
     public int numero_monete_linea = 8;
+    public int numero_mine_ostacoli = 5;
 
     public float percentuale_monete= 60;
     public float percentuale_altri_blocchi = 79;
@@ -2375,41 +2378,55 @@ public class crea_livello : MonoBehaviour
         for (int n = 0; n < max_linee_blocchi; n++)
         {
 
-            string struttura = struttura_generata(numero_aperture_minimo, numero_aperture_massimo, 1,4,1);
-
-            c_save.crea_blocco.Add(new blocco());
-
-            int num = c_save.crea_blocco.Count - 1;
-
-            c_save.crea_blocco[num].tipo = 100;
-            c_save.crea_blocco[num].rad = rad_base;
-
-
-            if (UnityEngine.Random.Range(0, 100) < percentuale_blocchi_rotanti)
+            if (solo_mine_e_ostacoli == false)
             {
-                if (UnityEngine.Random.Range(0, 10) > 5)
+
+                string struttura = struttura_generata(numero_aperture_minimo, numero_aperture_massimo, 1, 4, 1);
+
+                c_save.crea_blocco.Add(new blocco());
+
+                int num = c_save.crea_blocco.Count - 1;
+
+                c_save.crea_blocco[num].tipo = 100;
+                c_save.crea_blocco[num].rad = rad_base;
+
+
+                if (UnityEngine.Random.Range(0, 100) < percentuale_blocchi_rotanti)
                 {
-                    c_save.crea_blocco[num].rotazione = .2f;
-                }
-                else
-                {
-                    c_save.crea_blocco[num].rotazione = -.2f;
+                    if (UnityEngine.Random.Range(0, 10) > 5)
+                    {
+                        c_save.crea_blocco[num].rotazione = .2f;
+                    }
+                    else
+                    {
+                        c_save.crea_blocco[num].rotazione = -.2f;
+                    }
+
+
                 }
 
-               
+
+                float pos_z = distanza_partenza + n * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd);
+
+                c_save.crea_blocco[num].pos = pos_z;
+
+                pz_ultimo = pos_z;
+
+                c_save.crea_blocco[num].struttura_procedurale = struttura;
+                c_save.crea_blocco[num].struttura_procedurale_dz = struttura_generata_dz;
+
             }
+            else
+            {
+                float pos_z = distanza_partenza + n * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd);
 
+                pz_ultimo = pos_z;
+                genera_bonus(n, 4, distanza, distanza_rnd, distanza_partenza);
 
-            float pos_z = distanza_partenza + n * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd);
+            }
+            
 
-            c_save.crea_blocco[num].pos = pos_z;
-
-            pz_ultimo = pos_z;
-
-            c_save.crea_blocco[num].struttura_procedurale = struttura;
-            c_save.crea_blocco[num].struttura_procedurale_dz = struttura_generata_dz;
-
-            genera_altri_blocchi(n,4, distanza, distanza_rnd, distanza_partenza);
+            genera_altri_blocchi(n, numero_mine_ostacoli, distanza, distanza_rnd, distanza_partenza);
 
         }
 
@@ -2810,6 +2827,93 @@ public class crea_livello : MonoBehaviour
 
 
 
+    void genera_bonus(int pos, int numero_blocchi, float distanza, float distanza_rnd, float distanza_partenza)
+    {
+
+        float molt_rad = Mathf.PI * 2 / (numero_blocchi + 1);
+
+
+        for (int n = 0; n <= numero_blocchi; n++)
+        {
+            if (UnityEngine.Random.Range(0, 100.0f) < 70f)
+            {
+
+               
+                   float rad = UnityEngine.Random.Range(0, 6.28f);
+               
+
+                float pos_z = distanza_partenza + pos * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd) + distanza * .5f;
+
+                float xx = Mathf.Sin(rad) * c_save.crea_cilindro[0].raggio;
+                float yy = Mathf.Cos(rad) * c_save.crea_cilindro[0].raggio;
+
+                float zz = pos_z;
+
+                Vector3 pos0 = new Vector3(xx, yy, zz);
+
+                int ok = 1;
+
+                for (int k = 0; k < c_save.crea_bonus.Count; k++)
+                {
+                    
+                        float rad_p = c_save.crea_bonus[k].rad;
+
+
+                        float px = Mathf.Sin(rad_p) * c_save.crea_cilindro[0].raggio;
+                        float py = Mathf.Cos(rad_p) * c_save.crea_cilindro[0].raggio;
+
+                        float pz = c_save.crea_bonus[k].pos;
+
+                        float dis = Vector3.Distance(pos0, new Vector3(px, py, pz));
+
+                        if (dis < 5)
+                        {
+                            ok = 0;
+                            k = 100000;
+
+                        }
+
+                }
+
+
+
+                if (ok == 1)
+                {
+
+                    c_save.crea_bonus.Add(new bonus());
+
+                    int num = c_save.crea_bonus.Count - 1;
+
+                    int t_bonus= (int)(UnityEngine.Random.Range(0, 100.49f));
+
+
+                    c_save.crea_bonus[num].tipo = 0;
+
+                    if (t_bonus > 70)
+                    {
+                        c_save.crea_bonus[num].tipo = 1;
+                    }
+
+
+                    if (t_bonus > 90)
+                    {
+                        c_save.crea_bonus[num].tipo = 2;
+                    }
+
+                    c_save.crea_bonus[num].rad = rad;
+
+                    c_save.crea_bonus[num].pos = pos_z;
+
+                }
+
+
+            }
+
+        }
+
+
+    }
+
 
 
 
@@ -2825,6 +2929,13 @@ public class crea_livello : MonoBehaviour
             {
 
                 float rad= molt_rad * n + UnityEngine.Random.Range(-.12f, .12f);
+
+                if (solo_mine_e_ostacoli == true)
+                {
+                    rad = UnityEngine.Random.Range(0, 6.28f);
+                }
+
+
                 float pos_z = distanza_partenza + pos * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd) + distanza * .5f;
 
                 float xx = Mathf.Sin(rad) * c_save.crea_cilindro[0].raggio;

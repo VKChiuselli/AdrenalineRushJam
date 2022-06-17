@@ -13,6 +13,8 @@ public class cilindro {
     public float spostamento_z = 1;
     public float spostamento_z2 = .75f;
 
+    public bool visione_boss =false;
+
     public Vector3 pos_finale;
 }
 
