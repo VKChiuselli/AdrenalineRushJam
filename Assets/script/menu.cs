@@ -1080,15 +1080,53 @@ public class menu : MonoBehaviour {
         float pos_x = 0;
         float pos_y = risoluzione_y * .3f;
 
-
-
-        if (pulsante[0] != null) { //play
+        if (pulsante[0] != null) { 
             pos_y = risoluzione_y * -.2f;
 
             pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
             pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
 
             pulsante_testo[0].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+
+        }
+
+        if (pulsante[30] != null) {
+
+            pos_y = risoluzione_y * 0.28f;
+
+            pulsante[30].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
+            pulsante[30].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
+            pulsante_testo[30].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+        }
+
+        if (pulsante[31] != null) {
+
+            float dx2 = risoluzione_x * 0.8f * 0.3f;
+            float dy2 = risoluzione_y * 0.8f * 0.1f;
+            pos_y = risoluzione_y * -0.33f;
+            pulsante[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            pulsante[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
+        }
+
+        if (grafica[20] != null) { 
+            pos_y = risoluzione_y * 0.15f ;
+
+            grafica[20].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
+            grafica[20].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
+
+            grafica_testo[20].GetComponent<TextMeshProUGUI>().fontSize = font_size * 3f;
+
+        }
+        if (grafica[21] != null) {
+
+            float dx2=risoluzione_x * 0.8f ;
+            float dy2=risoluzione_y  * 0.8f * 0.45f;
+
+            pos_y = 0;
+
+            grafica[21].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2/2, dy2/2);
+            grafica[21].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
+
 
         }
 
@@ -1242,6 +1280,10 @@ public class menu : MonoBehaviour {
 
 
         crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
+        crea_button_text(30, "BATTLEPASS", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/battlepass");
+        crea_button_text(31, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/chest_main_page_1");
+        crea_grafica_text(20, new Color(1, 1, 1, 0), "Livello " + script_struttura_dati.livello_in_uso + "/50", canvas, "Canvas", "");
+        crea_grafica_text(21, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/immagine_centrale_1");
 
         crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
         crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
