@@ -104,7 +104,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float rotazione_cilindro = 0;
 
-    int blocco_velocita = 1;
+    float blocco_velocita = 1;
 
     float inversione_controllo = 0;
 
@@ -156,12 +156,14 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float resetTimerPopup = 0;
 
-    float[] grafica_tempo = new float[5];
+    float[] grafica_tempo = new float[15];
 
-    float[] grafica_dime = new float[5];
-    float[] grafica_pos = new float[5];
+    float[] grafica_dime = new float[15];
+    float[] grafica_pos = new float[15];
 
     int crea_popup_finale = 0;
+
+    float crea_popup_finale_tempo = 1;
 
     // upgrade
 
@@ -176,6 +178,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
     float calamita = 0;
 
     float attiva_barriera = 0;
+
+    float tempo_fire_work = 0;
 
 
     // Start is called before the first frame update
@@ -255,7 +259,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
         energia = 100;
 
 
-        numero_spari = 1;
+        numero_spari = 3;
 
         scafo = 1.0f;
         calamita = 1;
@@ -271,7 +275,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
             energia = 100.0f + script_struttura_dati.livello_upgrade[2] * 10;
 
-            numero_spari = 1 + script_struttura_dati.livello_upgrade[3];
+            numero_spari = 3 + script_struttura_dati.livello_upgrade[3];
 
             scafo = 1.0f + script_struttura_dati.livello_upgrade[4] * .1f;
 
@@ -289,19 +293,15 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     void analisi_energia(float riduttore)
     {
-
-        if (attiva_barriera < 0)
+        if (crea_popup_finale == 0)
         {
-            energia = energia - riduttore / scafo;
+            if (attiva_barriera < 0)
+            {
+                energia = energia - riduttore / scafo;
 
+            }
         }
 
-
-        if (energia < 0)
-        {
-            blocco_velocita = 0;
-
-        }
 
     }
 
@@ -328,7 +328,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         gestione_coll_special_bonus_malus();
 
-    //    gestione_fine_gioco();
+       gestione_fine_gioco();
 
         aggiorna_menu();
 
@@ -514,7 +514,17 @@ void leggi_vertici_cilindro()
         attiva_barriera = attiva_barriera - Time.deltaTime;
 
 
-       
+        if (energia < 0 || crea_popup_finale==1)
+        {
+            blocco_velocita = blocco_velocita*.9f;
+
+            if (blocco_velocita < .05f)
+            {
+                blocco_velocita = 0;
+            }
+
+        }
+
 
 
         float pressione_tasto_up = Input.GetAxis("Vertical");
@@ -522,7 +532,7 @@ void leggi_vertici_cilindro()
         attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio - Time.deltaTime;
 
 
-        if (pressione_tasto_up < 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita == 1)
+        if (pressione_tasto_up < 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f)
         {
             crea_sparo();
 
@@ -544,7 +554,7 @@ void leggi_vertici_cilindro()
 
         pressione_tasto = Input.GetAxis("Horizontal");
 
-        if (Mathf.Abs(pressione_tasto) > 0 && blocco_velocita == 1)
+        if (Mathf.Abs(pressione_tasto) > 0 && blocco_velocita >.99f)
         {
 
             int molt_inversione = 1;
@@ -829,6 +839,22 @@ void leggi_vertici_cilindro()
                 float zz2 = c_save.crea_blocco[n].mesh.transform.position.z;
 
 
+                if (c_save.crea_blocco[n].rotazione != 0)
+                {
+                    
+                        c_save.crea_blocco[n].rad = c_save.crea_blocco[n].rad + c_save.crea_blocco[n].rotazione*Time.deltaTime;
+
+                       
+
+                        float angolo = c_save.crea_blocco[n].rad * Mathf.Rad2Deg;
+
+                        c_save.crea_blocco[n].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
+
+                }
+
+
+
+
                 if (c_save.crea_blocco[n].distruzione_oggetto > 0)
                 {
 
@@ -857,8 +883,11 @@ void leggi_vertici_cilindro()
                 }
 
 
+              
 
-                if (c_save.crea_blocco[n].arrivo == 0 && zz2 < distanza_disolve)
+
+
+                    if (c_save.crea_blocco[n].arrivo == 0 && zz2 < distanza_disolve)
                 {
 
 
@@ -1438,8 +1467,25 @@ void leggi_vertici_cilindro()
         c_save.crea_blocco[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/blocco_mesh", typeof(GameObject))) as GameObject;
 
 
+        int scelta_colore = (int)(UnityEngine.Random.Range(.0f, 2.999f));
 
-        scala_blocco(c_save.crea_blocco[num].mesh, tipo, struttura, struttura_dz);
+        Color colore_blocco = new Color(.9f, 0, 0, 1);
+
+        if (scelta_colore == 1)
+        {
+            colore_blocco = new Color(1.0f, .45f, 0, 1);
+        }
+
+        if (scelta_colore >= 2)
+        {
+            colore_blocco = new Color(1.0f, .85f, 0, 1);
+        }
+
+
+        c_save.crea_blocco[num].mesh.GetComponent<Renderer>().material.SetColor("_Color", colore_blocco);
+    
+
+    scala_blocco(c_save.crea_blocco[num].mesh, tipo, struttura, struttura_dz);
 
         c_save.crea_blocco[num].mesh.transform.SetParent(cilindro.transform);
     }
@@ -1907,7 +1953,7 @@ void leggi_vertici_cilindro()
                                 c_save.crea_blocco[num_block].disattiva_coll = 1;
 
 
-                                analisi_energia(25);
+                                analisi_energia(20);
 
 
 
@@ -1998,7 +2044,7 @@ void leggi_vertici_cilindro()
                 if (c_save.crea_blocco[num_block].disattiva_coll == 0)
                 {
                     c_save.crea_blocco[num_block].disattiva_coll = 1;
-                    analisi_energia(20);
+                    analisi_energia(15);
 
                     carica_particles("particles/CFXR Hit A", punto_coll_uso);
 
@@ -2143,7 +2189,7 @@ void leggi_vertici_cilindro()
         {
             DestroyImmediate(ogg);
 
-            analisi_energia(50);
+            analisi_energia(30);
 
 
         }
@@ -2275,7 +2321,7 @@ void leggi_vertici_cilindro()
 
         attivo_tempo_sparo_boss2 = attivo_tempo_sparo_boss2 - Time.deltaTime;
 
-        if (attivo_tempo_sparo_boss2 < -1)
+        if (attivo_tempo_sparo_boss2 < -1 && blocco_velocita>.99f)
         {
 
             if (Mathf.Abs(diff) < .1f)
@@ -2927,7 +2973,7 @@ void leggi_vertici_cilindro()
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popup_gioco"); //pannello shop
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
         crea_grafica_text(201, new Color(1, 1, 1, 0), "LEVEL", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
@@ -2943,8 +2989,21 @@ void leggi_vertici_cilindro()
 
         grafica[203].transform.localEulerAngles = new Vector3(0,0,30);
 
+        for (int n = 0; n <= 2; n++)
+        {
+            crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
+            crea_grafica_text(207 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1"); // stelle
 
-   grafica_tempo[1] = .5f;
+            grafica_dime[4 + n] = 1;
+            grafica_dime[7+n] = 2;
+
+            grafica_tempo[4 + n] = .0f;
+            grafica_tempo[7+n] = 2.0f+n*.25f;
+        }
+
+
+
+        grafica_tempo[1] = .5f;
         grafica_tempo[2] = 1;
         grafica_tempo[3] = 1.5f;
 
@@ -2953,7 +3012,6 @@ void leggi_vertici_cilindro()
 
         grafica_dime[2] = 4;
 
-       
         grafica_dime[3] = 4;
 
 
@@ -3020,6 +3078,10 @@ void leggi_vertici_cilindro()
                 float dx2 = dx * .8f;
                 float dy2 = dy * .8f;
 
+                float dx_stelle = dx2 * .25f;
+               
+
+
                 float dy_t = dy * .2f;
 
                 dime_panel_x = dx2;
@@ -3032,13 +3094,22 @@ void leggi_vertici_cilindro()
                 grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
 
-                
+
                 grafica_pos[1] = .3f;
-                grafica_pos[2] = .1f;
-                grafica_pos[3] = -.25f;
+                grafica_pos[2] = .15f;
+                grafica_pos[3] = -.08f;
 
 
-                for (int n = 1; n <= 3; n++)
+
+                for (int n = 4; n <= 9; n++)
+                {
+                    grafica_pos[n] = -.32f;
+
+                }
+
+
+
+                for (int n = 1; n <= 9; n++)
                 {
                     grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
 
@@ -3053,10 +3124,39 @@ void leggi_vertici_cilindro()
 
                         pos_y = dime_panel_y  * grafica_pos[n];
 
-                        grafica[200+n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy_t );
-                        grafica[200+n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-                        grafica[200 + n].transform.localScale= new Vector3(grafica_dime[n], grafica_dime[n], grafica_dime[n]);
+                        if (n <= 3)
+                        {
+                            grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy_t);
+                            grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                        }
+                        else
+                        {
+
+                            if (n==4 || n == 7)
+                            {
+                                pos_x = dx2 * -.25f;
+                            }
+
+                            if (n == 5 || n == 8)
+                            {
+                                pos_x = 0;
+                            }
+
+                            if (n == 6 || n == 9)
+                            {
+                                pos_x = dx2 * .25f;
+                            }
+
+                            grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stelle, dx_stelle);
+                            grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
+                        }
+
+
+                        grafica[200 + n].transform.localScale= new Vector3(grafica_dime[n], grafica_dime[n], 1);
 
 
 
@@ -3077,8 +3177,6 @@ void leggi_vertici_cilindro()
                     }
 
                 }
-
-
 
             }
 
@@ -3187,16 +3285,52 @@ void leggi_vertici_cilindro()
             if (cilindro.transform.position.z < -pos_finale.z)
             {
 
-                blocco_velocita = 0;
-
+               
 
                 crea_popup_finale = 1;
-                crea_popup(1);
+                crea_popup_finale_tempo = 1.5f;
+
+                
             }
 
         }
 
 
+
+        if (crea_popup_finale == 1)
+        {
+            crea_popup_finale_tempo = crea_popup_finale_tempo - Time.deltaTime;
+
+
+            tempo_fire_work = tempo_fire_work - Time.deltaTime;
+
+            if (tempo_fire_work < 0)
+            {
+                tempo_fire_work = UnityEngine.Random.Range(.1f, .3f);
+
+
+                float xx = UnityEngine.Random.Range(-5, 5);
+                float yy = UnityEngine.Random.Range(5, 7) + c_save.crea_cilindro[0].raggio;
+                float zz = UnityEngine.Random.Range(-1, 1);
+
+
+                Vector3 pos0 = new Vector3(xx, yy, zz);
+
+                int tipo_firework = (int)(UnityEngine.Random.Range(0, 3.49f));
+
+                carica_particles("particles/Firework Variants/CFXM_Firework " + tipo_firework, pos0);
+
+
+            }
+
+
+
+            if (crea_popup_finale_tempo < 0)
+            {
+                crea_popup_finale = 2;
+                crea_popup(1);
+            }
+        }
 
     }
 

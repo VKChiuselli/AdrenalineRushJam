@@ -411,15 +411,18 @@ MonoBehaviour:
     crea_gemma: []
   level_json: {fileID: 4900000, guid: 3a85bfba77b3ae7459a6f4ce38a92365, type: 3}
   max_blocchi: 20
-  distanza_partenza_blocchi: 20
-  distanza_blocchi: 26
-  distanza_random: 3
-  numero_aperture_minimo: 6
-  numero_aperture_massimo: 10
-  fila_monete_cirolari: 6
+  max_linee_blocchi: 5
+  buchi_doppi: 1
+  distanza_partenza_blocchi: 35
+  distanza_blocchi: 36
+  distanza_random: 6
+  numero_aperture_minimo: 2
+  numero_aperture_massimo: 2
+  fila_monete_cirolari: 4
   numero_monete_linea: 8
   percentuale_monete: 60
   percentuale_altri_blocchi: 79
+  percentuale_blocchi_rotanti: 100
   spostamento_z: 1
   spostamento_z2: 0.75
   move_camera_editor_speed: 0.2

@@ -45,6 +45,7 @@ public class blocco {
     public float altezza;
     public float rad;
     public float pos;
+    public float rotazione;
 
 }
 

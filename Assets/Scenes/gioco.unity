@@ -338,7 +338,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ddce6de424c678045a5b4a503e46df6f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 85d11bd6357fd45459425f0e1c3ed09a, type: 2}
+      objectReference: {fileID: 2100000, guid: e8a4824a2de370940ac17f9da37bc184, type: 2}
     - target: {fileID: 919132149155446097, guid: ddce6de424c678045a5b4a503e46df6f, type: 3}
       propertyPath: m_Name
       value: cilindro_esatto
@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1099,6 +1099,8 @@ MonoBehaviour:
     crea_moneta: []
     crea_gemma: []
   level_json: {fileID: 4900000, guid: 3a85bfba77b3ae7459a6f4ce38a92365, type: 3}
+  variabile_x: 0
+  variabile_y: 0
   potenza_tasto: -250
   velocita_personaggio: 11
   aumento_velo: 1
@@ -1107,13 +1109,10 @@ MonoBehaviour:
   inversione_camera: 1
   velocita_sparo: 55
   velocita_sparo_boss: 55
-  numero_spari: 300
   astronave: {fileID: 1025342169}
   boss_mesh: {fileID: 1699463916}
   boss_mesh_sparo: {fileID: 1896255085}
   spostamento_boss_rotazione: -0.01
   newColor: {r: 0, g: 1, b: 1, a: 1}
-  jump: 25
   distanza_disolve: -15
-  energia: 1000
   monete_partita_corrente: 0

@@ -23,6 +23,10 @@ public class crea_livello : MonoBehaviour
 
     float xm, ym, xm_old, ym_old;
 
+    public int max_linee_blocchi = 30;
+
+    public bool buchi_doppi = true;
+
     public float distanza_partenza_blocchi = 20;
     public float distanza_blocchi = 26;
     public float distanza_random = 3;
@@ -33,6 +37,9 @@ public class crea_livello : MonoBehaviour
 
     public float percentuale_monete= 60;
     public float percentuale_altri_blocchi = 79;
+
+    public float percentuale_blocchi_rotanti = 60;
+    
 
     public float spostamento_z = 1;
     public float spostamento_z2 = .75f;
@@ -2365,7 +2372,7 @@ public class crea_livello : MonoBehaviour
 
         float pz_ultimo = 0;
 
-        for (int n = 0; n < 30; n++)
+        for (int n = 0; n < max_linee_blocchi; n++)
         {
 
             string struttura = struttura_generata(numero_aperture_minimo, numero_aperture_massimo, 1,4,1);
@@ -2376,6 +2383,22 @@ public class crea_livello : MonoBehaviour
 
             c_save.crea_blocco[num].tipo = 100;
             c_save.crea_blocco[num].rad = rad_base;
+
+
+            if (UnityEngine.Random.Range(0, 100) < percentuale_blocchi_rotanti)
+            {
+                if (UnityEngine.Random.Range(0, 10) > 5)
+                {
+                    c_save.crea_blocco[num].rotazione = .2f;
+                }
+                else
+                {
+                    c_save.crea_blocco[num].rotazione = -.2f;
+                }
+
+               
+            }
+
 
             float pos_z = distanza_partenza + n * distanza + UnityEngine.Random.Range(-distanza_rnd, distanza_rnd);
 
@@ -2434,7 +2457,7 @@ public class crea_livello : MonoBehaviour
 
 
 
-            int vuoto_creato = 0;
+          
 
 
             string struttura_controllo = "";
@@ -2446,17 +2469,15 @@ public class crea_livello : MonoBehaviour
 
                 string str = struttura.Substring(n, 1);
 
-                if (UnityEngine.Random.Range(0.0f, 10.0f) > 5)
+                if (UnityEngine.Random.Range(0.0f, 10.0f) > (8.5f- numero_massimo_buchi*.15f))
                 {
                     str = "0";
 
-                        vuoto_creato = vuoto_creato + 1;
                 }
 
                 struc[n] = str;
 
-                struttura_controllo = struttura_controllo + str;
-
+               
 
             }
 
@@ -2482,14 +2503,7 @@ public class crea_livello : MonoBehaviour
 
                 }
 
-                struttura_controllo = "";
-
-
-                for (int n = 0; n < 19; n++)
-                {
-                    struttura_controllo = struttura_controllo + struc[n];
-
-                }
+              
 
 
 
@@ -2497,8 +2511,48 @@ public class crea_livello : MonoBehaviour
 
 
 
-            if (vuoto_creato>= numero_minimo_buchi && vuoto_creato <= numero_massimo_buchi)
+            if (buchi_doppi == true)
             {
+                for (int n = 1; n < 18; n++)
+                {
+
+                    if (struc[n] == "0")
+                    {
+                        struc[n - 1] = "0";
+
+
+                        n = n + 2;
+
+
+                    }
+
+                  
+
+                }
+
+            }
+
+            int vuoto_creato = 0;
+
+            for (int n = 0; n < 19; n++)
+            {
+                if (struc[n] == "0" || struc[n]=="9")
+                {
+                    vuoto_creato = vuoto_creato + 1;
+                }
+
+               
+                    struttura_controllo = struttura_controllo + struc[n];
+
+            }
+
+          
+
+
+                if (vuoto_creato>= numero_minimo_buchi && vuoto_creato <= numero_massimo_buchi)
+            {
+
+                Debug.Log("");
 
                 return struttura_controllo;
 
@@ -2538,7 +2592,7 @@ public class crea_livello : MonoBehaviour
 
 
 
-        for (int n = 0; n < 30; n++)
+        for (int n = 0; n < max_linee_blocchi; n++)
         {
 
             genera_monete(n, fila_monete_cirolari, numero_monete_linea, distanza_blocchi, .25f, 5);
