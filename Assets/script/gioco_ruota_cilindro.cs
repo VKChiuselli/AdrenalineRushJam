@@ -121,6 +121,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     float astronave_rx = 0;
     float astronave_rx_calcolo = 0;
 
+    float astronave_ry = 0;
     float astronave_rz = 0;
     float astronave_rz_calcolo = 0;
 
@@ -562,7 +563,7 @@ void leggi_vertici_cilindro()
         float pressione_tasto_up = Input.GetAxis("Vertical");
 
 
-        if (controllo_mobile == 1)
+        if (controllo_mobile == 1 && touch_x[0]>0)
         {
             if (Mathf.Abs(diff_ym) < risoluzione_y / 20)
             {
@@ -668,10 +669,23 @@ void leggi_vertici_cilindro()
 
 
 
+
+        float astronave_ry_calcolo = 0;
+
+
+
+        if (crea_popup_finale == 1)
+        {
+            astronave_ry_calcolo = 20;
+        }
+
+        astronave_ry = Mathf.LerpAngle(astronave_ry, astronave_ry_calcolo, Time.deltaTime * 3);
+
         astronave_rz = Mathf.LerpAngle(astronave_rz, astronave_rz_calcolo, Time.deltaTime * 15);
 
 
-        astronave.transform.localEulerAngles = new Vector3(0, 0, astronave_rz);
+
+        astronave.transform.localEulerAngles = new Vector3(0, astronave_ry, astronave_rz);
 
         astronave_rz_calcolo = astronave_rz_calcolo * .9f;
 
@@ -792,7 +806,19 @@ void leggi_vertici_cilindro()
 
         if (inversione_camera == 1)
         {
-            cam_pos.z = Mathf.Lerp(cam_pos.z, 27, Time.deltaTime * 5);
+            float sposta_z = 27;
+
+            if (crea_popup_finale == 1)
+            {
+                sposta_z = 8;
+            }
+
+
+
+
+            cam_pos.z = Mathf.Lerp(cam_pos.z, sposta_z, Time.deltaTime * 5);
+
+
 
             cam_rot.y = Mathf.Lerp(cam_rot.y, 180, Time.deltaTime * 50);
 
@@ -2912,7 +2938,7 @@ void leggi_vertici_cilindro()
 
         controllo_mobile = 0;
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID || UNITY_IOS
 
         controllo_mobile = 1;
 
@@ -2997,8 +3023,14 @@ void leggi_vertici_cilindro()
 
         }
 
+
+
+
         if (controllo_mobile == 1)
         {
+            diff_xm = 0;
+            diff_ym = 0;
+
 
             if (touch_x[0] > 0 && touch_xo[0] > 0 && touch_xo[1] < 0)
             {
@@ -3028,7 +3060,7 @@ void leggi_vertici_cilindro()
     {
 
 
-        Debug.Log("" + ogg.name);
+    //    Debug.Log("" + ogg.name);
 
 
 
@@ -3287,7 +3319,7 @@ void leggi_vertici_cilindro()
 
         int font_size = (int)(risoluzione_x / 5.5f);
         int font_size2 = (int)(risoluzione_x / 5);
-        int font_size3 = (int)(risoluzione_x / 6);
+        int font_size3 = (int)(risoluzione_x / 7.5f);
 
         if (attivo_popup == 2)
         {
@@ -3336,9 +3368,9 @@ void leggi_vertici_cilindro()
 
 
 
-                grafica_pos[1] = -.05f;
-                grafica_pos[2] = -.15f;
-                grafica_pos[3] = -.25f;
+                grafica_pos[1] = -.13f;
+                grafica_pos[2] = -.175f;
+                grafica_pos[3] = -.33f;
 
 
 
@@ -3600,7 +3632,7 @@ void leggi_vertici_cilindro()
 
 
                 crea_popup_finale = 1;
-                crea_popup_finale_tempo = 1.5f;
+                crea_popup_finale_tempo = 2.2f;
 
             }
 
