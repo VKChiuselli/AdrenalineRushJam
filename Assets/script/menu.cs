@@ -1166,7 +1166,12 @@ public class menu : MonoBehaviour {
             crea_grafica_text(100 + n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
             crea_grafica_text(120 + n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-            grafica[100 + n].GetComponent<Image>().raycastTarget = false;
+            if (n == 0) {
+            pulsante[100].AddComponent<timer_reward>();
+            }
+  
+
+              grafica[100 + n].GetComponent<Image>().raycastTarget = false;
             grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
             grafica[120 + n].GetComponent<Image>().raycastTarget = false;
             grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
@@ -1548,6 +1553,9 @@ public class menu : MonoBehaviour {
         if (indice_shop_corrente == 1) {
             script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
             PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            if (pulsante[100].GetComponent<timer_reward>() != null) {
+                pulsante[100].GetComponent<timer_reward>().Click();
+            }
         }
         if (indice_shop_corrente == 2) {
             script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
@@ -1585,6 +1593,7 @@ public class menu : MonoBehaviour {
             script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
             PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
         }
+        distruggi_menu_popup();
     }
 
     private void acquista_upgrade(int costoUpgrade) {
