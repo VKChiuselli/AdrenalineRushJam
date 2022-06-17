@@ -190,6 +190,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     float sposta_uv_bonus = 0;
 
+    int controllo_mobile = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -556,7 +558,21 @@ void leggi_vertici_cilindro()
 
 
 
+
         float pressione_tasto_up = Input.GetAxis("Vertical");
+
+
+        if (controllo_mobile == 1)
+        {
+            if (Mathf.Abs(diff_ym) < risoluzione_y / 20)
+            {
+
+                pressione_tasto_up = -1;
+
+            }
+        }
+
+
 
         attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio - Time.deltaTime;
 
@@ -568,20 +584,29 @@ void leggi_vertici_cilindro()
         }
 
 
-        if (pressione_tasto_up > 0)
-        {
-            //   aumento_velo = aumento_velo +.25f;
-
-
-        }
-
-
 
         astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio + 1.0f, 0);
 
 
 
+
         pressione_tasto = Input.GetAxis("Horizontal");
+
+
+        if (controllo_mobile == 1)
+        {
+
+            if (touch_x[0]>0 && touch_x[0]<risoluzione_x*.5f)
+            {
+                pressione_tasto = -1;
+            }
+
+            if (touch_x[0] > 0 && touch_x[0] > risoluzione_x * .5f)
+            {
+                pressione_tasto = 1;
+            }
+        }
+
 
         if (Mathf.Abs(pressione_tasto) > 0 && blocco_velocita >.99f)
         {
@@ -2885,6 +2910,14 @@ void leggi_vertici_cilindro()
     public void controllo_risoluzione()
     {
 
+        controllo_mobile = 0;
+
+#if UNITY_ANDROID
+
+        controllo_mobile = 1;
+
+#endif
+
         risoluzione_x = Screen.width;
         risoluzione_y = Screen.height;
 
@@ -2915,8 +2948,76 @@ void leggi_vertici_cilindro()
         ym = Input.mousePosition.y;
 
 
-        diff_xm = xm - xm_old;
-        diff_ym = ym - ym_old;
+
+
+
+
+        for (int n = 0; n <= 3; n++)
+        {
+            touch_xo[n] = touch_x[n];
+            touch_yo[n] = touch_y[n];
+        }
+
+        for (int n = 0; n <= 3; n++)
+        {
+            touch_x[n] = -1000;
+            touch_y[n] = -1000;
+        }
+
+#if ((UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR))
+
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+
+            Touch touch = Input.GetTouch(i);
+
+
+            touch_x[i] = touch.position.x;
+            touch_y[i] = touch.position.y;
+
+        }
+
+#endif
+
+
+
+        if (controllo_mobile == 0 && Input.GetMouseButton(0))
+        {
+            for (int n = 0; n <= 0; n++)
+            {
+                touch_x[n] = xm;
+                touch_y[n] = ym;
+                touch_rx[n] = touch_x[n];
+                touch_ry[n] = touch_y[n];
+            }
+
+
+            diff_xm = xm - xm_old;
+            diff_ym = ym - ym_old;
+
+        }
+
+        if (controllo_mobile == 1)
+        {
+
+            if (touch_x[0] > 0 && touch_xo[0] > 0 && touch_xo[1] < 0)
+            {
+
+                diff_xm = (touch_x[0] - touch_xo[0]);
+
+            }
+
+
+            if (touch_y[0] > 0 && touch_yo[0] > 0 && touch_xo[1] < 0)
+            {
+                diff_ym = (touch_y[0] - touch_yo[0]);
+
+            }
+
+        }
+
+
+
 
 
     }
@@ -3050,7 +3151,7 @@ void leggi_vertici_cilindro()
 
 
             crea_grafica_text(202, new Color(1, 1, 1, 0), "" , canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
-            crea_grafica_text(203, new Color(1, 1, 1, 0), "WASTED", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+            crea_grafica_text(203, new Color(1, 1, 1, 0), "COMPLETED", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
             grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
 
