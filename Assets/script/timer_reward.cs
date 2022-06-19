@@ -49,8 +49,7 @@ public class timer_reward : MonoBehaviour {
         float secondsLeft = (float)(msToWait - m) / 1000.0f;
 
         if (secondsLeft < 0) {
-          //  ClickButton.interactable = false;
-            Debug.Log("qzazqz");
+          //  TODO azione quando viene cliccato
             return true;
         }
 
