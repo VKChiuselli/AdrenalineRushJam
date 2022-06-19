@@ -439,7 +439,7 @@ public class menu : MonoBehaviour {
 
             pos_x = 2 * risoluzione_x * 0.88f - risoluzione_x * .25f + risoluzione_x * .5f;
 
-            pos_y = risoluzione_y * .1f * 2.5f - aumento_pos_y * dy2 * 1.05f * 1.8f; //distanza dall'inizio pagina  - gap tra stelle
+            pos_y = risoluzione_y * .1f * 1.9f - aumento_pos_y * dy2 * 1.05f * 1.8f; //distanza dall'inizio pagina  - gap tra stelle
 
     
 
@@ -470,35 +470,38 @@ public class menu : MonoBehaviour {
 
 
 
-            //if (grafica[297] != null) {
-
-        
-            //    pos_x = risoluzione_x;
-            //    pos_y = risoluzione_y * 0.25f;
+            if (grafica[297] != null) {
 
 
-            //    grafica[297].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            //    grafica[297].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 0.85f, pos_y + scroll_verticale_dx_battlepass);
-            //    grafica_testo[297].GetComponent<TextMeshProUGUI>().text = "FREE";
-            //}
+                pos_x = risoluzione_x * 2;
+                pos_y = risoluzione_y * 0.25f * 1.35f;
 
-            //if (grafica[298] != null) {
 
-            //    pos_x = risoluzione_x;
-            //    pos_y = risoluzione_y * 0.25f;
-            //    grafica[298].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            //    grafica[298].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx_battlepass);
-            //    grafica_testo[298].GetComponent<TextMeshProUGUI>().text = "STARS";
-            //}
+                grafica[297].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*3f, dy2);
+                grafica[297].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 0.85f, pos_y + scroll_verticale_dx_battlepass);
+                grafica_testo[297].GetComponent<TextMeshProUGUI>().text = "FREE";
+                grafica_testo[297].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.7f;
+            }
 
-            //if (grafica[299] != null) {
+            if (grafica[298] != null) {
 
-            //    pos_x = risoluzione_x;
-            //    pos_y = risoluzione_y * 0.25f;
-            //    grafica[299].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            //    grafica[299].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 1.15f, pos_y + scroll_verticale_dx_battlepass);
-            //    grafica_testo[299].GetComponent<TextMeshProUGUI>().text = "PREMIUM";
-            //}
+                pos_x = risoluzione_x * 2; 
+                pos_y = risoluzione_y * 0.25f * 1.35f; 
+                grafica[298].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 3f, dy2);
+                grafica[298].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx_battlepass);
+                grafica_testo[298].GetComponent<TextMeshProUGUI>().text = "STARS";
+                grafica_testo[298].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.7f;
+            }
+
+            if (grafica[299] != null) {
+
+                pos_x = risoluzione_x * 2;
+                pos_y = risoluzione_y * 0.25f * 1.35f;
+                grafica[299].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 3f, dy2);
+                grafica[299].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 1.15f, pos_y + scroll_verticale_dx_battlepass);
+                grafica_testo[299].GetComponent<TextMeshProUGUI>().text = "PREMIUM";
+                grafica_testo[299].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.7f;
+            }
 
 
         }
@@ -1371,9 +1374,9 @@ public class menu : MonoBehaviour {
         //pagina battlepass 
         int stelle_acquisite = script_struttura_dati.stelle_battle_pass;
 
-        //crea_grafica_text(297, new Color(1, 1, 1, 0), "", canvas, "Canvas", ""); //text premium battlepass
-        //crea_grafica_text(298, new Color(1, 1, 1, 0), "", canvas, "Canvas", ""); //text stelle acquisite
-        //crea_grafica_text(299, new Color(1, 1, 1, 0), "", canvas, "Canvas", ""); //text free battlepass
+        crea_grafica_text(297, new Color(1, 1, 1, 0), "", canvas, "Canvas", ""); //text premium battlepass
+        crea_grafica_text(298, new Color(1, 1, 1, 0), "", canvas, "Canvas", ""); //text stelle acquisite
+        crea_grafica_text(299, new Color(1, 1, 1, 0), "", canvas, "Canvas", ""); //text free battlepass
 
 
         for (int n = 0; n < 100; n++) {
