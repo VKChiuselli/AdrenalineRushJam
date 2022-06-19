@@ -456,9 +456,9 @@ public class menu : MonoBehaviour {
 
                 grafica[300 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[300 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx_battlepass + dy2 * 0.33f);
+                limite_verticale_dx_battlepass = pos_y - dy2 * .15f;
 
             }
-
         }
 
     }
