@@ -50,7 +50,7 @@ public class menu : MonoBehaviour {
     public float scroll_verticale_dx;
     public float scroll_verticale_dx_battlepass;
 
-    static int num_ogg = 500;
+    static int num_ogg = 550;
 
     GameObject[] pulsante = new GameObject[num_ogg];
     GameObject[] pulsante_testo = new GameObject[num_ogg];
@@ -428,29 +428,21 @@ public class menu : MonoBehaviour {
         float pos_y = risoluzione_y * .3f;
 
 
-
-
-        int aumento_pos_x = -1;
-        int aumento_pos_y = 0;
+        int aumento_pos_y = -1;
 
         for (int n = 0; n < 100; n++) {
 
-            float dx2 = risoluzione_x * .4f;
+            float dx2 = risoluzione_x * 0.1f;
             float dy2 = dx2 * (650.0f / 470.0f);
 
+            aumento_pos_y++;
 
+            pos_x = 2 * risoluzione_x * 0.88f - risoluzione_x * .25f + risoluzione_x * .5f;
 
-            aumento_pos_x = aumento_pos_x + 1;
+            pos_y = risoluzione_y * .1f * 2.5f - aumento_pos_y * dy2 * 1.05f * 1.8f; //distanza dall'inizio pagina  - gap tra stelle
 
+    
 
-            if (aumento_pos_x > 1) {
-                aumento_pos_x = 0;
-                aumento_pos_y = aumento_pos_y + 1;
-            }
-
-            pos_x = 2 * risoluzione_x - risoluzione_x * .25f + aumento_pos_x * risoluzione_x * .5f;
-
-            pos_y = risoluzione_y * .1f - aumento_pos_y * dy2 * 1.05f;
 
             if (grafica[300 + n] != null) {
 
@@ -459,6 +451,56 @@ public class menu : MonoBehaviour {
                 limite_verticale_dx_battlepass = pos_y - dy2 * .15f;
 
             }
+
+            if (pulsante[300 + n] != null) {
+
+                pulsante[300 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                pulsante[300 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 0.85f, pos_y + scroll_verticale_dx_battlepass + dy2 * 0.33f);
+                limite_verticale_dx_battlepass = pos_y - dy2 * .15f;
+
+            }
+
+            if (pulsante[400 + n] != null) {
+
+                pulsante[400 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                pulsante[400 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 1.15f, pos_y + scroll_verticale_dx_battlepass + dy2 * 0.33f);
+                limite_verticale_dx_battlepass = pos_y - dy2 * .15f;
+
+            }
+
+
+
+            //if (grafica[297] != null) {
+
+        
+            //    pos_x = risoluzione_x;
+            //    pos_y = risoluzione_y * 0.25f;
+
+
+            //    grafica[297].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            //    grafica[297].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 0.85f, pos_y + scroll_verticale_dx_battlepass);
+            //    grafica_testo[297].GetComponent<TextMeshProUGUI>().text = "FREE";
+            //}
+
+            //if (grafica[298] != null) {
+
+            //    pos_x = risoluzione_x;
+            //    pos_y = risoluzione_y * 0.25f;
+            //    grafica[298].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            //    grafica[298].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx_battlepass);
+            //    grafica_testo[298].GetComponent<TextMeshProUGUI>().text = "STARS";
+            //}
+
+            //if (grafica[299] != null) {
+
+            //    pos_x = risoluzione_x;
+            //    pos_y = risoluzione_y * 0.25f;
+            //    grafica[299].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            //    grafica[299].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 1.15f, pos_y + scroll_verticale_dx_battlepass);
+            //    grafica_testo[299].GetComponent<TextMeshProUGUI>().text = "PREMIUM";
+            //}
+
+
         }
 
     }
@@ -474,31 +516,31 @@ public class menu : MonoBehaviour {
         float pos_y = risoluzione_y * .3f;
 
 
-        if (pulsante[20] != null) { //shop
-            float dx2 = risoluzione_x * .333f;
-            float dy2 = dx2 * (55f / 145f);
-            pos_x = risoluzione_x;
-            pos_y = risoluzione_y * 0.25f;
+        //if (pulsante[20] != null) { //shop
+        //    float dx2 = risoluzione_x * .333f;
+        //    float dy2 = dx2 * (55f / 145f);
+        //    pos_x = risoluzione_x;
+        //    pos_y = risoluzione_y * 0.25f;
 
-            pulsante[20].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
-            pulsante[20].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
+        //    pulsante[20].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
+        //    pulsante[20].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
 
-            pulsante_testo[20].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+        //    pulsante_testo[20].GetComponent<TextMeshProUGUI>().fontSize = font_size;
 
-        }
+        //}
 
-        if (pulsante[21] != null)  //main
-        {
+        //if (pulsante[21] != null)  //main
+        //{
 
-            float dx2 = dy * .8f;
-            float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x;
-            pos_y = risoluzione_y * 0.05f;
+        //    float dx2 = dy * .8f;
+        //    float dy2 = dx2 * (76f / 72f);
+        //    pos_x = risoluzione_x;
+        //    pos_y = risoluzione_y * 0.05f;
 
-            pulsante[21].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            pulsante[21].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
+        //    pulsante[21].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+        //    pulsante[21].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
 
-        }
+        //}
 
 
 
@@ -526,7 +568,7 @@ public class menu : MonoBehaviour {
 
 
 
-            pos_y = risoluzione_y * -.2f - aumento_pos_y * dy2 * 1.05f;
+            pos_y = risoluzione_y * .1f - aumento_pos_y * dy2 * 1.05f;
 
             if (pulsante[150 + n] != null) {
 
@@ -1269,14 +1311,14 @@ public class menu : MonoBehaviour {
 
         canvas_popup.SetActive(false);
 
-        for (int n = 200; n < pulsante.Length; n++) {
+        for (int n = 200; n < 300; n++) {
             if (pulsante[n] != null) {
                 DestroyImmediate(pulsante[n]);
             }
 
         }
 
-        for (int n = 200; n < grafica.Length; n++) {
+        for (int n = 200; n < 286; n++) {
             if (grafica[n] != null) {
                 DestroyImmediate(grafica[n]);
             }
@@ -1326,11 +1368,35 @@ public class menu : MonoBehaviour {
             grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
         }
 
+        //pagina battlepass 
+        int stelle_acquisite = script_struttura_dati.stelle_battle_pass;
+
+        //crea_grafica_text(297, new Color(1, 1, 1, 0), "", canvas, "Canvas", ""); //text premium battlepass
+        //crea_grafica_text(298, new Color(1, 1, 1, 0), "", canvas, "Canvas", ""); //text stelle acquisite
+        //crea_grafica_text(299, new Color(1, 1, 1, 0), "", canvas, "Canvas", ""); //text free battlepass
+
+
+        for (int n = 0; n < 100; n++) {
+            if (stelle_acquisite > 0) {
+                crea_grafica_text(300 + n, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/stella 1");
+                stelle_acquisite--;
+            }
+            else
+                crea_grafica_text(300 + n, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/stella 0");
+        }
+
+        for (int n = 0; n < 100; n++) {
+            crea_button_text(300 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_shop 1");
+        }
+
+        for (int n = 0; n < 100; n++) {
+            crea_button_text(400 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_shop 6");
+        }
 
 
         // pagina a destra
-        crea_button_text(20, "DESTRA", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
-        crea_button_text(21, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
+        //   crea_button_text(20, "DESTRA", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
+        //   crea_button_text(21, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
 
         // agilità 0
         // barriera 1
@@ -1402,11 +1468,6 @@ public class menu : MonoBehaviour {
         crea_grafica_text(13, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gem");
         crea_grafica_text(14, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-        //pagina battlepass 
-
-        for (int n = 0; n < 100; n++) {
-            crea_grafica_text(300 + n, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/stella 0");
-        }
 
 
 
