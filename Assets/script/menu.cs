@@ -116,8 +116,52 @@ public class menu : MonoBehaviour {
 
         controllo_risoluzione();
 
-        crea_menu();
+        aggiorno_stelle();
 
+
+        crea_menu();
+    }
+
+    private void aggiorno_stelle() {
+    
+        PlayerPrefs.SetString($"battle_pass_reward_free", calcolo_stelle_free());
+        PlayerPrefs.SetString($"battle_pass_reward_premium", calcolo_stelle_premium());
+    }
+
+    private string calcolo_stelle_free() {
+
+        char[] reward_string = script_struttura_dati.battle_pass_reward_free.ToCharArray();
+
+        for (int i=0; i<script_struttura_dati.stelle_battle_pass; i++) {
+
+
+            if (reward_string[i] == '0') {
+                reward_string[i]='1';
+            }
+        }
+
+
+        script_struttura_dati.battle_pass_reward_free = new string(reward_string);
+        return script_struttura_dati.battle_pass_reward_free;
+    }
+
+
+    private string calcolo_stelle_premium() {
+
+        char[] reward_string = script_struttura_dati.battle_pass_reward_premium.ToCharArray();
+
+        for (int i=0; i<script_struttura_dati.stelle_battle_pass; i++) {
+
+
+            if (reward_string[i] == '0') {
+                reward_string[i]='1';
+            }
+        }
+
+
+        script_struttura_dati.battle_pass_reward_premium = new string(reward_string);
+
+        return script_struttura_dati.battle_pass_reward_premium;
     }
 
     private static void inizializzazione_dati() {
@@ -452,20 +496,22 @@ public class menu : MonoBehaviour {
 
             }
 
-            if (pulsante[300 + n] != null) {
+            if (pulsante[300 + n] != null) { // free battlepass
 
                 pulsante[300 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 pulsante[300 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 0.85f, pos_y + scroll_verticale_dx_battlepass + dy2 * 0.33f);
                 limite_verticale_dx_battlepass = pos_y - dy2 * .15f;
-
+                if(script_struttura_dati.battle_pass_reward_free[n]=='0' || script_struttura_dati.battle_pass_reward_free[n] == '2')
+                pulsante[300 + n].GetComponent<Button>().interactable = false;
             }
 
-            if (pulsante[400 + n] != null) {
+            if (pulsante[400 + n] != null) {// premium battlepass
 
                 pulsante[400 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 pulsante[400 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 1.15f, pos_y + scroll_verticale_dx_battlepass + dy2 * 0.33f);
                 limite_verticale_dx_battlepass = pos_y - dy2 * .15f;
-
+                if (script_struttura_dati.battle_pass_reward_premium[n] == '0' || script_struttura_dati.battle_pass_reward_premium[n] == '2')
+                    pulsante[400 + n].GetComponent<Button>().interactable = false;
             }
 
 
@@ -1777,6 +1823,38 @@ public class menu : MonoBehaviour {
         if (num == 201 || num == 204) {
             distruggi_menu_popup();
         }
+
+        for(int n=0; n<100; n++) {
+            if (num == 300+n) {
+                riscatta_premio_battle_pass_free(n);
+            }
+        }
+      
+        for(int n=0; n<100; n++) {
+            if (num == 400+n) {
+                riscatta_premio_battle_pass_premium(n);
+            }
+        }
+      
+    }
+
+    private void riscatta_premio_battle_pass_free(int indice_reward) {
+        char[] reward_string = script_struttura_dati.battle_pass_reward_free.ToCharArray();
+
+        reward_string[indice_reward] = '2';
+
+        script_struttura_dati.battle_pass_reward_free = new string(reward_string);
+        PlayerPrefs.SetString("battle_pass_reward_free", script_struttura_dati.battle_pass_reward_free);
+
+    }
+
+    private void riscatta_premio_battle_pass_premium(int indice_reward) {
+        char[] reward_string = script_struttura_dati.battle_pass_reward_premium.ToCharArray();
+
+        reward_string[indice_reward] = '2';
+
+        script_struttura_dati.battle_pass_reward_premium = new string(reward_string);
+        PlayerPrefs.SetString("battle_pass_reward_premium", script_struttura_dati.battle_pass_reward_premium);
 
     }
 
