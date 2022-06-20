@@ -208,7 +208,6 @@ public class gioco_ruota_cilindro : MonoBehaviour
     int carica_dati_livello_online = 0;
 
 
-    float parametro_touch = .2f;
 
     // Start is called before the first frame update
     void Start()
@@ -570,6 +569,7 @@ void leggi_vertici_cilindro()
     void controllo()
     {
 
+        float parametro_touch = c_save_p.crea_parametri[0].posizione_touch;
 
         attiva_barriera = attiva_barriera - Time.deltaTime;
 
@@ -605,9 +605,9 @@ void leggi_vertici_cilindro()
         float pressione_tasto_up = Input.GetAxis("Vertical");
 
 
-        if (controllo_mobile == 1 && touch_x[0]>0)
+        if (controllo_mobile == 1 && touch_x[0] >risoluzione_x* parametro_touch && touch_x[0] < risoluzione_x*(1-parametro_touch))
         {
-            if (Mathf.Abs(diff_ym) < risoluzione_y / 20)
+            if (Mathf.Abs(diff_ym) < risoluzione_y / c_save_p.crea_parametri[0].touch_sparo_differenza)
             {
 
                 pressione_tasto_up = -1;
