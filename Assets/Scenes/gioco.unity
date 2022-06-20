@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 14169879}
   - component: {fileID: 14169878}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: sfondo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5868,6 +5868,8 @@ MonoBehaviour:
     crea_malus: []
     crea_moneta: []
     crea_gemma: []
+  c_save_p:
+    crea_parametri: []
   level_json: {fileID: 4900000, guid: 3a85bfba77b3ae7459a6f4ce38a92365, type: 3}
   variabile_x: 0
   variabile_y: 0
@@ -5885,4 +5887,5 @@ MonoBehaviour:
   spostamento_boss_rotazione: -0.01
   newColor: {r: 0, g: 1, b: 1, a: 1}
   distanza_disolve: -15
+  online_dati: 1
   monete_partita_corrente: 0

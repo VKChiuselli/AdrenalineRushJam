@@ -153,7 +153,12 @@ public class parametri
 {
 
     public float posizione_touch;
-   
-  
+    public float touch_sparo_differenza;
+
+    public Color colore_cilindro;
+    public Color colore_sfondo;
+    public Color colore_blocco_1;
+    public Color colore_blocco_2;
+    public Color colore_blocco_3;
 
 }

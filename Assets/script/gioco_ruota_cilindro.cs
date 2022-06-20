@@ -110,6 +110,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     CharacterController characterController;
 
     GameObject cilindro;
+    GameObject sfondo;
 
 
 
@@ -217,6 +218,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         cilindro = GameObject.Find("cilindro_esatto");
+        sfondo = GameObject.Find("sfondo");
+
 
         boss = GameObject.Find("boss");
 
@@ -253,11 +256,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
             load_project();
 
         }
-        else
-        {
-            StartCoroutine(load_project_online());
-        }
-
+       
 
 
         canvas = GameObject.Find("Canvas");
@@ -283,7 +282,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         inizializza_personaggio();
 
-    //    save_parameter();
+    //  save_parameter();
 
         StartCoroutine(leggi_dati_online("parametri"));
 
@@ -1692,16 +1691,16 @@ void leggi_vertici_cilindro()
 
         int scelta_colore = (int)(UnityEngine.Random.Range(.0f, 2.999f));
 
-        Color colore_blocco = new Color(.9f, 0, 0, 1);
+        Color colore_blocco = c_save_p.crea_parametri[0].colore_blocco_1;
 
         if (scelta_colore == 1)
         {
-            colore_blocco = new Color(1.0f, .45f, 0, 1);
+            colore_blocco = c_save_p.crea_parametri[0].colore_blocco_2;
         }
 
         if (scelta_colore >= 2)
         {
-            colore_blocco = new Color(1.0f, .85f, 0, 1);
+            colore_blocco = c_save_p.crea_parametri[0].colore_blocco_3;
         }
 
 
@@ -3837,6 +3836,16 @@ void leggi_vertici_cilindro()
                     c_save_p = JsonUtility.FromJson<classe_save_parametri>(www.downloadHandler.text);
 
     
+                    cilindro.GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_cilindro);
+                    sfondo.GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_sfondo);
+
+
+                    if (online_dati == true)
+                    {
+                        StartCoroutine(load_project_online());
+                    }
+
+
 
                     carica_dati_online = 1;
 
@@ -3875,6 +3884,13 @@ void leggi_vertici_cilindro()
         c_save_p.crea_parametri.Add(new parametri());
 
         c_save_p.crea_parametri[0].posizione_touch = .2f;
+
+        c_save_p.crea_parametri[0].colore_sfondo = new Color(.4218f, .6914f, .9257f, 1);
+        c_save_p.crea_parametri[0].colore_cilindro = new Color(0.6835f,0.9335f, 0.4531f, 1);
+
+    
+
+
 
         string jsonData = JsonUtility.ToJson(c_save_p, true);
 
