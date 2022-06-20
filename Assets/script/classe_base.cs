@@ -146,3 +146,14 @@ public class carte_upgrade {
     public int tipologia;
 
 }
+
+
+[Serializable]
+public class parametri
+{
+
+    public float posizione_touch;
+   
+  
+
+}

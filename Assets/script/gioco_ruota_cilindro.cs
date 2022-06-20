@@ -6,16 +6,25 @@ using System;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.Networking;
+using UnityEditor;
+using System.IO;
 
 public class gioco_ruota_cilindro : MonoBehaviour
 {
 
+    string path_server = "https://www.mnzgame.com/AstroVortex/testi/";
 
 #if UNITY_EDITOR
     [SerializeField]
 #endif
     public classe_save c_save;
+
+
+#if UNITY_EDITOR
+    [SerializeField]
+#endif
+    public classe_save_parametri c_save_p;
 
 
     public TextAsset level_json;
@@ -60,6 +69,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     public float distanza_disolve = -15;
 
+    public bool online_dati = true;
 
     public int monete_partita_corrente = 0;
 
@@ -193,6 +203,11 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     int controllo_mobile = 0;
 
+    int carica_dati_online = 0;
+    int carica_dati_livello_online = 0;
+
+
+    float parametro_touch = .2f;
 
     // Start is called before the first frame update
     void Start()
@@ -232,7 +247,18 @@ public class gioco_ruota_cilindro : MonoBehaviour
         }
 
 
-        load_project();
+
+        if (online_dati == false)
+        {
+            load_project();
+
+        }
+        else
+        {
+            StartCoroutine(load_project_online());
+        }
+
+
 
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
@@ -256,6 +282,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
         crea_menu();
 
         inizializza_personaggio();
+
+    //    save_parameter();
+
+        StartCoroutine(leggi_dati_online("parametri"));
 
 
     }
@@ -328,6 +358,19 @@ public class gioco_ruota_cilindro : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (carica_dati_online == 1 && carica_dati_livello_online==1)
+        {
+
+            update_game();
+
+        }
+
+    }
+
+
+    void update_game() { 
+
         controllo_risoluzione();
 
         controllo();
@@ -597,12 +640,12 @@ void leggi_vertici_cilindro()
         if (controllo_mobile == 1)
         {
 
-            if (touch_x[0]>0 && touch_x[0]<risoluzione_x*.5f)
+            if (touch_x[0]>0 && touch_x[0]<risoluzione_x*(parametro_touch))
             {
                 pressione_tasto = -1;
             }
 
-            if (touch_x[0] > 0 && touch_x[0] > risoluzione_x * .5f)
+            if (touch_x[0] > 0 && touch_x[0] > risoluzione_x*(1.0f-parametro_touch))
             {
                 pressione_tasto = 1;
             }
@@ -1052,14 +1095,83 @@ void leggi_vertici_cilindro()
 
 
 
+    IEnumerator load_project_online(int num_livello=1)
+    {
+
+
+        string path2 = path_server + "livello_"+ num_livello + ".json";
+
+        Debug.Log("" + path2);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Get(path2))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+
+
+
+                try
+                {
+
+
+                    string testo_json = www.downloadHandler.text;
+
+
+                    if (c_save != null)
+                    {
+
+                        distruggi_oggetti();
+
+                    }
+
+
+
+                    c_save = null;
+
+                    c_save = new classe_save();
+
+
+                    c_save = JsonUtility.FromJson<classe_save>(testo_json);
+
+
+                    associa_livello();
+
+                   
+
+                }
+                catch (Exception e)
+                {
+
+                    Debug.Log("errore_oggetto_codice " + e.ToString());
+
+                }
+
+
+
+            }
+
+
+        }
+
+
+
+
+
+
+    }
 
 
 
 
     void load_project()
     {
-
-
 
 
         try
@@ -1086,52 +1198,7 @@ void leggi_vertici_cilindro()
                 c_save = JsonUtility.FromJson<classe_save>(level_json.text);
 
 
-                spostamento_z = c_save.crea_cilindro[0].spostamento_z;
-                spostamento_z2 = c_save.crea_cilindro[0].spostamento_z2;
-
-
-
-                calcolo_snap(1);
-
-                scala_cilindro();
-
-
-                int num_blocchi = c_save.crea_blocco.Count;
-
-                for (int k = 0; k < num_blocchi; k++)
-                {
-                    crea_blocco(k);
-                }
-
-                int num_gemme = c_save.crea_gemma.Count;
-
-                for (int k = 0; k < num_gemme; k++)
-                {
-                    crea_gemma(k);
-                }
-
-
-                int num_monete = c_save.crea_moneta.Count;
-
-                for (int k = 0; k < num_monete; k++)
-                {
-                    crea_moneta(k);
-                }
-
-                int num_malus = c_save.crea_malus.Count;
-
-                for (int k = 0; k < num_malus; k++)
-                {
-                    crea_malus(k);
-                }
-
-                int num_bonus = c_save.crea_bonus.Count;
-
-                for (int k = 0; k < num_bonus; k++)
-                {
-                    crea_bonus(k);
-                }
-
+                associa_livello();
 
 
             }
@@ -1143,6 +1210,61 @@ void leggi_vertici_cilindro()
             print("error " + e.ToString());
         }
 
+
+    }
+
+
+    void associa_livello()
+    {
+
+
+        spostamento_z = c_save.crea_cilindro[0].spostamento_z;
+        spostamento_z2 = c_save.crea_cilindro[0].spostamento_z2;
+
+
+
+        calcolo_snap(1);
+
+        scala_cilindro();
+
+
+        int num_blocchi = c_save.crea_blocco.Count;
+
+        for (int k = 0; k < num_blocchi; k++)
+        {
+            crea_blocco(k);
+        }
+
+        int num_gemme = c_save.crea_gemma.Count;
+
+        for (int k = 0; k < num_gemme; k++)
+        {
+            crea_gemma(k);
+        }
+
+
+        int num_monete = c_save.crea_moneta.Count;
+
+        for (int k = 0; k < num_monete; k++)
+        {
+            crea_moneta(k);
+        }
+
+        int num_malus = c_save.crea_malus.Count;
+
+        for (int k = 0; k < num_malus; k++)
+        {
+            crea_malus(k);
+        }
+
+        int num_bonus = c_save.crea_bonus.Count;
+
+        for (int k = 0; k < num_bonus; k++)
+        {
+            crea_bonus(k);
+        }
+
+        carica_dati_livello_online = 1;
 
     }
 
@@ -3674,6 +3796,104 @@ void leggi_vertici_cilindro()
                 crea_popup(1);
             }
         }
+
+    }
+
+
+    public IEnumerator leggi_dati_online(string nome_pagina)
+    {
+
+
+        string path2 = path_server + nome_pagina + ".json";
+
+        Debug.Log("" + path2);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Get(path2))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+
+               
+
+                try
+                {
+
+                   
+                    string testo_json = www.downloadHandler.text;
+
+                    
+                    c_save_p = null;
+
+                    c_save_p = new classe_save_parametri();
+
+
+                    c_save_p = JsonUtility.FromJson<classe_save_parametri>(www.downloadHandler.text);
+
+    
+
+                    carica_dati_online = 1;
+
+
+                }
+                catch (Exception e)
+                {
+
+                    Debug.Log("errore_oggetto_codice " + e.ToString());
+
+                }
+
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+    void save_parameter()
+    {
+
+
+
+
+#if UNITY_EDITOR
+
+
+        c_save_p = new classe_save_parametri();
+
+        c_save_p.crea_parametri.Add(new parametri());
+
+        c_save_p.crea_parametri[0].posizione_touch = .2f;
+
+        string jsonData = JsonUtility.ToJson(c_save_p, true);
+
+        string file_name = "parametri";
+
+
+
+
+        string path_data = "Assets/Resources/data_level/" + file_name + ".json";
+
+
+        File.WriteAllText(path_data, jsonData, Encoding.UTF8);
+
+
+        AssetDatabase.Refresh();
+
+#endif
+
+
 
     }
 
