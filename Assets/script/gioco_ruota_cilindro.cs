@@ -69,6 +69,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     public float distanza_disolve = -15;
 
     public bool online_dati = true;
+    public bool tutorial_in_corso;
 
     public int monete_partita_corrente = 0;
 
@@ -349,9 +350,6 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     }
 
-
-
-    // Update is called once per frame
     void Update()
     {
 
@@ -576,7 +574,6 @@ void leggi_vertici_cilindro()
         potenza_tasto = c_save_p.crea_parametri[0].potenza_tasto;
 
 
-
         attiva_barriera = attiva_barriera - Time.deltaTime;
 
 
@@ -607,90 +604,84 @@ void leggi_vertici_cilindro()
 
 
 
-
-        float pressione_tasto_up = Input.GetAxis("Vertical");
-
-
-        if (controllo_mobile == 1 && touch_x[0] >risoluzione_x* parametro_touch && touch_x[0] < risoluzione_x*(1-parametro_touch))
-        {
-            if (Mathf.Abs(diff_ym) < risoluzione_y / c_save_p.crea_parametri[0].touch_sparo_differenza)
-            {
-
-                pressione_tasto_up = -1;
-
-            }
-        }
-
-
-
-        attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio - Time.deltaTime;
-
-
-        if (pressione_tasto_up < 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f)
-        {
-            crea_sparo();
-
-        }
-
-
-
         astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio + 1.0f, 0);
 
 
 
 
-        pressione_tasto = Input.GetAxis("Horizontal");
+        if (!tutorial_in_corso) {
+
+            float pressione_tasto_up = Input.GetAxis("Vertical");
 
 
-        if (controllo_mobile == 1)
-        {
+            if (controllo_mobile == 1 && touch_x[0] > risoluzione_x * parametro_touch && touch_x[0] < risoluzione_x * (1 - parametro_touch)) {
+                if (Mathf.Abs(diff_ym) < risoluzione_y / c_save_p.crea_parametri[0].touch_sparo_differenza) {
 
-            if (touch_x[0]>0 && touch_x[0]<risoluzione_x*(parametro_touch))
-            {
-                pressione_tasto = -1;
+                    pressione_tasto_up = -1;
+
+                }
             }
 
-            if (touch_x[0] > 0 && touch_x[0] > risoluzione_x*(1.0f-parametro_touch))
-            {
-                pressione_tasto = 1;
-            }
-        }
 
 
-        if (Mathf.Abs(pressione_tasto) > 0 && blocco_velocita >.99f)
-        {
+            attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio - Time.deltaTime;
 
-            int molt_inversione = 1;
 
-            if (inversione_controllo == 1)
-            {
-                molt_inversione = -1;
-
-            }
-
-            if (inversione_camera == 0)
-            {
-                molt_inversione = molt_inversione * -1;
+            if (pressione_tasto_up < 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f) {
+                crea_sparo();
 
             }
 
 
 
-           
 
-            rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione*agilita;
+            pressione_tasto = Input.GetAxis("Horizontal");
+
+
+            if (controllo_mobile == 1) {
+
+                if (touch_x[0] > 0 && touch_x[0] < risoluzione_x * (parametro_touch)) {
+                    pressione_tasto = -1;
+                }
+
+                if (touch_x[0] > 0 && touch_x[0] > risoluzione_x * (1.0f - parametro_touch)) {
+                    pressione_tasto = 1;
+                }
+            }
+
+
+            if (Mathf.Abs(pressione_tasto) > 0 && blocco_velocita > .99f) {
+
+                int molt_inversione = 1;
+
+                if (inversione_controllo == 1) {
+                    molt_inversione = -1;
+
+                }
+
+                if (inversione_camera == 0) {
+                    molt_inversione = molt_inversione * -1;
+
+                }
+
+                rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione * agilita;
+
+            }
+
+
+
+
+      
 
 
             astronave_rz_calcolo = astronave_rz_calcolo + pressione_tasto;
 
-            if (astronave_rz_calcolo > 30)
-            {
+            if (astronave_rz_calcolo > 30) {
                 astronave_rz_calcolo = 30;
 
             }
 
-            if (astronave_rz_calcolo < -30)
-            {
+            if (astronave_rz_calcolo < -30) {
                 astronave_rz_calcolo = -30;
 
             }
@@ -699,11 +690,9 @@ void leggi_vertici_cilindro()
             boss_rad = boss_rad + rotazione_cilindro * spostamento_boss_rotazione;
 
 
-            for (int n = 0; n < 5; n++)
-            {
+            for (int n = 0; n < 5; n++) {
 
-                if (sparo_boss[n] != null)
-                {
+                if (sparo_boss[n] != null) {
 
                     sparo_boss_rad[n] = sparo_boss_rad[n] + rotazione_cilindro * spostamento_boss_rotazione;
 
@@ -714,33 +703,35 @@ void leggi_vertici_cilindro()
 
             cilindro.transform.Rotate(new Vector3(0, 0, rotazione_cilindro));
 
+
+
+
+            float astronave_ry_calcolo = 0;
+
+
+
+            if (crea_popup_finale == 1) {
+                astronave_ry_calcolo = 20;
+            }
+
+            astronave_ry = Mathf.LerpAngle(astronave_ry, astronave_ry_calcolo, Time.deltaTime * 3);
+
+            astronave_rz = Mathf.LerpAngle(astronave_rz, astronave_rz_calcolo, Time.deltaTime * 15);
+
+
+
+            astronave.transform.localEulerAngles = new Vector3(0, astronave_ry, astronave_rz);
+
+            astronave_rz_calcolo = astronave_rz_calcolo * .9f;
+
+
+
+
+            gestione_sparo();
+
+
         }
 
-
-
-
-
-        float astronave_ry_calcolo = 0;
-
-
-
-        if (crea_popup_finale == 1)
-        {
-            astronave_ry_calcolo = 20;
-        }
-
-        astronave_ry = Mathf.LerpAngle(astronave_ry, astronave_ry_calcolo, Time.deltaTime * 3);
-
-        astronave_rz = Mathf.LerpAngle(astronave_rz, astronave_rz_calcolo, Time.deltaTime * 15);
-
-
-
-        astronave.transform.localEulerAngles = new Vector3(0, astronave_ry, astronave_rz);
-
-        astronave_rz_calcolo = astronave_rz_calcolo * .9f;
-
-
-        gestione_sparo();
 
 
 

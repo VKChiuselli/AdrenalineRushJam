@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657582, g: 0.4964118, b: 0.5748169, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657654, g: 0.49641246, b: 0.57481754, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5825,6 +5825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7450251571877793395}
   - component: {fileID: 7450251571877793396}
+  - component: {fileID: 7450251571877793397}
   m_Layer: 0
   m_Name: personaggio
   m_TagString: Player
@@ -5870,7 +5871,7 @@ MonoBehaviour:
     crea_gemma: []
   c_save_p:
     crea_parametri: []
-  level_json: {fileID: 4900000, guid: 3a85bfba77b3ae7459a6f4ce38a92365, type: 3}
+  level_json: {fileID: 4900000, guid: df1a1c867778e724ab8e58e90c40ec9b, type: 3}
   variabile_x: 0
   variabile_y: 0
   potenza_tasto: -250
@@ -5887,4 +5888,20 @@ MonoBehaviour:
   newColor: {r: 0, g: 1, b: 1, a: 1}
   distanza_disolve: -15
   online_dati: 1
+  tutorial_in_corso: 0
   monete_partita_corrente: 0
+--- !u!114 &7450251571877793397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729384711981216617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b61844302063ed644af8706bfe3d644d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avvisato_mina_cratere: 0
+  avvisato_bonus_speed: 0
+  distanza_raycast_tutorial: 21

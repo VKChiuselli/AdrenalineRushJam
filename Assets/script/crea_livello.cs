@@ -82,7 +82,7 @@ public class crea_livello : MonoBehaviour
     GameObject canvas;
     GameObject cilindro;
     GameObject partenza;
-    GameObject finale;
+   public GameObject finale;
 
     int tipo_blocco = 0;
     int tipo_moneta = 0;
