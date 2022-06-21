@@ -207,6 +207,8 @@ public class gioco_ruota_cilindro : MonoBehaviour
     int carica_dati_online = 0;
     int carica_dati_livello_online = 0;
 
+    int inizio_game = 0;
+    float tempo_inizio_livello = 1.5f;
 
 
     // Start is called before the first frame update
@@ -362,6 +364,10 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
             update_game();
 
+        }
+        else
+        {
+            aggiorna_menu();
         }
 
     }
@@ -881,11 +887,15 @@ void leggi_vertici_cilindro()
     void gestione_cilindro()
     {
 
-        velocita_bonus = Mathf.Lerp(velocita_bonus, 1, Time.deltaTime * .333f);
-        aumento_velo = Mathf.Lerp(aumento_velo, 1, Time.deltaTime * .333f);
+        if (inizio_game == 1)
+        {
 
-        cilindro.transform.Translate(new Vector3(0, 0, -velocita_personaggio * Time.deltaTime * blocco_velocita * velocita_bonus * aumento_velo));
+            velocita_bonus = Mathf.Lerp(velocita_bonus, 1, Time.deltaTime * .333f);
+            aumento_velo = Mathf.Lerp(aumento_velo, 1, Time.deltaTime * .333f);
 
+            cilindro.transform.Translate(new Vector3(0, 0, -velocita_personaggio * Time.deltaTime * blocco_velocita * velocita_bonus * aumento_velo));
+
+        }
 
     }
 
@@ -2088,6 +2098,9 @@ void leggi_vertici_cilindro()
         pos_direction[5] = new Vector3(0, 0, -.5f);
         pos_direction[6] = new Vector3(0, 0, -.5f);
 
+        pos_direction[7] = new Vector3(0,-.5f, 0);
+
+
         pos_ray_direction[0] = new Vector3(0, 0, 2.6f);
         pos_ray_direction[1] = new Vector3(-1.5f, 0, .25f);
         pos_ray_direction[2] = new Vector3(1.5f, 0, .25f);
@@ -2095,6 +2108,7 @@ void leggi_vertici_cilindro()
         pos_ray_direction[4] = new Vector3(0, 0, 2.6f);
         pos_ray_direction[5] = new Vector3(-1.5f, 0, .75f);
         pos_ray_direction[6] = new Vector3(1.5f, 0, .75f);
+        pos_ray_direction[7] = new Vector3(0, 0, 2.6f);
 
         distanza_direction[0] = 2.6f;
         distanza_direction[1] = 1.5f;
@@ -2105,13 +2119,14 @@ void leggi_vertici_cilindro()
 
         distanza_direction[5] = 1.5f;
         distanza_direction[6] = 1.5f;
+        distanza_direction[7] = 2.6f;
 
         int numero_coll = 0;
         Vector3 punto_coll = new Vector3(0, 0, 0);
 
         int num_block = -1;
 
-        for (int n = 0; n <= 6; n++)
+        for (int n = 0; n <= 7; n++)
         {
 
             pos = astronave.transform.position + pos_direction[n];
@@ -2870,13 +2885,16 @@ void leggi_vertici_cilindro()
         crea_grafica_text(8, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/ammo");
         crea_grafica_text(9, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
+        crea_grafica_text(10, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
+
+
     }
 
 
     void aggiorna_menu()
     {
         font_size = (int)(risoluzione_x / 25);
-
+      
 
         float dy = risoluzione_y * .125f;
         float dx = risoluzione_x * .7f;
@@ -2888,7 +2906,7 @@ void leggi_vertici_cilindro()
         {
 
             float dx2 = risoluzione_x;
-            float dy2 = dy*.5f;
+            float dy2 = dy * .5f;
             pos_x = 0;
             pos_y = risoluzione_y * .455f;
 
@@ -2900,16 +2918,16 @@ void leggi_vertici_cilindro()
 
 
 
-        float pos_y2= pos_y = risoluzione_y * 0.445f;
+        float pos_y2 = pos_y = risoluzione_y * 0.445f;
 
 
         if (pulsante[0] != null)  //settings
         {
-            float dx2 = dy * .4f ;
+            float dx2 = dy * .4f;
             float dy2 = dx2 * (79f / 75f);
-            pos_x = risoluzione_x * -.5f + dx2*.65f;
+            pos_x = risoluzione_x * -.5f + dx2 * .65f;
             pos_y = pos_y2;
-            pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy2);
+            pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
         }
@@ -2919,10 +2937,10 @@ void leggi_vertici_cilindro()
 
             float dx2 = dy * .8f;
             float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2*.5f ;
+            pos_x = risoluzione_x * .5f - dx2 * .5f;
             pos_y = pos_y2;
 
-            grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy2);
+            grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
         }
@@ -2931,8 +2949,8 @@ void leggi_vertici_cilindro()
         {
 
             float dx2 = dy * .8f;
-            float dy2 = dx2 ;
-            pos_x = risoluzione_x * .5f - dx2*.31f;
+            float dy2 = dx2;
+            pos_x = risoluzione_x * .5f - dx2 * .31f;
             pos_y = pos_y2;
 
             grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
@@ -2946,9 +2964,9 @@ void leggi_vertici_cilindro()
         if (grafica[1] != null)  //gem
         {
 
-            float dx2 = dy * .8f ;
-            float dy2 = dx2 ;
-            pos_x = risoluzione_x * .5f - dx2*1.5f;
+            float dx2 = dy * .8f;
+            float dy2 = dx2;
+            pos_x = risoluzione_x * .5f - dx2 * 1.5f;
             pos_y = pos_y2;
 
             grafica[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -3008,27 +3026,27 @@ void leggi_vertici_cilindro()
         pos_x = risoluzione_x * -.1f;
 
 
-        
-                    if (grafica[5] != null)  // energia base
+
+        if (grafica[5] != null)  // energia base
         {
 
 
 
             float frazionario = energia / energia_base;
 
-            float dx2 = risoluzione_x*.2f;
-            float dy2 = dy*.15f;
+            float dx2 = risoluzione_x * .2f;
+            float dy2 = dy * .15f;
 
             float pos_x2 = pos_x + dx2 * .5f;
-           pos_y = pos_y2;
+            pos_y = pos_y2;
 
-            grafica[5].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*1.02f, dy2);
+            grafica[5].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 1.02f, dy2);
             grafica[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x2, pos_y);
 
-            float dx6 = risoluzione_x * .2f* frazionario;
+            float dx6 = risoluzione_x * .2f * frazionario;
             float pos_x6 = pos_x + dx6 * .5f;
 
-            grafica[6].GetComponent<RectTransform>().sizeDelta = new Vector2(dx6, dy2*.8f);
+            grafica[6].GetComponent<RectTransform>().sizeDelta = new Vector2(dx6, dy2 * .8f);
             grafica[6].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x6, pos_y);
 
 
@@ -3038,17 +3056,51 @@ void leggi_vertici_cilindro()
         {
 
             float dx2 = dy * .85f;
-            float dy2 = dx2 ;
-            
-            pos_y = pos_y2 ;
+            float dy2 = dx2;
+
+            pos_y = pos_y2;
 
             grafica[7].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[7].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-          
+
 
         }
 
+
+        int font_size_level = (int)(risoluzione_x / 7);
+
+        if (grafica[10] != null) // inizio
+        {
+
+            float dx2 = risoluzione_x;
+            float dy2 = risoluzione_y;
+            pos_x = 0;
+            pos_y = 0;
+
+            grafica[10].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy2);
+            grafica[10].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[10].GetComponent<TextMeshProUGUI>().fontSize = font_size_level;
+            grafica_testo[10].GetComponent<TextMeshProUGUI>().text = "LEVEL " +che_livello;
+            
+
+            tempo_inizio_livello = tempo_inizio_livello - Time.deltaTime;
+
+            float alpha = tempo_inizio_livello;
+
+            if (alpha < 0)
+            {
+                alpha = 0;
+
+                inizio_game = 1;
+            }
+
+            grafica[10].GetComponent<Image>().color = new Color(1, 1, 1, alpha);
+            grafica_testo[10].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, alpha);
+        }
+
+        
 
     }
 
