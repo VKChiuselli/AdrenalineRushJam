@@ -2084,8 +2084,8 @@ public class crea_livello : MonoBehaviour
         if (tipo == 15)
         {
             //-----------012345678901234567
-            testo_ogg = "23956236847532532354235";
-            dz = new Vector3(0, 0, 22);
+            testo_ogg = "2344562364847532532354235";
+            dz = new Vector3(0, 0, 1);
         }
 
 

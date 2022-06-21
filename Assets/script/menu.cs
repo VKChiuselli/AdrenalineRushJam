@@ -837,7 +837,7 @@ public class menu : MonoBehaviour {
                 float dx2 = dy * .333f;
                 float dy2 = dx2;
                 pos_x = 0;
-                pos_y = 0;
+                pos_y = dime_panel_y*.1f;
 
                 grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);

@@ -153,6 +153,11 @@ public class parametri
 {
 
     public float posizione_touch;
+    public float potenza_tasto;
+    public float velocita_personaggio;
+    public float velocita_bonus;
+
+
     public float touch_sparo_differenza;
 
     public Color colore_cilindro;

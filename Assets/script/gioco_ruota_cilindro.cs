@@ -47,7 +47,6 @@ public class gioco_ruota_cilindro : MonoBehaviour
     public float velocita_personaggio = 1;
     public float aumento_velo = 1;
 
-    public float velocita_bonus_base = 2;
     public float velocita_bonus = 1;
 
     public int inversione_camera = 1;
@@ -577,6 +576,11 @@ void leggi_vertici_cilindro()
 
         float parametro_touch = c_save_p.crea_parametri[0].posizione_touch;
 
+        potenza_tasto = c_save_p.crea_parametri[0].potenza_tasto;
+
+        Debug.Log("potenza_tasto " + potenza_tasto);
+
+
         attiva_barriera = attiva_barriera - Time.deltaTime;
 
 
@@ -675,6 +679,8 @@ void leggi_vertici_cilindro()
             }
 
 
+
+           
 
             rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione*agilita;
 
@@ -890,8 +896,10 @@ void leggi_vertici_cilindro()
         if (inizio_game == 1)
         {
 
-            velocita_bonus = Mathf.Lerp(velocita_bonus, 1, Time.deltaTime * .333f);
-            aumento_velo = Mathf.Lerp(aumento_velo, 1, Time.deltaTime * .333f);
+            velocita_personaggio = c_save_p.crea_parametri[0].velocita_personaggio;
+
+
+
 
             cilindro.transform.Translate(new Vector3(0, 0, -velocita_personaggio * Time.deltaTime * blocco_velocita * velocita_bonus * aumento_velo));
 
@@ -2331,7 +2339,8 @@ void leggi_vertici_cilindro()
 
                     c_save.crea_bonus[num_bonus].attivo = 1;
 
-                    velocita_bonus = velocita_bonus_base;
+                    velocita_bonus = c_save_p.crea_parametri[0].velocita_bonus;
+
 
                 }
 
