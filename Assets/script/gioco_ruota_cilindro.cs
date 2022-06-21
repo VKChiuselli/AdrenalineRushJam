@@ -575,7 +575,6 @@ void leggi_vertici_cilindro()
 
         potenza_tasto = c_save_p.crea_parametri[0].potenza_tasto;
 
-        Debug.Log("potenza_tasto " + potenza_tasto);
 
 
         attiva_barriera = attiva_barriera - Time.deltaTime;
