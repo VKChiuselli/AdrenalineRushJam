@@ -223,10 +223,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         boss = GameObject.Find("boss");
 
-        if (visione_boss == false)
-        {
-            boss.SetActive(false);
-        }
+       
 
 
         cam0 = GameObject.Find("Main Camera");
@@ -1237,6 +1234,14 @@ void leggi_vertici_cilindro()
 
         spostamento_z = c_save.crea_cilindro[0].spostamento_z;
         spostamento_z2 = c_save.crea_cilindro[0].spostamento_z2;
+
+
+        visione_boss = c_save.crea_cilindro[0].visione_boss;
+
+        if (visione_boss == false)
+        {
+            boss.SetActive(false);
+        }
 
 
 
@@ -3880,15 +3885,15 @@ void leggi_vertici_cilindro()
             else
             {
 
-               
+
 
                 try
                 {
 
-                   
+
                     string testo_json = www.downloadHandler.text;
 
-                    
+
                     c_save_p = null;
 
                     c_save_p = new classe_save_parametri();
@@ -3896,10 +3901,12 @@ void leggi_vertici_cilindro()
 
                     c_save_p = JsonUtility.FromJson<classe_save_parametri>(www.downloadHandler.text);
 
-    
+
                     cilindro.GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_cilindro);
                     sfondo.GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_sfondo);
 
+
+                  
 
                     if (online_dati == true)
                     {

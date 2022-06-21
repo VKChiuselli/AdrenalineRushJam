@@ -42,7 +42,8 @@ public class crea_livello : MonoBehaviour
     public float percentuale_altri_blocchi = 79;
 
     public float percentuale_blocchi_rotanti = 60;
-    
+
+    public bool visione_boss = false;
 
     public float spostamento_z = 1;
     public float spostamento_z2 = .75f;
@@ -1440,6 +1441,8 @@ public class crea_livello : MonoBehaviour
                     c_save.crea_cilindro.Add(new cilindro());
                 }
 
+
+                c_save.crea_cilindro[0].visione_boss = visione_boss;
 
                 cilindro.transform.localEulerAngles = new Vector3(0, 0, 0);
 
