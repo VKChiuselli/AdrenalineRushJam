@@ -86,7 +86,7 @@ public class tutorial_primo_livello : MonoBehaviour {
 
 
                 if (!avvisato_mina_cratere) {
-                    Time.timeScale = 0;
+                   // Time.timeScale = 0;
                     tutorial_comandi_e_mine();
                     avvisato_mina_cratere = true;
                 }

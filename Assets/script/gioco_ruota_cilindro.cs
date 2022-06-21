@@ -249,11 +249,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-        if (online_dati == false)
-        {
-            load_project();
-
-        }
+        
        
 
 
@@ -3901,6 +3897,13 @@ void leggi_vertici_cilindro()
                     if (online_dati == true)
                     {
                         StartCoroutine(load_project_online());
+                    }
+                    else
+                    {
+                      
+                            load_project();
+
+
                     }
 
 
