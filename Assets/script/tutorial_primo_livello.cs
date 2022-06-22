@@ -7,6 +7,9 @@ public class tutorial_primo_livello : MonoBehaviour {
 
     public bool avvisato_mina_cratere;
     public bool avvisato_bonus_speed;
+    public bool avvisato_raccogli_ammo;
+    public bool avvisato_spara_ammo;
+    public bool ammo_raccolta;
     float distanza_raycast_tutorial = 21f;
 
     gioco_ruota_cilindro Gioco_ruota_cilindro;
@@ -24,7 +27,8 @@ public class tutorial_primo_livello : MonoBehaviour {
         if (Gioco_ruota_cilindro.tutorial_in_corso)
             gestione_collisione_mina();
 
-        gestione_collisione_bonus_speed();
+        if (Gioco_ruota_cilindro.livello_corrente == 1)
+            gestione_collisione_bonus_speed();
 
         if (!Gioco_ruota_cilindro.tutorial_in_corso)
             ResumeGame();
@@ -40,7 +44,7 @@ public class tutorial_primo_livello : MonoBehaviour {
         Vector3 pos_astronave = new Vector3(pos.x, pos.y, pos.z + 1.2f);
 
         if (Physics.Raycast(pos_astronave, new Vector3(0, -1, 0), out hit_collider, 1)) {
-         
+
             if (hit_collider.collider.name.IndexOf("bonus0_") > -1) {
                 string str_bonus = hit_collider.collider.name;
 
@@ -49,17 +53,17 @@ public class tutorial_primo_livello : MonoBehaviour {
                     Time.timeScale = 0;
                     tutorial_bonus_speed();
                 }
-             
+
                 str_bonus = str_bonus.Replace("bonus0_", "");
 
                 int num_bonus = int.Parse(str_bonus);
 
-         
 
-                }
-            }
 
             }
+        }
+
+    }
 
     void gestione_collisione_mina() {
 
@@ -114,42 +118,60 @@ public class tutorial_primo_livello : MonoBehaviour {
 
             Debug.DrawRay(pos, pos_ray_direction[n], new Color(1, n * .2f, 0, 1));
 
+            {
+                if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, distanza_raycast_tutorial)) {
 
-            if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, distanza_raycast_tutorial)) {
+                    float dis = hit_collider.distance;
 
-                float dis = hit_collider.distance;
-
-
-                if (!avvisato_mina_cratere) {
-                    Time.timeScale = 0;
-                    avvisato_mina_cratere = true;
-                    Gioco_ruota_cilindro.tutorial_in_corso = false;
-                    tutorial_comandi_e_mine();
-                }
-
-
-
-                if (dis < distanza_direction[n]) {
-
-
-                    if (hit_collider.collider.name.IndexOf("blocco") > -1) {
-
-
-
-                        string str_block = "" + hit_collider.collider.name;
-
+                    if (Gioco_ruota_cilindro.livello_corrente == 1) {
+                        if (!avvisato_mina_cratere) {
+                            Time.timeScale = 0;
+                            avvisato_mina_cratere = true;
+                            Gioco_ruota_cilindro.tutorial_in_corso = false;
+                            tutorial_comandi_e_mine();
+                        }
                     }
+                   
 
-                    if (hit_collider.collider.name.IndexOf("bonus0_") > -1) {
+                    if (Gioco_ruota_cilindro.livello_corrente == 2) {
+                        if (!avvisato_raccogli_ammo) {
+                            Time.timeScale = 0;
+                            avvisato_raccogli_ammo = true;
+                            Gioco_ruota_cilindro.tutorial_in_corso = false;
+                            tutorial_raccogli_ammo();
+                        }
+                    }
+                   
 
-                        string str_bonus = "" + hit_collider.collider.name;
+                    if (Gioco_ruota_cilindro.livello_corrente == 2 && ammo_raccolta) {
+                        if (!avvisato_spara_ammo) {
+                            Time.timeScale = 0;
+                            avvisato_spara_ammo = true;
+                            Gioco_ruota_cilindro.tutorial_in_corso = false;
+                            tutorial_sparare();
+                        }
+                    }
+                   
 
-                       Debug.Log("TRIGGERASR TUTORIAL BONUS SPEED" );
 
-                        str_bonus = str_bonus.Replace("bonus1_", "");
 
-                        int num_bonus = int.Parse(str_bonus);
+                    if (dis < distanza_direction[n]) {
 
+
+                        if (hit_collider.collider.name.IndexOf("blocco") > -1) {
+
+
+
+                            string str_block = "" + hit_collider.collider.name;
+
+                        }
+
+                        if (hit_collider.collider.name.IndexOf("bonus1_") > -1) {
+                            ammo_raccolta = true;
+
+                            Debug.Log("TRIGGERASR TUTORIAL BONUS SPEED");
+
+                        }
 
                     }
 
@@ -157,9 +179,7 @@ public class tutorial_primo_livello : MonoBehaviour {
 
             }
 
-
         }
-
 
     }
 
@@ -167,6 +187,15 @@ public class tutorial_primo_livello : MonoBehaviour {
         Debug.Log("tutorial_comandi_e_mine");
         Gioco_ruota_cilindro.crea_tutorial("Dodge mines and craters tapping left or right");
 
+    }
+    private void tutorial_raccogli_ammo() {
+        Debug.Log("tutorial_raccogli_ammo");
+        Gioco_ruota_cilindro.crea_tutorial("Pick up ammo to shooting");
+    }
+
+    private void tutorial_sparare() {
+        Debug.Log("tutorial_sparare");
+        Gioco_ruota_cilindro.crea_tutorial("Tap in this way to shooting");
     }
 
     private void tutorial_bonus_speed() {
@@ -178,6 +207,9 @@ public class tutorial_primo_livello : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) { //TODO implemenmtare i comandi touch in ascolto
             Time.timeScale = 1;
             Gioco_ruota_cilindro.distruggi_menu_tutorial();
+            //if (avvisato_raccogli_ammo) {
+            //    Gioco_ruota_cilindro.tutorial_in_corso = true;
+            //}
         }
 
     }

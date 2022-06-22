@@ -204,7 +204,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 9.91, y: 180, z: 0}
 --- !u!1001 &370990447
 PrefabInstance:
@@ -293,7 +293,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ddce6de424c678045a5b4a503e46df6f, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ddce6de424c678045a5b4a503e46df6f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5291,7 +5291,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 19, y: 180, z: 0}
 --- !u!1001 &1025342167
 PrefabInstance:
@@ -5441,7 +5441,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1361775677
 GameObject:
@@ -5612,7 +5612,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5650,7 +5650,7 @@ Transform:
   - {fileID: 370990448}
   - {fileID: 1896255086}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1838183879
 GameObject:
@@ -5948,7 +5948,7 @@ Transform:
   - {fileID: 2076308978}
   - {fileID: 1025342168}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7450251571877793396
 MonoBehaviour:
@@ -5971,7 +5971,7 @@ MonoBehaviour:
     crea_gemma: []
   c_save_p:
     crea_parametri: []
-  level_json: {fileID: 4900000, guid: 3a85bfba77b3ae7459a6f4ce38a92365, type: 3}
+  level_json: {fileID: 4900000, guid: df1a1c867778e724ab8e58e90c40ec9b, type: 3}
   variabile_x: 0
   variabile_y: 0
   potenza_tasto: -250
@@ -5987,10 +5987,11 @@ MonoBehaviour:
   spostamento_boss_rotazione: -0.01
   newColor: {r: 0, g: 1, b: 1, a: 1}
   distanza_disolve: -15
-  online_dati: 1
+  online_dati: 0
   tutorial_in_corso: 0
   monete_partita_corrente: 0
   script_struttura_dati: {fileID: 0}
+  livello_corrente: 2
 --- !u!114 &7450251571877793397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6005,3 +6006,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avvisato_mina_cratere: 0
   avvisato_bonus_speed: 0
+  avvisato_raccogli_ammo: 0
+  avvisato_spara_ammo: 0
+  ammo_raccolta: 0

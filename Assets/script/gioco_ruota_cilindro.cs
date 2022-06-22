@@ -100,6 +100,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     public struttura_dati script_struttura_dati;
+    public int livello_corrente;
 
     GameObject canvas;
     GameObject canvas_popup;
@@ -631,7 +632,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
                 rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione * agilita;
-            
+
 
             }
 
@@ -3254,6 +3255,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         crea_grafica_text(100, new Color(1, 1, 1, 0.74f), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/sfondo_menu");//overlay scuro TODO cambiare grafica
         crea_grafica_text(101, new Color(1, 1, 1, 0), testo_informativo, canvas_tutorial, "Canvas_tutorial", ""); //pannello shop
+        crea_grafica_text(102, new Color(1, 1, 1, 0), "Tap to continue", canvas_tutorial, "Canvas_tutorial", ""); //pannello shop
 
 
     }
@@ -3267,31 +3269,42 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         float pos_x = 0;
         float pos_y = 0;
 
-            if (grafica[100] != null)  //pannello
-            {
+        if (grafica[100] != null)  //pannello
+        {
 
-    
-                pos_x = 0;
-                pos_y = 0;
 
-                grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
-                grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            pos_x = 0;
+            pos_y = 0;
+
+            grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
+            grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
         }
-            if (grafica[101] != null)  //pannello
-            {
+        if (grafica[101] != null)  //pannello
+        {
 
-    
-                pos_x = 0;
-                pos_y = dy * 0.3f;
 
-                grafica[101].GetComponent<RectTransform>().sizeDelta = new Vector2(dx *0.93f, dy);
-                grafica[101].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-               grafica_testo[101].GetComponent<TextMeshProUGUI>().fontSize = font_size/0.5f;
+            pos_x = 0;
+            pos_y = dy * 0.3f;
+
+            grafica[101].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.93f, dy);
+            grafica[101].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            grafica_testo[101].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.5f;
+        }
+        if (grafica[102] != null)  //pannello
+        {
+
+
+            pos_x = 0;
+            pos_y = dy * -0.3f;
+
+            grafica[102].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.93f, dy);
+            grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            grafica_testo[102].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.8f;
         }
     }
 
 
- public   void distruggi_menu_tutorial() {
+    public void distruggi_menu_tutorial() {
 
         canvas_tutorial.SetActive(false);
 
@@ -3672,7 +3685,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
                     if (online_dati == true) {
-                        StartCoroutine(load_project_online());
+                        StartCoroutine(load_project_online(livello_corrente)); //TODO mettere il livello da script_struttura_dati
                     }
                     else {
 
