@@ -415,22 +415,22 @@ MonoBehaviour:
   buchi_doppi: 1
   solo_mine_e_ostacoli: 1
   distanza_partenza_blocchi: 35
-  distanza_blocchi: 15
-  distanza_random: 6
-  numero_aperture_minimo: 2
-  numero_aperture_massimo: 2
+  distanza_blocchi: 35
+  distanza_random: 12
+  numero_aperture_minimo: 12
+  numero_aperture_massimo: 14
   fila_monete_cirolari: 4
   numero_monete_linea: 8
   numero_mine_ostacoli: 8
   percentuale_monete: 60
   percentuale_altri_blocchi: 79
-  percentuale_blocchi_rotanti: 100
-  visione_boss: 1
+  percentuale_blocchi_rotanti: 0
+  visione_boss: 0
   spostamento_z: 1
   spostamento_z2: 0.75
   move_camera_editor_speed: 0.2
   speed_rotation_camera: 0.1
-  finale: {fileID: 0}
+  finale: {fileID: 610415364}
   attivo_funzione: 0
 --- !u!1 &1142285358
 GameObject:
