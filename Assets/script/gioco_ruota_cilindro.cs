@@ -633,7 +633,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     potenziometro_touch = potenziometro_touch - c_save_p.crea_parametri[0].potenziometro_touch;
 
-
+                    if (potenziometro_touch <- 1)
+                    {
+                        potenziometro_touch = -1;
+                    }
 
 
                     pressione_tasto = pressione_tasto + potenziometro_touch * Time.deltaTime;
@@ -644,6 +647,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 if (touch_x[0] > risoluzione_x * (1.0f - parametro_touch)) {
                     potenziometro_touch = potenziometro_touch + c_save_p.crea_parametri[0].potenziometro_touch ;
+
+                    if (potenziometro_touch > 1)
+                    {
+                        potenziometro_touch = 1;
+                    }
+
                     pressione_tasto = pressione_tasto + potenziometro_touch * Time.deltaTime;
 
                 }
