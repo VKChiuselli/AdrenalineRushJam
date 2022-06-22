@@ -22,13 +22,46 @@ public class tutorial_primo_livello : MonoBehaviour {
 
     void Update() {
         if (Gioco_ruota_cilindro.tutorial_in_corso)
-            gestione_collisione();
+            gestione_collisione_mina();
+
+        gestione_collisione_bonus_speed();
+
         if (!Gioco_ruota_cilindro.tutorial_in_corso)
             ResumeGame();
     }
 
+    private void gestione_collisione_bonus_speed() {
+        RaycastHit hit_collider;
 
-    void gestione_collisione() {
+
+        Vector3 pos = Gioco_ruota_cilindro.astronave.transform.position;
+
+
+        Vector3 pos_astronave = new Vector3(pos.x, pos.y, pos.z + 1.2f);
+
+        if (Physics.Raycast(pos_astronave, new Vector3(0, -1, 0), out hit_collider, 1)) {
+         
+            if (hit_collider.collider.name.IndexOf("bonus0_") > -1) {
+                string str_bonus = hit_collider.collider.name;
+
+                if (!avvisato_bonus_speed) {
+                    avvisato_bonus_speed = true;
+                    Time.timeScale = 0;
+                    tutorial_bonus_speed();
+                }
+             
+                str_bonus = str_bonus.Replace("bonus0_", "");
+
+                int num_bonus = int.Parse(str_bonus);
+
+         
+
+                }
+            }
+
+            }
+
+    void gestione_collisione_mina() {
 
         RaycastHit hit_collider;
 
@@ -72,10 +105,7 @@ public class tutorial_primo_livello : MonoBehaviour {
         distanza_direction[6] = 1.5f;
         distanza_direction[7] = 2.6f;
 
-        int numero_coll = 0;
         Vector3 punto_coll = new Vector3(0, 0, 0);
-
-        int num_block = -1;
 
         for (int n = 0; n <= 7; n++) {
 
@@ -110,11 +140,11 @@ public class tutorial_primo_livello : MonoBehaviour {
 
                     }
 
-                    if (hit_collider.collider.name.IndexOf("bonus1_") > -1) {
+                    if (hit_collider.collider.name.IndexOf("bonus0_") > -1) {
 
                         string str_bonus = "" + hit_collider.collider.name;
 
-                        //   Debug.Log("" + str_block);
+                       Debug.Log("TRIGGERASR TUTORIAL BONUS SPEED" );
 
                         str_bonus = str_bonus.Replace("bonus1_", "");
 
@@ -127,12 +157,6 @@ public class tutorial_primo_livello : MonoBehaviour {
 
             }
 
-            if (num_block > -1 && numero_coll > 0) {
-
-
-                Vector3 punto_coll_uso = punto_coll / numero_coll;
-
-            }
 
         }
 
@@ -140,13 +164,18 @@ public class tutorial_primo_livello : MonoBehaviour {
     }
 
     private void tutorial_comandi_e_mine() {
-        Debug.Log("primo tutorial iniziato");
-        Gioco_ruota_cilindro.crea_tutorial_primo();
+        Debug.Log("tutorial_comandi_e_mine");
+        Gioco_ruota_cilindro.crea_tutorial("Dodge mines and craters tapping left or right");
 
     }
 
+    private void tutorial_bonus_speed() {
+        Debug.Log("tutorial_bonus_speed");
+        Gioco_ruota_cilindro.crea_tutorial("There is a variaty of bonus, this speed you up!");
+    }
+
     private void ResumeGame() {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) { //TODO implemenmtare i comandi touch in ascolto
             Time.timeScale = 1;
             Gioco_ruota_cilindro.distruggi_menu_tutorial();
         }

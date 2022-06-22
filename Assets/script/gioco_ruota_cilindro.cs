@@ -2153,10 +2153,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         Vector3 pos_astronave = new Vector3(pos.x, pos.y, pos.z + 1.2f);
 
         if (Physics.Raycast(pos_astronave, new Vector3(0, -1, 0), out hit_collider, 15)) {
-
             if (hit_collider.collider.name.IndexOf("bonus0_") > -1) {
                 string str_bonus = hit_collider.collider.name;
-
 
                 str_bonus = str_bonus.Replace("bonus0_", "");
 
@@ -3249,13 +3247,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     }
 
-    public void crea_tutorial_primo() {
+    public void crea_tutorial(string testo_informativo) {
 
 
         canvas_tutorial.SetActive(true);
 
         crea_grafica_text(100, new Color(1, 1, 1, 0.74f), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/sfondo_menu");//overlay scuro TODO cambiare grafica
-        crea_grafica_text(101, new Color(1, 1, 1, 0), "Dodge mines and craters tapping left or right", canvas_tutorial, "Canvas_tutorial", ""); //pannello shop
+        crea_grafica_text(101, new Color(1, 1, 1, 0), testo_informativo, canvas_tutorial, "Canvas_tutorial", ""); //pannello shop
 
 
     }
