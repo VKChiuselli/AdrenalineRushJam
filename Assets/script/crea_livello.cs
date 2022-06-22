@@ -951,7 +951,58 @@ public class crea_livello : MonoBehaviour
             name_collider = hit2.collider.name;
 
 
-          //  Debug.Log("name_collider "+ name_collider);
+            //  Debug.Log("name_collider "+ name_collider);
+
+
+            if (Input.GetKey(KeyCode.C))
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+
+                    Debug.Log("click "+name_collider);
+
+                    if (name_collider.IndexOf("blocco") > -1)
+                    {
+
+                        string str_block = "" + name_collider;
+
+                        int indice = str_block.IndexOf("blocco_mesh");
+
+
+                        if (indice == -1)
+                        {
+                            str_block = str_block.Replace("blocco ", "");
+
+                            int num_block = int.Parse(str_block);
+
+                            c_save.crea_blocco[num_block].tipo = 0;
+
+                            DestroyImmediate(c_save.crea_blocco[num_block].mesh);
+
+                        }
+
+                        if (indice > -1)
+                        {
+
+                            str_block = str_block.Replace("blocco_mesh ", "");
+
+                            int num_block = int.Parse(str_block);
+
+                            c_save.crea_blocco[num_block].tipo = 0;
+
+                            DestroyImmediate(c_save.crea_blocco[num_block].mesh);
+
+                        }
+
+
+                    }
+
+
+
+
+                }
+            }
+
 
             if (attivo_funzione == 1)
             {
@@ -1604,51 +1655,62 @@ public class crea_livello : MonoBehaviour
 
     void crea_blocco(int num)
     {
-
-
-        float rad = c_save.crea_blocco[num].rad;
-
         int tipo_blocco = c_save.crea_blocco[num].tipo;
-
-  
-
-        float angolo = rad * Mathf.Rad2Deg;
-
-        float xx = Mathf.Sin(rad) * c_save.crea_cilindro[0].raggio;
-        float yy = Mathf.Cos(rad) * c_save.crea_cilindro[0].raggio;
-
-        float zz = c_save.crea_blocco[num].pos;
-
-        
-
-        if (tipo_blocco <= 4)
+        if (tipo_blocco > 0)
         {
-            c_save.crea_blocco[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/blocco_" + tipo_blocco, typeof(GameObject))) as GameObject;
-        }
-        else
-        {
-            crea_blocco_mesh2(num, tipo_blocco, c_save.crea_blocco[num].struttura_procedurale, c_save.crea_blocco[num].struttura_procedurale_dz);
-        }
+
+            float rad = c_save.crea_blocco[num].rad;
 
 
-        c_save.crea_blocco[num].mesh.name = "blocco " + tipo_blocco;
-
-        c_save.crea_blocco[num].mesh.transform.SetParent(cilindro.transform);
-
-        c_save.crea_blocco[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
 
 
-        if (tipo_blocco <= 8)
-        {
-            
-            c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
-        }
 
-        if (tipo_blocco >= 9)
-        {
+            float angolo = rad * Mathf.Rad2Deg;
+
+            float xx = Mathf.Sin(rad) * c_save.crea_cilindro[0].raggio;
+            float yy = Mathf.Cos(rad) * c_save.crea_cilindro[0].raggio;
+
+            float zz = c_save.crea_blocco[num].pos;
+
+
+
+            if (tipo_blocco <= 4)
+            {
+                c_save.crea_blocco[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/blocco_" + tipo_blocco, typeof(GameObject))) as GameObject;
+            }
+            else
+            {
+                crea_blocco_mesh2(num, tipo_blocco, c_save.crea_blocco[num].struttura_procedurale, c_save.crea_blocco[num].struttura_procedurale_dz);
+            }
+
+
+            c_save.crea_blocco[num].mesh.name = "blocco " + num;
+
+            c_save.crea_blocco[num].mesh.transform.SetParent(cilindro.transform);
+
             c_save.crea_blocco[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
 
-            c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(0, 0, zz);
+
+            if (tipo_blocco >=5 && tipo_blocco<=8)
+            {
+
+                c_save.crea_blocco[num].mesh.AddComponent<MeshCollider>();
+            }
+
+
+            if (tipo_blocco <= 8)
+            {
+
+                c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
+            }
+
+            if (tipo_blocco >= 9)
+            {
+                c_save.crea_blocco[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
+
+                c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(0, 0, zz);
+            }
+
         }
 
     }
