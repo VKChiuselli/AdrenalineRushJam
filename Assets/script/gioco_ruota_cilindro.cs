@@ -576,7 +576,6 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-
         if (!tutorial_in_corso) {
 
             float pressione_tasto_up = Input.GetAxis("Vertical");
@@ -586,7 +585,6 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 if (Mathf.Abs(diff_ym) < risoluzione_y / c_save_p.crea_parametri[0].touch_sparo_differenza) {
 
                     pressione_tasto_up = -1;
-
                 }
             }
 
@@ -633,6 +631,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
                 rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione * agilita;
+            
 
             }
 
@@ -3255,13 +3254,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         canvas_tutorial.SetActive(true);
 
-        crea_grafica_text(100, new Color(1, 1, 1, 1), "", canvas_tutorial, "Canvas_tutorial", ""); //overlay scuro
+        crea_grafica_text(100, new Color(1, 1, 1, 0.74f), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/sfondo_menu");//overlay scuro TODO cambiare grafica
+        crea_grafica_text(101, new Color(1, 1, 1, 0), "Dodge mines and craters tapping left or right", canvas_tutorial, "Canvas_tutorial", ""); //pannello shop
 
-        float dy = risoluzione_y;
-        float dx = risoluzione_x;
 
-        float pos_x = 0;
-        float pos_y = 0;
     }
 
 
@@ -3270,7 +3266,6 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         float dy = risoluzione_y;
         float dx = risoluzione_x;
-
         float pos_x = 0;
         float pos_y = 0;
 
@@ -3284,10 +3279,35 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
                 grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
         }
+            if (grafica[101] != null)  //pannello
+            {
+
+    
+                pos_x = 0;
+                pos_y = dy * 0.3f;
+
+                grafica[101].GetComponent<RectTransform>().sizeDelta = new Vector2(dx *0.93f, dy);
+                grafica[101].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+               grafica_testo[101].GetComponent<TextMeshProUGUI>().fontSize = font_size/0.5f;
+        }
     }
 
 
-    
+ public   void distruggi_menu_tutorial() {
+
+        canvas_tutorial.SetActive(false);
+
+        for (int n = 100; n < grafica.Length; n++) {
+            if (grafica[n] != null) {
+                DestroyImmediate(grafica[n]);
+            }
+
+        }
+
+
+    }
+
+
     void aggiorna_menu_popup() {
 
 

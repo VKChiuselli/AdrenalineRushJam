@@ -15,13 +15,16 @@ public class tutorial_primo_livello : MonoBehaviour {
 
         Gioco_ruota_cilindro = FindObjectOfType<gioco_ruota_cilindro>();
         if (Gioco_ruota_cilindro != null)
-        //    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
-                Gioco_ruota_cilindro.tutorial_in_corso = true;
+            //    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
+            Gioco_ruota_cilindro.tutorial_in_corso = true;
 
     }
 
     void Update() {
-        gestione_collisione();
+        if (Gioco_ruota_cilindro.tutorial_in_corso)
+            gestione_collisione();
+        if (!Gioco_ruota_cilindro.tutorial_in_corso)
+            ResumeGame();
     }
 
 
@@ -89,8 +92,9 @@ public class tutorial_primo_livello : MonoBehaviour {
 
                 if (!avvisato_mina_cratere) {
                     Time.timeScale = 0;
-                    tutorial_comandi_e_mine();
                     avvisato_mina_cratere = true;
+                    Gioco_ruota_cilindro.tutorial_in_corso = false;
+                    tutorial_comandi_e_mine();
                 }
 
 
@@ -128,8 +132,6 @@ public class tutorial_primo_livello : MonoBehaviour {
 
                 Vector3 punto_coll_uso = punto_coll / numero_coll;
 
-
-
             }
 
         }
@@ -140,5 +142,15 @@ public class tutorial_primo_livello : MonoBehaviour {
     private void tutorial_comandi_e_mine() {
         Debug.Log("primo tutorial iniziato");
         Gioco_ruota_cilindro.crea_tutorial_primo();
+
     }
+
+    private void ResumeGame() {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) {
+            Time.timeScale = 1;
+            Gioco_ruota_cilindro.distruggi_menu_tutorial();
+        }
+
+    }
+
 }
