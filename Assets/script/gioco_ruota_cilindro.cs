@@ -1469,7 +1469,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 c_save.crea_blocco[num].mesh_renderer.material.shader = Shader.Find("Custom/Dissolve");
 
 
-                rigenera_blocco(c_save.crea_blocco[num].mesh);
+                if (tipo_blocco >= 9)
+                {
+                    rigenera_blocco(c_save.crea_blocco[num].mesh);
+
+                }
+
             }
 
         }
