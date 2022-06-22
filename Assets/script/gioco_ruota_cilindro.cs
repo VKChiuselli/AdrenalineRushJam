@@ -801,7 +801,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         }
 
-        if (inversione_camera == 1) {
+        if (visione_boss==true) {
             float sposta_z = 27;
 
             if (crea_popup_finale == 1) {
