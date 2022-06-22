@@ -113,7 +113,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     GameObject cilindro;
     GameObject sfondo;
 
-
+    public GUISkin skin_scrittura;
 
 
     float rotazione_cilindro = 0;
@@ -628,7 +628,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 }
 
-                if (touch_x[0] > 0 && touch_x[0] > risoluzione_x * (1.0f - parametro_touch)) {
+                if (touch_x[0] > risoluzione_x * (1.0f - parametro_touch)) {
                     potenziometro_touch = potenziometro_touch + c_save_p.crea_parametri[0].potenziometro_touch *Time.deltaTime;
                     pressione_tasto = pressione_tasto + potenziometro_touch;
 
@@ -639,7 +639,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
 
-                if (touch_x[0] < 0)
+                if (touch_x[0] <= 0)
                 {
                     potenziometro_touch = 0;
                     pressione_tasto = 0;
@@ -648,6 +648,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             }
 
+            rotazione_cilindro = 0;
 
             if (Mathf.Abs(pressione_tasto) > 0 && blocco_velocita > .99f) {
 
@@ -738,7 +739,21 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     }
 
 
-    void gestione_sparo() {
+
+    void OnGUI()
+    {
+
+        GUI.skin = skin_scrittura;
+
+        GUI.Label( new Rect(0,0,600,70), "pressione_tasto " + pressione_tasto+" touch "+touch_x[0]); 
+
+
+
+    }
+
+
+
+        void gestione_sparo() {
 
 
         for (int n = 0; n < 5; n++) {
@@ -2958,7 +2973,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         controllo_mobile = 0;
 
-#if UNITY_ANDROID || UNITY_IOS
+
+#if (UNITY_ANDROID || UNITY_IOS) &&  !UNITY_EDITOR
 
         controllo_mobile = 1;
 
@@ -3007,7 +3023,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             touch_y[n] = -1000;
         }
 
-#if ((UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR))
+#if ((UNITY_ANDROID || UNITY_IOS ))
 
         for (int i = 0; i < Input.touchCount; i++) {
 
