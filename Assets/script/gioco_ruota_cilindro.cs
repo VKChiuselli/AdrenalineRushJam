@@ -56,6 +56,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     public GameObject astronave;
+    public GameObject astronave_barriera;
 
     public GameObject boss_mesh;
     public GameObject boss_mesh_sparo;
@@ -108,7 +109,6 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     GameObject ogg_struttura_dati;
 
-    CharacterController characterController;
 
     GameObject cilindro;
     GameObject sfondo;
@@ -221,7 +221,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         controllo_risoluzione();
 
-        characterController = GetComponent<CharacterController>();
+       
         cilindro = GameObject.Find("cilindro_esatto");
         sfondo = GameObject.Find("sfondo");
 
@@ -338,6 +338,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             if (attiva_barriera < 0) {
                 energia = energia - riduttore / scafo;
 
+                Debug.Log("energia "+ energia);
+
+                attiva_barriera = tempo_barriera;
             }
         }
 
@@ -554,6 +557,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         attiva_barriera = attiva_barriera - Time.deltaTime;
 
 
+        if (attiva_barriera < 0)
+        {
+            attiva_barriera = -.001f;
+        }
+
+
+        astronave_barriera.GetComponent<Renderer>().material.SetColor("_Color", new Color32(118,255,200,(byte) (attiva_barriera * 85)));
+
+
+
         if (energia < 0 || crea_popup_finale == 1) {
             blocco_velocita = blocco_velocita * .9f;
 
@@ -743,9 +756,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void OnGUI()
     {
 
-        GUI.skin = skin_scrittura;
+    //    GUI.skin = skin_scrittura;
 
-        GUI.Label( new Rect(0,0,600,70), "pressione_tasto " + pressione_tasto+" touch "+touch_x[0]); 
+    //    GUI.Label( new Rect(0,0,600,70), "pressione_tasto " + pressione_tasto+ " attiva_barriera " + attiva_barriera); 
 
 
 
@@ -2382,7 +2395,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                             num_block = int.Parse(str_block);
 
+
                             carica_particles("particles/CFXR Hit A", hit_collider.point);
+
+
+                            carica_particles("particles/CFXR Explosion 3", hit_collider.collider.transform.position);
 
 
                             if (tipo == 0) {

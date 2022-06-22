@@ -553,7 +553,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10.38
+      scalar: 2.68
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5376,6 +5376,92 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ff9d3c580bfa6245a70e42e9972bc17, type: 3}
   m_PrefabInstance: {fileID: 1025342167}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1058504582 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+  m_PrefabInstance: {fileID: 1090916596}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1090916596
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1025342168}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.000000021855694
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e41b2bc3e84df0d438e50f6fb118c574, type: 2}
+    - target: {fileID: 919132149155446097, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_Name
+      value: StarSparrow_finale_scudo
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e31f4d149c71fa84292f727fedc5c2c0, type: 3}
 --- !u!1 &1221077547
 GameObject:
   m_ObjectHideFlags: 0
@@ -5982,6 +6068,7 @@ MonoBehaviour:
   velocita_sparo: 55
   velocita_sparo_boss: 55
   astronave: {fileID: 1025342169}
+  astronave_barriera: {fileID: 1058504582}
   boss_mesh: {fileID: 1699463916}
   boss_mesh_sparo: {fileID: 1896255085}
   spostamento_boss_rotazione: -0.01
@@ -5991,7 +6078,7 @@ MonoBehaviour:
   tutorial_in_corso: 0
   monete_partita_corrente: 0
   script_struttura_dati: {fileID: 0}
-  livello_corrente: 2
+  livello_corrente: 4
   skin_scrittura: {fileID: 11400000, guid: 9e5e221bf7ecd62448cd10305abd894a, type: 2}
 --- !u!114 &7450251571877793397
 MonoBehaviour:
