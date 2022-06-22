@@ -605,11 +605,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
+            if (controllo_mobile == 0)
+            {
+                pressione_tasto = Input.GetAxis("Horizontal");
 
-            pressione_tasto = Input.GetAxis("Horizontal");
-
+            }
 
             if (controllo_mobile == 1) {
+
 
 
 
@@ -639,6 +642,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 if (touch_x[0] < 0)
                 {
                     potenziometro_touch = 0;
+                    pressione_tasto = 0;
                 }
 
 
