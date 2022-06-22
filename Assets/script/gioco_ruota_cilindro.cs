@@ -795,7 +795,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
         if (inversione_camera == 0) {
-            cam_pos.z = Mathf.Lerp(cam_pos.z, -13, Time.deltaTime * 5);
+            cam_pos.z = Mathf.Lerp(cam_pos.z, -6, Time.deltaTime * 5);
 
             cam_rot.y = Mathf.Lerp(cam_rot.y, 0, Time.deltaTime * 50);
 
@@ -1365,69 +1365,77 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         int tipo_blocco = c_save.crea_blocco[num].tipo;
 
+        if (tipo_blocco > 0)
+        {
 
 
-        float angolo = rad * Mathf.Rad2Deg;
+            float angolo = rad * Mathf.Rad2Deg;
 
-        float xx = Mathf.Sin(rad) * c_save.crea_cilindro[0].raggio;
-        float yy = Mathf.Cos(rad) * c_save.crea_cilindro[0].raggio;
+            float xx = Mathf.Sin(rad) * c_save.crea_cilindro[0].raggio;
+            float yy = Mathf.Cos(rad) * c_save.crea_cilindro[0].raggio;
 
-        float zz = c_save.crea_blocco[num].pos;
-
-
-
-        if (tipo_blocco <= 4) {
-            c_save.crea_blocco[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/blocco_" + tipo_blocco, typeof(GameObject))) as GameObject;
-        }
-        else {
-            crea_blocco_mesh2(num, tipo_blocco, c_save.crea_blocco[num].struttura_procedurale, c_save.crea_blocco[num].struttura_procedurale_dz);
-        }
-
-        c_save.crea_blocco[num].attivo = 1;
-
-        c_save.crea_blocco[num].mesh.name = "blocco " + num;
-
-        c_save.crea_blocco[num].mesh.transform.SetParent(cilindro.transform);
-
-        c_save.crea_blocco[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
+            float zz = c_save.crea_blocco[num].pos;
 
 
 
+            if (tipo_blocco <= 4)
+            {
+                c_save.crea_blocco[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/blocco_" + tipo_blocco, typeof(GameObject))) as GameObject;
+            }
+            else
+            {
+                crea_blocco_mesh2(num, tipo_blocco, c_save.crea_blocco[num].struttura_procedurale, c_save.crea_blocco[num].struttura_procedurale_dz);
+            }
 
-        if (tipo_blocco <= 8) {
+            c_save.crea_blocco[num].attivo = 1;
 
-            c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
-        }
+            c_save.crea_blocco[num].mesh.name = "blocco " + num;
 
-        if (tipo_blocco >= 9) {
+            c_save.crea_blocco[num].mesh.transform.SetParent(cilindro.transform);
+
             c_save.crea_blocco[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
 
-            c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(0, 0, zz);
+
+
+
+            if (tipo_blocco <= 8)
+            {
+
+                c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
+            }
+
+            if (tipo_blocco >= 9)
+            {
+                c_save.crea_blocco[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
+
+                c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(0, 0, zz);
+            }
+
+
+            if (tipo_blocco <= 4)
+            {
+                c_save.crea_blocco[num].mesh_dissolve = GameObject.Find("cilindro_esatto/blocco " + num + "/blocco_mesh");
+
+                c_save.crea_blocco[num].mesh_dissolve.name = "blocco_mesh " + num;
+
+                c_save.crea_blocco[num].mesh_renderer = c_save.crea_blocco[num].mesh_dissolve.GetComponent<Renderer>();
+
+                c_save.crea_blocco[num].mesh_renderer.material.shader = Shader.Find("Custom/Dissolve");
+            }
+
+            if (tipo_blocco >= 5)
+            {
+                c_save.crea_blocco[num].mesh_dissolve = c_save.crea_blocco[num].mesh;
+
+                c_save.crea_blocco[num].mesh_renderer = c_save.crea_blocco[num].mesh_dissolve.GetComponent<Renderer>();
+
+                c_save.crea_blocco[num].mesh_renderer.material.shader = Shader.Find("Custom/Dissolve");
+
+
+                rigenera_blocco(c_save.crea_blocco[num].mesh);
+            }
+
         }
-
-
-        if (tipo_blocco <= 4) {
-            c_save.crea_blocco[num].mesh_dissolve = GameObject.Find("cilindro_esatto/blocco " + num + "/blocco_mesh");
-
-            c_save.crea_blocco[num].mesh_dissolve.name = "blocco_mesh " + num;
-
-            c_save.crea_blocco[num].mesh_renderer = c_save.crea_blocco[num].mesh_dissolve.GetComponent<Renderer>();
-
-            c_save.crea_blocco[num].mesh_renderer.material.shader = Shader.Find("Custom/Dissolve");
-        }
-
-        if (tipo_blocco >= 5) {
-            c_save.crea_blocco[num].mesh_dissolve = c_save.crea_blocco[num].mesh;
-
-            c_save.crea_blocco[num].mesh_renderer = c_save.crea_blocco[num].mesh_dissolve.GetComponent<Renderer>();
-
-            c_save.crea_blocco[num].mesh_renderer.material.shader = Shader.Find("Custom/Dissolve");
-
-
-            rigenera_blocco(c_save.crea_blocco[num].mesh);
-        }
-
-
 
     }
 
