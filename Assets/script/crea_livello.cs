@@ -1422,6 +1422,8 @@ public class crea_livello : MonoBehaviour
     void save_project()
     {
 
+        Debug.Log("finale "+ finale.transform.position);
+
         c_save.crea_cilindro[0].pos_finale = finale.transform.position;
 
 
@@ -1442,6 +1444,7 @@ public class crea_livello : MonoBehaviour
 
         string path_data = "Assets/Resources/data_level/" + file_name + ".json";
 
+        Debug.Log(""+ path_data);
 
         File.WriteAllText(path_data, jsonData, Encoding.UTF8);
 
@@ -1495,7 +1498,12 @@ public class crea_livello : MonoBehaviour
 
                 c_save.crea_cilindro[0].visione_boss = visione_boss;
 
+
+                finale.transform.position = c_save.crea_cilindro[0].pos_finale;
+
                 cilindro.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+
 
                 calcolo_snap(1);
 
@@ -1899,7 +1907,7 @@ public class crea_livello : MonoBehaviour
     {
 
 
-        Debug.Log("modifica "+ogg.name+" tipo bonus "+tipo_bonus);
+     //   Debug.Log("modifica "+ogg.name+" tipo bonus "+tipo_bonus);
 
 
 
