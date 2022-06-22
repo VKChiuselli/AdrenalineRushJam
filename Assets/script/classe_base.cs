@@ -157,6 +157,7 @@ public class parametri
     public float velocita_personaggio;
     public float velocita_bonus;
 
+    public float potenziometro_touch;
 
     public float touch_sparo_differenza;
 

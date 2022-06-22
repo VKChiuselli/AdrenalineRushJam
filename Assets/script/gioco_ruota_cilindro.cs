@@ -212,6 +212,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float tempo_inizio_livello = 1.5f;
 
 
+
+    float potenziometro_touch = 0;
+
+
     // Start is called before the first frame update
     void Start() {
 
@@ -607,13 +611,37 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             if (controllo_mobile == 1) {
 
+
+
                 if (touch_x[0] > 0 && touch_x[0] < risoluzione_x * (parametro_touch)) {
-                    pressione_tasto = -1;
+
+                    potenziometro_touch = potenziometro_touch - c_save_p.crea_parametri[0].potenziometro_touch*Time.deltaTime;
+                    pressione_tasto = pressione_tasto + potenziometro_touch;
+
+                    if (pressione_tasto < -1)
+                    {
+                        pressione_tasto = -1;
+                    }
+
                 }
 
                 if (touch_x[0] > 0 && touch_x[0] > risoluzione_x * (1.0f - parametro_touch)) {
-                    pressione_tasto = 1;
+                    potenziometro_touch = potenziometro_touch + c_save_p.crea_parametri[0].potenziometro_touch *Time.deltaTime;
+                    pressione_tasto = pressione_tasto + potenziometro_touch;
+
+                    if (pressione_tasto >1)
+                    {
+                        pressione_tasto = 1;
+                    }
                 }
+
+
+                if (touch_x[0] < 0)
+                {
+                    potenziometro_touch = 0;
+                }
+
+
             }
 
 
@@ -794,15 +822,24 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         float altezza_cam = 3.5f;
 
 
-        if (inversione_camera == 0) {
-            cam_pos.z = Mathf.Lerp(cam_pos.z, -6, Time.deltaTime * 5);
+        if (visione_boss == false)
+        {
+            float sposta_z = -6;
+            if (crea_popup_finale == 1)
+            {
+                sposta_z = -8;
+            }
+
+
+
+            cam_pos.z = Mathf.Lerp(cam_pos.z, sposta_z, Time.deltaTime * 5);
 
             cam_rot.y = Mathf.Lerp(cam_rot.y, 0, Time.deltaTime * 50);
 
         }
 
         if (visione_boss==true) {
-            float sposta_z = 27;
+            float sposta_z = 6;
 
             if (crea_popup_finale == 1) {
                 sposta_z = 8;
