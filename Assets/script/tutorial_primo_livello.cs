@@ -7,14 +7,16 @@ public class tutorial_primo_livello : MonoBehaviour {
 
     public bool avvisato_mina_cratere;
     public bool avvisato_bonus_speed;
-    public float distanza_raycast_tutorial = 21f;
+    float distanza_raycast_tutorial = 21f;
 
-    GameObject astronave;
     gioco_ruota_cilindro Gioco_ruota_cilindro;
     void Start() {
-        astronave = GameObject.Find("StarSparrow12");
+
+
         Gioco_ruota_cilindro = FindObjectOfType<gioco_ruota_cilindro>();
-        Gioco_ruota_cilindro.tutorial_in_corso = true;
+        if (Gioco_ruota_cilindro != null)
+        //    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
+                Gioco_ruota_cilindro.tutorial_in_corso = true;
 
     }
 
@@ -74,7 +76,7 @@ public class tutorial_primo_livello : MonoBehaviour {
 
         for (int n = 0; n <= 7; n++) {
 
-            pos = astronave.transform.position + pos_direction[n];
+            pos = Gioco_ruota_cilindro.astronave.transform.position + pos_direction[n];
 
 
             Debug.DrawRay(pos, pos_ray_direction[n], new Color(1, n * .2f, 0, 1));
@@ -86,7 +88,7 @@ public class tutorial_primo_livello : MonoBehaviour {
 
 
                 if (!avvisato_mina_cratere) {
-                   // Time.timeScale = 0;
+                    Time.timeScale = 0;
                     tutorial_comandi_e_mine();
                     avvisato_mina_cratere = true;
                 }
@@ -136,6 +138,7 @@ public class tutorial_primo_livello : MonoBehaviour {
     }
 
     private void tutorial_comandi_e_mine() {
-        throw new NotImplementedException();
+        Debug.Log("primo tutorial iniziato");
+        Gioco_ruota_cilindro.crea_tutorial_primo();
     }
 }

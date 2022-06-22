@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657582, g: 0.4964118, b: 0.5748169, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657654, g: 0.49641246, b: 0.57481754, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -206,6 +206,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 9.91, y: 180, z: 0}
+--- !u!1 &40879666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 40879667}
+  m_Layer: 0
+  m_Name: Canvas_tutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &40879667
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40879666}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.3065903, y: 19.608616, z: 30.378588}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &370990447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5871,7 +5902,7 @@ MonoBehaviour:
     crea_gemma: []
   c_save_p:
     crea_parametri: []
-  level_json: {fileID: 4900000, guid: df1a1c867778e724ab8e58e90c40ec9b, type: 3}
+  level_json: {fileID: 4900000, guid: 3a85bfba77b3ae7459a6f4ce38a92365, type: 3}
   variabile_x: 0
   variabile_y: 0
   potenza_tasto: -250
@@ -5887,9 +5918,10 @@ MonoBehaviour:
   spostamento_boss_rotazione: -0.01
   newColor: {r: 0, g: 1, b: 1, a: 1}
   distanza_disolve: -15
-  online_dati: 0
+  online_dati: 1
   tutorial_in_corso: 0
   monete_partita_corrente: 0
+  script_struttura_dati: {fileID: 0}
 --- !u!114 &7450251571877793397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5904,4 +5936,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avvisato_mina_cratere: 0
   avvisato_bonus_speed: 0
-  distanza_raycast_tutorial: 21

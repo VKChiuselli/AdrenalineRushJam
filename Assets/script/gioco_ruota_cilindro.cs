@@ -10,8 +10,7 @@ using UnityEngine.Networking;
 using UnityEditor;
 using System.IO;
 
-public class gioco_ruota_cilindro : MonoBehaviour
-{
+public class gioco_ruota_cilindro : MonoBehaviour {
 
     string path_server = "https://www.mnzgame.com/AstroVortex/testi/";
 
@@ -100,10 +99,11 @@ public class gioco_ruota_cilindro : MonoBehaviour
     GameObject[] pulsante_field_testo2 = new GameObject[max_ui];
 
 
-    struttura_dati script_struttura_dati;
+    public struttura_dati script_struttura_dati;
 
     GameObject canvas;
     GameObject canvas_popup;
+    GameObject canvas_tutorial;
 
     GameObject ogg_struttura_dati;
 
@@ -212,8 +212,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
 
         controllo_risoluzione();
 
@@ -224,7 +223,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         boss = GameObject.Find("boss");
 
-       
+
 
 
         cam0 = GameObject.Find("Main Camera");
@@ -233,11 +232,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-        for (int k = 0; k <= 9; k++)
-        {
+        for (int k = 0; k <= 9; k++) {
 
-            for (int n = 0; n < 40; n++)
-            {
+            for (int n = 0; n < 40; n++) {
 
                 snap_rif[n + k * 50] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere_rif", typeof(GameObject))) as GameObject;
 
@@ -249,20 +246,21 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-        
-       
+
+
 
 
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
+        canvas_tutorial = GameObject.Find("Canvas_tutorial");
 
         canvas_popup.SetActive(false);
+        canvas_tutorial.SetActive(false);
 
 
         ogg_struttura_dati = GameObject.Find("base_struttura");
 
-        if (ogg_struttura_dati != null)
-        {
+        if (ogg_struttura_dati != null) {
             script_struttura_dati = ogg_struttura_dati.GetComponent<struttura_dati>();
 
         }
@@ -276,7 +274,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         inizializza_personaggio();
 
-    //  save_parameter();
+        //  save_parameter();
 
         StartCoroutine(leggi_dati_online("parametri"));
 
@@ -284,8 +282,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
     }
 
 
-    void inizializza_personaggio()
-    {
+    void inizializza_personaggio() {
         // agilità 0
         // barriera 1
         // energia 2
@@ -307,8 +304,7 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-        if (ogg_struttura_dati != null)
-        {
+        if (ogg_struttura_dati != null) {
 
             agilita = 1.0f + script_struttura_dati.livello_upgrade[0] * .1f;
 
@@ -332,12 +328,9 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 
 
-    void analisi_energia(float riduttore)
-    {
-        if (crea_popup_finale == 0)
-        {
-            if (attiva_barriera < 0)
-            {
+    void analisi_energia(float riduttore) {
+        if (crea_popup_finale == 0) {
+            if (attiva_barriera < 0) {
                 energia = energia - riduttore / scafo;
 
             }
@@ -346,24 +339,21 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
     }
 
-    void Update()
-    {
+    void Update() {
 
-        if (carica_dati_online == 1 && carica_dati_livello_online==1)
-        {
+        if (carica_dati_online == 1 && carica_dati_livello_online == 1) {
 
             update_game();
 
         }
-        else
-        {
+        else {
             aggiorna_menu();
         }
 
     }
 
 
-    void update_game() { 
+    void update_game() {
 
         controllo_risoluzione();
 
@@ -383,19 +373,20 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
         gestione_coll_special_bonus_malus();
 
-       gestione_fine_gioco();
+        gestione_fine_gioco();
 
         aggiorna_menu();
 
         aggiorna_menu_popup();
+
+        aggiorna_menu_tutorial();
 
 
 
 
 #if UNITY_EDITOR
 
-        if (Input.GetKeyUp(KeyCode.M))
-        {
+        if (Input.GetKeyUp(KeyCode.M)) {
 
             crea_menu();
 
@@ -404,20 +395,18 @@ public class gioco_ruota_cilindro : MonoBehaviour
 
 #endif
 
-}
+    }
 
 
 
-void leggi_vertici_cilindro()
-    {
+    void leggi_vertici_cilindro() {
 
 
 
         Mesh mesh = cilindro.GetComponent<MeshFilter>().mesh;
         Vector3[] vertices = mesh.vertices;
 
-        for (var i = 0; i < vertices.Length; i++)
-        {
+        for (var i = 0; i < vertices.Length; i++) {
             vertici_cilindro[i] = vertices[i];
         }
 
@@ -425,8 +414,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void scala_cilindro()
-    {
+    void scala_cilindro() {
 
 
 
@@ -434,8 +422,7 @@ void leggi_vertici_cilindro()
         Vector3[] vertices = mesh.vertices;
 
 
-        for (var i = 0; i < vertices.Length; i++)
-        {
+        for (var i = 0; i < vertices.Length; i++) {
             vertices[i] = vertici_cilindro[i] * c_save.crea_cilindro[0].raggio;
         }
 
@@ -455,8 +442,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void crea_sparo()
-    {
+    void crea_sparo() {
 
 
         Debug.Log("sparo creato ");
@@ -466,11 +452,9 @@ void leggi_vertici_cilindro()
 
         int num_sparo = -1;
 
-        for (int n = 0; n < 5; n++)
-        {
+        for (int n = 0; n < 5; n++) {
 
-            if (attivo_tempo_sparo[n] < -1)
-            {
+            if (attivo_tempo_sparo[n] < -1) {
                 num_sparo = n;
 
                 attivo_tempo_sparo[n] = 5;
@@ -499,8 +483,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void controllo_monete()
-    {
+    void controllo_monete() {
 
         int num_monete = c_save.crea_moneta.Count;
 
@@ -508,44 +491,38 @@ void leggi_vertici_cilindro()
         pos_astronave.z += pos_astronave.z + 2.0f;
 
 
-        float distanza = 6*calamita;
+        float distanza = 6 * calamita;
         float distanza_cattura = .75f;
 
         float velocita_calamita_animazione = velocita_personaggio * 1.5f;
 
 
-        for (int k = 0; k < num_monete; k++)
-        {
+        for (int k = 0; k < num_monete; k++) {
 
-            if (c_save.crea_moneta[k].presa == 0)
-            {
+            if (c_save.crea_moneta[k].presa == 0) {
                 float dis = Vector3.Distance(pos_astronave, c_save.crea_moneta[k].mesh.transform.position);
 
-                if (dis < distanza)
-                {
+                if (dis < distanza) {
                     c_save.crea_moneta[k].presa = 1;
                 }
 
             }
 
-            if (c_save.crea_moneta[k].presa == 1)
-            {
+            if (c_save.crea_moneta[k].presa == 1) {
 
                 c_save.crea_moneta[k].mesh.transform.position = Vector3.Lerp(c_save.crea_moneta[k].mesh.transform.position, pos_astronave, Time.deltaTime * velocita_calamita_animazione);
 
 
                 float dis = Vector3.Distance(pos_astronave, c_save.crea_moneta[k].mesh.transform.position);
 
-                if (dis < distanza_cattura)
-                {
+                if (dis < distanza_cattura) {
                     c_save.crea_moneta[k].presa = 2;
 
                     Destroy(c_save.crea_moneta[k].mesh);
 
                     monete_partita_corrente = monete_partita_corrente + 1;
 
-                    if (ogg_struttura_dati != null)
-                    {
+                    if (ogg_struttura_dati != null) {
                         script_struttura_dati.monete = script_struttura_dati.monete + 1;
 
 
@@ -562,8 +539,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void controllo()
-    {
+    void controllo() {
 
         float parametro_touch = c_save_p.crea_parametri[0].posizione_touch;
 
@@ -573,24 +549,20 @@ void leggi_vertici_cilindro()
         attiva_barriera = attiva_barriera - Time.deltaTime;
 
 
-        if (energia < 0 || crea_popup_finale==1)
-        {
-            blocco_velocita = blocco_velocita*.9f;
+        if (energia < 0 || crea_popup_finale == 1) {
+            blocco_velocita = blocco_velocita * .9f;
 
-            if (blocco_velocita < .05f)
-            {
+            if (blocco_velocita < .05f) {
                 blocco_velocita = 0;
 
-                if (energia <= 0)
-                {
-                   
-                       if ( crea_popup_finale == 0)
-                    {
+                if (energia <= 0) {
+
+                    if (crea_popup_finale == 0) {
                         crea_popup_finale = 10;
                         crea_popup(2);
                     }
-                       
-                    
+
+
                 }
 
 
@@ -667,7 +639,7 @@ void leggi_vertici_cilindro()
 
 
 
-      
+
 
 
             astronave_rz_calcolo = astronave_rz_calcolo + pressione_tasto;
@@ -734,20 +706,16 @@ void leggi_vertici_cilindro()
     }
 
 
-    void gestione_sparo()
-    {
+    void gestione_sparo() {
 
 
-        for (int n = 0; n < 5; n++)
-        {
+        for (int n = 0; n < 5; n++) {
             attivo_tempo_sparo[n] = attivo_tempo_sparo[n] - Time.deltaTime;
 
-            if (sparo[n] != null)
-            {
+            if (sparo[n] != null) {
 
 
-                if (attivo_tempo_sparo[n] > 0)
-                {
+                if (attivo_tempo_sparo[n] > 0) {
 
 
                     sparo[n].transform.Translate(new Vector3(0, 0, velocita_sparo * Time.deltaTime));
@@ -755,8 +723,7 @@ void leggi_vertici_cilindro()
                     gestione_collisione_sparo(n, sparo[n]);
 
                 }
-                else
-                {
+                else {
                     DestroyImmediate(sparo[n]);
                 }
 
@@ -768,21 +735,17 @@ void leggi_vertici_cilindro()
 
 
 
-    void gestione_sparo_boss()
-    {
+    void gestione_sparo_boss() {
 
-        for (int n = 0; n < 5; n++)
-        {
+        for (int n = 0; n < 5; n++) {
             attivo_tempo_sparo_boss[n] = attivo_tempo_sparo_boss[n] - Time.deltaTime;
 
 
 
-            if (sparo_boss[n] != null)
-            {
+            if (sparo_boss[n] != null) {
 
 
-                if (attivo_tempo_sparo_boss[n] > 0)
-                {
+                if (attivo_tempo_sparo_boss[n] > 0) {
 
                     float xx = Mathf.Sin(sparo_boss_rad[n]) * (c_save.crea_cilindro[0].raggio + 1);
                     float yy = Mathf.Cos(sparo_boss_rad[n]) * (c_save.crea_cilindro[0].raggio + 1);
@@ -809,8 +772,7 @@ void leggi_vertici_cilindro()
 
 
                 }
-                else
-                {
+                else {
                     DestroyImmediate(sparo_boss[n]);
                 }
 
@@ -823,8 +785,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void gestione_camera()
-    {
+    void gestione_camera() {
 
 
 
@@ -833,20 +794,17 @@ void leggi_vertici_cilindro()
         float altezza_cam = 3.5f;
 
 
-        if (inversione_camera == 0)
-        {
+        if (inversione_camera == 0) {
             cam_pos.z = Mathf.Lerp(cam_pos.z, -13, Time.deltaTime * 5);
 
             cam_rot.y = Mathf.Lerp(cam_rot.y, 0, Time.deltaTime * 50);
 
         }
 
-        if (inversione_camera == 1)
-        {
+        if (inversione_camera == 1) {
             float sposta_z = 27;
 
-            if (crea_popup_finale == 1)
-            {
+            if (crea_popup_finale == 1) {
                 sposta_z = 8;
             }
 
@@ -873,11 +831,9 @@ void leggi_vertici_cilindro()
 
 
 
-    void gestione_cilindro()
-    {
+    void gestione_cilindro() {
 
-        if (inizio_game == 1)
-        {
+        if (inizio_game == 1) {
 
             velocita_personaggio = c_save_p.crea_parametri[0].velocita_personaggio;
 
@@ -893,8 +849,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void crea_bonus_gemma(float pos_z, float angolo)
-    {
+    void crea_bonus_gemma(float pos_z, float angolo) {
 
 
         GameObject bonus_gemma = Instantiate(Resources.Load("grafica_3d/Prefabs_space/gemma")) as GameObject;
@@ -916,8 +871,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void crea_bonus_speed(float pos_z, float angolo)
-    {
+    void crea_bonus_speed(float pos_z, float angolo) {
 
 
         GameObject bonus_speed = Instantiate(Resources.Load("grafica_3d/Prefabs_space/speed")) as GameObject;
@@ -945,20 +899,16 @@ void leggi_vertici_cilindro()
 
 
 
-    void aggiorna_blocco()
-    {
+    void aggiorna_blocco() {
 
-        if (blocco_velocita > .99f)
-        {
+        if (blocco_velocita > .99f) {
             sposta_uv_bonus = sposta_uv_bonus - Time.deltaTime;
 
             int num_bonus = c_save.crea_bonus.Count;
 
 
-            for (int n = 0; n < num_bonus; n++)
-            {
-                if (c_save.crea_bonus[n].tipo == 0)
-                {
+            for (int n = 0; n < num_bonus; n++) {
+                if (c_save.crea_bonus[n].tipo == 0) {
                     c_save.crea_bonus[n].mesh.GetComponent<Renderer>().material.SetTextureOffset("_MainTex", new Vector2(0, sposta_uv_bonus));
                 }
             }
@@ -969,43 +919,38 @@ void leggi_vertici_cilindro()
 
 
 
-            float pos_z = cilindro.transform.position.z;
+        float pos_z = cilindro.transform.position.z;
 
         int num_blocco = c_save.crea_blocco.Count;
 
 
-        for (int n = 0; n < num_blocco; n++)
-        {
+        for (int n = 0; n < num_blocco; n++) {
 
-            if (c_save.crea_blocco[n].attivo == 1)
-            {
+            if (c_save.crea_blocco[n].attivo == 1) {
 
                 float zz2 = c_save.crea_blocco[n].mesh.transform.position.z;
 
 
-                if (c_save.crea_blocco[n].rotazione != 0 && blocco_velocita>.99f)
-                {
-                    
-                        c_save.crea_blocco[n].rad = c_save.crea_blocco[n].rad + c_save.crea_blocco[n].rotazione*Time.deltaTime;
+                if (c_save.crea_blocco[n].rotazione != 0 && blocco_velocita > .99f) {
 
-                       
+                    c_save.crea_blocco[n].rad = c_save.crea_blocco[n].rad + c_save.crea_blocco[n].rotazione * Time.deltaTime;
 
-                        float angolo = c_save.crea_blocco[n].rad * Mathf.Rad2Deg;
 
-                        c_save.crea_blocco[n].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
+
+                    float angolo = c_save.crea_blocco[n].rad * Mathf.Rad2Deg;
+
+                    c_save.crea_blocco[n].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
 
                 }
 
 
 
 
-                if (c_save.crea_blocco[n].distruzione_oggetto > 0)
-                {
+                if (c_save.crea_blocco[n].distruzione_oggetto > 0) {
 
                     c_save.crea_blocco[n].forza_impatto = c_save.crea_blocco[n].forza_impatto * .95f - .015f;
 
-                    if (c_save.crea_blocco[n].forza_impatto > .025f)
-                    {
+                    if (c_save.crea_blocco[n].forza_impatto > .025f) {
                         spostamento_blocco(c_save.crea_blocco[n].mesh, c_save.crea_blocco[n].punto_impatto, c_save.crea_blocco[n].forza_impatto, c_save.crea_blocco[n].rad);
                     }
 
@@ -1015,8 +960,7 @@ void leggi_vertici_cilindro()
 
                     aggiorna_oggetto_dissolto_singolo(n, c_save.crea_blocco[n].valore_dissolve);
 
-                    if (c_save.crea_blocco[n].valore_dissolve > 1)
-                    {
+                    if (c_save.crea_blocco[n].valore_dissolve > 1) {
                         c_save.crea_blocco[n].valore_dissolve = 1;
                         c_save.crea_blocco[n].attivo = 0;
 
@@ -1027,12 +971,11 @@ void leggi_vertici_cilindro()
                 }
 
 
-              
 
 
 
-                    if (c_save.crea_blocco[n].arrivo == 0 && zz2 < distanza_disolve)
-                {
+
+                if (c_save.crea_blocco[n].arrivo == 0 && zz2 < distanza_disolve) {
 
 
 
@@ -1043,8 +986,7 @@ void leggi_vertici_cilindro()
 
                     aggiorna_oggetto_dissolto_singolo(n, c_save.crea_blocco[n].valore_dissolve);
 
-                    if (c_save.crea_blocco[n].valore_dissolve > 1)
-                    {
+                    if (c_save.crea_blocco[n].valore_dissolve > 1) {
                         c_save.crea_blocco[n].valore_dissolve = 1;
                         c_save.crea_blocco[n].attivo = 0;
 
@@ -1075,8 +1017,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void gestione_pos(int num)
-    {
+    void gestione_pos(int num) {
         float rad = c_save.crea_blocco[num].rad;
 
 
@@ -1095,37 +1036,31 @@ void leggi_vertici_cilindro()
 
 
 
-    IEnumerator load_project_online(int num_livello=1)
-    {
+    IEnumerator load_project_online(int num_livello = 1) {
 
 
-        string path2 = path_server + "livello_"+ num_livello + ".json";
+        string path2 = path_server + "livello_" + num_livello + ".json";
 
         Debug.Log("" + path2);
 
 
-        using (UnityWebRequest www = UnityWebRequest.Get(path2))
-        {
+        using (UnityWebRequest www = UnityWebRequest.Get(path2)) {
             yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
+            if (www.isNetworkError || www.isHttpError) {
                 Debug.Log(www.error);
             }
-            else
-            {
+            else {
 
 
 
-                try
-                {
+                try {
 
 
                     string testo_json = www.downloadHandler.text;
 
 
-                    if (c_save != null)
-                    {
+                    if (c_save != null) {
 
                         distruggi_oggetti();
 
@@ -1143,11 +1078,10 @@ void leggi_vertici_cilindro()
 
                     associa_livello();
 
-                   
+
 
                 }
-                catch (Exception e)
-                {
+                catch (Exception e) {
 
                     Debug.Log("errore_oggetto_codice " + e.ToString());
 
@@ -1170,19 +1104,15 @@ void leggi_vertici_cilindro()
 
 
 
-    void load_project()
-    {
+    void load_project() {
 
 
-        try
-        {
+        try {
 
-            if (level_json != null)
-            {
+            if (level_json != null) {
 
 
-                if (c_save != null)
-                {
+                if (c_save != null) {
 
                     distruggi_oggetti();
 
@@ -1205,8 +1135,7 @@ void leggi_vertici_cilindro()
 
 
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             print("error " + e.ToString());
         }
 
@@ -1214,8 +1143,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void associa_livello()
-    {
+    void associa_livello() {
 
 
         spostamento_z = c_save.crea_cilindro[0].spostamento_z;
@@ -1224,8 +1152,7 @@ void leggi_vertici_cilindro()
 
         visione_boss = c_save.crea_cilindro[0].visione_boss;
 
-        if (visione_boss == false)
-        {
+        if (visione_boss == false) {
             boss.SetActive(false);
         }
 
@@ -1238,37 +1165,32 @@ void leggi_vertici_cilindro()
 
         int num_blocchi = c_save.crea_blocco.Count;
 
-        for (int k = 0; k < num_blocchi; k++)
-        {
+        for (int k = 0; k < num_blocchi; k++) {
             crea_blocco(k);
         }
 
         int num_gemme = c_save.crea_gemma.Count;
 
-        for (int k = 0; k < num_gemme; k++)
-        {
+        for (int k = 0; k < num_gemme; k++) {
             crea_gemma(k);
         }
 
 
         int num_monete = c_save.crea_moneta.Count;
 
-        for (int k = 0; k < num_monete; k++)
-        {
+        for (int k = 0; k < num_monete; k++) {
             crea_moneta(k);
         }
 
         int num_malus = c_save.crea_malus.Count;
 
-        for (int k = 0; k < num_malus; k++)
-        {
+        for (int k = 0; k < num_malus; k++) {
             crea_malus(k);
         }
 
         int num_bonus = c_save.crea_bonus.Count;
 
-        for (int k = 0; k < num_bonus; k++)
-        {
+        for (int k = 0; k < num_bonus; k++) {
             crea_bonus(k);
         }
 
@@ -1279,15 +1201,12 @@ void leggi_vertici_cilindro()
 
 
 
-    void distruggi_oggetti()
-    {
+    void distruggi_oggetti() {
 
         int num_blocchi2 = c_save.crea_blocco.Count;
 
-        for (int k = 0; k < num_blocchi2; k++)
-        {
-            if (c_save.crea_blocco[k].mesh != null)
-            {
+        for (int k = 0; k < num_blocchi2; k++) {
+            if (c_save.crea_blocco[k].mesh != null) {
                 DestroyImmediate(c_save.crea_blocco[k].mesh);
 
             }
@@ -1296,10 +1215,8 @@ void leggi_vertici_cilindro()
 
         int num_gemma2 = c_save.crea_gemma.Count;
 
-        for (int k = 0; k < num_gemma2; k++)
-        {
-            if (c_save.crea_gemma[k].mesh != null)
-            {
+        for (int k = 0; k < num_gemma2; k++) {
+            if (c_save.crea_gemma[k].mesh != null) {
                 DestroyImmediate(c_save.crea_gemma[k].mesh);
 
             }
@@ -1308,10 +1225,8 @@ void leggi_vertici_cilindro()
 
         int num_moneta2 = c_save.crea_moneta.Count;
 
-        for (int k = 0; k < num_moneta2; k++)
-        {
-            if (c_save.crea_moneta[k].mesh != null)
-            {
+        for (int k = 0; k < num_moneta2; k++) {
+            if (c_save.crea_moneta[k].mesh != null) {
                 DestroyImmediate(c_save.crea_moneta[k].mesh);
 
             }
@@ -1321,10 +1236,8 @@ void leggi_vertici_cilindro()
 
         int num_bonus2 = c_save.crea_bonus.Count;
 
-        for (int k = 0; k < num_bonus2; k++)
-        {
-            if (c_save.crea_bonus[k].mesh != null)
-            {
+        for (int k = 0; k < num_bonus2; k++) {
+            if (c_save.crea_bonus[k].mesh != null) {
                 DestroyImmediate(c_save.crea_bonus[k].mesh);
 
             }
@@ -1333,10 +1246,8 @@ void leggi_vertici_cilindro()
 
         int num_malus2 = c_save.crea_malus.Count;
 
-        for (int k = 0; k < num_malus2; k++)
-        {
-            if (c_save.crea_malus[k].mesh != null)
-            {
+        for (int k = 0; k < num_malus2; k++) {
+            if (c_save.crea_malus[k].mesh != null) {
                 DestroyImmediate(c_save.crea_malus[k].mesh);
 
             }
@@ -1348,14 +1259,12 @@ void leggi_vertici_cilindro()
 
 
 
-    void delete_project()
-    {
+    void delete_project() {
 
 
 
 
-        if (c_save != null)
-        {
+        if (c_save != null) {
 
             distruggi_oggetti();
 
@@ -1375,18 +1284,14 @@ void leggi_vertici_cilindro()
     }
 
 
-    void calcolo_snap(int aggiorna = 0)
-    {
+    void calcolo_snap(int aggiorna = 0) {
 
         Debug.Log("aggiorna " + aggiorna);
 
-        if (aggiorna == 1)
-        {
-            for (int k = 0; k < snap_rif.Length; k++)
-            {
+        if (aggiorna == 1) {
+            for (int k = 0; k < snap_rif.Length; k++) {
 
-                if (snap_rif[k] != null)
-                {
+                if (snap_rif[k] != null) {
                     DestroyImmediate(snap_rif[k]);
 
                 }
@@ -1406,12 +1311,10 @@ void leggi_vertici_cilindro()
         Vector3[] pos_vn = new Vector3[3000];
 
 
-        for (int k = 0; k <= 9; k++)
-        {
+        for (int k = 0; k <= 9; k++) {
 
 
-            for (int n = 0; n < 39; n++)
-            {
+            for (int n = 0; n < 39; n++) {
 
                 float rad = rad2 * n - rad_cilindro;
 
@@ -1419,8 +1322,7 @@ void leggi_vertici_cilindro()
 
                 altezza = k * .25f + .75f;
 
-                if (k == 0)
-                {
+                if (k == 0) {
                     altezza = 0;
                 }
 
@@ -1434,8 +1336,7 @@ void leggi_vertici_cilindro()
 
                 pos_vn[n + k * 50] = pos;
 
-                if (aggiorna == 1)
-                {
+                if (aggiorna == 1) {
 
 
 
@@ -1457,8 +1358,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void crea_blocco(int num)
-    {
+    void crea_blocco(int num) {
 
 
         float rad = c_save.crea_blocco[num].rad;
@@ -1476,12 +1376,10 @@ void leggi_vertici_cilindro()
 
 
 
-        if (tipo_blocco <= 4)
-        {
+        if (tipo_blocco <= 4) {
             c_save.crea_blocco[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/blocco_" + tipo_blocco, typeof(GameObject))) as GameObject;
         }
-        else
-        {
+        else {
             crea_blocco_mesh2(num, tipo_blocco, c_save.crea_blocco[num].struttura_procedurale, c_save.crea_blocco[num].struttura_procedurale_dz);
         }
 
@@ -1496,22 +1394,19 @@ void leggi_vertici_cilindro()
 
 
 
-        if (tipo_blocco <= 8)
-        {
+        if (tipo_blocco <= 8) {
 
             c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
         }
 
-        if (tipo_blocco >= 9)
-        {
+        if (tipo_blocco >= 9) {
             c_save.crea_blocco[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
 
             c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(0, 0, zz);
         }
 
 
-        if (tipo_blocco <= 4)
-        {
+        if (tipo_blocco <= 4) {
             c_save.crea_blocco[num].mesh_dissolve = GameObject.Find("cilindro_esatto/blocco " + num + "/blocco_mesh");
 
             c_save.crea_blocco[num].mesh_dissolve.name = "blocco_mesh " + num;
@@ -1521,8 +1416,7 @@ void leggi_vertici_cilindro()
             c_save.crea_blocco[num].mesh_renderer.material.shader = Shader.Find("Custom/Dissolve");
         }
 
-        if (tipo_blocco >= 5)
-        {
+        if (tipo_blocco >= 5) {
             c_save.crea_blocco[num].mesh_dissolve = c_save.crea_blocco[num].mesh;
 
             c_save.crea_blocco[num].mesh_renderer = c_save.crea_blocco[num].mesh_dissolve.GetComponent<Renderer>();
@@ -1540,8 +1434,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void crea_gemma(int num)
-    {
+    void crea_gemma(int num) {
 
 
         float rad = c_save.crea_gemma[num].rad;
@@ -1568,8 +1461,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void crea_moneta(int num)
-    {
+    void crea_moneta(int num) {
 
 
         float rad = c_save.crea_moneta[num].rad;
@@ -1597,8 +1489,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void crea_malus(int num)
-    {
+    void crea_malus(int num) {
 
 
         float rad = c_save.crea_malus[num].rad;
@@ -1627,16 +1518,14 @@ void leggi_vertici_cilindro()
 
         c_save.crea_malus[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
 
-        if (tipo_malus == 0)
-        {
+        if (tipo_malus == 0) {
             modifica_base(c_save.crea_malus[num].mesh);
         }
 
     }
 
 
-    void crea_bonus(int num)
-    {
+    void crea_bonus(int num) {
 
 
         float rad = c_save.crea_bonus[num].rad;
@@ -1661,21 +1550,18 @@ void leggi_vertici_cilindro()
         c_save.crea_bonus[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
 
 
-        if (tipo_bonus == 0)
-        {
-            modifica_base(c_save.crea_bonus[num].mesh,1);
+        if (tipo_bonus == 0) {
+            modifica_base(c_save.crea_bonus[num].mesh, 1);
         }
 
     }
 
 
-    void aggiorna_oggetto_dissolto_singolo(int num, float dissolto)
-    {
+    void aggiorna_oggetto_dissolto_singolo(int num, float dissolto) {
 
         //  Debug.Log(num+" num "+ dissolto);
 
-        if (c_save.crea_blocco[num].mesh_renderer != null)
-        {
+        if (c_save.crea_blocco[num].mesh_renderer != null) {
             c_save.crea_blocco[num].mesh_renderer.material.SetFloat("_Amount", dissolto);
 
 
@@ -1685,12 +1571,10 @@ void leggi_vertici_cilindro()
 
 
 
-    void crea_blocco_mesh2(int num, int tipo, string struttura, string struttura_dz)
-    {
+    void crea_blocco_mesh2(int num, int tipo, string struttura, string struttura_dz) {
 
 
-        if (c_save.crea_blocco[num].mesh != null)
-        {
+        if (c_save.crea_blocco[num].mesh != null) {
 
             DestroyImmediate(c_save.crea_blocco[num].mesh);
         }
@@ -1702,54 +1586,46 @@ void leggi_vertici_cilindro()
 
         Color colore_blocco = c_save_p.crea_parametri[0].colore_blocco_1;
 
-        if (scelta_colore == 1)
-        {
+        if (scelta_colore == 1) {
             colore_blocco = c_save_p.crea_parametri[0].colore_blocco_2;
         }
 
-        if (scelta_colore >= 2)
-        {
+        if (scelta_colore >= 2) {
             colore_blocco = c_save_p.crea_parametri[0].colore_blocco_3;
         }
 
 
         c_save.crea_blocco[num].mesh.GetComponent<Renderer>().material.SetColor("_Color", colore_blocco);
-    
 
-    scala_blocco(c_save.crea_blocco[num].mesh, tipo, struttura, struttura_dz);
+
+        scala_blocco(c_save.crea_blocco[num].mesh, tipo, struttura, struttura_dz);
 
         c_save.crea_blocco[num].mesh.transform.SetParent(cilindro.transform);
     }
 
 
-    void scala_blocco(GameObject ogg, int tipo, string struttura = "", string struttura_dz = "")
-    {
+    void scala_blocco(GameObject ogg, int tipo, string struttura = "", string struttura_dz = "") {
 
         Vector3 scale = new Vector3(distanza_corda * 2, 1.0f, 2);
 
-        if (tipo == 6)
-        {
+        if (tipo == 6) {
             scale = new Vector3(distanza_corda * 2, 2.0f, 2);
         }
 
-        if (tipo == 7)
-        {
+        if (tipo == 7) {
             scale = new Vector3(distanza_corda * 2, 4.0f, 1);
         }
 
-        if (tipo == 8)
-        {
+        if (tipo == 8) {
             scale = new Vector3(distanza_corda * 2, 4.0f, 4);
         }
 
-        if (tipo <= 8)
-        {
+        if (tipo <= 8) {
             ogg.transform.localScale = scale;
 
         }
 
-        if (tipo >= 9)
-        {
+        if (tipo >= 9) {
 
             ristruttura_blocco(ogg, tipo, struttura, struttura_dz);
 
@@ -1759,8 +1635,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void ristruttura_blocco(GameObject ogg, int tipo, string struttura, string struttura_dz)
-    {
+    void ristruttura_blocco(GameObject ogg, int tipo, string struttura, string struttura_dz) {
 
 
 
@@ -1770,8 +1645,7 @@ void leggi_vertici_cilindro()
 
         Vector3 dz = new Vector3(0, 0, 2);
 
-        if (tipo == 9)
-        {
+        if (tipo == 9) {
             //-----------0123456789012345678
             testo_ogg = "0770077004500320077";
 
@@ -1779,45 +1653,39 @@ void leggi_vertici_cilindro()
 
 
 
-        if (tipo == 10)
-        {
+        if (tipo == 10) {
             //-----------012345678901234567
             testo_ogg = "300500700300600888";
 
         }
 
-        if (tipo == 11)
-        {
+        if (tipo == 11) {
             //-----------012345678901234567
             testo_ogg = "6987996";
 
         }
 
 
-        if (tipo == 12)
-        {
+        if (tipo == 12) {
             //-----------012345678901234567
             testo_ogg = "8980096";
             dz = new Vector3(0, 0, 6);
         }
 
 
-        if (tipo == 13)
-        {
+        if (tipo == 13) {
             //-----------012345678901234567
             testo_ogg = "811845611898113456";
             dz = new Vector3(0, 0, 6);
         }
 
-        if (tipo == 14)
-        {
+        if (tipo == 14) {
             //-----------012345678901234567
             testo_ogg = "1234321";
             dz = new Vector3(0, 0, 6);
         }
 
-        if (tipo == 15)
-        {
+        if (tipo == 15) {
             //-----------012345678901234567
             testo_ogg = "23956236847532532354235";
             dz = new Vector3(0, 0, 22);
@@ -1826,8 +1694,7 @@ void leggi_vertici_cilindro()
 
 
 
-        if (tipo == 100)
-        {
+        if (tipo == 100) {
             testo_ogg = "" + struttura;
             testo_ogg_dz = "" + struttura_dz;
 
@@ -1841,15 +1708,13 @@ void leggi_vertici_cilindro()
         mesh.Clear();
 
         int lung_dz = testo_ogg_dz.Length;
-        if (lung_dz > 18)
-        {
+        if (lung_dz > 18) {
             lung_dz = 18;
         }
 
 
         int lung = testo_ogg.Length;
-        if (lung > 18)
-        {
+        if (lung > 18) {
             lung = 18;
         }
 
@@ -1857,14 +1722,12 @@ void leggi_vertici_cilindro()
 
         float[] mesh_v_dz = new float[37];
 
-        for (var n = 0; n < lung; n++)
-        {
+        for (var n = 0; n < lung; n++) {
             string str = testo_ogg.Substring(n, 1);
             mesh_v[n] = int.Parse(str);
         }
 
-        for (var n = 0; n < lung_dz; n++)
-        {
+        for (var n = 0; n < lung_dz; n++) {
             string str = testo_ogg_dz.Substring(n, 1);
             mesh_v_dz[n] = int.Parse(str);
 
@@ -1873,10 +1736,8 @@ void leggi_vertici_cilindro()
 
         int num_v = 0;
 
-        for (var n = 0; n < 19; n++)
-        {
-            if (mesh_v[n] > 0)
-            {
+        for (var n = 0; n < 19; n++) {
+            if (mesh_v[n] > 0) {
                 num_v = num_v + 1;
             }
 
@@ -1898,10 +1759,8 @@ void leggi_vertici_cilindro()
 
 
 
-        for (var n = 0; n < 19; n++)
-        {
-            if (mesh_v[n] > 0)
-            {
+        for (var n = 0; n < 19; n++) {
+            if (mesh_v[n] > 0) {
 
 
                 int codice = (int)(mesh_v[n]);
@@ -1918,8 +1777,7 @@ void leggi_vertici_cilindro()
                 Vector3 snap_up_n = snap_rif[mo + codice * 50].transform.position;
                 Vector3 snap_up_n1 = snap_rif[mo + 2 + codice * 50].transform.position;
 
-                if (mesh_v[n] >= 9)
-                {
+                if (mesh_v[n] >= 9) {
                     snap_n = snap_rif[mo + 4 * 50].transform.position;
                     snap_n1 = snap_rif[mo + 2 + 4 * 50].transform.position;
 
@@ -1931,8 +1789,7 @@ void leggi_vertici_cilindro()
 
                 dz = dz_base;
 
-                if (mesh_v_dz[n] > 0)
-                {
+                if (mesh_v_dz[n] > 0) {
                     dz = new Vector3(0, 0, mesh_v_dz[n]) * spostamento_z;
 
                 }
@@ -1974,8 +1831,7 @@ void leggi_vertici_cilindro()
 
 
 
-                for (int k = 0; k < 6; k++)
-                {
+                for (int k = 0; k < 6; k++) {
                     uvs[nv + k * 4 + 0] = new Vector2(0, 0);
                     uvs[nv + k * 4 + 1] = new Vector2(0, 1);
                     uvs[nv + k * 4 + 2] = new Vector2(1, 1);
@@ -2067,16 +1923,14 @@ void leggi_vertici_cilindro()
     }
 
 
-    void crea_sfera(Vector3 pos, string str = "")
-    {
+    void crea_sfera(Vector3 pos, string str = "") {
         GameObject sfera = Instantiate(Resources.Load("grafica_3d/Prefabs/Sphere", typeof(GameObject))) as GameObject;
         sfera.transform.position = pos;
 
         sfera.name = "" + str;
     }
 
-    void gestione_collisione()
-    {
+    void gestione_collisione() {
 
         RaycastHit hit_collider;
 
@@ -2097,7 +1951,7 @@ void leggi_vertici_cilindro()
         pos_direction[5] = new Vector3(0, 0, -.5f);
         pos_direction[6] = new Vector3(0, 0, -.5f);
 
-        pos_direction[7] = new Vector3(0,-.5f, 0);
+        pos_direction[7] = new Vector3(0, -.5f, 0);
 
 
         pos_ray_direction[0] = new Vector3(0, 0, 2.6f);
@@ -2125,8 +1979,7 @@ void leggi_vertici_cilindro()
 
         int num_block = -1;
 
-        for (int n = 0; n <= 7; n++)
-        {
+        for (int n = 0; n <= 7; n++) {
 
             pos = astronave.transform.position + pos_direction[n];
 
@@ -2134,26 +1987,23 @@ void leggi_vertici_cilindro()
             Debug.DrawRay(pos, pos_ray_direction[n], new Color(1, n * .2f, 0, 1));
 
 
-            if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, 15))
-            {
+            if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, 15)) {
 
                 float dis = hit_collider.distance;
 
 
-                
-
-                if (dis < distanza_direction[n])
-                {
 
 
-                    if (hit_collider.collider.name.IndexOf("blocco") > -1)
-                    {
+                if (dis < distanza_direction[n]) {
+
+
+                    if (hit_collider.collider.name.IndexOf("blocco") > -1) {
 
 
 
                         string str_block = "" + hit_collider.collider.name;
 
-                      
+
 
 
 
@@ -2161,8 +2011,7 @@ void leggi_vertici_cilindro()
                         int indice = str_block.IndexOf("blocco_mesh");
 
 
-                        if (indice == -1)
-                        {
+                        if (indice == -1) {
                             str_block = str_block.Replace("blocco ", "");
 
                             num_block = int.Parse(str_block);
@@ -2172,16 +2021,14 @@ void leggi_vertici_cilindro()
                             punto_coll = punto_coll + hit_collider.point;
                         }
 
-                        if (indice > -1)
-                        {
+                        if (indice > -1) {
 
                             str_block = str_block.Replace("blocco_mesh ", "");
 
                             num_block = int.Parse(str_block);
 
 
-                            if (c_save.crea_blocco[num_block].disattiva_coll == 0)
-                            {
+                            if (c_save.crea_blocco[num_block].disattiva_coll == 0) {
                                 c_save.crea_blocco[num_block].distruzione_oggetto = 10;
 
                                 carica_particles("particles/CFXR Explosion 2", c_save.crea_blocco[num_block].mesh_dissolve.transform.position);
@@ -2210,8 +2057,7 @@ void leggi_vertici_cilindro()
                     //----------
 
 
-                    if (hit_collider.collider.name.IndexOf("bonus1_") > -1)
-                    {
+                    if (hit_collider.collider.name.IndexOf("bonus1_") > -1) {
 
                         string str_bonus = "" + hit_collider.collider.name;
 
@@ -2219,11 +2065,10 @@ void leggi_vertici_cilindro()
 
                         str_bonus = str_bonus.Replace("bonus1_", "");
 
-                            int num_bonus = int.Parse(str_bonus);
+                        int num_bonus = int.Parse(str_bonus);
 
                         numero_spari = numero_spari + 1;
-                        if (c_save.crea_bonus[num_bonus].attivo == 0)
-                        {
+                        if (c_save.crea_bonus[num_bonus].attivo == 0) {
                             c_save.crea_bonus[num_bonus].attivo = 1;
                             Destroy(c_save.crea_bonus[num_bonus].mesh);
 
@@ -2231,19 +2076,17 @@ void leggi_vertici_cilindro()
                     }
 
 
-                    if (hit_collider.collider.name.IndexOf("bonus2_") > -1)
-                    {
+                    if (hit_collider.collider.name.IndexOf("bonus2_") > -1) {
 
                         string str_bonus = "" + hit_collider.collider.name;
 
-                     //     Debug.Log("" + str_bonus);
+                        //     Debug.Log("" + str_bonus);
 
                         str_bonus = str_bonus.Replace("bonus2_", "");
 
                         int num_bonus = int.Parse(str_bonus);
 
-                        if (c_save.crea_bonus[num_bonus].attivo == 0)
-                        {
+                        if (c_save.crea_bonus[num_bonus].attivo == 0) {
                             c_save.crea_bonus[num_bonus].attivo = 1;
 
                             attiva_barriera = tempo_barriera;
@@ -2261,8 +2104,7 @@ void leggi_vertici_cilindro()
             }
 
 
-            if (num_block > -1 && numero_coll > 0)
-            {
+            if (num_block > -1 && numero_coll > 0) {
 
 
                 Vector3 punto_coll_uso = punto_coll / numero_coll;
@@ -2277,8 +2119,7 @@ void leggi_vertici_cilindro()
 
                 //   Debug.Break();
 
-                if (c_save.crea_blocco[num_block].disattiva_coll == 0)
-                {
+                if (c_save.crea_blocco[num_block].disattiva_coll == 0) {
                     c_save.crea_blocco[num_block].disattiva_coll = 1;
                     analisi_energia(15);
 
@@ -2303,8 +2144,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void gestione_coll_special_bonus_malus()
-    {
+    void gestione_coll_special_bonus_malus() {
         RaycastHit hit_collider;
 
 
@@ -2313,11 +2153,9 @@ void leggi_vertici_cilindro()
 
         Vector3 pos_astronave = new Vector3(pos.x, pos.y, pos.z + 1.2f);
 
-        if (Physics.Raycast(pos_astronave, new Vector3(0, -1, 0), out hit_collider, 15))
-        {
+        if (Physics.Raycast(pos_astronave, new Vector3(0, -1, 0), out hit_collider, 15)) {
 
-            if (hit_collider.collider.name.IndexOf("bonus0_") > -1)
-            {
+            if (hit_collider.collider.name.IndexOf("bonus0_") > -1) {
                 string str_bonus = hit_collider.collider.name;
 
 
@@ -2325,8 +2163,7 @@ void leggi_vertici_cilindro()
 
                 int num_bonus = int.Parse(str_bonus);
 
-                if (c_save.crea_bonus[num_bonus].attivo == 0)
-                {
+                if (c_save.crea_bonus[num_bonus].attivo == 0) {
 
                     c_save.crea_bonus[num_bonus].attivo = 1;
 
@@ -2337,8 +2174,7 @@ void leggi_vertici_cilindro()
 
             }
 
-            if (hit_collider.collider.name.IndexOf("malus0_") > -1)
-            {
+            if (hit_collider.collider.name.IndexOf("malus0_") > -1) {
                 string str_malus = hit_collider.collider.name;
 
 
@@ -2346,8 +2182,7 @@ void leggi_vertici_cilindro()
 
                 int num_malus = int.Parse(str_malus);
 
-                if (c_save.crea_malus[num_malus].attivo == 0)
-                {
+                if (c_save.crea_malus[num_malus].attivo == 0) {
 
                     c_save.crea_malus[num_malus].attivo = 1;
 
@@ -2376,8 +2211,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void carica_particles(string path, Vector3 pos)
-    {
+    void carica_particles(string path, Vector3 pos) {
 
         GameObject particles = Instantiate(Resources.Load(path, typeof(GameObject))) as GameObject;
 
@@ -2390,8 +2224,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void gestione_collisione_sparo(int num, GameObject ogg, int tipo = 0)
-    {
+    void gestione_collisione_sparo(int num, GameObject ogg, int tipo = 0) {
 
         RaycastHit hit_collider;
 
@@ -2410,20 +2243,17 @@ void leggi_vertici_cilindro()
         float distanza_coll = 0;
 
 
-        if (tipo == 0)
-        {
+        if (tipo == 0) {
             distanza_coll = Vector3.Distance(sparo[num].transform.position, astronave.transform.position);
         }
-        if (tipo == 1)
-        {
+        if (tipo == 1) {
             distanza_coll = Vector3.Distance(sparo_boss[num].transform.position, astronave.transform.position);
         }
 
 
         int toccato_astronave = 0;
 
-        if (distanza_coll < 2 && tipo == 1)
-        {
+        if (distanza_coll < 2 && tipo == 1) {
             DestroyImmediate(ogg);
 
             analisi_energia(30);
@@ -2432,21 +2262,17 @@ void leggi_vertici_cilindro()
         }
 
 
-        if (toccato_astronave == 0)
-        {
+        if (toccato_astronave == 0) {
 
-            if (Physics.Raycast(pos, pos_ray_direction, out hit_collider, 15))
-            {
+            if (Physics.Raycast(pos, pos_ray_direction, out hit_collider, 15)) {
 
                 float dis = hit_collider.distance;
 
 
-                if (dis < 3.6f)
-                {
+                if (dis < 3.6f) {
 
 
-                    if (hit_collider.collider.name.IndexOf("blocco") > -1)
-                    {
+                    if (hit_collider.collider.name.IndexOf("blocco") > -1) {
 
 
 
@@ -2461,8 +2287,7 @@ void leggi_vertici_cilindro()
                         int indice = str_block.IndexOf("blocco_mesh");
 
 
-                        if (indice == -1)
-                        {
+                        if (indice == -1) {
                             str_block = str_block.Replace("blocco ", "");
 
                             num_block = int.Parse(str_block);
@@ -2474,20 +2299,17 @@ void leggi_vertici_cilindro()
 
                             carica_particles("particles/CFXR Hit A", hit_collider.point);
 
-                            if (tipo == 0)
-                            {
+                            if (tipo == 0) {
                                 attivo_tempo_sparo[num] = 0;
                             }
-                            else
-                            {
+                            else {
                                 attivo_tempo_sparo_boss[num] = 0;
                             }
                             DestroyImmediate(ogg);
 
                         }
 
-                        if (indice > -1)
-                        {
+                        if (indice > -1) {
 
                             str_block = str_block.Replace("blocco_mesh ", "");
 
@@ -2496,12 +2318,10 @@ void leggi_vertici_cilindro()
                             carica_particles("particles/CFXR Hit A", hit_collider.point);
 
 
-                            if (tipo == 0)
-                            {
+                            if (tipo == 0) {
                                 attivo_tempo_sparo[num] = 0;
                             }
-                            else
-                            {
+                            else {
                                 attivo_tempo_sparo_boss[num] = 0;
                             }
 
@@ -2532,14 +2352,11 @@ void leggi_vertici_cilindro()
 
 
 
-    void gestione_boss()
-    {
+    void gestione_boss() {
 
-        if (visione_boss == true)
-        {
+        if (visione_boss == true) {
 
-            if (blocco_velocita > .99f)
-            {
+            if (blocco_velocita > .99f) {
 
                 float raggio = c_save.crea_cilindro[0].raggio;
 
@@ -2564,18 +2381,14 @@ void leggi_vertici_cilindro()
 
                 attivo_tempo_sparo_boss2 = attivo_tempo_sparo_boss2 - Time.deltaTime;
 
-                if (attivo_tempo_sparo_boss2 < 0)
-                {
+                if (attivo_tempo_sparo_boss2 < 0) {
 
-                    if (Mathf.Abs(diff) < .1f)
-                    {
+                    if (Mathf.Abs(diff) < .1f) {
                         int num_sparo_boss = -1;
 
-                        for (int n = 0; n < 5; n++)
-                        {
+                        for (int n = 0; n < 5; n++) {
 
-                            if (attivo_tempo_sparo_boss[n] < -1)
-                            {
+                            if (attivo_tempo_sparo_boss[n] < -1) {
                                 num_sparo_boss = n;
 
                                 attivo_tempo_sparo_boss[n] = 6;
@@ -2617,8 +2430,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void rigenera_blocco(GameObject ogg)
-    {
+    void rigenera_blocco(GameObject ogg) {
 
 
         Mesh mesh = ogg.GetComponent<MeshFilter>().mesh;
@@ -2628,8 +2440,7 @@ void leggi_vertici_cilindro()
         Vector3[] vertices_studio = mesh.vertices;
         Vector3[] vertices = mesh.vertices;
 
-        for (int n = 0; n < vertices.Length; n++)
-        {
+        for (int n = 0; n < vertices.Length; n++) {
             Vector3 pv = ogg.transform.TransformPoint(vertices[n]);
 
 
@@ -2661,8 +2472,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void spostamento_blocco(GameObject ogg, Vector3 pi, float forza, float ogg_rad)
-    {
+    void spostamento_blocco(GameObject ogg, Vector3 pi, float forza, float ogg_rad) {
 
         //    Debug.Log("blocco impatto ");
 
@@ -2677,8 +2487,7 @@ void leggi_vertici_cilindro()
 
         float rad = -ogg.transform.localEulerAngles.z * Mathf.Deg2Rad;
 
-        for (int n = 0; n < vertices.Length; n++)
-        {
+        for (int n = 0; n < vertices.Length; n++) {
 
             Vector3 pv = ogg.transform.TransformPoint(vertices[n]);
 
@@ -2695,8 +2504,7 @@ void leggi_vertici_cilindro()
 
             float molt = (6 - dis) / 6.0f;
 
-            if (molt < 0)
-            {
+            if (molt < 0) {
                 molt = 0;
             }
 
@@ -2724,8 +2532,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void crea_button_input_text(int num, string str = "")
-    {
+    void crea_button_input_text(int num, string str = "") {
 
         pulsante_field[num] = Instantiate(Resources.Load("UI/InputField_txt", typeof(GameObject))) as GameObject;
 
@@ -2745,8 +2552,7 @@ void leggi_vertici_cilindro()
 
         InputField m_Toggle2 = pulsante_field[num].GetComponent<InputField>();
 
-        m_Toggle2.onEndEdit.AddListener(delegate
-        {
+        m_Toggle2.onEndEdit.AddListener(delegate {
             pressione_input_text(num, m_Toggle2);
         });
 
@@ -2756,8 +2562,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void crea_button_text(int num, string txt, Color colore_testo, GameObject parent, string path = "Canvas", string path_sprite = "")
-    {
+    void crea_button_text(int num, string txt, Color colore_testo, GameObject parent, string path = "Canvas", string path_sprite = "") {
 
         pulsante[num] = Instantiate(Resources.Load("UI/Button_text", typeof(GameObject))) as GameObject;
 
@@ -2772,8 +2577,7 @@ void leggi_vertici_cilindro()
         pulsante[num].GetComponent<Button>().colors = cb;
 
 
-        if (path_sprite != "")
-        {
+        if (path_sprite != "") {
             pulsante[num].GetComponent<Image>().sprite = Resources.Load<Sprite>(path_sprite);
         }
 
@@ -2793,8 +2597,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void crea_grafica_text(int num, Color colore, string txt, GameObject parent, string path = "Canvas", string path_sprite = "")
-    {
+    void crea_grafica_text(int num, Color colore, string txt, GameObject parent, string path = "Canvas", string path_sprite = "") {
 
         //    Debug.Log("entratooo");
 
@@ -2809,8 +2612,7 @@ void leggi_vertici_cilindro()
 
         grafica[num].GetComponent<Image>().color = colore;
 
-        if (path_sprite != "")
-        {
+        if (path_sprite != "") {
             grafica[num].GetComponent<Image>().sprite = Resources.Load<Sprite>(path_sprite);
         }
 
@@ -2832,8 +2634,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void pressione_pulsante(int num)
-    {
+    void pressione_pulsante(int num) {
 
 #if UNITY_EDITOR
 
@@ -2845,12 +2646,10 @@ void leggi_vertici_cilindro()
 
 
 
-    void pressione_input_text(int num, InputField tog)
-    {
+    void pressione_input_text(int num, InputField tog) {
 
 
-        if (tog.text != null || tog.text != "" && tog.text != "-" && tog.text != ".")
-        {
+        if (tog.text != null || tog.text != "" && tog.text != "-" && tog.text != ".") {
 
             Debug.Log("pressione!" + tog.text + "!!");
 
@@ -2860,8 +2659,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void crea_menu()
-    {
+    void crea_menu() {
 
         distruggi_menu();
 
@@ -2871,11 +2669,11 @@ void leggi_vertici_cilindro()
 
         crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/menu");
 
-     //   crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme");
-     //   crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+        //   crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme");
+        //   crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-     //   crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete");
-    //    crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+        //   crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete");
+        //    crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
         crea_grafica_text(5, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
@@ -2891,10 +2689,9 @@ void leggi_vertici_cilindro()
     }
 
 
-    void aggiorna_menu()
-    {
+    void aggiorna_menu() {
         font_size = (int)(risoluzione_x / 25);
-      
+
 
         float dy = risoluzione_y * .125f;
         float dx = risoluzione_x * .7f;
@@ -3078,19 +2875,18 @@ void leggi_vertici_cilindro()
             pos_x = 0;
             pos_y = 0;
 
-            grafica[10].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy2);
+            grafica[10].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[10].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             grafica_testo[10].GetComponent<TextMeshProUGUI>().fontSize = font_size_level;
-            grafica_testo[10].GetComponent<TextMeshProUGUI>().text = "LEVEL " +che_livello;
-            
+            grafica_testo[10].GetComponent<TextMeshProUGUI>().text = "LEVEL " + che_livello;
+
 
             tempo_inizio_livello = tempo_inizio_livello - Time.deltaTime;
 
             float alpha = tempo_inizio_livello;
 
-            if (alpha < 0)
-            {
+            if (alpha < 0) {
                 alpha = 0;
 
                 inizio_game = 1;
@@ -3100,14 +2896,13 @@ void leggi_vertici_cilindro()
             grafica_testo[10].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, alpha);
         }
 
-        
+
 
     }
 
 
 
-    public void controllo_risoluzione()
-    {
+    public void controllo_risoluzione() {
 
         controllo_mobile = 0;
 
@@ -3130,8 +2925,7 @@ void leggi_vertici_cilindro()
         spostamento_sx2 = (rapporto_risoluzione - 1.333333f);
 
 
-        if (rapporto_risoluzione < 1)
-        {
+        if (rapporto_risoluzione < 1) {
 
             spostamento_sx = (rapporto_risoluzione / .75f);
             spostamento_sx2 = (rapporto_risoluzione - .75f);
@@ -3151,22 +2945,19 @@ void leggi_vertici_cilindro()
 
 
 
-        for (int n = 0; n <= 3; n++)
-        {
+        for (int n = 0; n <= 3; n++) {
             touch_xo[n] = touch_x[n];
             touch_yo[n] = touch_y[n];
         }
 
-        for (int n = 0; n <= 3; n++)
-        {
+        for (int n = 0; n <= 3; n++) {
             touch_x[n] = -1000;
             touch_y[n] = -1000;
         }
 
 #if ((UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR))
 
-        for (int i = 0; i < Input.touchCount; i++)
-        {
+        for (int i = 0; i < Input.touchCount; i++) {
 
             Touch touch = Input.GetTouch(i);
 
@@ -3180,10 +2971,8 @@ void leggi_vertici_cilindro()
 
 
 
-        if (controllo_mobile == 0 && Input.GetMouseButton(0))
-        {
-            for (int n = 0; n <= 0; n++)
-            {
+        if (controllo_mobile == 0 && Input.GetMouseButton(0)) {
+            for (int n = 0; n <= 0; n++) {
                 touch_x[n] = xm;
                 touch_y[n] = ym;
                 touch_rx[n] = touch_x[n];
@@ -3199,22 +2988,19 @@ void leggi_vertici_cilindro()
 
 
 
-        if (controllo_mobile == 1)
-        {
+        if (controllo_mobile == 1) {
             diff_xm = 0;
             diff_ym = 0;
 
 
-            if (touch_x[0] > 0 && touch_xo[0] > 0 && touch_xo[1] < 0)
-            {
+            if (touch_x[0] > 0 && touch_xo[0] > 0 && touch_xo[1] < 0) {
 
                 diff_xm = (touch_x[0] - touch_xo[0]);
 
             }
 
 
-            if (touch_y[0] > 0 && touch_yo[0] > 0 && touch_xo[1] < 0)
-            {
+            if (touch_y[0] > 0 && touch_yo[0] > 0 && touch_xo[1] < 0) {
                 diff_ym = (touch_y[0] - touch_yo[0]);
 
             }
@@ -3229,11 +3015,10 @@ void leggi_vertici_cilindro()
 
 
 
-    void modifica_base(GameObject ogg, int t_bonus=0)
-    {
+    void modifica_base(GameObject ogg, int t_bonus = 0) {
 
 
-    //    Debug.Log("" + ogg.name);
+        //    Debug.Log("" + ogg.name);
 
 
 
@@ -3244,8 +3029,7 @@ void leggi_vertici_cilindro()
 
         float altezza = .05f;
 
-        for (int n = 0; n < 49; n++)
-        {
+        for (int n = 0; n < 49; n++) {
 
             float rad = rad2 * n;
 
@@ -3276,10 +3060,9 @@ void leggi_vertici_cilindro()
 
         float u = 1.0f / (num_v - 1);
 
-       
 
-        for (int n = 0; n < num_v; n++)
-        {
+
+        for (int n = 0; n < num_v; n++) {
             vertices[n] = pos_v[34 + n];
 
             vertices[n + num_v] = vertices[n];
@@ -3290,8 +3073,7 @@ void leggi_vertici_cilindro()
         }
 
 
-        for (int n = 0; n < num_v - 1; n++)
-        {
+        for (int n = 0; n < num_v - 1; n++) {
             int num_t = n * 6;
 
             tria[num_t + 0] = 0 + n;
@@ -3329,9 +3111,7 @@ void leggi_vertici_cilindro()
     }
 
 
-
-    void crea_popup(int num = 1)
-    {
+    void crea_popup(int num = 1) {
 
 
         attivo_popup = num;
@@ -3341,29 +3121,27 @@ void leggi_vertici_cilindro()
         canvas_popup.SetActive(true);
 
 
-        if (num == 1)
-        {
+        if (num == 1) {
 
             crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
             string num_livello = "1";
 
-            crea_grafica_text(201, new Color(1, 1, 1, 0), "LEVEL "+ num_livello, canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
-
-
-           
+            crea_grafica_text(201, new Color(1, 1, 1, 0), "LEVEL " + num_livello, canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
 
 
-            crea_grafica_text(202, new Color(1, 1, 1, 0), "" , canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
+
+            crea_grafica_text(202, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
             crea_grafica_text(203, new Color(1, 1, 1, 0), "COMPLETED", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
             grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
 
             grafica[203].transform.localEulerAngles = new Vector3(0, 0, 10);
 
-            for (int n = 0; n <= 2; n++)
-            {
+            for (int n = 0; n <= 2; n++) {
                 crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
                 crea_grafica_text(207 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1"); // stelle
 
@@ -3400,16 +3178,15 @@ void leggi_vertici_cilindro()
 
         }
 
-        if (num == 2)
-        {
+        if (num == 2) {
 
             crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
             crea_grafica_text(201, new Color(1, 1, 1, 0), "TRY", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
-            
 
-            crea_grafica_text(202, new Color(1, 1, 1, 0), "AGAIN" , canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+            crea_grafica_text(202, new Color(1, 1, 1, 0), "AGAIN", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
 
             crea_grafica_text(203, new Color(1, 1, 1, 0), "CLICK\nTO CONTINUE", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
@@ -3418,8 +3195,7 @@ void leggi_vertici_cilindro()
 
 
 
-            for (int n = 0; n <= 2; n++)
-            {
+            for (int n = 0; n <= 2; n++) {
                 crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
                 crea_grafica_text(207 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1"); // stelle
 
@@ -3459,8 +3235,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    void crea_popup_raddoppio_monete(int num = 2)
-    {
+    void crea_popup_raddoppio_monete(int num = 2) {
 
 
         attivo_popup = num;
@@ -3475,10 +3250,45 @@ void leggi_vertici_cilindro()
 
     }
 
+    public void crea_tutorial_primo() {
 
 
-    void aggiorna_menu_popup()
-    {
+        canvas_tutorial.SetActive(true);
+
+        crea_grafica_text(100, new Color(1, 1, 1, 1), "", canvas_tutorial, "Canvas_tutorial", ""); //overlay scuro
+
+        float dy = risoluzione_y;
+        float dx = risoluzione_x;
+
+        float pos_x = 0;
+        float pos_y = 0;
+    }
+
+
+    void aggiorna_menu_tutorial() {
+
+
+        float dy = risoluzione_y;
+        float dx = risoluzione_x;
+
+        float pos_x = 0;
+        float pos_y = 0;
+
+            if (grafica[100] != null)  //pannello
+            {
+
+    
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
+                grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+        }
+    }
+
+
+    
+    void aggiorna_menu_popup() {
 
 
         float dy = risoluzione_y;
@@ -3494,21 +3304,17 @@ void leggi_vertici_cilindro()
         int font_size2 = (int)(risoluzione_x / 5);
         int font_size3 = (int)(risoluzione_x / 7.5f);
 
-        if (attivo_popup == 2)
-        {
+        if (attivo_popup == 2) {
             font_size3 = (int)(risoluzione_x / 11);
 
         }
 
-            for (int n = 0; n <= 20; n++)
-        {
-            if (grafica[200 + n] != null)
-            {
+        for (int n = 0; n <= 20; n++) {
+            if (grafica[200 + n] != null) {
                 grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
 
-            if (pulsante[200 + n] != null)
-            {
+            if (pulsante[200 + n] != null) {
                 pulsante[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
         }
@@ -3516,8 +3322,7 @@ void leggi_vertici_cilindro()
 
 
 
-        if (attivo_popup >= 1)
-        {
+        if (attivo_popup >= 1) {
             if (grafica[200] != null)  //pannello
             {
 
@@ -3525,7 +3330,7 @@ void leggi_vertici_cilindro()
                 float dy2 = dy * .8f;
 
                 float dx_stelle = dx2 * .275f;
-               
+
 
 
                 float dy_t = dy * .2f;
@@ -3547,30 +3352,25 @@ void leggi_vertici_cilindro()
 
 
 
-                for (int n = 4; n <= 9; n++)
-                {
+                for (int n = 4; n <= 9; n++) {
                     grafica_pos[n] = .35f;
 
                 }
 
-                for (int n = 10; n <= 12; n++)
-                {
+                for (int n = 10; n <= 12; n++) {
                     grafica_pos[n] = .15f;
 
                 }
 
 
-                if (crea_popup_finale >= 1)
-                {
-                    if (energia <= 0)
-                    {
+                if (crea_popup_finale >= 1) {
+                    if (energia <= 0) {
                         grafica_pos[1] = .25f;
                         grafica_pos[2] = .1f;
                         grafica_pos[3] = -.2f;
 
 
-                        for (int n = 4; n <= 12; n++)
-                        {
+                        for (int n = 4; n <= 12; n++) {
                             grafica_pos[n] = 5.35f;
 
                         }
@@ -3581,16 +3381,14 @@ void leggi_vertici_cilindro()
                 }
 
 
-                if (energia != energia_base)
-                {
+                if (energia != energia_base) {
                     grafica_pos[8] = 5.35f;
                     grafica_pos[11] = 5.35f;
 
                 }
 
 
-                if (numero_spari != numero_spari_base)
-                {
+                if (numero_spari != numero_spari_base) {
                     grafica_pos[9] = 5.35f;
                     grafica_pos[12] = 5.35f;
 
@@ -3600,16 +3398,13 @@ void leggi_vertici_cilindro()
 
 
 
-                for (int n = 1; n <= 12; n++)
-                {
-                    if (grafica[200 + n] != null)
-                    {
+                for (int n = 1; n <= 12; n++) {
+                    if (grafica[200 + n] != null) {
 
                         grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
 
 
-                        if (grafica_tempo[n] < 0)
-                        {
+                        if (grafica_tempo[n] < 0) {
 
                             //  grafica_pos[n] = Mathf.MoveTowards(grafica_pos[n], 1, Time.deltaTime);
 
@@ -3619,28 +3414,23 @@ void leggi_vertici_cilindro()
                             pos_y = dime_panel_y * grafica_pos[n];
 
 
-                            if (n <= 3)
-                            {
+                            if (n <= 3) {
 
                                 grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy_t);
                                 grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                             }
-                            else
-                            {
+                            else {
 
-                                if (n == 4 || n == 7 || n == 10)
-                                {
+                                if (n == 4 || n == 7 || n == 10) {
                                     pos_x = dx2 * -.3f;
                                 }
 
-                                if (n == 5 || n == 8 || n == 11)
-                                {
+                                if (n == 5 || n == 8 || n == 11) {
                                     pos_x = 0;
                                 }
 
-                                if (n == 6 || n == 9 || n == 12)
-                                {
+                                if (n == 6 || n == 9 || n == 12) {
                                     pos_x = dx2 * .3f;
                                 }
 
@@ -3657,16 +3447,13 @@ void leggi_vertici_cilindro()
 
 
 
-                            if (n == 1)
-                            {
+                            if (n == 1) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size;
                             }
-                            if (n == 2)
-                            {
+                            if (n == 2) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size2;
                             }
-                            if (n == 3)
-                            {
+                            if (n == 3) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
                             }
 
@@ -3678,25 +3465,21 @@ void leggi_vertici_cilindro()
 
             }
 
-            if (grafica_tempo[12] < -1)
-            {
+            if (grafica_tempo[12] < -1) {
                 uscita_popup(dime_panel_x, dime_panel_y);
 
             }
         }
 
-  
+
 
     }
 
-    void uscita_popup(float dime_panel_x, float dime_panel_y)
-    {
+    void uscita_popup(float dime_panel_x, float dime_panel_y) {
         resetTimerPopup += Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f && energia <= 0)
-        {
-            if (crea_popup_finale == 10)
-            {
+        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f && energia <= 0) {
+            if (crea_popup_finale == 10) {
 
                 SceneManager.LoadScene("gioco");
             }
@@ -3704,21 +3487,18 @@ void leggi_vertici_cilindro()
         }
 
 
-        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f && energia>0)
-        {
+        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f && energia > 0) {
             resetTimerPopup = 0;
             float dx = (risoluzione_x - dime_panel_x) * .5f;
             float dy = (risoluzione_y - dime_panel_y) * .5f;
 
 
-            if (xm < dx || xm > risoluzione_x - dx)
-            {
+            if (xm < dx || xm > risoluzione_x - dx) {
                 distruggi_menu_popup();
             }
 
 
-            if (ym < dy || ym > risoluzione_y - dy)
-            {
+            if (ym < dy || ym > risoluzione_y - dy) {
                 distruggi_menu_popup();
             }
 
@@ -3728,30 +3508,25 @@ void leggi_vertici_cilindro()
         }
 
 
-      
+
 
 
     }
 
 
-    void distruggi_menu()
-    {
+    void distruggi_menu() {
 
-      
 
-        for (int n = 0; n < 200; n++)
-        {
-            if (pulsante[n] != null)
-            {
+
+        for (int n = 0; n < 200; n++) {
+            if (pulsante[n] != null) {
                 DestroyImmediate(pulsante[n]);
             }
 
         }
 
-        for (int n = 0; n < 200; n++)
-        {
-            if (grafica[n] != null)
-            {
+        for (int n = 0; n < 200; n++) {
+            if (grafica[n] != null) {
                 DestroyImmediate(grafica[n]);
             }
 
@@ -3761,24 +3536,19 @@ void leggi_vertici_cilindro()
     }
 
 
-    void distruggi_menu_popup()
-    {
+    void distruggi_menu_popup() {
 
         canvas_popup.SetActive(false);
 
-        for (int n = 200; n < pulsante.Length; n++)
-        {
-            if (pulsante[n] != null)
-            {
+        for (int n = 200; n < pulsante.Length; n++) {
+            if (pulsante[n] != null) {
                 DestroyImmediate(pulsante[n]);
             }
 
         }
 
-        for (int n = 200; n < grafica.Length; n++)
-        {
-            if (grafica[n] != null)
-            {
+        for (int n = 200; n < grafica.Length; n++) {
+            if (grafica[n] != null) {
                 DestroyImmediate(grafica[n]);
             }
 
@@ -3788,11 +3558,9 @@ void leggi_vertici_cilindro()
     }
 
 
-    void gestione_fine_gioco()
-    {
+    void gestione_fine_gioco() {
 
-        if (crea_popup_finale == 0)
-        {
+        if (crea_popup_finale == 0) {
 
             Vector3 pos_finale = c_save.crea_cilindro[0].pos_finale;
 
@@ -3800,8 +3568,7 @@ void leggi_vertici_cilindro()
 
 
 
-            if (cilindro.transform.position.z < -pos_finale.z)
-            {
+            if (cilindro.transform.position.z < -pos_finale.z) {
 
 
                 crea_popup_finale = 1;
@@ -3813,15 +3580,13 @@ void leggi_vertici_cilindro()
 
 
 
-        if (crea_popup_finale == 1)
-        {
+        if (crea_popup_finale == 1) {
             crea_popup_finale_tempo = crea_popup_finale_tempo - Time.deltaTime;
 
 
             tempo_fire_work = tempo_fire_work - Time.deltaTime;
 
-            if (tempo_fire_work < 0)
-            {
+            if (tempo_fire_work < 0) {
                 tempo_fire_work = UnityEngine.Random.Range(.1f, .3f);
 
 
@@ -3841,8 +3606,7 @@ void leggi_vertici_cilindro()
 
 
 
-            if (crea_popup_finale_tempo < 0)
-            {
+            if (crea_popup_finale_tempo < 0) {
                 crea_popup_finale = 2;
                 crea_popup(1);
             }
@@ -3851,8 +3615,7 @@ void leggi_vertici_cilindro()
     }
 
 
-    public IEnumerator leggi_dati_online(string nome_pagina)
-    {
+    public IEnumerator leggi_dati_online(string nome_pagina) {
 
 
         string path2 = path_server + nome_pagina + ".json";
@@ -3860,21 +3623,17 @@ void leggi_vertici_cilindro()
         Debug.Log("" + path2);
 
 
-        using (UnityWebRequest www = UnityWebRequest.Get(path2))
-        {
+        using (UnityWebRequest www = UnityWebRequest.Get(path2)) {
             yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
+            if (www.isNetworkError || www.isHttpError) {
                 Debug.Log(www.error);
             }
-            else
-            {
+            else {
 
 
 
-                try
-                {
+                try {
 
 
                     string testo_json = www.downloadHandler.text;
@@ -3892,16 +3651,14 @@ void leggi_vertici_cilindro()
                     sfondo.GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_sfondo);
 
 
-                  
 
-                    if (online_dati == true)
-                    {
+
+                    if (online_dati == true) {
                         StartCoroutine(load_project_online());
                     }
-                    else
-                    {
-                      
-                            load_project();
+                    else {
+
+                        load_project();
 
 
                     }
@@ -3912,8 +3669,7 @@ void leggi_vertici_cilindro()
 
 
                 }
-                catch (Exception e)
-                {
+                catch (Exception e) {
 
                     Debug.Log("errore_oggetto_codice " + e.ToString());
 
@@ -3931,8 +3687,7 @@ void leggi_vertici_cilindro()
 
 
 
-    void save_parameter()
-    {
+    void save_parameter() {
 
 
 
@@ -3947,11 +3702,7 @@ void leggi_vertici_cilindro()
         c_save_p.crea_parametri[0].posizione_touch = .2f;
 
         c_save_p.crea_parametri[0].colore_sfondo = new Color(.4218f, .6914f, .9257f, 1);
-        c_save_p.crea_parametri[0].colore_cilindro = new Color(0.6835f,0.9335f, 0.4531f, 1);
-
-    
-
-
+        c_save_p.crea_parametri[0].colore_cilindro = new Color(0.6835f, 0.9335f, 0.4531f, 1);
 
         string jsonData = JsonUtility.ToJson(c_save_p, true);
 
