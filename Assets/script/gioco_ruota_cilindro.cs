@@ -551,6 +551,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         float parametro_touch = c_save_p.crea_parametri[0].posizione_touch;
 
+        if(livello_corrente==1 || livello_corrente == 2) { //TODO da sostituire con script_struttura_dati
+           potenza_tasto = 200;
+        }
+        else
         potenza_tasto = c_save_p.crea_parametri[0].potenza_tasto;
 
 
@@ -921,8 +925,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void gestione_cilindro() {
 
         if (inizio_game == 1) {
-
-            velocita_personaggio = c_save_p.crea_parametri[0].velocita_personaggio;
+            if (livello_corrente == 1 || livello_corrente == 2) { //TODO da sostituire con script_struttura_dati
+                velocita_personaggio = 20;
+            }
+            else
+                velocita_personaggio = c_save_p.crea_parametri[0].velocita_personaggio;
 
 
 
