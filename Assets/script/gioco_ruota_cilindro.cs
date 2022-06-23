@@ -101,7 +101,6 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     public struttura_dati script_struttura_dati;
-    public int livello_corrente;
 
     GameObject canvas;
     GameObject canvas_popup;
@@ -550,8 +549,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void controllo() {
 
         float parametro_touch = c_save_p.crea_parametri[0].posizione_touch;
-
-        if(livello_corrente==1 || livello_corrente == 2) { //TODO da sostituire con script_struttura_dati
+       
+        if ( script_struttura_dati.livello_in_uso==1 ||  script_struttura_dati.livello_in_uso == 2) { //TODO da sostituire con script_struttura_dati
            potenza_tasto = 200;
         }
         else
@@ -925,7 +924,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void gestione_cilindro() {
 
         if (inizio_game == 1) {
-            if (livello_corrente == 1 || livello_corrente == 2) { //TODO da sostituire con script_struttura_dati
+            if ( script_struttura_dati.livello_in_uso == 1 ||  script_struttura_dati.livello_in_uso == 2) { //TODO da sostituire con script_struttura_dati
                 velocita_personaggio = 20;
             }
             else
@@ -3841,7 +3840,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
                     if (online_dati == true) {
-                        StartCoroutine(load_project_online(livello_corrente)); //TODO mettere il livello da script_struttura_dati
+                        StartCoroutine(load_project_online( script_struttura_dati.livello_in_uso)); //TODO mettere il livello da script_struttura_dati
                     }
                     else {
 
