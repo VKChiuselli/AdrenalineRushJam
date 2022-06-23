@@ -210,7 +210,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     int inizio_game = 0;
     float tempo_inizio_livello = 1.5f;
 
-
+    float spostamento_ui_verticale = .75f;
 
     float potenziometro_touch = 0;
 
@@ -400,6 +400,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        {
+
+            crea_popup(4);
+
+        }
+       
+
+
 #endif
 
     }
@@ -549,12 +558,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void controllo() {
 
         float parametro_touch = c_save_p.crea_parametri[0].posizione_touch;
-       
-        if ( script_struttura_dati.livello_in_uso==1 ||  script_struttura_dati.livello_in_uso == 2) { //TODO da sostituire con script_struttura_dati
-           potenza_tasto = 200;
+
+        if (script_struttura_dati.livello_in_uso == 1 || script_struttura_dati.livello_in_uso == 2)
+        { //TODO da sostituire con script_struttura_dati
+            potenza_tasto = 200;
         }
         else
-        potenza_tasto = c_save_p.crea_parametri[0].potenza_tasto;
+        {
+            potenza_tasto = c_save_p.crea_parametri[0].potenza_tasto;
+        }
 
 
         attiva_barriera = attiva_barriera - Time.deltaTime;
@@ -597,7 +609,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        if (!tutorial_in_corso) {
+        if (!tutorial_in_corso && attivo_popup==0) {
 
             float pressione_tasto_up = Input.GetAxis("Vertical");
 
@@ -924,16 +936,24 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void gestione_cilindro() {
 
         if (inizio_game == 1) {
-            if ( script_struttura_dati.livello_in_uso == 1 ||  script_struttura_dati.livello_in_uso == 2) { //TODO da sostituire con script_struttura_dati
+            if (script_struttura_dati.livello_in_uso == 1 || script_struttura_dati.livello_in_uso == 2)
+            { //TODO da sostituire con script_struttura_dati
                 velocita_personaggio = 20;
             }
             else
+            {
                 velocita_personaggio = c_save_p.crea_parametri[0].velocita_personaggio;
 
+            }
 
+            float velo_popup = 1;
 
+            if (attivo_popup > 0)
+            {
+                velo_popup = 0;
+            }
 
-            cilindro.transform.Translate(new Vector3(0, 0, -velocita_personaggio * Time.deltaTime * blocco_velocita * velocita_bonus * aumento_velo));
+            cilindro.transform.Translate(new Vector3(0, 0, -velocita_personaggio * Time.deltaTime * velo_popup * blocco_velocita * velocita_bonus * aumento_velo));
 
         }
 
@@ -2464,7 +2484,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (visione_boss == true) {
 
-            if (blocco_velocita > .99f) {
+            if (blocco_velocita > .99f && attivo_popup==0) {
 
                 float raggio = c_save.crea_cilindro[0].raggio;
 
@@ -2702,6 +2722,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         pulsante_testo[num].GetComponent<TextMeshProUGUI>().color = colore_testo;
 
+
+       
+        pulsante_testo[num].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+
     }
 
 
@@ -2750,6 +2774,34 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 #endif
 
+
+        if (num == 0)
+        {
+
+            crea_popup(4);
+
+
+        }
+
+
+        if (num == 202)
+        {
+
+            SceneManager.LoadScene("menu");
+
+
+        }
+
+        if (num == 203)
+        {
+
+            distruggi_menu_popup();
+
+
+        }
+
+
+
     }
 
 
@@ -2777,6 +2829,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/menu");
 
+
+
         //   crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme");
         //   crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
@@ -2791,14 +2845,28 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         crea_grafica_text(8, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/ammo");
         crea_grafica_text(9, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
+       
+
         crea_grafica_text(10, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
 
+     
 
     }
 
 
     void aggiorna_menu() {
         font_size = (int)(risoluzione_x / 25);
+
+        float valore_yy = .445f;
+
+        if (crea_popup_finale > 0)
+        {
+            valore_yy = .75f;
+
+        }
+        
+
+        spostamento_ui_verticale = Mathf.Lerp(spostamento_ui_verticale, valore_yy, Time.deltaTime*2);
 
 
         float dy = risoluzione_y * .125f;
@@ -2823,7 +2891,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        float pos_y2 = pos_y = risoluzione_y * 0.445f;
+        float pos_y2 = pos_y = risoluzione_y *( spostamento_ui_verticale);
 
 
         if (pulsante[0] != null)  //settings
@@ -2834,6 +2902,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             pos_y = pos_y2;
             pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
 
         }
 
@@ -2983,8 +3053,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             pos_x = 0;
             pos_y = 0;
 
-            grafica[10].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            grafica[10].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
 
             grafica_testo[10].GetComponent<TextMeshProUGUI>().fontSize = font_size_level;
             grafica_testo[10].GetComponent<TextMeshProUGUI>().text = "LEVEL " + che_livello;
@@ -2998,10 +3067,21 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 alpha = 0;
 
                 inizio_game = 1;
+                dx2 = 5;
+                dy2 = 5;
+                pos_y = risoluzione_y;
             }
+
+
+
+            grafica[10].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[10].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             grafica[10].GetComponent<Image>().color = new Color(1, 1, 1, alpha);
             grafica_testo[10].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, alpha);
+
+           
+
         }
 
 
@@ -3223,9 +3303,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void crea_popup(int num = 1) {
 
 
-        attivo_popup = num;
+       
 
         distruggi_menu_popup();
+
+        attivo_popup = num;
+
 
         canvas_popup.SetActive(true);
 
@@ -3341,23 +3424,81 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         }
 
+
+
+        if (num == 3)
+        {
+
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
+
+            crea_grafica_text(201, new Color(1, 1, 1, 0), "TRY", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
+
+            crea_grafica_text(202, new Color(1, 1, 1, 0), "AGAIN", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
+            crea_grafica_text(203, new Color(1, 1, 1, 0), "CLICK\nTO CONTINUE", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+            grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
+
+
+
+            for (int n = 0; n <= 2; n++)
+            {
+                crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
+                crea_grafica_text(207 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1"); // stelle
+
+                grafica_dime[4 + n] = 1;
+                grafica_dime[7 + n] = 2;
+
+                grafica_tempo[4 + n] = .0f;
+                grafica_tempo[7 + n] = 2.0f + n * .25f;
+            }
+
+            crea_grafica_text(210, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_livello"); // stelle
+
+            crea_grafica_text(211, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_energia"); // stelle
+            crea_grafica_text(212, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_ammo"); // stelle
+
+            grafica_dime[10] = 2;
+            grafica_dime[11] = 2;
+            grafica_dime[12] = 2;
+
+            grafica_tempo[10] = 2.0f;
+            grafica_tempo[11] = 2.25f;
+            grafica_tempo[12] = 2.5f;
+
+            grafica_tempo[1] = .5f;
+            grafica_tempo[2] = 1;
+            grafica_tempo[3] = 1.5f;
+
+
+            grafica_dime[1] = 4;
+
+            grafica_dime[2] = 4;
+
+            grafica_dime[3] = 4;
+
+        }
+
+        if (num == 4)
+        {
+
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
+
+            crea_grafica_text(201, new Color(1, 1, 1, 0), "ENTER MENU", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+            crea_button_text(202, "CONFIRM", new Color(1, 1, 1, 0), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pannello shop
+           
+            crea_button_text(203, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
+
+
+        }
+
     }
 
 
-    void crea_popup_raddoppio_monete(int num = 2) {
-
-
-        attivo_popup = num;
-
-        distruggi_menu_popup();
-
-        canvas_popup.SetActive(true);
-
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_menu"); //pannello shop
-
-        crea_button_text(200, "DOUBLE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
-
-    }
 
     public void crea_tutorial(string testo_informativo) {
 
@@ -3508,7 +3649,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        if (attivo_popup >= 1) {
+        if (attivo_popup == 1 || attivo_popup==2) {
             if (grafica[200] != null)  //pannello
             {
 
@@ -3658,6 +3799,71 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
+        if (attivo_popup == 4)
+        {
+            if (grafica[200] != null)  //pannello
+            {
+
+                float dx2 = dx * .8f;
+                float dy2 = dy * .8f;
+
+                
+
+                float dy_t = dy * .2f;
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                pos_y = dime_panel_y * .3f;
+
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*.9f, dx2 * .7f);
+                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize =(int) (risoluzione_x/10);
+
+                pos_y = dime_panel_y * -.3f;
+
+
+                if (pulsante[202] != null)  //exit
+                {
+                    pulsante[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .6f, dy2 * .12f);
+                    pulsante[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
+                    pulsante_testo[202].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 25);
+
+                    pulsante_testo[202].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+
+                }
+
+
+                if (pulsante[203] != null)  //exit
+                {
+                    float dx3 = risoluzione_x * 0.12f;
+                    float dy3 = dx3;
+                    pos_x = dime_panel_x * .465f;
+                    pos_y = dime_panel_y * .465f;
+
+
+                    pulsante[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
+                    pulsante[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                }
+
+
+                uscita_popup(dime_panel_x, dime_panel_y);
+
+            }
+          
+        }
+
 
     }
 
@@ -3723,6 +3929,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     void distruggi_menu_popup() {
+
+
+        attivo_popup = 0;
 
         canvas_popup.SetActive(false);
 
@@ -3837,10 +4046,21 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     sfondo.GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_sfondo);
 
 
+                    int livello_uso = 1;
 
+                    if (script_struttura_dati != null)
+                    {
+
+                        livello_uso = script_struttura_dati.livello_in_uso;
+                    }
+
+
+                 
 
                     if (online_dati == true) {
-                        StartCoroutine(load_project_online( script_struttura_dati.livello_in_uso)); //TODO mettere il livello da script_struttura_dati
+
+
+                        StartCoroutine(load_project_online(livello_uso)); //TODO mettere il livello da script_struttura_dati
                     }
                     else {
 
