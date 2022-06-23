@@ -74,8 +74,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     public int monete_partita_corrente = 0;
     public int gemme_partita_corrente = 0;
 
-    int monete_UI = 0;
-    int gemme_UI = 0;
+    float monete_UI = 0;
+    float gemme_UI = 0;
 
 
     float risoluzione_x;
@@ -564,7 +564,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         float parametro_touch = c_save_p.crea_parametri[0].posizione_touch;
 
-        if (script_struttura_dati.livello_in_uso == 1 || script_struttura_dati.livello_in_uso == 2)
+        int livello_uso = 1;
+
+        if (script_struttura_dati != null)
+        {
+
+                livello_uso = script_struttura_dati.livello_in_uso;
+        }
+
+
+            if (livello_uso == 1 || livello_uso == 2)
         { //TODO da sostituire con script_struttura_dati
             potenza_tasto = 200;
         }
@@ -941,7 +950,18 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void gestione_cilindro() {
 
         if (inizio_game == 1) {
-            if (script_struttura_dati.livello_in_uso == 1 || script_struttura_dati.livello_in_uso == 2)
+
+            int livello_uso = 1;
+
+            if (script_struttura_dati != null)
+            {
+
+                    livello_uso = script_struttura_dati.livello_in_uso;
+     
+            }
+
+
+            if (livello_uso == 1 || livello_uso == 2)
             { //TODO da sostituire con script_struttura_dati
                 velocita_personaggio = 20;
             }
@@ -3081,8 +3101,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
             grafica_testo[10].GetComponent<TextMeshProUGUI>().fontSize = font_size_level;
-            grafica_testo[10].GetComponent<TextMeshProUGUI>().text = "LEVEL " + script_struttura_dati.livello_in_uso;
 
+            if (script_struttura_dati != null)
+            {
+                grafica_testo[10].GetComponent<TextMeshProUGUI>().text = "LEVEL " + script_struttura_dati.livello_in_uso;
+            }
 
             tempo_inizio_livello = tempo_inizio_livello - Time.deltaTime;
 
@@ -3826,9 +3849,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 grafica_testo[202].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 10);
 
-                monete_UI =(int) Mathf.MoveTowards(monete_UI, monete_partita_corrente, Time.deltaTime * 10);
+                monete_UI =Mathf.MoveTowards(monete_UI, monete_partita_corrente, Time.deltaTime * 100);
 
-                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = ""+ monete_UI;
+
+
+                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = ""+ (int)(monete_UI);
 
                
                 pos_x = dime_panel_x * -.2f;
@@ -3842,9 +3867,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 grafica[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 grafica_testo[204].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 10);
 
-                gemme_UI = (int)Mathf.MoveTowards(gemme_UI, gemme_partita_corrente, Time.deltaTime * 10);
+                gemme_UI = Mathf.MoveTowards(gemme_UI, gemme_partita_corrente, Time.deltaTime * 100);
 
-                grafica_testo[204].GetComponent<TextMeshProUGUI>().text = "" + gemme_UI;
+             
+
+                grafica_testo[204].GetComponent<TextMeshProUGUI>().text = "" + (int)(gemme_UI);
 
 
 
@@ -4148,8 +4175,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                         livello_uso = int.Parse(nome_livello);
 
-                        script_struttura_dati.livello_in_uso= livello_uso;
+                        if (script_struttura_dati != null)
+                        {
+                            script_struttura_dati.livello_in_uso = livello_uso;
 
+                        }
                     }
 
 #endif
