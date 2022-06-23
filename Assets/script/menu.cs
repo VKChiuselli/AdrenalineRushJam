@@ -38,6 +38,8 @@ public class menu : MonoBehaviour {
     float diff_xm;
     float diff_ym;
 
+    float diff_ym_mo;
+
     float risoluzione_x;
     float risoluzione_y;
 
@@ -87,7 +89,7 @@ public class menu : MonoBehaviour {
     string[] upgrade_descrittore = new string[20];
     int[] shop_quantita_monete = new int[20];
 
-
+    int controllo_mobile = 0;
 
     void Start() {
 
@@ -240,35 +242,84 @@ public class menu : MonoBehaviour {
 
     void aggiorna_menu() {
 
+
+
+        diff_ym_mo = diff_ym_mo * .9f;
+
+
         if (pagina == -1) {
-            if (Input.GetKey(KeyCode.UpArrow)) {
-                scroll_verticale_sx = scroll_verticale_sx - risoluzione_y * .025f;
+
+            if (controllo_mobile == 0)
+            {
+
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    scroll_verticale_sx = scroll_verticale_sx - risoluzione_y * .025f;
+                }
+
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    scroll_verticale_sx = scroll_verticale_sx + risoluzione_y * .025f;
+                }
+
+            }
+            else
+            {
+                scroll_verticale_sx = scroll_verticale_sx + diff_ym_mo;
+
             }
 
-            if (Input.GetKey(KeyCode.DownArrow)) {
-                scroll_verticale_sx = scroll_verticale_sx + risoluzione_y * .025f;
-            }
+
         }
 
         if (pagina == 1) {
-            if (Input.GetKey(KeyCode.UpArrow)) {
+
+            if (controllo_mobile == 0)
+            {
+                if (Input.GetKey(KeyCode.UpArrow)) {
                 scroll_verticale_dx = scroll_verticale_dx - risoluzione_y * .025f;
             }
 
             if (Input.GetKey(KeyCode.DownArrow)) {
                 scroll_verticale_dx = scroll_verticale_dx + risoluzione_y * .025f;
             }
+
+        }
+        else
+        {
+            scroll_verticale_dx = scroll_verticale_dx + diff_ym_mo;
+
+        }
+    }
+
+        if (pagina == 2)
+        {
+
+            if (controllo_mobile == 0)
+            {
+
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    scroll_verticale_dx_battlepass = scroll_verticale_dx_battlepass - risoluzione_y * .025f;
+                }
+
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    scroll_verticale_dx_battlepass = scroll_verticale_dx_battlepass + risoluzione_y * .025f;
+                }
+
+
+            }
+            else
+            {
+                scroll_verticale_dx_battlepass = scroll_verticale_dx_battlepass + diff_ym_mo;
+
+            }
         }
 
-        if (pagina == 2) {
-            if (Input.GetKey(KeyCode.UpArrow)) {
-                scroll_verticale_dx_battlepass = scroll_verticale_dx_battlepass - risoluzione_y * .025f;
-            }
 
-            if (Input.GetKey(KeyCode.DownArrow)) {
-                scroll_verticale_dx_battlepass = scroll_verticale_dx_battlepass + risoluzione_y * .025f;
-            }
-        }
+
+
 
         if (scroll_verticale_sx < 0) {
             scroll_verticale_sx = 0;
@@ -663,10 +714,22 @@ public class menu : MonoBehaviour {
 
     }
 
-    public void controllo_risoluzione() {
+    public void controllo_risoluzione()
+    {
+
+        controllo_mobile = 0;
+
+
+#if (UNITY_ANDROID || UNITY_IOS) &&  !UNITY_EDITOR
+
+        controllo_mobile = 1;
+
+#endif
 
         risoluzione_x = Screen.width;
         risoluzione_y = Screen.height;
+
+
 
         float xx = risoluzione_x;
 
@@ -676,7 +739,8 @@ public class menu : MonoBehaviour {
         spostamento_sx2 = (rapporto_risoluzione - 1.333333f);
 
 
-        if (rapporto_risoluzione < 1) {
+        if (rapporto_risoluzione < 1)
+        {
 
             spostamento_sx = (rapporto_risoluzione / .75f);
             spostamento_sx2 = (rapporto_risoluzione - .75f);
@@ -692,11 +756,89 @@ public class menu : MonoBehaviour {
         ym = Input.mousePosition.y;
 
 
-        diff_xm = xm - xm_old;
-        diff_ym = ym - ym_old;
+
+
+
+
+        for (int n = 0; n <= 3; n++)
+        {
+            touch_xo[n] = touch_x[n];
+            touch_yo[n] = touch_y[n];
+        }
+
+        for (int n = 0; n <= 3; n++)
+        {
+            touch_x[n] = -1000;
+            touch_y[n] = -1000;
+        }
+
+#if ((UNITY_ANDROID || UNITY_IOS ))
+
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+
+            Touch touch = Input.GetTouch(i);
+
+
+            touch_x[i] = touch.position.x;
+            touch_y[i] = touch.position.y;
+
+        }
+
+#endif
+
+
+
+        if (controllo_mobile == 0 && Input.GetMouseButton(0))
+        {
+            for (int n = 0; n <= 0; n++)
+            {
+                touch_x[n] = xm;
+                touch_y[n] = ym;
+                touch_rx[n] = touch_x[n];
+                touch_ry[n] = touch_y[n];
+            }
+
+
+            diff_xm = xm - xm_old;
+            diff_ym = ym - ym_old;
+
+        }
+
+
+
+
+        if (controllo_mobile == 1)
+        {
+            diff_xm = 0;
+            diff_ym = 0;
+
+
+            if (touch_x[0] > 0 && touch_xo[0] > 0 && touch_xo[1] < 0)
+            {
+
+                diff_xm = (touch_x[0] - touch_xo[0]);
+
+            }
+
+
+            if (touch_y[0] > 0 && touch_yo[0] > 0 && touch_xo[1] < 0)
+            {
+                diff_ym = (touch_y[0] - touch_yo[0]);
+                diff_ym_mo = diff_ym;
+            }
+
+        }
+
+
+
 
 
     }
+
+
+
+
     void aggiorna_menu_popup() {
 
 
