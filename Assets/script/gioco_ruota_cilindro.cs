@@ -187,7 +187,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float tempo_barriera = 3;
     float energia = 100;
     float energia_base = 100;
-    int numero_spari = 3;
+  public  int numero_spari = 3;
     int numero_spari_base = 0;
 
     float scafo = 0;
