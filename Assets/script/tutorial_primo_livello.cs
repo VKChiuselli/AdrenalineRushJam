@@ -149,10 +149,8 @@ public class tutorial_primo_livello : MonoBehaviour {
 
                     if (Gioco_ruota_cilindro.livello_corrente == 2 && Gioco_ruota_cilindro.numero_spari > 0) {
                         if (!avvisato_spara_ammo) {
-                            Time.timeScale = 0;
                             avvisato_spara_ammo = true;
-                            Gioco_ruota_cilindro.tutorial_in_corso = false;
-                            tutorial_sparare();
+                            StartCoroutine(ShootingTime());
                         }
                     }
 
@@ -185,6 +183,13 @@ public class tutorial_primo_livello : MonoBehaviour {
 
         }
 
+    }
+
+    private IEnumerator ShootingTime() {
+        yield return new WaitForSeconds(1f);
+        Time.timeScale = 0;
+        Gioco_ruota_cilindro.tutorial_in_corso = false;
+        tutorial_sparare();
     }
 
     private void tutorial_comandi_e_mine() {
