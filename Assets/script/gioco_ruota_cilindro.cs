@@ -3366,8 +3366,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         canvas_tutorial.SetActive(true);
 
         crea_grafica_text(100, new Color(1, 1, 1, 0.74f), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/sfondo_menu");//overlay scuro TODO cambiare grafica
-        crea_grafica_text(101, new Color(1, 1, 1, 0), testo_informativo, canvas_tutorial, "Canvas_tutorial", ""); //pannello shop
-        crea_grafica_text(102, new Color(1, 1, 1, 0), "Tap to continue", canvas_tutorial, "Canvas_tutorial", ""); //pannello shop
+        crea_grafica_text(101, new Color(1, 1, 1, 0), testo_informativo, canvas_tutorial, "Canvas_tutorial", ""); //text testo_informativo
+        crea_grafica_text(102, new Color(1, 1, 1, 0), "Tap to continue", canvas_tutorial, "Canvas_tutorial", ""); //text Tap to continue
+        crea_grafica_text(103, new Color(1, 1, 1, 1), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/freccia_sinistra"); //text aarrow left
+        crea_grafica_text(104, new Color(1, 1, 1, 1), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/freccia_destra"); //text aarrow right
 
 
     }
@@ -3381,38 +3383,80 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         float pos_x = 0;
         float pos_y = 0;
 
-        if (grafica[100] != null)  //pannello
+        if (grafica[100] != null)  //overlay scuro TODO cambiare grafica
         {
 
 
             pos_x = 0;
             pos_y = 0;
 
-            grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
+            grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
             grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
         }
-        if (grafica[101] != null)  //pannello
+        if (grafica[101] != null)  //text tip info
         {
 
 
             pos_x = 0;
             pos_y = dy * 0.3f;
 
-            grafica[101].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.93f, dy);
+            grafica[101].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
             grafica[101].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
             grafica_testo[101].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.5f;
         }
-        if (grafica[102] != null)  //pannello
+        if (grafica[102] != null)  //text Tap to continue
         {
 
 
             pos_x = 0;
-            pos_y = dy * -0.3f;
+            pos_y = dy * -0.41f;
 
-            grafica[102].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.93f, dy);
+            grafica[102].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
             grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
             grafica_testo[102].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.8f;
         }
+        if (grafica[103] != null)  //text aarrow left
+        {
+
+            float dx2 = dx * 0.3f;
+            float dy2 = dy * 0.3f;
+            pos_x =  dx2 * -1f;
+            pos_y =   0;
+
+            grafica[103].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
+            grafica[103].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            fade_continuo(grafica[103].GetComponent<Image>());
+        }
+        if (grafica[104] != null)  //text aarrow right
+        {
+
+            float dx2 = dx * 0.3f;
+            float dy2 = dy * 0.3f;
+            pos_x = dx2 * 1f;
+            pos_y = 0;
+
+            grafica[104].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
+            grafica[104].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            fade_continuo(grafica[104].GetComponent<Image>());
+        }
+    }
+
+    [SerializeField] float period = 2f;
+    [SerializeField] float movementFactor = 2f;
+  
+
+    private void fade_continuo(Image image) {
+
+        if (period <= Mathf.Epsilon) { return; }
+        float cycles = Time.realtimeSinceStartup / period;  // continually growing over time
+
+        const float tau = Mathf.PI * 2;  // constant value of 6.283
+        float rawSinWave = Mathf.Sin(cycles * tau);  // going from -1 to 1
+
+        movementFactor = (rawSinWave + 1f) / 2f;   // recalculated to go from 0 to 1 so its cleaner
+  
+        image.color = new Color(1,1,1, movementFactor);
     }
 
 

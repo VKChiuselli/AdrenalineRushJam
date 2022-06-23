@@ -124,7 +124,6 @@ public class tutorial_primo_livello : MonoBehaviour {
                 if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, distanza_raycast_tutorial)) {
 
                     float dis = hit_collider.distance;
-                    Debug.Log(dis + " distanza");
                     if (Gioco_ruota_cilindro.livello_corrente == 1) {
                         if (!avvisato_mina_cratere) {
                             Time.timeScale = 0;
