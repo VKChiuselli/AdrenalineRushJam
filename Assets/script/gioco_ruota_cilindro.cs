@@ -219,6 +219,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     float potenziometro_touch = 0;
 
+    int[] boss_potere_attivo = new int[5];
+    float[] boss_potere = new float[5];
+
+    float[] boss_potere_rad = new float[5];
+    float[] boss_potere_altezza = new float[5];
+
+
+    GameObject[] boss_potere_mesh = new GameObject[5];
+
+    float attivo_tempo_potere_boss = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -393,7 +403,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         aggiorna_menu_tutorial();
 
-
+        aggiorna_potere_boss();
 
 
 #if UNITY_EDITOR
@@ -405,10 +415,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (Input.GetKeyUp(KeyCode.Alpha3))
+        if (Input.GetKeyUp(KeyCode.Alpha2))
         {
 
-            crea_popup(3);
+            crea_potere_boss();
 
         }
        
@@ -2208,6 +2218,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     //----------
 
 
+                   
+
+
+
+
                     if (hit_collider.collider.name.IndexOf("bonus1_") > -1) {
 
                         string str_bonus = "" + hit_collider.collider.name;
@@ -2248,6 +2263,31 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                         }
 
                     }
+
+
+
+                    if (hit_collider.collider.name.IndexOf("boss_potere_mesh") > -1)
+                    {
+                        string str_boss_potere_mesh = "" + hit_collider.collider.name;
+
+                        str_boss_potere_mesh = str_boss_potere_mesh.Replace("boss_potere_mesh ", "");
+
+                        int num_boss_potere_mesh = int.Parse(str_boss_potere_mesh);
+
+                        analisi_energia(50);
+
+
+                        boss_potere[num_boss_potere_mesh] = 0;
+
+                        boss_potere_attivo[num_boss_potere_mesh] = 1;
+
+                        carica_particles("particles/CFXR Explosion 2", hit_collider.point);
+
+
+                        DestroyImmediate(boss_potere_mesh[num_boss_potere_mesh]);
+
+                    }
+
 
 
                 }
@@ -2533,6 +2573,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
                 attivo_tempo_sparo_boss2 = attivo_tempo_sparo_boss2 - Time.deltaTime;
+
+                attivo_tempo_potere_boss = attivo_tempo_potere_boss - Time.deltaTime;
+
+                if (attivo_tempo_potere_boss < -5)
+                {
+                    attivo_tempo_potere_boss = UnityEngine.Random.Range(0.0f, 3.0f);
+                    crea_potere_boss();
+
+
+                }
+
 
                 if (attivo_tempo_sparo_boss2 < 0) {
 
@@ -4259,6 +4310,322 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     }
+
+
+    void aggiorna_potere_boss()
+    {
+
+        for (int n = 0; n < 4; n++)
+        {
+
+            boss_potere[n] = boss_potere[n] - Time.deltaTime;
+
+            if (boss_potere_attivo[n] == 1) {
+
+                
+                
+                    if (boss_potere[n] >=6.0f && boss_potere[n] <= 6.5f)
+                {
+                    boss_potere_altezza[n] = boss_potere_altezza[n] + Time.deltaTime * 10;
+
+                    update_potere_boss(n, boss_potere_altezza[n]);
+
+                }
+
+
+                if (boss_potere[n] < 0)
+                {
+                    boss_potere_attivo[n] = 1;
+
+                    DestroyImmediate(boss_potere_mesh[n]);
+                }
+
+            }
+
+
+        }
+       
+
+
+    }
+
+
+
+    void crea_potere_boss()
+    {
+        int che_potere = -1;
+
+        for (int n = 0;  n < 4; n++)
+        {
+
+         
+            if (boss_potere[n] < 0)
+            {
+                che_potere = n;
+                break;
+            }
+
+
+        }
+
+
+        if (che_potere > -1)
+        {
+
+            boss_potere_attivo[che_potere] = 1;
+
+            boss_potere[che_potere] = 10;
+
+           crea_potere_boss(che_potere, 0.15f);
+        }
+
+
+
+    }
+
+
+    void crea_potere_boss(int num, float altezza=0)
+    {
+        if (boss_potere_mesh[num] != null)
+        {
+            DestroyImmediate(boss_potere_mesh[num]);
+
+        }
+
+        boss_potere_mesh[num] = Instantiate(Resources.Load("grafica_3d/Prefabs_space/blocco_mesh_potere", typeof(GameObject))) as GameObject;
+
+        boss_potere_mesh[num].name = "boss_potere_mesh " + num;
+
+        boss_potere_mesh[num].transform.SetParent(cilindro.transform);
+
+        boss_potere_mesh[num].GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_blocco_1);
+
+
+        Mesh mesh = boss_potere_mesh[num].GetComponent<MeshFilter>().mesh;
+
+        mesh.Clear();
+
+        int num_v = 12;
+        int num_tria = 6;
+
+        Vector3[] vertices = new Vector3[num_v];
+        Vector2[] uvs = new Vector2[num_v];
+        int[] tria = new int[num_tria * 3];
+
+
+        float raggio = c_save.crea_cilindro[0].raggio;
+
+        float divisore = Mathf.PI * 2 / 18.0f+ cilindro.transform.localEulerAngles.y*Mathf.Deg2Rad;
+
+        boss_potere_rad[num] = divisore;
+
+
+        float x0 = Mathf.Sin( 0) * raggio;
+        float y0 = Mathf.Cos( 0) * raggio;
+
+        float x1 = Mathf.Sin(  divisore) * raggio;
+        float y1 = Mathf.Cos(  divisore) * raggio;
+
+        float x2 = Mathf.Sin( 0) * (raggio+ altezza);
+        float y2 = Mathf.Cos( 0) * (raggio + altezza);
+
+        float x3 = Mathf.Sin( divisore) * (raggio + altezza);
+        float y3 = Mathf.Cos( divisore) * (raggio + altezza);
+
+
+
+
+        vertices[0] = new Vector3(x0,y0, 0);
+        vertices[1] = new Vector3(x2, y2, 0);
+
+        vertices[2] = new Vector3(x0, y0, 100);
+        vertices[3] = new Vector3(x2, y2, 100);
+
+
+        vertices[4] = new Vector3(x2, y2, 0);
+        vertices[5] = new Vector3(x3, y3, 0);
+
+        vertices[6] = new Vector3(x2, y2, 100);
+        vertices[7] = new Vector3(x3, y3, 100);
+
+        vertices[8] = new Vector3(x1, y1, 0);
+        vertices[9] = new Vector3(x3, y3, 0);
+
+        vertices[10] = new Vector3(x1, y1, 100);
+        vertices[11] = new Vector3(x3, y3, 100);
+
+        uvs[0] = new Vector2(0, 0);
+        uvs[1] = new Vector2(0, 1);
+        uvs[2] = new Vector2(1, 0);
+        uvs[3] = new Vector2(1, 1);
+
+        uvs[4] = new Vector2(0, 0);
+        uvs[5] = new Vector2(0, 1);
+        uvs[6] = new Vector2(1, 0);
+        uvs[7] = new Vector2(1, 1);
+
+        uvs[8] = new Vector2(0, 0);
+        uvs[9] = new Vector2(0, 1);
+        uvs[10] = new Vector2(1, 0);
+        uvs[11] = new Vector2(1, 1);
+
+        tria[0] = 2;
+        tria[1] = 3;
+        tria[2] = 1;
+
+        tria[3] = 2;
+        tria[4] = 1;
+        tria[5] = 0;
+
+        tria[6] = 4;
+        tria[7] = 6;
+        tria[8] = 5;
+
+        tria[9] = 6;
+        tria[10] = 7;
+        tria[11] = 5;
+
+        tria[12] = 9;
+        tria[13] = 11;
+        tria[14] = 10;
+
+        tria[15] = 9;
+        tria[16] = 10;
+        tria[17] = 8;
+
+
+        mesh.vertices = vertices;
+        mesh.uv = uvs;
+        mesh.triangles = tria;
+
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
+
+
+
+    }
+
+
+
+
+    void update_potere_boss(int num,float altezza)
+    {
+       
+
+        Mesh mesh = boss_potere_mesh[num].GetComponent<MeshFilter>().mesh;
+
+        mesh.Clear();
+
+        int num_v = 12;
+        int num_tria = 6;
+
+        Vector3[] vertices = new Vector3[num_v];
+        Vector2[] uvs = new Vector2[num_v];
+        int[] tria = new int[num_tria * 3];
+
+
+        float raggio = c_save.crea_cilindro[0].raggio;
+
+        float divisore = boss_potere_rad[num];
+
+
+
+
+        float x0 = Mathf.Sin(0) * raggio;
+        float y0 = Mathf.Cos(0) * raggio;
+
+        float x1 = Mathf.Sin( 1 * divisore) * raggio;
+        float y1 = Mathf.Cos( 1 * divisore) * raggio;
+
+        float x2 = Mathf.Sin(0) * (raggio + altezza);
+        float y2 = Mathf.Cos(0) * (raggio + altezza);
+
+        float x3 = Mathf.Sin(1 * divisore) * (raggio + altezza);
+        float y3 = Mathf.Cos(1 * divisore) * (raggio + altezza);
+
+
+
+
+        vertices[0] = new Vector3(x0, y0, 0);
+        vertices[1] = new Vector3(x2, y2, 0);
+
+        vertices[2] = new Vector3(x0, y0, 100);
+        vertices[3] = new Vector3(x2, y2, 100);
+
+
+        vertices[4] = new Vector3(x2, y2, 0);
+        vertices[5] = new Vector3(x3, y3, 0);
+
+        vertices[6] = new Vector3(x2, y2, 100);
+        vertices[7] = new Vector3(x3, y3, 100);
+
+        vertices[8] = new Vector3(x1, y1, 0);
+        vertices[9] = new Vector3(x3, y3, 0);
+
+        vertices[10] = new Vector3(x1, y1, 100);
+        vertices[11] = new Vector3(x3, y3, 100);
+
+        uvs[0] = new Vector2(0, 0);
+        uvs[1] = new Vector2(0, 1);
+        uvs[2] = new Vector2(1, 0);
+        uvs[3] = new Vector2(1, 1);
+
+        uvs[4] = new Vector2(0, 0);
+        uvs[5] = new Vector2(0, 1);
+        uvs[6] = new Vector2(1, 0);
+        uvs[7] = new Vector2(1, 1);
+
+        uvs[8] = new Vector2(0, 0);
+        uvs[9] = new Vector2(0, 1);
+        uvs[10] = new Vector2(1, 0);
+        uvs[11] = new Vector2(1, 1);
+
+        tria[0] = 2;
+        tria[1] = 3;
+        tria[2] = 1;
+
+        tria[3] = 2;
+        tria[4] = 1;
+        tria[5] = 0;
+
+        tria[6] = 4;
+        tria[7] = 6;
+        tria[8] = 5;
+
+        tria[9] = 6;
+        tria[10] = 7;
+        tria[11] = 5;
+
+        tria[12] = 9;
+        tria[13] = 11;
+        tria[14] = 10;
+
+        tria[15] = 9;
+        tria[16] = 10;
+        tria[17] = 8;
+
+
+        mesh.vertices = vertices;
+        mesh.uv = uvs;
+        mesh.triangles = tria;
+
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
+
+        DestroyImmediate(boss_potere_mesh[num].GetComponent<MeshCollider>());
+
+
+        boss_potere_mesh[num].AddComponent<MeshCollider>();
+
+    }
+
+
+
+
+
+
 
 
 

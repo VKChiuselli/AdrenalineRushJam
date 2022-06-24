@@ -76,8 +76,11 @@ public class gioco : MonoBehaviour
 
   
     GameObject cilindro;
- 
-   
+
+
+    float[] bosso_potere = new float[5];
+
+    GameObject[] boss_potere_mesh = new GameObject[5];
 
 
     float rotazione_cilindro = 0;
