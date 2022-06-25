@@ -152,14 +152,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     GameObject boss;
     float boss_rad;
 
-    float[] attivo_tempo_sparo_boss = new float[10];
+    float[] attivo_tempo_sparo_boss = new float[20];
 
-    GameObject[] sparo_boss = new GameObject[10];
+    GameObject[] sparo_boss = new GameObject[20];
 
-    float[] sparo_boss_rad = new float[10];
+    float[] sparo_boss_rad = new float[20];
 
-    GameObject[] sparo = new GameObject[10];
-    float[] attivo_tempo_sparo = new float[10];
+    GameObject[] sparo = new GameObject[20];
+    float[] attivo_tempo_sparo = new float[20];
 
     float attivo_tempo_sparo_personaggio = 0;
     float attivo_tempo_sparo_boss2 = 0;
@@ -854,7 +854,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     void gestione_sparo_boss() {
 
-        for (int n = 0; n < 5; n++) {
+        for (int n = 0; n < 10; n++) {
             attivo_tempo_sparo_boss[n] = attivo_tempo_sparo_boss[n] - Time.deltaTime;
 
 
@@ -2443,8 +2443,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         int toccato_astronave = 0;
 
         if (distanza_coll < 2 && tipo == 1) {
-            DestroyImmediate(ogg);
+           
 
+         
+            carica_particles("particles/CFXR Explosion 3", ogg.transform.position);
+
+            DestroyImmediate(ogg);
             analisi_energia(30);
 
 
@@ -2576,7 +2580,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 attivo_tempo_potere_boss = attivo_tempo_potere_boss - Time.deltaTime;
 
-                if (attivo_tempo_potere_boss < -5)
+                if (attivo_tempo_potere_boss < -3)
                 {
                     attivo_tempo_potere_boss = UnityEngine.Random.Range(0.0f, 3.0f);
                     crea_potere_boss();
@@ -2590,12 +2594,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     if (Mathf.Abs(diff) < .1f) {
                         int num_sparo_boss = -1;
 
-                        for (int n = 0; n < 5; n++) {
+                        for (int n = 0; n < 10; n++) {
 
-                            if (attivo_tempo_sparo_boss[n] < -1) {
+                            if (attivo_tempo_sparo_boss[n] < -.1) {
                                 num_sparo_boss = n;
 
-                                attivo_tempo_sparo_boss[n] = 6;
+                                attivo_tempo_sparo_boss[n] = 1.5f;
 
 
                                 sparo_boss[n] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sparo_boss", typeof(GameObject))) as GameObject;
@@ -2608,9 +2612,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                                 sparo_boss[n].name = "sparo_boss " + n;
 
-                                attivo_tempo_sparo_boss2 = UnityEngine.Random.Range(4f, 6.0f) - che_livello * .025f;
-
-
+                                attivo_tempo_sparo_boss2 = UnityEngine.Random.Range(2f, 2.0f) - che_livello * .025f;
 
                                 n = 1000;
 
@@ -2884,8 +2886,6 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (num == 209) // next level da salvare e poi 
         {
 
-            // vittorio 
-
             script_struttura_dati.livello_in_uso = script_struttura_dati.livello_in_uso + 1;
 
             PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
@@ -2896,6 +2896,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
+        if (num == 210) // repeat level
+        {
+
+            SceneManager.LoadScene("gioco");
+
+
+        }
 
 
     }
@@ -3541,6 +3548,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_button_text(208, "RADDOPPIA", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
             crea_button_text(209, "NEXT LEVEL", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+            crea_button_text(210, "REPEAT LEVEL", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
 
             pulsante_testo[208].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
             pulsante_testo[209].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
@@ -3939,7 +3949,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 }
 
-                if (pulsante[209] != null)  //next level
+                if (pulsante[209] != null && energia>0)  //next level
                 {
                     float dx3 = risoluzione_x * .5f;
                     float dy3 = risoluzione_x * .15f;
@@ -3953,7 +3963,21 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
 
-              
+                if (pulsante[210] != null && energia<=0)  //repeat level
+                {
+                    float dx3 = risoluzione_x * .5f;
+                    float dy3 = risoluzione_x * .15f;
+                    pos_x = 0;
+                    pos_y = dime_panel_y * -.35f;
+
+
+                    pulsante[210].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
+                    pulsante[210].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                }
+
+
+
 
             }
 
@@ -4326,7 +4350,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 
                     if (boss_potere[n] >=6.0f && boss_potere[n] <= 6.5f)
                 {
-                    boss_potere_altezza[n] = boss_potere_altezza[n] + Time.deltaTime * 10;
+                    boss_potere_altezza[n] = boss_potere_altezza[n] + Time.deltaTime * 5;
 
                     update_potere_boss(n, boss_potere_altezza[n]);
 
@@ -4374,7 +4398,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             boss_potere_attivo[che_potere] = 1;
 
-            boss_potere[che_potere] = 10;
+            boss_potere[che_potere] = 8;
 
            crea_potere_boss(che_potere, 0.15f);
         }
@@ -4405,8 +4429,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         mesh.Clear();
 
-        int num_v = 12;
-        int num_tria = 6;
+        int num_v = 16;
+        int num_tria = 8;
 
         Vector3[] vertices = new Vector3[num_v];
         Vector2[] uvs = new Vector2[num_v];
@@ -4454,6 +4478,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         vertices[10] = new Vector3(x1, y1, 100);
         vertices[11] = new Vector3(x3, y3, 100);
 
+        vertices[12] = new Vector3(x0, y0, 100);
+        vertices[13] = new Vector3(x1, y1, 100);
+        vertices[14] = new Vector3(x2, y2, 100);
+        vertices[15] = new Vector3(x3, y3, 100);
+
+
         uvs[0] = new Vector2(0, 0);
         uvs[1] = new Vector2(0, 1);
         uvs[2] = new Vector2(1, 0);
@@ -4468,6 +4498,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         uvs[9] = new Vector2(0, 1);
         uvs[10] = new Vector2(1, 0);
         uvs[11] = new Vector2(1, 1);
+
+        uvs[12] = new Vector2(0, 0);
+        uvs[13] = new Vector2(0, 1);
+        uvs[14] = new Vector2(1, 0);
+        uvs[15] = new Vector2(1, 1);
+
 
         tria[0] = 2;
         tria[1] = 3;
@@ -4494,6 +4530,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         tria[17] = 8;
 
 
+        tria[18] = 14;
+        tria[19] = 13;
+        tria[20] = 12;
+
+        tria[21] = 13;
+        tria[22] = 15;
+        tria[23] =14;
+
+
         mesh.vertices = vertices;
         mesh.uv = uvs;
         mesh.triangles = tria;
@@ -4517,8 +4562,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         mesh.Clear();
 
-        int num_v = 12;
-        int num_tria = 6;
+        int num_v = 16;
+        int num_tria = 8;
 
         Vector3[] vertices = new Vector3[num_v];
         Vector2[] uvs = new Vector2[num_v];
@@ -4546,7 +4591,6 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-
         vertices[0] = new Vector3(x0, y0, 0);
         vertices[1] = new Vector3(x2, y2, 0);
 
@@ -4566,20 +4610,38 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         vertices[10] = new Vector3(x1, y1, 100);
         vertices[11] = new Vector3(x3, y3, 100);
 
+        vertices[12] = new Vector3(x0, y0, 100);
+        vertices[13] = new Vector3(x1, y1, 100);
+        vertices[14] = new Vector3(x2, y2, 100);
+        vertices[15] = new Vector3(x3, y3, 100);
+
+        vertices[12] = new Vector3(x0, y0, 100);
+        vertices[13] = new Vector3(x1, y1, 100);
+        vertices[14] = new Vector3(x2, y2, 100);
+        vertices[15] = new Vector3(x3, y3, 100);
+
+        float molt = 10;
+
         uvs[0] = new Vector2(0, 0);
         uvs[1] = new Vector2(0, 1);
-        uvs[2] = new Vector2(1, 0);
-        uvs[3] = new Vector2(1, 1);
+        uvs[2] = new Vector2(molt, 0);
+        uvs[3] = new Vector2(molt, 1);
 
         uvs[4] = new Vector2(0, 0);
         uvs[5] = new Vector2(0, 1);
-        uvs[6] = new Vector2(1, 0);
-        uvs[7] = new Vector2(1, 1);
+        uvs[6] = new Vector2(molt, 0);
+        uvs[7] = new Vector2(molt, 1);
 
         uvs[8] = new Vector2(0, 0);
         uvs[9] = new Vector2(0, 1);
-        uvs[10] = new Vector2(1, 0);
-        uvs[11] = new Vector2(1, 1);
+        uvs[10] = new Vector2(molt, 0);
+        uvs[11] = new Vector2(molt, 1);
+
+        uvs[12] = new Vector2(0, 0);
+        uvs[13] = new Vector2(0, 1);
+        uvs[14] = new Vector2(1, 0);
+        uvs[15] = new Vector2(1, 1);
+
 
         tria[0] = 2;
         tria[1] = 3;
@@ -4604,6 +4666,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         tria[15] = 9;
         tria[16] = 10;
         tria[17] = 8;
+
+
+        tria[18] = 13;
+        tria[19] = 14;
+        tria[20] = 12;
+
+        tria[21] = 13;
+        tria[22] = 15;
+        tria[23] = 14;
 
 
         mesh.vertices = vertices;
