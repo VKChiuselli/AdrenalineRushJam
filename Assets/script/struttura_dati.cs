@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,7 @@ public class struttura_dati : MonoBehaviour {
     public int gemme;
     public int[] livello_upgrade = new int[20];
     public int[] costo_livello = new int[50];
+    public string[] stelle_livello = new string[400];
     public int stelle_battle_pass;
     public float caratteristiche_forza;
     public float caratteristiche_velocita;
@@ -32,6 +34,9 @@ public class struttura_dati : MonoBehaviour {
         if (!PlayerPrefs.HasKey("battle_pass_reward_premium")) {
             resetto_battle_pass("premium");
         }
+        if (!PlayerPrefs.HasKey("stelle_livello")) {
+            inizio_stelle_livello();
+        }
 
         battle_pass_reward_free = PlayerPrefs.GetString("battle_pass_reward_free");
         battle_pass_reward_premium = PlayerPrefs.GetString("battle_pass_reward_premium");
@@ -46,9 +51,18 @@ public class struttura_dati : MonoBehaviour {
         for (int i = 1; i < 11; i++) {
             costo_livello[i] = PlayerPrefs.GetInt($"Livello{i}");
         }
+        for (int i = 0; i < 400; i++) {
+            stelle_livello[i] = PlayerPrefs.GetString($"stelle_livello{i}");
+        }
 
         SceneManager.LoadScene("menu");
 
+    }
+
+    private void inizio_stelle_livello() {
+        for (int i = 0; i < 400; i++) {
+            PlayerPrefs.SetString($"stelle_livello{i}", new string('0', 3));
+        }
     }
 
     private void resetto_battle_pass(string tipo_battle_pass) {

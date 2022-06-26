@@ -609,35 +609,6 @@ public class menu : MonoBehaviour {
         float pos_x = 0;
         float pos_y = risoluzione_y * .3f;
 
-
-        //if (pulsante[20] != null) { //shop
-        //    float dx2 = risoluzione_x * .333f;
-        //    float dy2 = dx2 * (55f / 145f);
-        //    pos_x = risoluzione_x;
-        //    pos_y = risoluzione_y * 0.25f;
-
-        //    pulsante[20].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
-        //    pulsante[20].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
-
-        //    pulsante_testo[20].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-
-        //}
-
-        //if (pulsante[21] != null)  //main
-        //{
-
-        //    float dx2 = dy * .8f;
-        //    float dy2 = dx2 * (76f / 72f);
-        //    pos_x = risoluzione_x;
-        //    pos_y = risoluzione_y * 0.05f;
-
-        //    pulsante[21].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-        //    pulsante[21].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
-
-        //}
-
-
-
         int aumento_pos_x = -1;
         int aumento_pos_y = 0;
 
@@ -2096,16 +2067,50 @@ public class menu : MonoBehaviour {
         }
 
         if (num == 215) {
-            if (indice_pagina_livello_corrente != 20)
+            if (indice_pagina_livello_corrente != 20) {
                 indice_pagina_livello_corrente++;
+                aggiorna_grafica_stelle();
+            }
         }
 
         if (num == 216) {
-            if(indice_pagina_livello_corrente!=1)
+            if (indice_pagina_livello_corrente != 1) {
             indice_pagina_livello_corrente--;
+                aggiorna_grafica_stelle();
+            }
         }
 
 
+    }
+
+    private void aggiorna_grafica_stelle() {
+        float dx = risoluzione_x;
+        float dy = risoluzione_y;
+
+        float pos_x = 0;
+        float pos_y = 0;
+        float dx2 = dx * .8f;
+        float dy2 = dy * .8f;
+        float dime_panel_x = dx2;
+        float dime_panel_y = dy2;
+
+
+
+        for (int n = 0; n < 10; n++) {
+
+            if (grafica[202 + n] != null) //stelle acquisite
+{
+                dx2 = dime_panel_x * 0.09f;
+                dy2 = dime_panel_y * 0.09f;
+                pos_x = dime_panel_x * -0.2f;
+                pos_y = dime_panel_y * 0.35f + n * -38f;
+                grafica[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                grafica[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
+                grafica[202 + n].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/stella_{script_struttura_dati.stelle_livello[(indice_pagina_livello_corrente * 10 -10) + n+1]}");
+
+            }
+
+        }
     }
 
     private void riscatta_premio_battle_pass_free(int indice_reward) {
