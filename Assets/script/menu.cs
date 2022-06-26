@@ -70,6 +70,8 @@ public class menu : MonoBehaviour {
     struttura_dati script_struttura_dati;
     public int indice_upgrade_corrente;
     public int indice_shop_corrente;
+    public int indice_livello_corrente;
+    public int indice_pagina_livello_corrente;
 
     GameObject canvas;
     GameObject canvas_popup;
@@ -111,10 +113,13 @@ public class menu : MonoBehaviour {
 
         if (ogg_struttura_dati != null) {
             script_struttura_dati = ogg_struttura_dati.GetComponent<struttura_dati>();
+            indice_livello_corrente = script_struttura_dati.livello_in_uso;
+            indice_pagina_livello_corrente = script_struttura_dati.livello_in_uso / 10 + 1;
 
             Debug.Log("" + script_struttura_dati.caratteristiche_forza);
-
         }
+
+     
 
         controllo_risoluzione();
 
@@ -125,7 +130,7 @@ public class menu : MonoBehaviour {
     }
 
     private void aggiorno_stelle() {
-    
+
         PlayerPrefs.SetString($"battle_pass_reward_free", calcolo_stelle_free());
         PlayerPrefs.SetString($"battle_pass_reward_premium", calcolo_stelle_premium());
     }
@@ -134,11 +139,11 @@ public class menu : MonoBehaviour {
 
         char[] reward_string = script_struttura_dati.battle_pass_reward_free.ToCharArray();
 
-        for (int i=0; i<script_struttura_dati.stelle_battle_pass; i++) {
+        for (int i = 0; i < script_struttura_dati.stelle_battle_pass; i++) {
 
 
             if (reward_string[i] == '0') {
-                reward_string[i]='1';
+                reward_string[i] = '1';
             }
         }
 
@@ -152,11 +157,11 @@ public class menu : MonoBehaviour {
 
         char[] reward_string = script_struttura_dati.battle_pass_reward_premium.ToCharArray();
 
-        for (int i=0; i<script_struttura_dati.stelle_battle_pass; i++) {
+        for (int i = 0; i < script_struttura_dati.stelle_battle_pass; i++) {
 
 
             if (reward_string[i] == '0') {
-                reward_string[i]='1';
+                reward_string[i] = '1';
             }
         }
 
@@ -249,22 +254,18 @@ public class menu : MonoBehaviour {
 
         if (pagina == -1) {
 
-            if (controllo_mobile == 0)
-            {
+            if (controllo_mobile == 0) {
 
-                if (Input.GetKey(KeyCode.UpArrow))
-                {
+                if (Input.GetKey(KeyCode.UpArrow)) {
                     scroll_verticale_sx = scroll_verticale_sx - risoluzione_y * .025f;
                 }
 
-                if (Input.GetKey(KeyCode.DownArrow))
-                {
+                if (Input.GetKey(KeyCode.DownArrow)) {
                     scroll_verticale_sx = scroll_verticale_sx + risoluzione_y * .025f;
                 }
 
             }
-            else
-            {
+            else {
                 scroll_verticale_sx = scroll_verticale_sx + diff_ym_mo;
 
             }
@@ -274,44 +275,37 @@ public class menu : MonoBehaviour {
 
         if (pagina == 1) {
 
-            if (controllo_mobile == 0)
-            {
+            if (controllo_mobile == 0) {
                 if (Input.GetKey(KeyCode.UpArrow)) {
-                scroll_verticale_dx = scroll_verticale_dx - risoluzione_y * .025f;
+                    scroll_verticale_dx = scroll_verticale_dx - risoluzione_y * .025f;
+                }
+
+                if (Input.GetKey(KeyCode.DownArrow)) {
+                    scroll_verticale_dx = scroll_verticale_dx + risoluzione_y * .025f;
+                }
+
             }
+            else {
+                scroll_verticale_dx = scroll_verticale_dx + diff_ym_mo;
 
-            if (Input.GetKey(KeyCode.DownArrow)) {
-                scroll_verticale_dx = scroll_verticale_dx + risoluzione_y * .025f;
             }
-
         }
-        else
-        {
-            scroll_verticale_dx = scroll_verticale_dx + diff_ym_mo;
 
-        }
-    }
+        if (pagina == 2) {
 
-        if (pagina == 2)
-        {
+            if (controllo_mobile == 0) {
 
-            if (controllo_mobile == 0)
-            {
-
-                if (Input.GetKey(KeyCode.UpArrow))
-                {
+                if (Input.GetKey(KeyCode.UpArrow)) {
                     scroll_verticale_dx_battlepass = scroll_verticale_dx_battlepass - risoluzione_y * .025f;
                 }
 
-                if (Input.GetKey(KeyCode.DownArrow))
-                {
+                if (Input.GetKey(KeyCode.DownArrow)) {
                     scroll_verticale_dx_battlepass = scroll_verticale_dx_battlepass + risoluzione_y * .025f;
                 }
 
 
             }
-            else
-            {
+            else {
                 scroll_verticale_dx_battlepass = scroll_verticale_dx_battlepass + diff_ym_mo;
 
             }
@@ -536,7 +530,7 @@ public class menu : MonoBehaviour {
 
             pos_y = risoluzione_y * .1f * 1.9f - aumento_pos_y * dy2 * 1.05f * 1.8f; //distanza dall'inizio pagina  - gap tra stelle
 
-    
+
 
 
             if (grafica[300 + n] != null) {
@@ -552,8 +546,8 @@ public class menu : MonoBehaviour {
                 pulsante[300 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 pulsante[300 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 0.85f, pos_y + scroll_verticale_dx_battlepass + dy2 * 0.33f);
                 limite_verticale_dx_battlepass = pos_y - dy2 * .15f;
-                if(script_struttura_dati.battle_pass_reward_free[n]=='0' || script_struttura_dati.battle_pass_reward_free[n] == '2')
-                pulsante[300 + n].GetComponent<Button>().interactable = false;
+                if (script_struttura_dati.battle_pass_reward_free[n] == '0' || script_struttura_dati.battle_pass_reward_free[n] == '2')
+                    pulsante[300 + n].GetComponent<Button>().interactable = false;
             }
 
             if (pulsante[400 + n] != null) {// premium battlepass
@@ -574,7 +568,7 @@ public class menu : MonoBehaviour {
                 pos_y = risoluzione_y * 0.25f * 1.35f;
 
 
-                grafica[297].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*3f, dy2);
+                grafica[297].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 3f, dy2);
                 grafica[297].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 0.85f, pos_y + scroll_verticale_dx_battlepass);
                 grafica_testo[297].GetComponent<TextMeshProUGUI>().text = "FREE";
                 grafica_testo[297].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.7f;
@@ -582,8 +576,8 @@ public class menu : MonoBehaviour {
 
             if (grafica[298] != null) {
 
-                pos_x = risoluzione_x * 2; 
-                pos_y = risoluzione_y * 0.25f * 1.35f; 
+                pos_x = risoluzione_x * 2;
+                pos_y = risoluzione_y * 0.25f * 1.35f;
                 grafica[298].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 3f, dy2);
                 grafica[298].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx_battlepass);
                 grafica_testo[298].GetComponent<TextMeshProUGUI>().text = "STARS";
@@ -714,8 +708,7 @@ public class menu : MonoBehaviour {
 
     }
 
-    public void controllo_risoluzione()
-    {
+    public void controllo_risoluzione() {
 
         controllo_mobile = 0;
 
@@ -739,8 +732,7 @@ public class menu : MonoBehaviour {
         spostamento_sx2 = (rapporto_risoluzione - 1.333333f);
 
 
-        if (rapporto_risoluzione < 1)
-        {
+        if (rapporto_risoluzione < 1) {
 
             spostamento_sx = (rapporto_risoluzione / .75f);
             spostamento_sx2 = (rapporto_risoluzione - .75f);
@@ -760,22 +752,19 @@ public class menu : MonoBehaviour {
 
 
 
-        for (int n = 0; n <= 3; n++)
-        {
+        for (int n = 0; n <= 3; n++) {
             touch_xo[n] = touch_x[n];
             touch_yo[n] = touch_y[n];
         }
 
-        for (int n = 0; n <= 3; n++)
-        {
+        for (int n = 0; n <= 3; n++) {
             touch_x[n] = -1000;
             touch_y[n] = -1000;
         }
 
 #if ((UNITY_ANDROID || UNITY_IOS ))
 
-        for (int i = 0; i < Input.touchCount; i++)
-        {
+        for (int i = 0; i < Input.touchCount; i++) {
 
             Touch touch = Input.GetTouch(i);
 
@@ -789,10 +778,8 @@ public class menu : MonoBehaviour {
 
 
 
-        if (controllo_mobile == 0 && Input.GetMouseButton(0))
-        {
-            for (int n = 0; n <= 0; n++)
-            {
+        if (controllo_mobile == 0 && Input.GetMouseButton(0)) {
+            for (int n = 0; n <= 0; n++) {
                 touch_x[n] = xm;
                 touch_y[n] = ym;
                 touch_rx[n] = touch_x[n];
@@ -808,22 +795,19 @@ public class menu : MonoBehaviour {
 
 
 
-        if (controllo_mobile == 1)
-        {
+        if (controllo_mobile == 1) {
             diff_xm = 0;
             diff_ym = 0;
 
 
-            if (touch_x[0] > 0 && touch_xo[0] > 0 && touch_xo[1] < 0)
-            {
+            if (touch_x[0] > 0 && touch_xo[0] > 0 && touch_xo[1] < 0) {
 
                 diff_xm = (touch_x[0] - touch_xo[0]);
 
             }
 
 
-            if (touch_y[0] > 0 && touch_yo[0] > 0 && touch_xo[1] < 0)
-            {
+            if (touch_y[0] > 0 && touch_yo[0] > 0 && touch_xo[1] < 0) {
                 diff_ym = (touch_y[0] - touch_yo[0]);
                 diff_ym_mo = diff_ym;
             }
@@ -979,7 +963,7 @@ public class menu : MonoBehaviour {
                 float dx2 = dy * .333f;
                 float dy2 = dx2;
                 pos_x = 0;
-                pos_y = dime_panel_y*.1f;
+                pos_y = dime_panel_y * .1f;
 
                 grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -1205,7 +1189,7 @@ public class menu : MonoBehaviour {
                 pulsante_testo[207].GetComponent<TextMeshProUGUI>().fontSize = font_size;
             }
 
-            if (pulsante[204] != null)  //exit tasto
+            if (pulsante[201] != null)  //exit tasto
             {
                 float dx2 = risoluzione_x * 0.12f;
                 float dy2 = dx2;
@@ -1213,15 +1197,107 @@ public class menu : MonoBehaviour {
                 pos_y = dime_panel_y * .48f;
 
 
-                pulsante[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-                pulsante[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             }
 
 
             uscita_popup(dime_panel_x, dime_panel_y);
 
-        }
+        } //popup opzioni
+        else if (attivo_popup == 4)//popup seleziona livelli
+        {
+            if (grafica[200] != null)  //pannello opzioni
+            {
+
+                float dx2 = dx * .8f;
+                float dy2 = dy * .8f;
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+            if (grafica[201] != null)  //titolo capitolo selezionato
+            {
+
+                float dx2 = dy * .43f;
+                float dy2 = dx2;
+                pos_x = 0;
+                pos_y = dime_panel_y * 0.45f;
+
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 15f;
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "Chapter " + indice_pagina_livello_corrente;
+
+            }
+
+            for (int n = 0; n < 10; n++) {
+
+                if (pulsante[202 + n] != null) //pulsante testo lista
+   {
+                    float dx2 = dime_panel_x * 0.4f;
+                    float dy2 = dime_panel_y * 0.05f;
+                    pos_x = dime_panel_x * 0.2f;
+                    pos_y = dime_panel_y * 0.35f + n * -38f;
+                    pulsante[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                    pulsante[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
+
+
+                    pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 15f;
+                }
+
+            }
+            
+            for (int n = 0; n < 10; n++) {
+
+                if (grafica[202 + n] != null) //stelle acquisite
+   {
+                    float dx2 = dime_panel_x * 0.09f;
+                    float dy2 = dime_panel_y * 0.09f;
+                    pos_x = dime_panel_x * -0.2f;
+                    pos_y = dime_panel_y * 0.35f + n * -38f;
+                    grafica[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                    grafica[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
+
+                }
+
+            }
+
+            if (pulsante[215] != null) //pulsante destra
+{
+                float dx2 = dime_panel_x * 0.09f;
+                float dy2 = dime_panel_y * 0.09f;
+                pos_x = dime_panel_x * -.4f;
+                pos_y = dime_panel_y * 0.45f;
+                pulsante[215].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[215].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
+
+
+            }
+            if (pulsante[216] != null) //pulsante sinistra
+{
+                float dx2 = dime_panel_x * 0.09f;
+                float dy2 = dime_panel_y * 0.09f;
+                pos_x = dime_panel_x * 0.4f;
+                pos_y = dime_panel_y * 0.45f;
+                pulsante[216].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[216].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
+
+
+            }
+
+
+            uscita_popup(dime_panel_x, dime_panel_y);
+
+        } //popup opzioni
 
 
     }
@@ -1460,15 +1536,15 @@ public class menu : MonoBehaviour {
             grafica_testo[20].GetComponent<TextMeshProUGUI>().fontSize = font_size * 3f;
 
         }
-        if (grafica[21] != null) {
+        if (pulsante[11] != null) {
 
             float dx2 = risoluzione_x * 0.8f;
             float dy2 = risoluzione_y * 0.8f * 0.45f;
 
             pos_y = 0;
 
-            grafica[21].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 / 2, dy2 / 2);
-            grafica[21].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
+            pulsante[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 / 2, dy2 / 2);
+            pulsante[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
 
 
         }
@@ -1651,7 +1727,7 @@ public class menu : MonoBehaviour {
         crea_button_text(30, "BATTLEPASS", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/battlepass");
         crea_button_text(31, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/chest_main_page_1");
         crea_grafica_text(20, new Color(1, 1, 1, 0), "Livello " + script_struttura_dati.livello_in_uso + "/50", canvas, "Canvas", "");
-        crea_grafica_text(21, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/immagine_centrale_1");
+        crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/immagine_centrale_1"); //pulsante seleziona livelli
 
         crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
         crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
@@ -1688,6 +1764,33 @@ public class menu : MonoBehaviour {
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
     }
+    void crea_popup_seleziona_livelli(int num = 4) {
+
+        attivo_popup = num;
+
+        distruggi_menu_popup();
+
+        canvas_popup.SetActive(true);
+
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello selezione livelli
+        crea_grafica_text(201, new Color(1, 1, 1, 0), $"Chapter {indice_pagina_livello_corrente}", canvas_popup, "Canvas_popup/Panel", ""); //titolo capitolo selezionato
+
+        for (int n = 0; n < 10; n++) {
+            crea_grafica_text(202 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0");  //testo/titolo oggetto shop
+        }
+
+        crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //exit button
+
+        for (int n = 0; n < 10; n++) {
+            crea_button_text(202 + n, $"Level {n + 1}", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
+            pulsante[202 + n].GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        }
+
+        crea_button_text(215, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/freccia_destra");//pulsante freccia cambio capitolo
+        crea_button_text(216, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/freccia_sinistra"); //pulsante freccia cambio capitolo
+
+
+    }
 
     void crea_popup_upgrade(int num = 2) {
 
@@ -1707,7 +1810,7 @@ public class menu : MonoBehaviour {
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
 
     }
-    void crea_popup_opzioni(int num = 3) {
+    void crea_popup_opzioni(int num = 3) { //TODO FIX
 
         attivo_popup = num;
 
@@ -1728,7 +1831,7 @@ public class menu : MonoBehaviour {
         crea_grafica_text(204, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo credits
         crea_button_text(203, "Credits", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto credits
 
-        crea_button_text(204, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
+        crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
 
         crea_button_text(205, "FacebookLogin", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto credits
         crea_button_text(206, "ON", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto new music
@@ -1878,8 +1981,13 @@ public class menu : MonoBehaviour {
             pagina = 1;
         }
 
+        //pulsante battlepass
         if (num == 30) {
             pagina = 2;
+        }
+
+        if (num == 11) {
+            crea_popup_seleziona_livelli(4);
         }
 
 
@@ -1965,22 +2073,39 @@ public class menu : MonoBehaviour {
 
         }
 
-        if (num == 201 || num == 204) {
+        if (num == 201 ) {
             distruggi_menu_popup();
         }
 
-        for(int n=0; n<100; n++) {
-            if (num == 300+n) {
+        for (int n = 0; n < 100; n++) {
+            if (num == 300 + n) {
                 riscatta_premio_battle_pass_free(n);
             }
         }
-      
-        for(int n=0; n<100; n++) {
-            if (num == 400+n) {
+
+        for (int n = 0; n < 100; n++) {
+            if (num == 400 + n) {
                 riscatta_premio_battle_pass_premium(n);
             }
         }
-      
+
+        for (int n = 0; n < 10; n++) {
+            if (num == 202 + n) {
+                script_struttura_dati.livello_in_uso =  indice_pagina_livello_corrente * 10 - (10 - (n+1));
+            }
+        }
+
+        if (num == 215) {
+            if (indice_pagina_livello_corrente != 20)
+                indice_pagina_livello_corrente++;
+        }
+
+        if (num == 216) {
+            if(indice_pagina_livello_corrente!=1)
+            indice_pagina_livello_corrente--;
+        }
+
+
     }
 
     private void riscatta_premio_battle_pass_free(int indice_reward) {
