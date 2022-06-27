@@ -12,8 +12,7 @@ public class struttura_dati : MonoBehaviour {
     public int[] costo_livello = new int[50];
     public string[] stelle_livello = new string[400];
     public int stelle_battle_pass;
-    public float caratteristiche_forza;
-    public float caratteristiche_velocita;
+
     public float energia;
     public string battle_pass_reward_free;
     public string battle_pass_reward_premium;
@@ -38,8 +37,6 @@ public class struttura_dati : MonoBehaviour {
         livello_massimo_raggiunto = PlayerPrefs.GetInt("livello_massimo_raggiunto");
         battle_pass_reward_free = PlayerPrefs.GetString("battle_pass_reward_free");
         battle_pass_reward_premium = PlayerPrefs.GetString("battle_pass_reward_premium");
-        caratteristiche_forza = PlayerPrefs.GetFloat("caratteristiche_forza");
-        caratteristiche_velocita = PlayerPrefs.GetFloat("caratteristiche_velocita");
 
 
         for (int i = 1; i < 7; i++) {

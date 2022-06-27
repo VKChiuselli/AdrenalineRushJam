@@ -214,13 +214,22 @@ public class tutorial_primo_livello : MonoBehaviour {
     }
 
     private void ResumeGame() {
-        if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) ||  (Gioco_ruota_cilindro.touch_x[0]> 0)) { //TODO implemenmtare i comandi touch in ascolto
-            Time.timeScale = 1;
-            Gioco_ruota_cilindro.distruggi_menu_tutorial();
-            if (avvisato_raccogli_ammo) {
-                ammo_raccolta = true;
+
+        if (Gioco_ruota_cilindro.crea_popup_finale == 0)
+        {
+            if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) || (Gioco_ruota_cilindro.touch_x[0] > 0))
+            { //TODO implemenmtare i comandi touch in ascolto
+                Time.timeScale = 1;
+                Gioco_ruota_cilindro.distruggi_menu_tutorial();
+                if (avvisato_raccogli_ammo)
+                {
+                    ammo_raccolta = true;
+                }
             }
+
         }
+
+
 
     }
 

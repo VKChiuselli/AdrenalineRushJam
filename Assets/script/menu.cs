@@ -129,7 +129,7 @@ public class menu : MonoBehaviour {
             indice_livello_corrente = script_struttura_dati.livello_in_uso;
             indice_pagina_livello_corrente = script_struttura_dati.livello_in_uso / 10 + 1;
 
-            Debug.Log("" + script_struttura_dati.caratteristiche_forza);
+         
         }
 
      

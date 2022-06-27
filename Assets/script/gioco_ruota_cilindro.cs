@@ -74,6 +74,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     public int monete_partita_corrente = 0;
     public int gemme_partita_corrente = 0;
 
+    public int ok_energia_completa = 0;
+    public int ok_spari_completi = 0;
+
+
+
     float monete_UI = 0;
     float gemme_UI = 0;
 
@@ -180,7 +185,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float[] grafica_dime = new float[25];
     float[] grafica_pos = new float[25];
 
-    int crea_popup_finale = 0;
+    public int crea_popup_finale = 0;
 
     float crea_popup_finale_tempo = 1;
 
@@ -237,7 +242,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     AudioSource musica;
 
-
+    int ok_fine_livello = 0;
 
 
 
@@ -2888,6 +2893,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         {
             if (script_struttura_dati != null)
             {
+
+
+                // da passare i parametri stelle
+
+
                 script_struttura_dati.livello_in_uso = script_struttura_dati.livello_in_uso + 1;
 
                 PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
@@ -3785,20 +3795,30 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
 
+                ok_energia_completa=0;
+                ok_spari_completi = 0;
+
                 if (energia != energia_base) {
                     grafica_pos[8] = 5.35f;
                     grafica_pos[11] = 5.35f;
-
+                    ok_energia_completa = 1;
                 }
 
 
                 if (numero_spari != numero_spari_base) {
                     grafica_pos[9] = 5.35f;
                     grafica_pos[12] = 5.35f;
-
+                    ok_spari_completi = 1;
                 }
 
 
+
+                if (ok_fine_livello == 0)
+                {
+                    ok_fine_livello = 1;
+
+                    salva_le_stelle();
+                }
 
 
 
@@ -4049,6 +4069,20 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     }
+
+
+
+    void salva_le_stelle()
+    {
+
+       // ok_energia_completa;
+       // ok_spari_completi;
+
+
+    }
+
+
+
 
     void uscita_popup(float dime_panel_x, float dime_panel_y) {
         resetTimerPopup += Time.deltaTime;
