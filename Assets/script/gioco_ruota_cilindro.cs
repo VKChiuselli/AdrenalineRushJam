@@ -585,7 +585,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             if (livello_uso == 1 || livello_uso == 2)
         { //TODO da sostituire con script_struttura_dati
-            potenza_tasto = 200;
+            potenza_tasto = -200;
         }
         else
         {
@@ -650,7 +650,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio - Time.deltaTime;
 
 
-            if (pressione_tasto_up < 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f) {
+            if (pressione_tasto_up !=0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f) {
                 crea_sparo();
 
             }
@@ -722,17 +722,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             if (Mathf.Abs(pressione_tasto) > 0 && blocco_velocita > .99f) {
 
-                int molt_inversione = 1;
+                int molt_inversione = -1;
 
-                if (inversione_controllo == 1) {
-                    molt_inversione = -1;
-
-                }
-
-                if (inversione_camera == 0) {
-                    molt_inversione = molt_inversione * -1;
+                if (visione_boss == true)
+                {
+                    molt_inversione = 1;
 
                 }
+
+
 
                 rotazione_cilindro = pressione_tasto * potenza_tasto * Time.deltaTime * molt_inversione * agilita;
 
@@ -740,12 +738,18 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             }
 
 
+            int molt_rotazione_z = 1;
+
+            if (visione_boss == true)
+            {
+                molt_rotazione_z = -1;
+
+            }
 
 
+            astronave_rz_calcolo = astronave_rz_calcolo - pressione_tasto* molt_rotazione_z;
 
 
-
-            astronave_rz_calcolo = astronave_rz_calcolo + pressione_tasto;
 
             if (astronave_rz_calcolo > 30) {
                 astronave_rz_calcolo = 30;
