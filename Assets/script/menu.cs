@@ -1120,9 +1120,9 @@ public class menu : MonoBehaviour {
             if (pulsante[203] != null)  //tasto credits
             {
                 float dx2 = dime_panel_x * .7f;
-                float dy2 = risoluzione_y * 0.1f;
+                float dy2 = dime_panel_y * 0.1f;
                 pos_x = 0;
-                pos_y = risoluzione_y * -0.5f + dx2 * 1.5f;
+                pos_y = dime_panel_y * -0.09f;
                 pulsante[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[203].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -1131,9 +1131,9 @@ public class menu : MonoBehaviour {
             if (pulsante[205] != null)  //tasto new facebook
             {
                 float dx2 = dime_panel_x * .7f;
-                float dy2 = risoluzione_y * 0.1f;
+                float dy2 = dime_panel_y * 0.1f;
                 pos_x = 0;
-                pos_y = risoluzione_y * 0.5f - dy * .8f * (76f / 72f) * 0.50f;
+                pos_y = dime_panel_y * 0.12f;
                 pulsante[205].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[205].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[205].GetComponent<TextMeshProUGUI>().fontSize = font_size;
