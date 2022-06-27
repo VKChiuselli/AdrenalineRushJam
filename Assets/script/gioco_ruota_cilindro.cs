@@ -2147,9 +2147,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             pos = astronave.transform.position + pos_direction[n];
 
-
+#if UNITY_EDITOR
             Debug.DrawRay(pos, pos_ray_direction[n], new Color(1, n * .2f, 0, 1));
-
+#endif
 
             if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, 15)) {
 
@@ -2886,13 +2886,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 209) // next level da salvare e poi 
         {
+            if (script_struttura_dati != null)
+            {
+                script_struttura_dati.livello_in_uso = script_struttura_dati.livello_in_uso + 1;
 
-            script_struttura_dati.livello_in_uso = script_struttura_dati.livello_in_uso + 1;
+                PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
 
-            PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
+                SceneManager.LoadScene("gioco");
 
-            SceneManager.LoadScene("gioco");
-
+            }
 
         }
 
