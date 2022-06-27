@@ -33,8 +33,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     public float variabile_x;
     public float variabile_y;
 
-    float[] touch_x = new float[15];
-    float[] touch_y = new float[15];
+    public float[] touch_x = new float[15];
+    public float[] touch_y = new float[15];
 
     float[] touch_rx = new float[15];
     float[] touch_ry = new float[15];
@@ -86,7 +86,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float spostamento_sx2;
 
     float diff_xm;
-    float diff_ym;
+    public float diff_ym;
 
 
 
@@ -191,7 +191,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float tempo_barriera = 3;
     float energia = 100;
     float energia_base = 100;
-  public  int numero_spari = 3;
+    public int numero_spari = 3;
     int numero_spari_base = 0;
 
     float scafo = 0;
@@ -238,7 +238,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     AudioSource musica;
 
 
-   
+
 
 
     // Start is called before the first frame update
@@ -246,7 +246,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         controllo_risoluzione();
 
-       
+
         cilindro = GameObject.Find("cilindro_esatto");
         sfondo = GameObject.Find("sfondo");
 
@@ -364,7 +364,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             if (attiva_barriera < 0) {
                 energia = energia - riduttore / scafo;
 
-                Debug.Log("energia "+ energia);
+                Debug.Log("energia " + energia);
 
                 attiva_barriera = tempo_barriera;
             }
@@ -429,13 +429,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        {
+        if (Input.GetKeyUp(KeyCode.Alpha2)) {
 
             crea_potere_boss();
 
         }
-       
+
 
 
 #endif
@@ -590,19 +589,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         int livello_uso = 1;
 
-        if (script_struttura_dati != null)
-        {
+        if (script_struttura_dati != null) {
 
-                livello_uso = script_struttura_dati.livello_in_uso;
+            livello_uso = script_struttura_dati.livello_in_uso;
         }
 
 
-            if (livello_uso == 1 || livello_uso == 2)
-        { //TODO da sostituire con script_struttura_dati
+        if (livello_uso == 1 || livello_uso == 2) { //TODO da sostituire con script_struttura_dati
             potenza_tasto = -200;
         }
-        else
-        {
+        else {
             potenza_tasto = c_save_p.crea_parametri[0].potenza_tasto;
         }
 
@@ -610,13 +606,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         attiva_barriera = attiva_barriera - Time.deltaTime;
 
 
-        if (attiva_barriera < 0)
-        {
+        if (attiva_barriera < 0) {
             attiva_barriera = -.001f;
         }
 
 
-        astronave_barriera.GetComponent<Renderer>().material.SetColor("_Color", new Color32(118,255,200,(byte) (attiva_barriera * 85)));
+        astronave_barriera.GetComponent<Renderer>().material.SetColor("_Color", new Color32(118, 255, 200, (byte)(attiva_barriera * 85)));
 
 
 
@@ -647,7 +642,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        if (!tutorial_in_corso && attivo_popup==0) {
+        if (!tutorial_in_corso && attivo_popup == 0) {
 
             float pressione_tasto_up = Input.GetAxis("Vertical");
 
@@ -664,15 +659,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio - Time.deltaTime;
 
 
-            if (pressione_tasto_up !=0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f) {
+            if (pressione_tasto_up != 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f) {
                 crea_sparo();
 
             }
 
 
 
-            if (controllo_mobile == 0)
-            {
+            if (controllo_mobile == 0) {
                 pressione_tasto = Input.GetAxis("Horizontal");
 
             }
@@ -684,14 +678,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 if (touch_x[0] > 0 && touch_x[0] < risoluzione_x * (parametro_touch)) {
 
-                    if (pressione_tasto > 0)
-                    {
+                    if (pressione_tasto > 0) {
                         pressione_tasto = 0;
                     }
 
                     pressione_tasto = pressione_tasto - c_save_p.crea_parametri[0].potenziometro_touch * Time.deltaTime;
 
-                  
+
 
 
                 }
@@ -699,8 +692,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 if (touch_x[0] > risoluzione_x * (1.0f - parametro_touch)) {
 
 
-                    if (pressione_tasto < 0)
-                    {
+                    if (pressione_tasto < 0) {
                         pressione_tasto = 0;
                     }
 
@@ -711,21 +703,18 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
 
-                if (touch_x[0] <= 0)
-                {
+                if (touch_x[0] <= 0) {
                     potenziometro_touch = 0;
                     pressione_tasto = 0;
                 }
 
 
 
-                if (pressione_tasto > 1)
-                {
+                if (pressione_tasto > 1) {
                     pressione_tasto = 1;
                 }
 
-                if (pressione_tasto < -1)
-                {
+                if (pressione_tasto < -1) {
                     pressione_tasto = -1;
                 }
 
@@ -738,8 +727,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 int molt_inversione = -1;
 
-                if (visione_boss == true)
-                {
+                if (visione_boss == true) {
                     molt_inversione = 1;
 
                 }
@@ -754,14 +742,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             int molt_rotazione_z = 1;
 
-            if (visione_boss == true)
-            {
+            if (visione_boss == true) {
                 molt_rotazione_z = -1;
 
             }
 
 
-            astronave_rz_calcolo = astronave_rz_calcolo - pressione_tasto* molt_rotazione_z;
+            astronave_rz_calcolo = astronave_rz_calcolo - pressione_tasto * molt_rotazione_z;
 
 
 
@@ -828,12 +815,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-    void OnGUI()
-    {
+    void OnGUI() {
 
-    //    GUI.skin = skin_scrittura;
+        //    GUI.skin = skin_scrittura;
 
-    //    GUI.Label( new Rect(0,0,600,70), "pressione_tasto " + pressione_tasto+ " attiva_barriera " + attiva_barriera); 
+        //    GUI.Label( new Rect(0,0,600,70), "pressione_tasto " + pressione_tasto+ " attiva_barriera " + attiva_barriera); 
 
 
 
@@ -841,7 +827,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        void gestione_sparo() {
+    void gestione_sparo() {
 
 
         for (int n = 0; n < 5; n++) {
@@ -929,11 +915,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         float altezza_cam = 3.5f;
 
 
-        if (visione_boss == false)
-        {
+        if (visione_boss == false) {
             float sposta_z = -6;
-            if (crea_popup_finale == 1)
-            {
+            if (crea_popup_finale == 1) {
                 sposta_z = -8;
             }
 
@@ -945,7 +929,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         }
 
-        if (visione_boss==true) {
+        if (visione_boss == true) {
             float sposta_z = 6;
 
             if (crea_popup_finale == 1) {
@@ -981,28 +965,24 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             int livello_uso = 1;
 
-            if (script_struttura_dati != null)
-            {
+            if (script_struttura_dati != null) {
 
-                    livello_uso = script_struttura_dati.livello_in_uso;
-     
+                livello_uso = script_struttura_dati.livello_in_uso;
+
             }
 
 
-            if (livello_uso == 1 || livello_uso == 2)
-            { //TODO da sostituire con script_struttura_dati
+            if (livello_uso == 1 || livello_uso == 2) { //TODO da sostituire con script_struttura_dati
                 velocita_personaggio = 20;
             }
-            else
-            {
+            else {
                 velocita_personaggio = c_save_p.crea_parametri[0].velocita_personaggio;
 
             }
 
             float velo_popup = 1;
 
-            if (attivo_popup > 0)
-            {
+            if (attivo_popup > 0) {
                 velo_popup = 0;
             }
 
@@ -1116,7 +1096,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     c_save.crea_blocco[n].forza_impatto = c_save.crea_blocco[n].forza_impatto * .95f - .015f;
 
-                    if (c_save.crea_blocco[n].forza_impatto > .025f ) {
+                    if (c_save.crea_blocco[n].forza_impatto > .025f) {
                         spostamento_blocco(c_save.crea_blocco[n].mesh, c_save.crea_blocco[n].punto_impatto, c_save.crea_blocco[n].forza_impatto, c_save.crea_blocco[n].rad);
                     }
 
@@ -1531,8 +1511,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         int tipo_blocco = c_save.crea_blocco[num].tipo;
 
-        if (tipo_blocco > 0)
-        {
+        if (tipo_blocco > 0) {
 
 
             float angolo = rad * Mathf.Rad2Deg;
@@ -1544,12 +1523,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-            if (tipo_blocco <= 4)
-            {
+            if (tipo_blocco <= 4) {
                 c_save.crea_blocco[num].mesh = Instantiate(Resources.Load("grafica_3d/Prefabs_space/blocco_" + tipo_blocco, typeof(GameObject))) as GameObject;
             }
-            else
-            {
+            else {
                 crea_blocco_mesh2(num, tipo_blocco, c_save.crea_blocco[num].struttura_procedurale, c_save.crea_blocco[num].struttura_procedurale_dz);
             }
 
@@ -1564,28 +1541,24 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-            if (tipo_blocco <= 4)
-            {
+            if (tipo_blocco <= 4) {
 
                 c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
             }
 
-            if (tipo_blocco >= 5 && tipo_blocco<=8)
-            {
+            if (tipo_blocco >= 5 && tipo_blocco <= 8) {
 
                 c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(0, 0, 0);
             }
 
-            if (tipo_blocco >= 9)
-            {
+            if (tipo_blocco >= 9) {
                 c_save.crea_blocco[num].mesh.transform.localEulerAngles = new Vector3(0, 0, -angolo);
 
                 c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(0, 0, zz);
             }
 
 
-            if (tipo_blocco <= 4)
-            {
+            if (tipo_blocco <= 4) {
                 c_save.crea_blocco[num].mesh_dissolve = GameObject.Find("cilindro_esatto/blocco " + num + "/blocco_mesh");
 
                 c_save.crea_blocco[num].mesh_dissolve.name = "blocco_mesh " + num;
@@ -1595,8 +1568,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 c_save.crea_blocco[num].mesh_renderer.material.shader = Shader.Find("Custom/Dissolve");
             }
 
-            if (tipo_blocco >= 5)
-            {
+            if (tipo_blocco >= 5) {
                 c_save.crea_blocco[num].mesh_dissolve = c_save.crea_blocco[num].mesh;
 
                 c_save.crea_blocco[num].mesh_renderer = c_save.crea_blocco[num].mesh_dissolve.GetComponent<Renderer>();
@@ -1604,8 +1576,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 c_save.crea_blocco[num].mesh_renderer.material.shader = Shader.Find("Custom/Dissolve");
 
 
-                if (tipo_blocco >= 9)
-                {
+                if (tipo_blocco >= 9) {
                     rigenera_blocco(c_save.crea_blocco[num].mesh);
 
                 }
@@ -1787,8 +1758,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         c_save.crea_blocco[num].mesh.transform.SetParent(cilindro.transform);
 
-        if (tipo>=5 && tipo <= 8)
-        {
+        if (tipo >= 5 && tipo <= 8) {
             c_save.crea_blocco[num].mesh.AddComponent<MeshCollider>();
 
         }
@@ -2173,7 +2143,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         int num_block = -1;
 
-        for (int n =0; n <= 7; n++) {
+        for (int n = 0; n <= 7; n++) {
 
             pos = astronave.transform.position + pos_direction[n];
 
@@ -2251,7 +2221,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     //----------
 
 
-                   
+
 
 
 
@@ -2299,8 +2269,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                    if (hit_collider.collider.name.IndexOf("boss_potere_mesh") > -1)
-                    {
+                    if (hit_collider.collider.name.IndexOf("boss_potere_mesh") > -1) {
                         string str_boss_potere_mesh = "" + hit_collider.collider.name;
 
                         str_boss_potere_mesh = str_boss_potere_mesh.Replace("boss_potere_mesh ", "");
@@ -2346,7 +2315,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 if (c_save.crea_blocco[num_block].disattiva_coll == 0) {
                     c_save.crea_blocco[num_block].disattiva_coll = 1;
 
-                   
+
 
                     analisi_energia(15);
 
@@ -2479,9 +2448,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         int toccato_astronave = 0;
 
         if (distanza_coll < 2 && tipo == 1) {
-           
 
-         
+
+
             carica_particles("particles/CFXR Explosion 3", ogg.transform.position);
 
             DestroyImmediate(ogg);
@@ -2589,7 +2558,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (visione_boss == true) {
 
-            if (blocco_velocita > .99f && attivo_popup==0) {
+            if (blocco_velocita > .99f && attivo_popup == 0) {
 
                 float raggio = c_save.crea_cilindro[0].raggio;
 
@@ -2616,8 +2585,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 attivo_tempo_potere_boss = attivo_tempo_potere_boss - Time.deltaTime;
 
-                if (attivo_tempo_potere_boss < -3)
-                {
+                if (attivo_tempo_potere_boss < -3) {
                     attivo_tempo_potere_boss = UnityEngine.Random.Range(0.0f, 3.0f);
                     crea_potere_boss();
 
@@ -2837,7 +2805,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         pulsante_testo[num].GetComponent<TextMeshProUGUI>().color = colore_testo;
 
 
-       
+
         pulsante_testo[num].GetComponent<TextMeshProUGUI>().raycastTarget = false;
 
     }
@@ -2889,8 +2857,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 #endif
 
 
-        if (num == 0)
-        {
+        if (num == 0) {
 
             crea_popup(4);
 
@@ -2898,16 +2865,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (num == 202)
-        {
+        if (num == 202) {
 
             SceneManager.LoadScene("menu");
 
 
         }
 
-        if (num == 203)
-        {
+        if (num == 203) {
 
             distruggi_menu_popup();
 
@@ -2984,11 +2949,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         crea_grafica_text(8, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/ammo");
         crea_grafica_text(9, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-       
+
 
         crea_grafica_text(10, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
 
-     
+
 
     }
 
@@ -2998,14 +2963,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         float valore_yy = .445f;
 
-        if (crea_popup_finale > 0 || attivo_popup>0)
-        {
+        if (crea_popup_finale > 0 || attivo_popup > 0) {
             valore_yy = .75f;
 
         }
-        
 
-        spostamento_ui_verticale = Mathf.Lerp(spostamento_ui_verticale, valore_yy, Time.deltaTime*2);
+
+        spostamento_ui_verticale = Mathf.Lerp(spostamento_ui_verticale, valore_yy, Time.deltaTime * 2);
 
 
         float dy = risoluzione_y * .125f;
@@ -3030,7 +2994,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        float pos_y2 = pos_y = risoluzione_y *( spostamento_ui_verticale);
+        float pos_y2 = pos_y = risoluzione_y * (spostamento_ui_verticale);
 
 
         if (pulsante[0] != null)  //settings
@@ -3196,8 +3160,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             grafica_testo[10].GetComponent<TextMeshProUGUI>().fontSize = font_size_level;
 
-            if (script_struttura_dati != null)
-            {
+            if (script_struttura_dati != null) {
                 grafica_testo[10].GetComponent<TextMeshProUGUI>().text = "LEVEL " + script_struttura_dati.livello_in_uso;
             }
 
@@ -3222,7 +3185,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica[10].GetComponent<Image>().color = new Color(1, 1, 1, alpha);
             grafica_testo[10].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, alpha);
 
-           
+
 
         }
 
@@ -3445,7 +3408,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void crea_popup(int num = 1) {
 
 
-       
+
 
         distruggi_menu_popup();
 
@@ -3568,8 +3531,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        if (num == 3)
-        {
+        if (num == 3) {
 
             crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
@@ -3596,15 +3558,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         }
 
-        if (num == 4)
-        {
+        if (num == 4) {
 
             crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
             crea_grafica_text(201, new Color(1, 1, 1, 0), "ENTER MENU", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
             crea_button_text(202, "CONFIRM", new Color(1, 1, 1, 0), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pannello shop
-           
+
             crea_button_text(203, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
 
@@ -3674,8 +3635,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             float dx2 = dx * 0.3f;
             float dy2 = dy * 0.3f;
-            pos_x =  dx2 * -1f;
-            pos_y =   0;
+            pos_x = dx2 * -1f;
+            pos_y = 0;
 
             grafica[103].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
             grafica[103].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -3698,7 +3659,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     [SerializeField] float period = 2f;
     [SerializeField] float movementFactor = 2f;
-  
+
 
     private void fade_continuo(Image image) {
 
@@ -3709,8 +3670,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         float rawSinWave = Mathf.Sin(cycles * tau);  // going from -1 to 1
 
         movementFactor = (rawSinWave + 1f) / 2f;   // recalculated to go from 0 to 1 so its cleaner
-  
-        image.color = new Color(1,1,1, movementFactor);
+
+        image.color = new Color(1, 1, 1, movementFactor);
     }
 
 
@@ -3763,7 +3724,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        if (attivo_popup == 1 || attivo_popup==2) {
+        if (attivo_popup == 1 || attivo_popup == 2) {
             if (grafica[200] != null)  //pannello
             {
 
@@ -3913,8 +3874,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             }
         }
 
-        if (attivo_popup == 3)
-        {
+        if (attivo_popup == 3) {
             if (grafica[200] != null)  // monete
             {
 
@@ -3935,7 +3895,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
 
-                pos_x = dime_panel_x*-.2f;
+                pos_x = dime_panel_x * -.2f;
                 pos_y = dime_panel_y * .3f;
 
                 grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .4f, dx2 * .4f);
@@ -3946,13 +3906,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 grafica_testo[202].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 10);
 
-                monete_UI =Mathf.MoveTowards(monete_UI, monete_partita_corrente, Time.deltaTime * 100);
+                monete_UI = Mathf.MoveTowards(monete_UI, monete_partita_corrente, Time.deltaTime * 100);
 
 
 
-                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = ""+ (int)(monete_UI);
+                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = "" + (int)(monete_UI);
 
-               
+
                 pos_x = dime_panel_x * -.2f;
                 pos_y = dime_panel_y * .13f;
 
@@ -3966,7 +3926,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 gemme_UI = Mathf.MoveTowards(gemme_UI, gemme_partita_corrente, Time.deltaTime * 100);
 
-             
+
 
                 grafica_testo[204].GetComponent<TextMeshProUGUI>().text = "" + (int)(gemme_UI);
 
@@ -3985,7 +3945,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 }
 
-                if (pulsante[209] != null && energia>0)  //next level
+                if (pulsante[209] != null && energia > 0)  //next level
                 {
                     float dx3 = risoluzione_x * .5f;
                     float dy3 = risoluzione_x * .15f;
@@ -3999,7 +3959,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
 
-                if (pulsante[210] != null && energia<=0)  //repeat level
+                if (pulsante[210] != null && energia <= 0)  //repeat level
                 {
                     float dx3 = risoluzione_x * .5f;
                     float dy3 = risoluzione_x * .15f;
@@ -4021,15 +3981,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        if (attivo_popup == 4)
-        {
+        if (attivo_popup == 4) {
             if (grafica[200] != null)  //pannello
             {
 
                 float dx2 = dx * .8f;
                 float dy2 = dy * .8f;
 
-                
+
 
                 float dy_t = dy * .2f;
 
@@ -4044,11 +4003,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 pos_y = dime_panel_y * .3f;
 
-                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*.9f, dx2 * .7f);
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .9f, dx2 * .7f);
                 grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
 
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize =(int) (risoluzione_x/10);
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 10);
 
                 pos_y = dime_panel_y * -.3f;
 
@@ -4083,7 +4042,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 uscita_popup(dime_panel_x, dime_panel_y);
 
             }
-          
+
         }
 
 
@@ -4270,24 +4229,21 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     int livello_uso = 1;
 
-                    if (script_struttura_dati != null)
-                    {
+                    if (script_struttura_dati != null) {
 
                         livello_uso = script_struttura_dati.livello_in_uso;
                     }
 
 
 #if UNITY_EDITOR
-                    if (level_json != null)
-                    {
+                    if (level_json != null) {
 
                         string nome_livello = level_json.name;
-                        nome_livello = nome_livello.Replace("livello_","");
+                        nome_livello = nome_livello.Replace("livello_", "");
 
                         livello_uso = int.Parse(nome_livello);
 
-                        if (script_struttura_dati != null)
-                        {
+                        if (script_struttura_dati != null) {
                             script_struttura_dati.livello_in_uso = livello_uso;
 
                         }
@@ -4372,20 +4328,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     }
 
 
-    void aggiorna_potere_boss()
-    {
+    void aggiorna_potere_boss() {
 
-        for (int n = 0; n < 4; n++)
-        {
+        for (int n = 0; n < 4; n++) {
 
             boss_potere[n] = boss_potere[n] - Time.deltaTime;
 
             if (boss_potere_attivo[n] == 1) {
 
-                
-                
-                    if (boss_potere[n] >=6.0f && boss_potere[n] <= 6.5f)
-                {
+
+
+                if (boss_potere[n] >= 6.0f && boss_potere[n] <= 6.5f) {
                     boss_potere_altezza[n] = boss_potere_altezza[n] + Time.deltaTime * 5;
 
                     update_potere_boss(n, boss_potere_altezza[n]);
@@ -4393,8 +4346,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
 
-                if (boss_potere[n] < 0)
-                {
+                if (boss_potere[n] < 0) {
                     boss_potere_attivo[n] = 1;
 
                     DestroyImmediate(boss_potere_mesh[n]);
@@ -4404,23 +4356,20 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
         }
-       
+
 
 
     }
 
 
 
-    void crea_potere_boss()
-    {
+    void crea_potere_boss() {
         int che_potere = -1;
 
-        for (int n = 0;  n < 4; n++)
-        {
+        for (int n = 0; n < 4; n++) {
 
-         
-            if (boss_potere[n] < 0)
-            {
+
+            if (boss_potere[n] < 0) {
                 che_potere = n;
                 break;
             }
@@ -4429,14 +4378,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (che_potere > -1)
-        {
+        if (che_potere > -1) {
 
             boss_potere_attivo[che_potere] = 1;
 
             boss_potere[che_potere] = 8;
 
-           crea_potere_boss(che_potere, 0.15f);
+            crea_potere_boss(che_potere, 0.15f);
         }
 
 
@@ -4444,10 +4392,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     }
 
 
-    void crea_potere_boss(int num, float altezza=0)
-    {
-        if (boss_potere_mesh[num] != null)
-        {
+    void crea_potere_boss(int num, float altezza = 0) {
+        if (boss_potere_mesh[num] != null) {
             DestroyImmediate(boss_potere_mesh[num]);
 
         }
@@ -4475,27 +4421,27 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         float raggio = c_save.crea_cilindro[0].raggio;
 
-        float divisore = Mathf.PI * 2 / 18.0f+ cilindro.transform.localEulerAngles.y*Mathf.Deg2Rad;
+        float divisore = Mathf.PI * 2 / 18.0f + cilindro.transform.localEulerAngles.y * Mathf.Deg2Rad;
 
         boss_potere_rad[num] = divisore;
 
 
-        float x0 = Mathf.Sin( 0) * raggio;
-        float y0 = Mathf.Cos( 0) * raggio;
+        float x0 = Mathf.Sin(0) * raggio;
+        float y0 = Mathf.Cos(0) * raggio;
 
-        float x1 = Mathf.Sin(  divisore) * raggio;
-        float y1 = Mathf.Cos(  divisore) * raggio;
+        float x1 = Mathf.Sin(divisore) * raggio;
+        float y1 = Mathf.Cos(divisore) * raggio;
 
-        float x2 = Mathf.Sin( 0) * (raggio+ altezza);
-        float y2 = Mathf.Cos( 0) * (raggio + altezza);
+        float x2 = Mathf.Sin(0) * (raggio + altezza);
+        float y2 = Mathf.Cos(0) * (raggio + altezza);
 
-        float x3 = Mathf.Sin( divisore) * (raggio + altezza);
-        float y3 = Mathf.Cos( divisore) * (raggio + altezza);
-
-
+        float x3 = Mathf.Sin(divisore) * (raggio + altezza);
+        float y3 = Mathf.Cos(divisore) * (raggio + altezza);
 
 
-        vertices[0] = new Vector3(x0,y0, 0);
+
+
+        vertices[0] = new Vector3(x0, y0, 0);
         vertices[1] = new Vector3(x2, y2, 0);
 
         vertices[2] = new Vector3(x0, y0, 100);
@@ -4572,7 +4518,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         tria[21] = 13;
         tria[22] = 15;
-        tria[23] =14;
+        tria[23] = 14;
 
 
         mesh.vertices = vertices;
@@ -4590,9 +4536,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-    void update_potere_boss(int num,float altezza)
-    {
-       
+    void update_potere_boss(int num, float altezza) {
+
 
         Mesh mesh = boss_potere_mesh[num].GetComponent<MeshFilter>().mesh;
 
@@ -4616,8 +4561,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         float x0 = Mathf.Sin(0) * raggio;
         float y0 = Mathf.Cos(0) * raggio;
 
-        float x1 = Mathf.Sin( 1 * divisore) * raggio;
-        float y1 = Mathf.Cos( 1 * divisore) * raggio;
+        float x1 = Mathf.Sin(1 * divisore) * raggio;
+        float y1 = Mathf.Cos(1 * divisore) * raggio;
 
         float x2 = Mathf.Sin(0) * (raggio + altezza);
         float y2 = Mathf.Cos(0) * (raggio + altezza);
@@ -4731,11 +4676,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-    void carica_effetto_UI(int num, string path)
-    {
+    void carica_effetto_UI(int num, string path) {
 
-        if (effetto_source_UI_caricato[num] == 0)
-        {
+        if (effetto_source_UI_caricato[num] == 0) {
             effetto_source_UI_caricato[num] = 1;
 
             effetto_source_UI[num] = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
@@ -4746,8 +4689,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     }
 
 
-    void carica_musica(string path)
-    {
+    void carica_musica(string path) {
 
         musica = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
         musica.transform.parent = cam0.transform;
@@ -4758,13 +4700,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     }
 
 
-    void suona_effetto_UI(int tipologia = 1, float volume = 0)
-    {
+    void suona_effetto_UI(int tipologia = 1, float volume = 0) {
 
-        if (script_struttura_dati != null)
-        {
-            if (script_struttura_dati.disattiva_effetti == 0)
-            {
+        if (script_struttura_dati != null) {
+            if (script_struttura_dati.disattiva_effetti == 0) {
 
 
                 effetto_source_UI[tipologia].Play();
@@ -4776,16 +4715,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     }
 
 
-    void aggiorna_audio()
-    {
+    void aggiorna_audio() {
 
         float volume_musica = 0;
 
-        if (script_struttura_dati != null)
-        {
+        if (script_struttura_dati != null) {
 
-            if (script_struttura_dati.disattiva_musica == 0)
-            {
+            if (script_struttura_dati.disattiva_musica == 0) {
                 volume_musica = 1;
             }
 

@@ -214,7 +214,7 @@ public class tutorial_primo_livello : MonoBehaviour {
     }
 
     private void ResumeGame() {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) { //TODO implemenmtare i comandi touch in ascolto
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) ||  (Gioco_ruota_cilindro.touch_x[0]> 0)) { //TODO implemenmtare i comandi touch in ascolto
             Time.timeScale = 1;
             Gioco_ruota_cilindro.distruggi_menu_tutorial();
             if (avvisato_raccogli_ammo) {
