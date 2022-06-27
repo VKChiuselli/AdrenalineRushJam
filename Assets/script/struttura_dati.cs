@@ -7,6 +7,7 @@ public class struttura_dati : MonoBehaviour {
     public int livello_in_uso;
     public int monete;
     public int gemme;
+    public int livello_massimo_raggiunto;
     public int[] livello_upgrade = new int[20];
     public int[] costo_livello = new int[50];
     public string[] stelle_livello = new string[400];
@@ -38,6 +39,11 @@ public class struttura_dati : MonoBehaviour {
             inizio_stelle_livello();
         }
 
+        if (!PlayerPrefs.HasKey("livello_massimo_raggiunto")) {
+            PlayerPrefs.SetInt("livello_massimo_raggiunto", 1);
+        }
+
+        livello_massimo_raggiunto = PlayerPrefs.GetInt("livello_massimo_raggiunto");
         battle_pass_reward_free = PlayerPrefs.GetString("battle_pass_reward_free");
         battle_pass_reward_premium = PlayerPrefs.GetString("battle_pass_reward_premium");
         caratteristiche_forza = PlayerPrefs.GetFloat("caratteristiche_forza");

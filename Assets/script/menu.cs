@@ -1231,7 +1231,7 @@ public class menu : MonoBehaviour {
 
                 if (grafica[202 + n] != null) //stelle acquisite
    {
-                    float dx2 = dime_panel_x * 0.09f;
+                    float dx2 = dime_panel_x * 0.33f;
                     float dy2 = dime_panel_y * 0.09f;
                     pos_x = dime_panel_x * -0.2f;
                     pos_y = dime_panel_y * 0.35f + n * -38f;
@@ -1747,7 +1747,7 @@ public class menu : MonoBehaviour {
         crea_grafica_text(201, new Color(1, 1, 1, 0), $"Chapter {indice_pagina_livello_corrente}", canvas_popup, "Canvas_popup/Panel", ""); //titolo capitolo selezionato
 
         for (int n = 0; n < 10; n++) {
-            crea_grafica_text(202 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0");  //testo/titolo oggetto shop
+            crea_grafica_text(202 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/stella_{script_struttura_dati.stelle_livello[(indice_pagina_livello_corrente * 10 - 10) + n + 1]}");  //testo/titolo oggetto shop
         }
 
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //exit button
@@ -2061,19 +2061,20 @@ public class menu : MonoBehaviour {
         }
 
         for (int n = 0; n < 10; n++) {
+            if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1))))
             if (num == 202 + n) {
                 script_struttura_dati.livello_in_uso =  indice_pagina_livello_corrente * 10 - (10 - (n+1));
             }
         }
 
-        if (num == 215) {
+        if (num == 215) { //pulsante seleziona livello destra
             if (indice_pagina_livello_corrente != 20) {
                 indice_pagina_livello_corrente++;
                 aggiorna_grafica_stelle();
             }
         }
 
-        if (num == 216) {
+        if (num == 216) {//pulsante seleziona livello sinistra
             if (indice_pagina_livello_corrente != 1) {
             indice_pagina_livello_corrente--;
                 aggiorna_grafica_stelle();
