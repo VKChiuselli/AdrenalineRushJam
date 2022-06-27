@@ -110,7 +110,7 @@ public class menu : MonoBehaviour {
             PlayerPrefs.SetString("PrimoLogin", "effettuato");
         }
 
-       
+
 
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
@@ -129,10 +129,9 @@ public class menu : MonoBehaviour {
             indice_livello_corrente = script_struttura_dati.livello_in_uso;
             indice_pagina_livello_corrente = script_struttura_dati.livello_in_uso / 10 + 1;
 
-         
         }
 
-     
+
 
         controllo_risoluzione();
 
@@ -261,16 +260,13 @@ public class menu : MonoBehaviour {
     }
 
 
-    void aggiorna_audio()
-    {
+    void aggiorna_audio() {
 
         float volume_musica = 0;
 
-        if (script_struttura_dati != null)
-        {
+        if (script_struttura_dati != null) {
 
-            if (script_struttura_dati.disattiva_musica == 0)
-            {
+            if (script_struttura_dati.disattiva_musica == 0) {
                 volume_musica = 1;
             }
 
@@ -908,6 +904,7 @@ public class menu : MonoBehaviour {
                 pos_y = dime_panel_y * -0.5f + dy2 * .85f;
                 pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                pulsante_testo[200].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 15f;
 
             }
 
@@ -1248,29 +1245,29 @@ public class menu : MonoBehaviour {
 
             for (int n = 0; n < 10; n++) {
 
-                if (pulsante[202 + n] != null) //pulsante testo lista
+                if (pulsante[202 + n] != null) //pulsante testo lista scelta
    {
                     float dx2 = dime_panel_x * 0.4f;
                     float dy2 = dime_panel_y * 0.05f;
-                    pos_x = dime_panel_x * 0.2f;
-                    pos_y = dime_panel_y * 0.35f + n * -38f;
+                    pos_x = dime_panel_x * 0.37f;
+                    pos_y = dime_panel_y * 0.33f + n * dime_panel_y * -0.075f;
                     pulsante[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                     pulsante[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
 
 
-                    pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 15f;
+                    pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 20f;
                 }
 
             }
-            
+
             for (int n = 0; n < 10; n++) {
 
                 if (grafica[202 + n] != null) //stelle acquisite
    {
                     float dx2 = dime_panel_x * 0.33f;
-                    float dy2 = dime_panel_y * 0.09f;
+                    float dy2 = dime_panel_y * 0.06f;
                     pos_x = dime_panel_x * -0.2f;
-                    pos_y = dime_panel_y * 0.35f + n * -38f;
+                    pos_y = dime_panel_y * 0.35f + n * dime_panel_y * -0.075f;
                     grafica[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                     grafica[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
 
@@ -1298,6 +1295,17 @@ public class menu : MonoBehaviour {
                 pulsante[216].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[216].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
 
+
+            }
+            if (pulsante[217] != null) //pulsante gioca dal seleziona menu
+{
+                float dx2 = dime_panel_x * 0.45f;
+                float dy2 = dime_panel_y * 0.09f;
+                pos_x = 0;
+                pos_y = dime_panel_y * -0.42f;
+                pulsante[217].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[217].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
+                pulsante_testo[217].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 15f;
 
             }
 
@@ -1733,7 +1741,7 @@ public class menu : MonoBehaviour {
         crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
         crea_button_text(30, "BATTLEPASS", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/battlepass");
         crea_button_text(31, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/chest_main_page_1");
-        crea_grafica_text(20, new Color(1, 1, 1, 0), "Livello " + script_struttura_dati.livello_in_uso + "/50", canvas, "Canvas", "");
+        crea_grafica_text(20, new Color(1, 1, 1, 0), "Level " + script_struttura_dati.livello_in_uso, canvas, "Canvas", "");
         crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/immagine_centrale_1"); //pulsante seleziona livelli
 
         crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
@@ -1791,10 +1799,12 @@ public class menu : MonoBehaviour {
         for (int n = 0; n < 10; n++) {
             crea_button_text(202 + n, $"Level {n + 1}", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
             pulsante[202 + n].GetComponent<Image>().color = new Color(0, 0, 0, 0);
+            pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().alignment = (TextAlignmentOptions)TextAlignment.Left;
         }
 
         crea_button_text(215, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/freccia_destra");//pulsante freccia cambio capitolo
         crea_button_text(216, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/freccia_sinistra"); //pulsante freccia cambio capitolo
+        crea_button_text(217, "PLAY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pulsante gioca dentro il popup seleziona
 
 
     }
@@ -1814,11 +1824,11 @@ public class menu : MonoBehaviour {
         crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
 
         if (script_struttura_dati.livello_upgrade[indice_upgrade_corrente] == 10) {
-        crea_button_text(200, "MAXED", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
+            crea_button_text(200, "MAXED", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
             pulsante[200].GetComponent<Button>().interactable = false;
         }
         else {
-        crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
+            crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         }
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
 
@@ -2086,233 +2096,235 @@ public class menu : MonoBehaviour {
                 }
             }
 
-            }
-
-            if (num == 201) {
-                distruggi_menu_popup();
-            }
-
-
-
-            if (script_struttura_dati != null) {
-                if (num == 206) {
-                    script_struttura_dati.disattiva_musica = 1 - script_struttura_dati.disattiva_musica;
-                }
-
-                if (num == 207) {
-                    script_struttura_dati.disattiva_effetti = 1 - script_struttura_dati.disattiva_effetti;
-                }
-
-            }
-
-
-
-
-
-            for (int n = 0; n < 100; n++) {
-                if (num == 300 + n) {
-                    riscatta_premio_battle_pass_free(n);
-                }
-            }
-
-            for (int n = 0; n < 100; n++) {
-                if (num == 400 + n) {
-                    riscatta_premio_battle_pass_premium(n);
-                }
-            }
-
-            for (int n = 0; n < 10; n++) {
-                if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1))))
-                    if (num == 202 + n) {
-                        script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 10 - (10 - (n + 1));
-                    }
-            }
-
-            if (num == 215) { //pulsante seleziona livello destra
-                if (indice_pagina_livello_corrente != 20) {
-                    indice_pagina_livello_corrente++;
-                    aggiorna_grafica_stelle();
-                }
-            }
-
-            if (num == 216) {//pulsante seleziona livello sinistra
-                if (indice_pagina_livello_corrente != 1) {
-                    indice_pagina_livello_corrente--;
-                    aggiorna_grafica_stelle();
-                }
-            }
-
-
         }
 
-        private void aggiorna_grafica_stelle() {
-            float dx = risoluzione_x;
-            float dy = risoluzione_y;
-
-            float pos_x = 0;
-            float pos_y = 0;
-            float dx2 = dx * .8f;
-            float dy2 = dy * .8f;
-            float dime_panel_x = dx2;
-            float dime_panel_y = dy2;
-
-
-
-            for (int n = 0; n < 10; n++) {
-
-                if (grafica[202 + n] != null) //stelle acquisite
-    {
-                    dx2 = dime_panel_x * 0.09f;
-                    dy2 = dime_panel_y * 0.09f;
-                    pos_x = dime_panel_x * -0.2f;
-                    pos_y = dime_panel_y * 0.35f + n * -38f;
-                    grafica[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-                    grafica[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
-                    grafica[202 + n].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/stella_{script_struttura_dati.stelle_livello[(indice_pagina_livello_corrente * 10 - 10) + n + 1]}");
-
-                }
-
-            }
-        }
-
-        private void riscatta_premio_battle_pass_free(int indice_reward) {
-            char[] reward_string = script_struttura_dati.battle_pass_reward_free.ToCharArray();
-
-            reward_string[indice_reward] = '2';
-
-            script_struttura_dati.battle_pass_reward_free = new string(reward_string);
-            PlayerPrefs.SetString("battle_pass_reward_free", script_struttura_dati.battle_pass_reward_free);
-
-        }
-
-        private void riscatta_premio_battle_pass_premium(int indice_reward) {
-            char[] reward_string = script_struttura_dati.battle_pass_reward_premium.ToCharArray();
-
-            reward_string[indice_reward] = '2';
-
-            script_struttura_dati.battle_pass_reward_premium = new string(reward_string);
-            PlayerPrefs.SetString("battle_pass_reward_premium", script_struttura_dati.battle_pass_reward_premium);
-
-        }
-
-        private void acquista_shop() {
-            if (indice_shop_corrente == 1) {
-                script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
-                if (pulsante[100].GetComponent<timer_reward>() != null) {
-                    pulsante[100].GetComponent<timer_reward>().Click();
-                }
-            }
-            if (indice_shop_corrente == 2) {
-                script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
-            }
-            if (indice_shop_corrente == 3) {
-                script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
-            }
-            if (indice_shop_corrente == 4) {
-                script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
-            }
-            if (indice_shop_corrente == 5) {
-                script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
-            }
-            if (indice_shop_corrente == 6) {
-                script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
-            }
-            if (indice_shop_corrente == 7) {
-                script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
-            }
-            if (indice_shop_corrente == 8) {
-                script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
-            }
-            if (indice_shop_corrente == 9) {
-                script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
-            }
-            if (indice_shop_corrente == 10) {
-                script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
-                PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
-            }
+        if (num == 201) {
             distruggi_menu_popup();
         }
 
-        private void acquista_upgrade(int costoUpgrade) {
-            if (script_struttura_dati.monete >= costoUpgrade) {
 
-                script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
-                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
-                script_struttura_dati.livello_upgrade[indice_upgrade_corrente] = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] + 1;
-                PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (script_struttura_dati.livello_upgrade[indice_upgrade_corrente]));
 
-                if (grafica[204] != null) {
-                    Destroy(grafica[204]);
+        if (script_struttura_dati != null) {
+            if (num == 206) {
+                script_struttura_dati.disattiva_musica = 1 - script_struttura_dati.disattiva_musica;
+            }
+
+            if (num == 207) {
+                script_struttura_dati.disattiva_effetti = 1 - script_struttura_dati.disattiva_effetti;
+            }
+
+        }
+
+
+
+
+
+        for (int n = 0; n < 100; n++) {
+            if (num == 300 + n) {
+                riscatta_premio_battle_pass_free(n);
+            }
+        }
+
+        for (int n = 0; n < 100; n++) {
+            if (num == 400 + n) {
+                riscatta_premio_battle_pass_premium(n);
+            }
+        }
+
+        for (int n = 0; n < 10; n++) {
+            if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1))))
+                if (num == 202 + n) {
+                    script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 10 - (10 - (n + 1));
+                    PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
+                    grafica_testo[20].GetComponent<TextMeshProUGUI>().text = "Level " + script_struttura_dati.livello_in_uso;
                 }
-
-                crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
-
-
-                Debug.Log("Oggetto acquistato");
-            }
-
         }
 
-        void pressione_input_text(int num, InputField tog) {
-
-
-            if (tog.text != null || tog.text != "" && tog.text != "-" && tog.text != ".") {
-
-                Debug.Log("pressione!" + tog.text + "!!");
-
+        if (num == 215) { //pulsante seleziona livello destra
+            if (indice_pagina_livello_corrente != 20) {
+                indice_pagina_livello_corrente++;
+                aggiorna_grafica_stelle();
             }
+        }
 
-
+        if (num == 216) {//pulsante seleziona livello sinistra
+            if (indice_pagina_livello_corrente != 1) {
+                indice_pagina_livello_corrente--;
+                aggiorna_grafica_stelle();
+            }
         }
 
 
+    }
 
-        void carica_effetto_UI(int num, string path) {
+    private void aggiorna_grafica_stelle() {
+        float dx = risoluzione_x;
+        float dy = risoluzione_y;
 
-            if (effetto_source_UI_caricato[num] == 0) {
-                effetto_source_UI_caricato[num] = 1;
+        float pos_x = 0;
+        float pos_y = 0;
+        float dx2 = dx * .8f;
+        float dy2 = dy * .8f;
+        float dime_panel_x = dx2;
+        float dime_panel_y = dy2;
 
-                effetto_source_UI[num] = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
-                effetto_source_UI[num].transform.parent = cam0.transform;
-                effetto_source_UI[num].transform.localPosition = new Vector3(0, 0, 0);
+
+
+        for (int n = 0; n < 10; n++) {
+
+            if (grafica[202 + n] != null) //stelle acquisite
+{
+                dx2 = dime_panel_x * 0.09f;
+                dy2 = dime_panel_y * 0.09f;
+                pos_x = dime_panel_x * -0.2f;
+                pos_y = dime_panel_y * 0.35f + n * -38f;
+                grafica[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                grafica[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
+                grafica[202 + n].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/stella_{script_struttura_dati.stelle_livello[(indice_pagina_livello_corrente * 10 - 10) + n + 1]}");
+
             }
 
         }
+    }
+
+    private void riscatta_premio_battle_pass_free(int indice_reward) {
+        char[] reward_string = script_struttura_dati.battle_pass_reward_free.ToCharArray();
+
+        reward_string[indice_reward] = '2';
+
+        script_struttura_dati.battle_pass_reward_free = new string(reward_string);
+        PlayerPrefs.SetString("battle_pass_reward_free", script_struttura_dati.battle_pass_reward_free);
+
+    }
+
+    private void riscatta_premio_battle_pass_premium(int indice_reward) {
+        char[] reward_string = script_struttura_dati.battle_pass_reward_premium.ToCharArray();
+
+        reward_string[indice_reward] = '2';
+
+        script_struttura_dati.battle_pass_reward_premium = new string(reward_string);
+        PlayerPrefs.SetString("battle_pass_reward_premium", script_struttura_dati.battle_pass_reward_premium);
+
+    }
+
+    private void acquista_shop() {
+        if (indice_shop_corrente == 1) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            if (pulsante[100].GetComponent<timer_reward>() != null) {
+                pulsante[100].GetComponent<timer_reward>().Click();
+            }
+        }
+        if (indice_shop_corrente == 2) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 3) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 4) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 5) {
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        }
+        if (indice_shop_corrente == 6) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 7) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 8) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 9) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        if (indice_shop_corrente == 10) {
+            script_struttura_dati.gemme += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+        }
+        distruggi_menu_popup();
+    }
+
+    private void acquista_upgrade(int costoUpgrade) {
+        if (script_struttura_dati.monete >= costoUpgrade) {
+
+            script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            script_struttura_dati.livello_upgrade[indice_upgrade_corrente] = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] + 1;
+            PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (script_struttura_dati.livello_upgrade[indice_upgrade_corrente]));
+
+            if (grafica[204] != null) {
+                Destroy(grafica[204]);
+            }
+
+            crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
 
 
-        void carica_musica(string path) {
-
-            musica = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
-            musica.transform.parent = cam0.transform;
-            musica.transform.localPosition = new Vector3(0, 0, 0);
-
-            musica.volume = 0;
-
+            Debug.Log("Oggetto acquistato");
         }
 
+    }
 
-        void suona_effetto_UI(int tipologia = 1, float volume = 0) {
-
-            if (script_struttura_dati != null) {
-                if (script_struttura_dati.disattiva_effetti == 0) {
+    void pressione_input_text(int num, InputField tog) {
 
 
-                    effetto_source_UI[tipologia].Play();
-                    effetto_source_UI[tipologia].volume = volume;
+        if (tog.text != null || tog.text != "" && tog.text != "-" && tog.text != ".") {
 
-                }
-            }
+            Debug.Log("pressione!" + tog.text + "!!");
 
         }
 
 
     }
+
+
+
+    void carica_effetto_UI(int num, string path) {
+
+        if (effetto_source_UI_caricato[num] == 0) {
+            effetto_source_UI_caricato[num] = 1;
+
+            effetto_source_UI[num] = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
+            effetto_source_UI[num].transform.parent = cam0.transform;
+            effetto_source_UI[num].transform.localPosition = new Vector3(0, 0, 0);
+        }
+
+    }
+
+
+    void carica_musica(string path) {
+
+        musica = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
+        musica.transform.parent = cam0.transform;
+        musica.transform.localPosition = new Vector3(0, 0, 0);
+
+        musica.volume = 0;
+
+    }
+
+
+    void suona_effetto_UI(int tipologia = 1, float volume = 0) {
+
+        if (script_struttura_dati != null) {
+            if (script_struttura_dati.disattiva_effetti == 0) {
+
+
+                effetto_source_UI[tipologia].Play();
+                effetto_source_UI[tipologia].volume = volume;
+
+            }
+        }
+
+    }
+
+
+}
