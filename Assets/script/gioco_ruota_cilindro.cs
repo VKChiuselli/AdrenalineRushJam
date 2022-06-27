@@ -1871,33 +1871,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             dz = new Vector3(0, 0, 22);
         }
 
-        if (tipo == 16)
-        {
-            //-----------012345678901234567
-            testo_ogg = "4";
-            dz = new Vector3(0, 0, 1);
-        }
 
-        if (tipo == 17)
-        {
-            //-----------012345678901234567
-            testo_ogg = "5";
-            dz = new Vector3(0, 0, 1);
-        }
-
-        if (tipo == 18)
-        {
-            //-----------012345678901234567
-            testo_ogg = "6";
-            dz = new Vector3(0, 0, 1);
-        }
-
-        if (tipo == 19)
-        {
-            //-----------012345678901234567
-            testo_ogg = "7";
-            dz = new Vector3(0, 0, 1);
-        }
 
 
         if (tipo == 100) {
@@ -2151,8 +2125,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         pos_direction[1] = new Vector3(0, 0, -1);
         pos_direction[2] = new Vector3(0, 0, -1);
 
-        pos_direction[3] = new Vector3(-.9f, 0, -.8f);
-        pos_direction[4] = new Vector3(.9f, 0, -.8f);
+        pos_direction[3] = new Vector3(-.6f, 0, -.8f);
+        pos_direction[4] = new Vector3(.6f, 0, -.8f);
 
         pos_direction[5] = new Vector3(0, 0, -.5f);
         pos_direction[6] = new Vector3(0, 0, -.5f);
@@ -2161,23 +2135,23 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
         pos_ray_direction[0] = new Vector3(0, 0, 2.6f);
-        pos_ray_direction[1] = new Vector3(-1.5f, 0, .25f);
-        pos_ray_direction[2] = new Vector3(1.5f, 0, .25f);
-        pos_ray_direction[3] = new Vector3(0, 0, 2.6f);
-        pos_ray_direction[4] = new Vector3(0, 0, 2.6f);
-        pos_ray_direction[5] = new Vector3(-1.5f, 0, .75f);
-        pos_ray_direction[6] = new Vector3(1.5f, 0, .75f);
+        pos_ray_direction[1] = new Vector3(-.75f, 0, .125f);
+        pos_ray_direction[2] = new Vector3(.75f, 0, .125f);
+        pos_ray_direction[3] = new Vector3(0, 0, 1.6f);
+        pos_ray_direction[4] = new Vector3(0, 0, 1.6f);
+        pos_ray_direction[5] = new Vector3(-.8f, 0, .35f);
+        pos_ray_direction[6] = new Vector3(.8f, 0, .35f);
         pos_ray_direction[7] = new Vector3(0, 0, 2.6f);
 
         distanza_direction[0] = 2.6f;
-        distanza_direction[1] = 1.5f;
-        distanza_direction[2] = 1.5f;
+        distanza_direction[1] = .75f;
+        distanza_direction[2] = .75f;
 
-        distanza_direction[3] = 2.6f;
-        distanza_direction[4] = 2.6f;
+        distanza_direction[3] = 1.6f;
+        distanza_direction[4] = 1.6f;
 
-        distanza_direction[5] = 1.5f;
-        distanza_direction[6] = 1.5f;
+        distanza_direction[5] = .8f;
+        distanza_direction[6] = .8f;
         distanza_direction[7] = 2.6f;
 
         int numero_coll = 0;
@@ -2185,7 +2159,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         int num_block = -1;
 
-        for (int n = 0; n <= 7; n++) {
+        for (int n =0; n <= 7; n++) {
 
             pos = astronave.transform.position + pos_direction[n];
 
