@@ -2162,6 +2162,34 @@ public class crea_livello : MonoBehaviour
         }
 
 
+        if (tipo == 16)
+        {
+            //-----------012345678901234567
+            testo_ogg = "4";
+            dz = new Vector3(0, 0, 1);
+        }
+
+        if (tipo == 17)
+        {
+            //-----------012345678901234567
+            testo_ogg = "5";
+            dz = new Vector3(0, 0, 1);
+        }
+
+        if (tipo == 18)
+        {
+            //-----------012345678901234567
+            testo_ogg = "6";
+            dz = new Vector3(0, 0, 1);
+        }
+
+        if (tipo == 19)
+        {
+            //-----------012345678901234567
+            testo_ogg = "7";
+            dz = new Vector3(0, 0, 1);
+        }
+
 
 
         if (tipo == 100)

@@ -1102,7 +1102,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     c_save.crea_blocco[n].forza_impatto = c_save.crea_blocco[n].forza_impatto * .95f - .015f;
 
-                    if (c_save.crea_blocco[n].forza_impatto > .025f) {
+                    if (c_save.crea_blocco[n].forza_impatto > .025f ) {
                         spostamento_blocco(c_save.crea_blocco[n].mesh, c_save.crea_blocco[n].punto_impatto, c_save.crea_blocco[n].forza_impatto, c_save.crea_blocco[n].rad);
                     }
 
@@ -1550,10 +1550,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-            if (tipo_blocco <= 8)
+            if (tipo_blocco <= 4)
             {
 
                 c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(xx, yy, zz);
+            }
+
+            if (tipo_blocco >= 5 && tipo_blocco<=8)
+            {
+
+                c_save.crea_blocco[num].mesh.transform.localPosition = new Vector3(0, 0, 0);
             }
 
             if (tipo_blocco >= 9)
@@ -1766,6 +1772,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         scala_blocco(c_save.crea_blocco[num].mesh, tipo, struttura, struttura_dz);
 
         c_save.crea_blocco[num].mesh.transform.SetParent(cilindro.transform);
+
+        if (tipo>=5 && tipo <= 8)
+        {
+            c_save.crea_blocco[num].mesh.AddComponent<MeshCollider>();
+
+        }
+
+
+
     }
 
 
@@ -1856,7 +1871,33 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             dz = new Vector3(0, 0, 22);
         }
 
+        if (tipo == 16)
+        {
+            //-----------012345678901234567
+            testo_ogg = "4";
+            dz = new Vector3(0, 0, 1);
+        }
 
+        if (tipo == 17)
+        {
+            //-----------012345678901234567
+            testo_ogg = "5";
+            dz = new Vector3(0, 0, 1);
+        }
+
+        if (tipo == 18)
+        {
+            //-----------012345678901234567
+            testo_ogg = "6";
+            dz = new Vector3(0, 0, 1);
+        }
+
+        if (tipo == 19)
+        {
+            //-----------012345678901234567
+            testo_ogg = "7";
+            dz = new Vector3(0, 0, 1);
+        }
 
 
         if (tipo == 100) {
@@ -2316,6 +2357,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 if (c_save.crea_blocco[num_block].disattiva_coll == 0) {
                     c_save.crea_blocco[num_block].disattiva_coll = 1;
+
+                   
+
                     analisi_energia(15);
 
                     carica_particles("particles/CFXR Hit A", punto_coll_uso);
