@@ -230,6 +230,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     float attivo_tempo_potere_boss = 0;
 
+
+
+    AudioSource[] effetto_source_UI = new AudioSource[40];
+    int[] effetto_source_UI_caricato = new int[40];
+
+    AudioSource musica;
+
+
+   
+
+
     // Start is called before the first frame update
     void Start() {
 
@@ -243,9 +254,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         boss = GameObject.Find("boss");
 
 
-
-
         cam0 = GameObject.Find("Main Camera");
+
+        carica_effetto_UI(1, "audio/Prefabs/click");
+        carica_musica("audio/Prefabs/musica");
 
         leggi_vertici_cilindro();
 
@@ -376,6 +388,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     void update_game() {
+
+        aggiorna_audio();
 
         controllo_risoluzione();
 
@@ -4717,10 +4731,69 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
+    void carica_effetto_UI(int num, string path)
+    {
+
+        if (effetto_source_UI_caricato[num] == 0)
+        {
+            effetto_source_UI_caricato[num] = 1;
+
+            effetto_source_UI[num] = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
+            effetto_source_UI[num].transform.parent = cam0.transform;
+            effetto_source_UI[num].transform.localPosition = new Vector3(0, 0, 0);
+        }
+
+    }
 
 
+    void carica_musica(string path)
+    {
+
+        musica = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
+        musica.transform.parent = cam0.transform;
+        musica.transform.localPosition = new Vector3(0, 0, 0);
+
+        musica.volume = 0;
+
+    }
 
 
+    void suona_effetto_UI(int tipologia = 1, float volume = 0)
+    {
+
+        if (script_struttura_dati != null)
+        {
+            if (script_struttura_dati.disattiva_effetti == 0)
+            {
+
+
+                effetto_source_UI[tipologia].Play();
+                effetto_source_UI[tipologia].volume = volume;
+
+            }
+        }
+
+    }
+
+
+    void aggiorna_audio()
+    {
+
+        float volume_musica = 0;
+
+        if (script_struttura_dati != null)
+        {
+
+            if (script_struttura_dati.disattiva_musica == 0)
+            {
+                volume_musica = 1;
+            }
+
+        }
+
+        musica.volume = volume_musica;
+
+    }
 
 }
 

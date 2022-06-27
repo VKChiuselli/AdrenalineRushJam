@@ -18,6 +18,8 @@ public class struttura_dati : MonoBehaviour {
     public string battle_pass_reward_free;
     public string battle_pass_reward_premium;
 
+    public int disattiva_musica = 0;
+    public int disattiva_effetti = 0;
 
     void Start() {
         DontDestroyOnLoad(this.gameObject);

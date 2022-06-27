@@ -93,6 +93,15 @@ public class menu : MonoBehaviour {
 
     int controllo_mobile = 0;
 
+
+    AudioSource[] effetto_source_UI = new AudioSource[40];
+    int[] effetto_source_UI_caricato = new int[40];
+
+    AudioSource musica;
+
+
+    GameObject cam0;
+
     void Start() {
 
 
@@ -101,10 +110,14 @@ public class menu : MonoBehaviour {
             PlayerPrefs.SetString("PrimoLogin", "effettuato");
         }
 
-
+       
 
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
+        cam0 = GameObject.Find("Main Camera");
+
+        carica_effetto_UI(1, "audio/Prefabs/click");
+        carica_musica("audio/Prefabs/musica");
 
         canvas_popup.SetActive(false);
 
@@ -225,6 +238,8 @@ public class menu : MonoBehaviour {
     void Update() {
         controllo_risoluzione();
 
+        aggiorna_audio();
+
         aggiorna_menu();
 
         aggiorna_menu_popup();
@@ -244,6 +259,27 @@ public class menu : MonoBehaviour {
 #endif
 
     }
+
+
+    void aggiorna_audio()
+    {
+
+        float volume_musica = 0;
+
+        if (script_struttura_dati != null)
+        {
+
+            if (script_struttura_dati.disattiva_musica == 0)
+            {
+                volume_musica = 1;
+            }
+
+        }
+
+        musica.volume = volume_musica;
+
+    }
+
 
     void aggiorna_menu() {
 
@@ -1934,6 +1970,8 @@ public class menu : MonoBehaviour {
 
         if (num == 1) {
             crea_popup_opzioni(3);
+
+            suona_effetto_UI(1);
         }
 
         if (num == 20) {
@@ -2048,7 +2086,27 @@ public class menu : MonoBehaviour {
             distruggi_menu_popup();
         }
 
-        for (int n = 0; n < 100; n++) {
+
+
+        if (script_struttura_dati != null)
+        {
+            if (num == 206)
+            {
+                script_struttura_dati.disattiva_musica = 1 - script_struttura_dati.disattiva_musica;
+            }
+
+            if (num == 207)
+            {
+                script_struttura_dati.disattiva_effetti = 1 - script_struttura_dati.disattiva_effetti;
+            }
+
+        }
+
+
+
+
+
+                for (int n = 0; n < 100; n++) {
             if (num == 300 + n) {
                 riscatta_premio_battle_pass_free(n);
             }
@@ -2212,5 +2270,52 @@ public class menu : MonoBehaviour {
 
 
     }
+
+
+
+    void carica_effetto_UI(int num, string path)
+    {
+
+        if (effetto_source_UI_caricato[num] == 0)
+        {
+            effetto_source_UI_caricato[num] = 1;
+
+            effetto_source_UI[num] = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
+            effetto_source_UI[num].transform.parent = cam0.transform;
+            effetto_source_UI[num].transform.localPosition = new Vector3(0, 0, 0);
+        }
+
+    }
+
+
+    void carica_musica(string path)
+    {
+
+            musica = Instantiate(Resources.Load(path) as GameObject).GetComponent<AudioSource>();
+        musica.transform.parent = cam0.transform;
+        musica.transform.localPosition = new Vector3(0, 0, 0);
+
+        musica.volume = 0;
+
+    }
+
+
+    void suona_effetto_UI(int tipologia = 1, float volume=0)
+    {
+
+        if (script_struttura_dati != null) 
+        {
+                if (script_struttura_dati.disattiva_effetti == 0)
+                {
+
+
+                    effetto_source_UI[tipologia].Play();
+                    effetto_source_UI[tipologia].volume = volume;
+
+                }
+        }
+
+    }
+
 
 }
