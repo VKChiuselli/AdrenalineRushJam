@@ -24,27 +24,17 @@ public class struttura_dati : MonoBehaviour {
     void Start() {
         DontDestroyOnLoad(this.gameObject);
 
+       if (!PlayerPrefs.HasKey("1_login")) {
+            PlayerPrefs.SetInt("1_login", 1);
+            primo_login();
+        }
+
         livello_in_uso = PlayerPrefs.GetInt("livello_in_uso");
         monete = PlayerPrefs.GetInt("monete");
         gemme = PlayerPrefs.GetInt("gemme");
         energia = PlayerPrefs.GetInt("energia");
 
         stelle_battle_pass = PlayerPrefs.GetInt("stelle_battle_pass");
-
-        if (!PlayerPrefs.HasKey("battle_pass_reward_free")) {
-            resetto_battle_pass("free");
-        }
-        if (!PlayerPrefs.HasKey("battle_pass_reward_premium")) {
-            resetto_battle_pass("premium");
-        }
-        if (!PlayerPrefs.HasKey("stelle_livello")) {
-            inizio_stelle_livello();
-        }
-
-        if (!PlayerPrefs.HasKey("livello_massimo_raggiunto")) {
-            PlayerPrefs.SetInt("livello_massimo_raggiunto", 1);
-        }
-
         livello_massimo_raggiunto = PlayerPrefs.GetInt("livello_massimo_raggiunto");
         battle_pass_reward_free = PlayerPrefs.GetString("battle_pass_reward_free");
         battle_pass_reward_premium = PlayerPrefs.GetString("battle_pass_reward_premium");
@@ -65,6 +55,22 @@ public class struttura_dati : MonoBehaviour {
 
         SceneManager.LoadScene("menu");
 
+    }
+
+    private void primo_login() {
+
+        PlayerPrefs.SetInt("livello_in_uso", 1);
+        PlayerPrefs.SetInt("livello_massimo_raggiunto", 1);
+        PlayerPrefs.SetInt("monete", 0);
+        PlayerPrefs.SetInt("gemme", 0);
+        PlayerPrefs.SetInt("energia", 100);
+        PlayerPrefs.SetInt("stelle_battle_pass", 0);
+        for (int i = 1; i < 7; i++) {
+         PlayerPrefs.SetInt($"LivelloUpgrade{i}", 1);
+        }
+        resetto_battle_pass("free");
+        resetto_battle_pass("premium");
+        inizio_stelle_livello();
     }
 
     private void inizio_stelle_livello() {
