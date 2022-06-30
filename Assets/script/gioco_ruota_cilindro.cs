@@ -968,13 +968,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (inizio_game == 1) {
 
-            int livello_uso = 1;
+            int livello_uso = 3;
 
             if (script_struttura_dati != null) {
 
                 livello_uso = script_struttura_dati.livello_in_uso;
 
             }
+
+           
+
+
 
 
             if (livello_uso == 1 || livello_uso == 2) { //TODO da sostituire con script_struttura_dati
