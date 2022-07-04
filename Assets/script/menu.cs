@@ -2132,7 +2132,7 @@ public class menu : MonoBehaviour {
         }
 
         for (int n = 0; n < 10; n++) {
-            if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1))))
+            if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1)))) {
                 if (num == 202 + n) {
                     script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 10 - (10 - (n + 1));
                     PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
@@ -2140,11 +2140,18 @@ public class menu : MonoBehaviour {
                     reset_colori_testo_selezionati();
                     pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.white;
                 }
+            }
+            else {
+                pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.gray;
+            }
+             
+               
         }
 
         if (num == 215) { //pulsante seleziona livello destra
             if (indice_pagina_livello_corrente != 20) {
                 indice_pagina_livello_corrente++;
+                aggiorna_grafica_testo_menu_selezionato();
                 aggiorna_grafica_stelle();
             }
         }
@@ -2152,6 +2159,7 @@ public class menu : MonoBehaviour {
         if (num == 216) {//pulsante seleziona livello sinistra
             if (indice_pagina_livello_corrente != 1) {
                 indice_pagina_livello_corrente--;
+                aggiorna_grafica_testo_menu_selezionato();
                 aggiorna_grafica_stelle();
             }
         }
@@ -2162,6 +2170,16 @@ public class menu : MonoBehaviour {
     private void reset_colori_testo_selezionati() {
         for (int n = 0; n < 10; n++) {
             pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.black;
+        }
+    }
+    private void aggiorna_grafica_testo_menu_selezionato() {
+        for (int n = 0; n < 10; n++) {
+            if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1)))) {
+                pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.black;
+            }
+            else
+                pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.gray;
+
         }
     }
 
