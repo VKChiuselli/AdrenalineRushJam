@@ -22,7 +22,7 @@ public class menu : MonoBehaviour {
     public float variabile_x;
     public float variabile_y;
 
-    public Color newColor = new Color(0, 1, 1, 1);
+    Color newColor = new Color(1, 1, 1, 1);
 
     float[] touch_x = new float[15];
     float[] touch_y = new float[15];
@@ -1859,7 +1859,11 @@ public class menu : MonoBehaviour {
 
         crea_button_text(205, "FacebookLogin", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto credits
         crea_button_text(206, "ON", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto new music
+        cambio_colore_musiche_tasto();
+
         crea_button_text(207, "ON", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto new SFX
+
+        cambio_colore_sfx_tasto();
     }
 
     void crea_button_text(int num, string txt, Color colore_testo, GameObject parent, string path = "Canvas", string path_sprite = "") {
@@ -2119,10 +2123,12 @@ public class menu : MonoBehaviour {
         if (script_struttura_dati != null) {
             if (num == 206) {
                 script_struttura_dati.disattiva_musica = 1 - script_struttura_dati.disattiva_musica;
+                cambio_colore_musiche_tasto();
             }
 
             if (num == 207) {
                 script_struttura_dati.disattiva_effetti = 1 - script_struttura_dati.disattiva_effetti;
+                cambio_colore_sfx_tasto();
             }
 
         }
@@ -2182,6 +2188,28 @@ public class menu : MonoBehaviour {
         }
 
 
+    }
+
+    private void cambio_colore_sfx_tasto() {
+        if (script_struttura_dati.disattiva_effetti == 1) {
+            pulsante_testo[207].GetComponent<TextMeshProUGUI>().text = "OFF";
+            pulsante[207].GetComponent<Image>().color = Color.red;
+        }
+        else if (script_struttura_dati.disattiva_effetti == 0) {
+            pulsante_testo[207].GetComponent<TextMeshProUGUI>().text = "ON";
+            pulsante[207].GetComponent<Image>().color = Color.green;
+        }
+    }
+
+    private void cambio_colore_musiche_tasto() {
+        if (script_struttura_dati.disattiva_musica == 1) {
+            pulsante_testo[206].GetComponent<TextMeshProUGUI>().text = "OFF";
+            pulsante[206].GetComponent<Image>().color = Color.red;
+        }
+        else if (script_struttura_dati.disattiva_musica == 0) {
+            pulsante_testo[206].GetComponent<TextMeshProUGUI>().text = "ON";
+            pulsante[206].GetComponent<Image>().color = Color.green;
+        }
     }
 
     private void aggiorna_nome_livello() {
