@@ -31,9 +31,15 @@ public class tutorial_primo_livello : MonoBehaviour {
         }
 
         if (Gioco_ruota_cilindro != null)
-            if (script_struttura_dati.livello_in_uso > 2) {
-                this.gameObject.SetActive(false);
+        {
+            if (script_struttura_dati.livello_in_uso > 2)
+            {
+                // this.gameObject.SetActive(false);
             }
+        }
+
+
+
         if (script_struttura_dati.livello_in_uso == 1 || script_struttura_dati.livello_in_uso == 2) {//    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
             Gioco_ruota_cilindro.tutorial_in_corso = true;
             Gioco_ruota_cilindro.numero_spari = 0;
@@ -42,14 +48,28 @@ public class tutorial_primo_livello : MonoBehaviour {
     }
 
     void Update() {
-        if (Gioco_ruota_cilindro.tutorial_in_corso || ammo_raccolta)
-            gestione_collisione_mina();
 
-        if (script_struttura_dati.livello_in_uso == 1)
-            gestione_collisione_bonus_speed();
+        if (script_struttura_dati.livello_in_uso <= 2)
+        {//    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
 
-        if (!Gioco_ruota_cilindro.tutorial_in_corso)
-            ResumeGame();
+
+            if (Gioco_ruota_cilindro.tutorial_in_corso || ammo_raccolta)
+            {
+                gestione_collisione_mina();
+            }
+
+            if (script_struttura_dati.livello_in_uso == 1)
+            {
+                gestione_collisione_bonus_speed();
+            }
+
+            if (!Gioco_ruota_cilindro.tutorial_in_corso)
+            {
+                ResumeGame();
+            }
+
+        }
+
     }
     private void gestione_collisione_bonus_speed() {
         RaycastHit hit_collider;

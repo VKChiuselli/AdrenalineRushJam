@@ -1979,6 +1979,8 @@ public class menu : MonoBehaviour {
 #endif
 
 
+        suona_effetto_UI(1,1);
+
 
         if (num == 0 || num == 217) {
             SceneManager.LoadScene("gioco");
@@ -1998,7 +2000,7 @@ public class menu : MonoBehaviour {
         if (num == 1) {
             crea_popup_opzioni(3);
 
-            suona_effetto_UI(1);
+            
         }
 
         if (num == 20) {
@@ -2355,6 +2357,8 @@ public class menu : MonoBehaviour {
 
         if (script_struttura_dati != null) {
             if (script_struttura_dati.disattiva_effetti == 0) {
+
+
 
 
                 effetto_source_UI[tipologia].Play();
