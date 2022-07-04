@@ -3565,10 +3565,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-            crea_button_text(208, "RADDOPPIA", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+            crea_button_text(208, "Double ALL!", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
-            crea_button_text(209, "NEXT LEVEL", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
-            crea_button_text(210, "REPEAT LEVEL", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+            crea_button_text(209, "Next Level", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+            crea_button_text(210, "Repeat Level", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
 
 
@@ -3974,7 +3974,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     pulsante[208].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
                     pulsante[208].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
+                    pulsante_testo[208].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 13f);
                 }
 
                 if (pulsante[209] != null && energia > 0)  //next level
@@ -3987,7 +3987,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     pulsante[209].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
                     pulsante[209].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
+                    pulsante_testo[209].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 13f);
                 }
 
 
@@ -4001,7 +4001,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     pulsante[210].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
                     pulsante[210].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
+                    pulsante_testo[210].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 13f);
                 }
 
 
