@@ -127,7 +127,7 @@ public class menu : MonoBehaviour {
         if (ogg_struttura_dati != null) {
             script_struttura_dati = ogg_struttura_dati.GetComponent<struttura_dati>();
             indice_livello_corrente = script_struttura_dati.livello_in_uso;
-            indice_pagina_livello_corrente = script_struttura_dati.livello_in_uso / 10 + 1;
+            indice_pagina_livello_corrente = script_struttura_dati.livello_in_uso / 5 + 1;
 
         }
 
@@ -1243,14 +1243,14 @@ public class menu : MonoBehaviour {
 
             }
 
-            for (int n = 0; n < 10; n++) {
+            for (int n = 0; n < 5; n++) {
 
                 if (pulsante[202 + n] != null) //pulsante testo lista scelta
    {
                     float dx2 = dime_panel_x * 0.4f;
-                    float dy2 = dime_panel_y * 0.05f;
-                    pos_x = dime_panel_x * 0.37f;
-                    pos_y = dime_panel_y * 0.33f + n * dime_panel_y * -0.075f;
+                    float dy2 = dime_panel_y * 0.09f;
+                    pos_x = dime_panel_x * 0.25f; 
+                    pos_y = dime_panel_y * 0.33f + n * dime_panel_y * -0.15f;
                     pulsante[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                     pulsante[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
 
@@ -1260,14 +1260,14 @@ public class menu : MonoBehaviour {
 
             }
 
-            for (int n = 0; n < 10; n++) {
+            for (int n = 0; n < 5; n++) {
 
                 if (grafica[202 + n] != null) //stelle acquisite
    {
                     float dx2 = dime_panel_x * 0.33f;
                     float dy2 = dime_panel_y * 0.06f;
                     pos_x = dime_panel_x * -0.2f;
-                    pos_y = dime_panel_y * 0.35f + n * dime_panel_y * -0.075f;
+                    pos_y = dime_panel_y * 0.33f + n * dime_panel_y * -0.15f;
                     grafica[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                     grafica[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
 
@@ -1791,16 +1791,16 @@ public class menu : MonoBehaviour {
         crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello selezione livelli
         crea_grafica_text(201, new Color(1, 1, 1, 0), $"Chapter {indice_pagina_livello_corrente}", canvas_popup, "Canvas_popup/Panel", ""); //titolo capitolo selezionato
 
-        for (int n = 0; n < 10; n++) {
-            crea_grafica_text(202 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/stella_{script_struttura_dati.stelle_livello[(indice_pagina_livello_corrente * 10 - 10) + n + 1]}");  //testo/titolo oggetto shop
+        for (int n = 0; n < 5; n++) {
+            crea_grafica_text(202 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/stella_{script_struttura_dati.stelle_livello[(indice_pagina_livello_corrente * 5 - 5) + n + 1]}");  //testo/titolo oggetto shop
         }
 
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //exit button
 
-        for (int n = 0; n < 10; n++) {
+        for (int n = 0; n < 5; n++) {
             crea_button_text(202 + n, $"Level {n + 1}", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");
-            pulsante[202 + n].GetComponent<Image>().color = new Color(0, 0, 0, 0);
-            pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().alignment = (TextAlignmentOptions)TextAlignment.Left;
+        //    pulsante[202 + n].GetComponent<Image>().color = new Color(0, 0, 0, 0);
+            //     pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().alignment = (TextAlignmentOptions)TextAlignment.Left;
         }
 
         crea_button_text(215, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/freccia_destra");//pulsante freccia cambio capitolo
@@ -1977,9 +1977,7 @@ public class menu : MonoBehaviour {
 
 
 #endif
-
-
-        suona_effetto_UI(1,1);
+        suona_effetto_UI(1, 1);
 
 
         if (num == 0 || num == 217) {
@@ -2000,7 +1998,7 @@ public class menu : MonoBehaviour {
         if (num == 1) {
             crea_popup_opzioni(3);
 
-            
+          
         }
 
         if (num == 20) {
@@ -2145,18 +2143,19 @@ public class menu : MonoBehaviour {
         }
 
         if (attivo_popup == 4) {
-            for (int n = 0; n < 10; n++) {
-                if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1)))) {
+            for (int n = 0; n < 5; n++) {
+                if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 5 - (5 - (n + 1)))) {
                     if (num == 202 + n) {
-                        script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 10 - (10 - (n + 1));
+                        script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 5 - (5 - (n + 1));
                         PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
                         grafica_testo[20].GetComponent<TextMeshProUGUI>().text = "Level " + script_struttura_dati.livello_in_uso;
+                        aggiorna_grafica_testo_menu_selezionato();
                         reset_colori_testo_selezionati();
-                        pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.white;
                     }
                 }
                 else {
                     pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.gray;
+                    pulsante[202 + n].GetComponent<Button>().interactable = false;
                 }
 
 
@@ -2164,7 +2163,7 @@ public class menu : MonoBehaviour {
         }
 
         if (num == 215) { //pulsante seleziona livello destra
-            if (indice_pagina_livello_corrente != 20) {
+            if (indice_pagina_livello_corrente != 40) {
                 indice_pagina_livello_corrente++;
                 aggiorna_grafica_testo_menu_selezionato();
                 aggiorna_grafica_stelle();
@@ -2183,17 +2182,21 @@ public class menu : MonoBehaviour {
     }
 
     private void reset_colori_testo_selezionati() {
-        for (int n = 0; n < 10; n++) {
+        for (int n = 0; n < 5; n++) {
             pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.black;
         }
     }
     private void aggiorna_grafica_testo_menu_selezionato() {
-        for (int n = 0; n < 10; n++) {
-            if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1)))) {
+        for (int n = 0; n < 5; n++) {
+            if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 5 - (5 - (n + 1)))) {
                 pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.black;
+                pulsante[202 + n].GetComponent<Button>().interactable = true;
             }
-            else
+            else {
                 pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.gray;
+                pulsante[202 + n].GetComponent<Button>().interactable = false;
+
+            }
 
         }
     }
@@ -2211,7 +2214,7 @@ public class menu : MonoBehaviour {
 
 
 
-        for (int n = 0; n < 10; n++) {
+        for (int n = 0; n < 5; n++) {
 
             if (grafica[202 + n] != null) //stelle acquisite
 {
@@ -2221,7 +2224,7 @@ public class menu : MonoBehaviour {
                 pos_y = dime_panel_y * 0.35f + n * -38f;
                 grafica[202 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
-                grafica[202 + n].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/stella_{script_struttura_dati.stelle_livello[(indice_pagina_livello_corrente * 10 - 10) + n + 1]}");
+                grafica[202 + n].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/stella_{script_struttura_dati.stelle_livello[(indice_pagina_livello_corrente * 5 - 5) + n + 1]}");
 
             }
 
@@ -2357,8 +2360,6 @@ public class menu : MonoBehaviour {
 
         if (script_struttura_dati != null) {
             if (script_struttura_dati.disattiva_effetti == 0) {
-
-
 
 
                 effetto_source_UI[tipologia].Play();
