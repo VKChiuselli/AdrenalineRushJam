@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657582, g: 0.4964118, b: 0.5748169, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657654, g: 0.49641246, b: 0.57481754, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1396,7 +1396,7 @@ MonoBehaviour:
     crea_gemma: []
   c_save_p:
     crea_parametri: []
-  level_json: {fileID: 4900000, guid: f877c77132b6c184d87ddb2fc91e6388, type: 3}
+  level_json: {fileID: 0}
   variabile_x: 0
   variabile_y: 0
   touch_x:
@@ -1445,7 +1445,7 @@ MonoBehaviour:
   spostamento_boss_rotazione: -0.01
   newColor: {r: 0, g: 1, b: 1, a: 1}
   distanza_disolve: -15
-  online_dati: 0
+  online_dati: 1
   tutorial_in_corso: 0
   monete_partita_corrente: 0
   gemme_partita_corrente: 0
@@ -1465,7 +1465,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1729384711981216617}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b61844302063ed644af8706bfe3d644d, type: 3}
   m_Name: 

@@ -1980,7 +1980,7 @@ public class menu : MonoBehaviour {
 
 
 
-        if (num == 0) {
+        if (num == 0 || num == 217) {
             SceneManager.LoadScene("gioco");
         }
 

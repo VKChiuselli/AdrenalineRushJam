@@ -2904,6 +2904,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 script_struttura_dati.livello_in_uso = script_struttura_dati.livello_in_uso + 1;
 
+                if (script_struttura_dati.livello_massimo_raggiunto < script_struttura_dati.livello_in_uso) {
+                    script_struttura_dati.livello_massimo_raggiunto = script_struttura_dati.livello_massimo_raggiunto + 1;
+                    PlayerPrefs.SetInt("livello_massimo_raggiunto", script_struttura_dati.livello_massimo_raggiunto);
+                }
+
+
                 PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
 
                 SceneManager.LoadScene("gioco");
