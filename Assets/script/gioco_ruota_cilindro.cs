@@ -110,7 +110,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     GameObject[] pulsante_field_testo2 = new GameObject[max_ui];
 
 
-    public struttura_dati script_struttura_dati;
+    struttura_dati script_struttura_dati;
 
     GameObject canvas;
     GameObject canvas_popup;
@@ -4246,14 +4246,20 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
         using (UnityWebRequest www = UnityWebRequest.Get(path2)) {
+
+         
             yield return www.SendWebRequest();
 
+
+
             if (www.isNetworkError || www.isHttpError) {
-                Debug.Log(www.error);
+                Debug.Log("errore "+www.error);
             }
             else {
 
 
+
+                Debug.Log(""+ www.downloadHandler.text);
 
                 try {
 

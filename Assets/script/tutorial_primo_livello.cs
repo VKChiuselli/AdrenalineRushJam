@@ -12,16 +12,29 @@ public class tutorial_primo_livello : MonoBehaviour {
     public bool ammo_raccolta;
     float distanza_raycast_tutorial = 9f;
 
+    struttura_dati script_struttura_dati;
+
     gioco_ruota_cilindro Gioco_ruota_cilindro;
     void Start() {
 
 
         Gioco_ruota_cilindro = FindObjectOfType<gioco_ruota_cilindro>();
+
+
+
+       GameObject ogg_struttura_dati = GameObject.Find("base_struttura");
+
+        if (ogg_struttura_dati != null)
+        {
+            script_struttura_dati = ogg_struttura_dati.GetComponent<struttura_dati>();
+
+        }
+
         if (Gioco_ruota_cilindro != null)
-            if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso > 2) {
+            if (script_struttura_dati.livello_in_uso > 2) {
                 this.gameObject.SetActive(false);
             }
-        if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1 || Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 2) {//    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
+        if (script_struttura_dati.livello_in_uso == 1 || script_struttura_dati.livello_in_uso == 2) {//    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
             Gioco_ruota_cilindro.tutorial_in_corso = true;
             Gioco_ruota_cilindro.numero_spari = 0;
         }
@@ -32,7 +45,7 @@ public class tutorial_primo_livello : MonoBehaviour {
         if (Gioco_ruota_cilindro.tutorial_in_corso || ammo_raccolta)
             gestione_collisione_mina();
 
-        if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
+        if (script_struttura_dati.livello_in_uso == 1)
             gestione_collisione_bonus_speed();
 
         if (!Gioco_ruota_cilindro.tutorial_in_corso)
@@ -126,7 +139,7 @@ public class tutorial_primo_livello : MonoBehaviour {
                 if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, distanza_raycast_tutorial)) {
 
                     float dis = hit_collider.distance;
-                    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1) {
+                    if (script_struttura_dati.livello_in_uso == 1) {
                         if (!avvisato_mina_cratere) {
                             Time.timeScale = 0;
                             avvisato_mina_cratere = true;
@@ -136,7 +149,7 @@ public class tutorial_primo_livello : MonoBehaviour {
                     }
 
 
-                    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 2) {
+                    if (script_struttura_dati.livello_in_uso == 2) {
                         if (!avvisato_raccogli_ammo) {
                             distanza_raycast_tutorial = 3f;
                             Time.timeScale = 0;
@@ -148,7 +161,7 @@ public class tutorial_primo_livello : MonoBehaviour {
                     }
 
 
-                    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 2 && Gioco_ruota_cilindro.numero_spari > 0) {
+                    if (script_struttura_dati.livello_in_uso == 2 && Gioco_ruota_cilindro.numero_spari > 0) {
                         if (!avvisato_spara_ammo) {
                             avvisato_spara_ammo = true;
                             StartCoroutine(ShootingTime());
