@@ -1741,6 +1741,7 @@ public class menu : MonoBehaviour {
         crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
         crea_button_text(30, "BATTLEPASS", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/battlepass");
         crea_button_text(31, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/chest_main_page_1");
+        pulsante[31].AddComponent<timer_reward>();
         crea_grafica_text(20, new Color(1, 1, 1, 0), "Level " + script_struttura_dati.livello_in_uso, canvas, "Canvas", "");
         crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/immagine_centrale_1"); //pulsante seleziona livelli
 
@@ -1983,6 +1984,16 @@ public class menu : MonoBehaviour {
             SceneManager.LoadScene("gioco");
         }
 
+        if (num == 31) {
+
+            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            if (pulsante[31].GetComponent<timer_reward>() != null) {
+                pulsante[31].GetComponent<timer_reward>().Click();
+            }
+
+        }
+
 
         if (num == 1) {
             crea_popup_opzioni(3);
@@ -2131,21 +2142,23 @@ public class menu : MonoBehaviour {
             }
         }
 
-        for (int n = 0; n < 10; n++) {
-            if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1)))) {
-                if (num == 202 + n) {
-                    script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 10 - (10 - (n + 1));
-                    PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
-                    grafica_testo[20].GetComponent<TextMeshProUGUI>().text = "Level " + script_struttura_dati.livello_in_uso;
-                    reset_colori_testo_selezionati();
-                    pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.white;
+        if (attivo_popup == 4) {
+            for (int n = 0; n < 10; n++) {
+                if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 10 - (10 - (n + 1)))) {
+                    if (num == 202 + n) {
+                        script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 10 - (10 - (n + 1));
+                        PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
+                        grafica_testo[20].GetComponent<TextMeshProUGUI>().text = "Level " + script_struttura_dati.livello_in_uso;
+                        reset_colori_testo_selezionati();
+                        pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.white;
+                    }
                 }
+                else {
+                    pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.gray;
+                }
+
+
             }
-            else {
-                pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.gray;
-            }
-             
-               
         }
 
         if (num == 215) { //pulsante seleziona livello destra

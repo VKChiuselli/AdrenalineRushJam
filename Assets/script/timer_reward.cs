@@ -9,7 +9,7 @@ public class timer_reward : MonoBehaviour {
     public ulong lastTimeClicked;
 
     private void Start() {
-        msToWait = 10000f;
+        msToWait = 300000f;
         ClickButton = gameObject.GetComponent<Button>();
 
 
