@@ -238,7 +238,7 @@ public class tutorial_primo_livello : MonoBehaviour {
 
     private void tutorial_sparare() {
         Debug.Log("tutorial_sparare");
-        Gioco_ruota_cilindro.crea_tutorial("Tap in this way to shooting");
+        Gioco_ruota_cilindro.crea_tutorial("Tap the center of screen to shoot");
     }
 
     private void tutorial_bonus_speed() {
