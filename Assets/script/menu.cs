@@ -1807,7 +1807,7 @@ public class menu : MonoBehaviour {
         crea_button_text(216, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/freccia_sinistra"); //pulsante freccia cambio capitolo
         crea_button_text(217, "PLAY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pulsante gioca dentro il popup seleziona
 
-
+        aggiorna_nome_livello();
     }
 
     void crea_popup_upgrade(int num = 2) {
@@ -2023,6 +2023,7 @@ public class menu : MonoBehaviour {
         }
 
         if (num == 11) {
+    
             crea_popup_seleziona_livelli(4);
         }
 
@@ -2167,6 +2168,7 @@ public class menu : MonoBehaviour {
                 indice_pagina_livello_corrente++;
                 aggiorna_grafica_testo_menu_selezionato();
                 aggiorna_grafica_stelle();
+                aggiorna_nome_livello();
             }
         }
 
@@ -2175,10 +2177,18 @@ public class menu : MonoBehaviour {
                 indice_pagina_livello_corrente--;
                 aggiorna_grafica_testo_menu_selezionato();
                 aggiorna_grafica_stelle();
+                aggiorna_nome_livello();
             }
         }
 
 
+    }
+
+    private void aggiorna_nome_livello() {
+
+        for (int n = 0; n < 5; n++) {
+                pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().text = "Level " + (indice_pagina_livello_corrente * 5 - (5 - (n + 1)));
+            }
     }
 
     private void reset_colori_testo_selezionati() {
@@ -2189,6 +2199,7 @@ public class menu : MonoBehaviour {
     private void aggiorna_grafica_testo_menu_selezionato() {
         for (int n = 0; n < 5; n++) {
             if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 5 - (5 - (n + 1)))) {
+         
                 pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.black;
                 pulsante[202 + n].GetComponent<Button>().interactable = true;
             }
