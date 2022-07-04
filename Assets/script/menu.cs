@@ -2137,6 +2137,8 @@ public class menu : MonoBehaviour {
                     script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 10 - (10 - (n + 1));
                     PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
                     grafica_testo[20].GetComponent<TextMeshProUGUI>().text = "Level " + script_struttura_dati.livello_in_uso;
+                    reset_colori_testo_selezionati();
+                    pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.white;
                 }
         }
 
@@ -2155,6 +2157,12 @@ public class menu : MonoBehaviour {
         }
 
 
+    }
+
+    private void reset_colori_testo_selezionati() {
+        for (int n = 0; n < 10; n++) {
+            pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.black;
+        }
     }
 
     private void aggiorna_grafica_stelle() {
