@@ -3444,9 +3444,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
-            string num_livello = "1";
-
-            crea_grafica_text(201, new Color(1, 1, 1, 0), "LEVEL " + num_livello, canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+            crea_grafica_text(201, new Color(1, 1, 1, 0), "LEVEL " + script_struttura_dati.livello_in_uso, canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
 
 
