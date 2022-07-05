@@ -131,7 +131,7 @@ public class menu : MonoBehaviour {
 
         }
 
-
+        conta_nuove_stelle();
 
         controllo_risoluzione();
 
@@ -139,6 +139,28 @@ public class menu : MonoBehaviour {
 
 
         crea_menu();
+    }
+
+    private void conta_nuove_stelle() {
+
+        int stelle_nuove=0;
+        for (int i = 0; i < 400; i++) {
+            if (script_struttura_dati.stelle_livello[i] == "111") {
+                stelle_nuove = stelle_nuove + 3;
+            }
+            else if (script_struttura_dati.stelle_livello[i] == "101" || script_struttura_dati.stelle_livello[i] == "110") {
+                stelle_nuove = stelle_nuove + 2;
+            }
+            else if (script_struttura_dati.stelle_livello[i] == "100") {
+                stelle_nuove = stelle_nuove + 1;
+            }
+        }
+
+        if(stelle_nuove > script_struttura_dati.stelle_battle_pass) {
+            script_struttura_dati.stelle_battle_pass = stelle_nuove;
+            PlayerPrefs.SetInt("stelle_battle_pass", script_struttura_dati.stelle_battle_pass);
+        }
+
     }
 
     private void aggiorno_stelle() {
