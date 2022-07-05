@@ -668,7 +668,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             if (pressione_tasto_up != 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f) {
 
-             //   Debug.Log("attivo_tempo_sparo_personaggio"+attivo_tempo_sparo_personaggio);
+                //   Debug.Log("attivo_tempo_sparo_personaggio"+attivo_tempo_sparo_personaggio);
 
                 crea_sparo();
 
@@ -981,7 +981,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             }
 
-           
+
 
 
 
@@ -2549,7 +2549,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                             c_save.crea_blocco[num_block].distruzione_oggetto = 1;
                             c_save.crea_blocco[num_block].disattiva_coll = 1;
 
-                           
+
 
                         }
 
@@ -2906,8 +2906,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 209) // next level da salvare e poi 
         {
-            if (script_struttura_dati != null)
-            {
+            if (script_struttura_dati != null) {
 
 
                 // da passare i parametri stelle
@@ -3814,7 +3813,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
 
-                ok_energia_completa=0;
+                ok_energia_completa = 0;
                 ok_spari_completi = 0;
 
                 if (energia != energia_base) {
@@ -3832,8 +3831,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                if (ok_fine_livello == 0)
-                {
+                if (ok_fine_livello == 0) {
                     ok_fine_livello = 1;
 
                     salva_le_stelle();
@@ -4091,12 +4089,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-    void salva_le_stelle()
-    {
-
-       // ok_energia_completa;
-       // ok_spari_completi;
-
+    void salva_le_stelle() {
+        script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso] = $"1{ok_energia_completa}{ok_spari_completi}";
+        PlayerPrefs.SetString($"stelle_livello{script_struttura_dati.livello_in_uso}", script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso]);
+        ok_energia_completa = 0;
+        ok_spari_completi = 0;
 
     }
 
@@ -4256,19 +4253,19 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         using (UnityWebRequest www = UnityWebRequest.Get(path2)) {
 
-         
+
             yield return www.SendWebRequest();
 
 
 
             if (www.isNetworkError || www.isHttpError) {
-                Debug.Log("errore "+www.error);
+                Debug.Log("errore " + www.error);
             }
             else {
 
 
 
-                Debug.Log(""+ www.downloadHandler.text);
+                Debug.Log("" + www.downloadHandler.text);
 
                 try {
 
