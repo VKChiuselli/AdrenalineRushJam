@@ -2519,6 +2519,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                             }
                             DestroyImmediate(ogg);
 
+                            c_save.crea_blocco[num_block].disattiva_coll = 1;
+
                         }
 
                         if (indice > -1) {
