@@ -724,7 +724,7 @@ public class menu : MonoBehaviour {
                 grafica[170 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2 * .1f);
                 grafica[170 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 1.15f, pos_y + scroll_verticale_dx + dy2 * 0.37f);
                 grafica_testo[170 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
-                //  grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().text = "titolo" ;
+               
 
 
             }
@@ -2302,7 +2302,8 @@ public class menu : MonoBehaviour {
 
         script_struttura_dati.battle_pass_reward_free = new string(reward_string);
         PlayerPrefs.SetString("battle_pass_reward_free", script_struttura_dati.battle_pass_reward_free);
-
+        script_struttura_dati.monete += 100;
+        PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
     }
 
     private void riscatta_premio_battle_pass_premium(int indice_reward) {
@@ -2312,6 +2313,8 @@ public class menu : MonoBehaviour {
 
         script_struttura_dati.battle_pass_reward_premium = new string(reward_string);
         PlayerPrefs.SetString("battle_pass_reward_premium", script_struttura_dati.battle_pass_reward_premium);
+        script_struttura_dati.gemme += 10;
+        PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
 
     }
 
@@ -2376,7 +2379,7 @@ public class menu : MonoBehaviour {
 
             crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
 
-
+            grafica_testo[170 + indice_upgrade_corrente - 1].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.livello_upgrade[indice_upgrade_corrente];
             Debug.Log("Oggetto acquistato");
         }
 
