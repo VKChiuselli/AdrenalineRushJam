@@ -4090,6 +4090,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     void salva_le_stelle() {
+
+
+        if (script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso].Substring(1,1) == "1") {
+            ok_energia_completa = 1;
+        }
+        if (script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso].Substring(2,1) == "1") {
+            ok_spari_completi = 1;
+        }
+
         script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso] = $"1{ok_energia_completa}{ok_spari_completi}";
         PlayerPrefs.SetString($"stelle_livello{script_struttura_dati.livello_in_uso}", script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso]);
         ok_energia_completa = 0;
