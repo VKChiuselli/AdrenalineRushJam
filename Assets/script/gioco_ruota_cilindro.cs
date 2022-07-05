@@ -3583,7 +3583,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             pulsante_testo[208].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
             pulsante_testo[209].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
-
+            pulsante_testo[210].GetComponent<TextMeshProUGUI>().color = Color.black;
 
 
 
