@@ -77,6 +77,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     public int ok_energia_completa = 0;
     public int ok_spari_completi = 0;
 
+    public float attivo_tempo_sparo_personaggio_base = 1.0f;
 
 
     float monete_UI = 0;
@@ -121,6 +122,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     GameObject cilindro;
     GameObject sfondo;
+    GameObject sfondo2;
 
     public GUISkin skin_scrittura;
 
@@ -254,7 +256,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         cilindro = GameObject.Find("cilindro_esatto");
         sfondo = GameObject.Find("sfondo");
-
+        sfondo2 = GameObject.Find("sfondo2");
 
         boss = GameObject.Find("boss");
 
@@ -506,7 +508,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             if (attivo_tempo_sparo[n] < -1) {
                 num_sparo = n;
 
-                attivo_tempo_sparo[n] = 5;
+                attivo_tempo_sparo[n] = 3.5f;
 
 
                 sparo[n] = Instantiate(Resources.Load("grafica_3d/Prefabs/Sparo_personaggio", typeof(GameObject))) as GameObject;
@@ -518,7 +520,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 sparo[n].name = "sparo_personaggio " + n;
 
-                attivo_tempo_sparo_personaggio = .5f;
+                attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio_base;
 
                 n = 1000;
 
@@ -665,6 +667,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
             if (pressione_tasto_up != 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f) {
+
+             //   Debug.Log("attivo_tempo_sparo_personaggio"+attivo_tempo_sparo_personaggio);
+
                 crea_sparo();
 
             }
@@ -1475,7 +1480,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 float altezza = 0;
 
-                altezza = k * .25f + .75f;
+                altezza = k * .25f + 1.25f;
 
                 if (k == 0) {
                     altezza = 0;
@@ -2328,7 +2333,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     analisi_energia(15);
 
-                    carica_particles("particles/CFXR Hit A", punto_coll_uso);
+                    carica_particles("particles/CFXR Hit B", punto_coll_uso);
 
                     c_save.crea_blocco[num_block].punto_impatto = punto_coll_uso;
                     c_save.crea_blocco[num_block].forza_impatto = velocita_personaggio * 8;
@@ -2540,6 +2545,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                             DestroyImmediate(ogg);
 
                             c_save.crea_blocco[num_block].distruzione_oggetto = 1;
+                            c_save.crea_blocco[num_block].disattiva_coll = 1;
+
+                           
+
                         }
 
 
@@ -4275,6 +4284,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     cilindro.GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_cilindro);
                     sfondo.GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_sfondo);
+                    sfondo2.GetComponent<Renderer>().material.SetColor("_Color", c_save_p.crea_parametri[0].colore_sfondo);
 
 
                     int livello_uso = 1;
