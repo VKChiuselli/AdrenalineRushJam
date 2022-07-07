@@ -3816,7 +3816,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 ok_energia_completa = 0;
                 ok_spari_completi = 0;
 
+<<<<<<< HEAD
                 if (energia > energia_base * script_struttura_dati.livello_in_uso * 0.005f) { // se finisce il livello con energia superiore alla metï¿½ del livello attuale, quindi al livello 100, dovrï¿½ superare il gioco con il 50% di energia
+=======
+                if (energia > energia_base * script_struttura_dati.livello_in_uso * 0.005f) { // se finisce il livello con energia superiore alla metà del livello attuale, quindi al livello 100, dovrà superare il gioco con il 50% di energia
+>>>>>>> parent of 39daea9 (fix shaders)
                     grafica_pos[8] = 5.35f;
                     grafica_pos[11] = 5.35f;
                     ok_energia_completa = 1;
@@ -4092,10 +4096,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void salva_le_stelle() {
 
 
+<<<<<<< HEAD
         if (script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso].Substring(1, 1) == "1") {
             ok_energia_completa = 1;
         }
         if (script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso].Substring(2, 1) == "1") {
+=======
+        if (script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso].Substring(1,1) == "1") {
+            ok_energia_completa = 1;
+        }
+        if (script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso].Substring(2,1) == "1") {
+>>>>>>> parent of 39daea9 (fix shaders)
             ok_spari_completi = 1;
         }
 
