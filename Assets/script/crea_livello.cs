@@ -23,23 +23,28 @@ public class crea_livello : MonoBehaviour
 
     float xm, ym, xm_old, ym_old;
 
-    public int max_linee_blocchi = 30;
+
 
     public bool buchi_doppi = true;
 
     public bool solo_mine_e_ostacoli = true;
 
+    public int max_linee_blocchi = 30;
     public float distanza_partenza_blocchi = 20;
     public float distanza_blocchi = 26;
-    public float distanza_random = 3;
     public int numero_aperture_minimo = 8;
     public int numero_aperture_massimo = 12;
+    public float percentuale_altri_blocchi = 79;
+
+
+    public float distanza_random = 3;
+
     public int fila_monete_cirolari = 6;
     public int numero_monete_linea = 8;
     public int numero_mine_ostacoli = 5;
 
     public float percentuale_monete= 60;
-    public float percentuale_altri_blocchi = 79;
+
 
     public float percentuale_blocchi_rotanti = 60;
 
