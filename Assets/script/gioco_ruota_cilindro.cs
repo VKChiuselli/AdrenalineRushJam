@@ -2436,17 +2436,25 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         RaycastHit hit_collider;
 
-        Vector3 pos_ray_direction = new Vector3(0, 0, 10);
+        Vector3[] pos_ray_direction = new Vector3[5];
+
+        pos_ray_direction[0] = new Vector3(0, 0, 10);
+        pos_ray_direction[1] = new Vector3(0, 0, 10);
+        pos_ray_direction[2] = new Vector3(0, 0, 10);
+        pos_ray_direction[3] = new Vector3(0, 0, 10);
+
 
         Vector3 pos;
 
         Vector3[] pos_direction = new Vector3[10];
 
         pos_direction[0] = new Vector3(0, 0, 0);
+        pos_direction[1] = new Vector3(0, -.75f, 0);
+        pos_direction[2] = new Vector3(-.3f, -.35f, 0);
+        pos_direction[3] = new Vector3(.3f, -.35f, 0);
 
 
 
-        pos = ogg.transform.position + pos_direction[0];
 
         float distanza_coll = 0;
 
@@ -2476,91 +2484,110 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (toccato_astronave == 0) {
 
-            if (Physics.Raycast(pos, pos_ray_direction, out hit_collider, 15)) {
+
+            for (int n = 0; n <= 3; n++) {
+
+                pos = ogg.transform.position + pos_direction[n];
+
+
+#if UNITY_EDITOR
+                Debug.DrawRay(pos, pos_ray_direction[n], new Color(1, n * .2f, 0, 1));
+#endif
+
+
+                if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, 15)) {
 
                 float dis = hit_collider.distance;
 
 
-                if (dis < 3.6f) {
+                    if (dis < 3.6f)
+                    {
 
 
-                    if (hit_collider.collider.name.IndexOf("blocco") > -1) {
+                        if (hit_collider.collider.name.IndexOf("blocco") > -1)
+                        {
 
 
 
 
-                        string str_block = "" + hit_collider.collider.name;
+                            string str_block = "" + hit_collider.collider.name;
 
-                        Debug.Log("" + str_block);
+                            Debug.Log("" + str_block);
 
-                        int num_block = -1;
-
-
-                        int indice = str_block.IndexOf("blocco_mesh");
+                            int num_block = -1;
 
 
-                        if (indice == -1) {
-                            str_block = str_block.Replace("blocco ", "");
+                            int indice = str_block.IndexOf("blocco_mesh");
 
-                            num_block = int.Parse(str_block);
 
-                            c_save.crea_blocco[num_block].distruzione_oggetto = 1;
+                            if (indice == -1)
+                            {
+                                str_block = str_block.Replace("blocco ", "");
 
-                            c_save.crea_blocco[num_block].punto_impatto = hit_collider.point;
-                            c_save.crea_blocco[num_block].forza_impatto = velocita_personaggio * 5;
+                                num_block = int.Parse(str_block);
 
-                            carica_particles("particles/CFXR Hit A", hit_collider.point);
+                                c_save.crea_blocco[num_block].distruzione_oggetto = 1;
 
-                            if (tipo == 0) {
-                                attivo_tempo_sparo[num] = 0;
+                                c_save.crea_blocco[num_block].punto_impatto = hit_collider.point;
+                                c_save.crea_blocco[num_block].forza_impatto = velocita_personaggio * 5;
+
+                                carica_particles("particles/CFXR Hit A", hit_collider.point);
+
+                                if (tipo == 0)
+                                {
+                                    attivo_tempo_sparo[num] = 0;
+                                }
+                                else
+                                {
+                                    attivo_tempo_sparo_boss[num] = 0;
+                                }
+                                DestroyImmediate(ogg);
+
+                                c_save.crea_blocco[num_block].disattiva_coll = 1;
+
                             }
-                            else {
-                                attivo_tempo_sparo_boss[num] = 0;
-                            }
-                            DestroyImmediate(ogg);
 
-                            c_save.crea_blocco[num_block].disattiva_coll = 1;
+                            if (indice > -1)
+                            {
+
+                                str_block = str_block.Replace("blocco_mesh ", "");
+
+                                num_block = int.Parse(str_block);
+
+
+                                carica_particles("particles/CFXR Hit A", hit_collider.point);
+
+
+                                carica_particles("particles/CFXR Explosion 3", hit_collider.collider.transform.position);
+
+
+                                if (tipo == 0)
+                                {
+                                    attivo_tempo_sparo[num] = 0;
+                                }
+                                else
+                                {
+                                    attivo_tempo_sparo_boss[num] = 0;
+                                }
+
+
+                                DestroyImmediate(ogg);
+
+                                c_save.crea_blocco[num_block].distruzione_oggetto = 1;
+                                c_save.crea_blocco[num_block].disattiva_coll = 1;
+
+
+
+                            }
+
+
+
+
 
                         }
-
-                        if (indice > -1) {
-
-                            str_block = str_block.Replace("blocco_mesh ", "");
-
-                            num_block = int.Parse(str_block);
-
-
-                            carica_particles("particles/CFXR Hit A", hit_collider.point);
-
-
-                            carica_particles("particles/CFXR Explosion 3", hit_collider.collider.transform.position);
-
-
-                            if (tipo == 0) {
-                                attivo_tempo_sparo[num] = 0;
-                            }
-                            else {
-                                attivo_tempo_sparo_boss[num] = 0;
-                            }
-
-
-                            DestroyImmediate(ogg);
-
-                            c_save.crea_blocco[num_block].distruzione_oggetto = 1;
-                            c_save.crea_blocco[num_block].disattiva_coll = 1;
-
-
-
-                        }
-
-
-
 
 
                     }
-
-
-
 
                 }
 
