@@ -1322,6 +1322,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         scala_cilindro();
 
+        crea_finale();
+
 
         int num_blocchi = c_save.crea_blocco.Count;
 
@@ -2099,6 +2101,104 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         //   Debug.Break();
 
     }
+
+
+
+    void crea_finale()
+    {
+
+        GameObject ogg2 = Instantiate(Resources.Load("grafica_3d/blocchi_cilindro/Prefabs/cilindro_esatto_finale", typeof(GameObject))) as GameObject;
+
+        float pos_z = c_save.crea_cilindro[0].pos_finale.z;
+
+        float raggio = c_save.crea_cilindro[0].raggio;
+
+        float dx = raggio + .01f;
+
+        ogg2.transform.SetParent(cilindro.transform);
+
+        ogg2.transform.localScale = new Vector3(dx, dx, dx);
+
+        ogg2.transform.localPosition = new Vector3(0, 0, pos_z);
+
+
+        crea_blocco_finale(80,1);
+
+     //   crea_blocco_finale(100,0);
+
+    }
+
+
+
+    void crea_blocco_finale(float sposta_z,int aumento=0)
+    {
+
+
+
+
+        for (int n = 0; n <18; n++)
+        {
+            int rnd = (int)(UnityEngine.Random.Range(.0f, 3.99f));
+
+            GameObject ogg = Instantiate(Resources.Load("grafica_3d/blocchi_cilindro/Prefabs/blocco_city " + rnd, typeof(GameObject))) as GameObject;
+
+
+
+            ogg.name = "blocco_finale ";
+
+            ogg.transform.SetParent(cilindro.transform);
+
+
+
+
+
+            float pos_z = c_save.crea_cilindro[0].pos_finale.z + sposta_z;
+
+
+
+            Vector3 snap_n = snap_rif[n*2+ aumento].transform.position;
+            Vector3 snap_n1 = snap_rif[n*2+2+ aumento].transform.position;
+
+
+            Vector3 p0 = snap_n;
+            Vector3 p1 = snap_n1;
+
+
+
+           
+
+            Vector3 pm = (snap_n + snap_n1) * .5f;
+
+
+            ogg.transform.localPosition = new Vector3(pm.x, pm.y, pos_z);
+
+
+            float xx = snap_n.x - snap_n1.x;
+            float yy = snap_n.y - snap_n1.y;
+
+
+            float dis = Mathf.Sqrt(xx*xx+yy*yy);
+
+            float rad = Mathf.Atan2(xx, yy);
+
+
+
+
+            ogg.transform.localEulerAngles = new Vector3(0, 0,-20+ -20*n);
+
+
+            float dx = dis;
+            float dy =UnityEngine.Random.Range( dis, dis*8);
+
+
+            ogg.transform.localScale = new Vector3(dx, dx, dx);
+
+
+        }
+
+    }
+
+
 
 
     void crea_sfera(Vector3 pos, string str = "") {
