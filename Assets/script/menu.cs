@@ -1557,8 +1557,8 @@ public class menu : MonoBehaviour {
 
         if (pulsante[31] != null) {
 
-            float dx2 = risoluzione_x * 0.8f * 0.3f;
-            float dy2 = risoluzione_y * 0.8f * 0.1f;
+            float dx2 = risoluzione_x * 0.2f;
+            float dy2 = risoluzione_y * 0.1f;
             pos_y = risoluzione_y * -0.33f;
             pulsante[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
@@ -1575,12 +1575,12 @@ public class menu : MonoBehaviour {
         }
         if (pulsante[11] != null) {
 
-            float dx2 = risoluzione_x * 0.8f;
-            float dy2 = risoluzione_y * 0.8f * 0.45f;
+            float dx2 = risoluzione_x * 0.8f * 0.4f;
+            float dy2 = risoluzione_y * 0.8f * 0.45f * 0.535f;
 
             pos_y = 0;
 
-            pulsante[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 / 2, dy2 / 2);
+            pulsante[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 , dy2 );
             pulsante[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
 
 
