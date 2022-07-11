@@ -104,14 +104,6 @@ public class menu : MonoBehaviour {
 
     void Start() {
 
-
-        if (!PlayerPrefs.HasKey("PrimoLogin")) {
-            inizializzazione_dati();
-            PlayerPrefs.SetString("PrimoLogin", "effettuato");
-        }
-
-
-
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
         cam0 = GameObject.Find("Main Camera");
@@ -205,56 +197,7 @@ public class menu : MonoBehaviour {
         return script_struttura_dati.battle_pass_reward_premium;
     }
 
-    private static void inizializzazione_dati() {
 
-        PlayerPrefs.SetInt("Livello1", 100);
-        PlayerPrefs.SetInt("Livello2", 200);
-        PlayerPrefs.SetInt("Livello3", 400);
-        PlayerPrefs.SetInt("Livello4", 800);
-        PlayerPrefs.SetInt("Livello5", 1600);
-        PlayerPrefs.SetInt("Livello6", 3200);
-        PlayerPrefs.SetInt("Livello7", 6400);
-        PlayerPrefs.SetInt("Livello8", 10000);
-        PlayerPrefs.SetInt("Livello9", 11000);
-        PlayerPrefs.SetInt("Livello10", 12000);
-
-        for (int i = 1; i < 7; i++) {
-            PlayerPrefs.SetInt($"LivelloUpgrade{i}", 1);
-            PlayerPrefs.SetString($"path_sprite{i}", $"UI/grafica_UI/upgrade_carta {i}");
-            PlayerPrefs.SetInt($"Costo_Upgrade{i}", PlayerPrefs.GetInt($"Livello{PlayerPrefs.GetInt($"LivelloUpgrade{i}")}"));
-        }
-
-        PlayerPrefs.SetString("UpgradeTitolo1", "agilita");
-        PlayerPrefs.SetString("UpgradeTitolo2", "barriera");
-        PlayerPrefs.SetString("UpgradeTitolo3", "energia");
-        PlayerPrefs.SetString("UpgradeTitolo4", "spari");
-        PlayerPrefs.SetString("UpgradeTitolo5", "scafo");
-        PlayerPrefs.SetString("UpgradeTitolo6", "calamita");
-
-        PlayerPrefs.SetString("UpgradeDescrizione1", "Descrizione!agilita");
-        PlayerPrefs.SetString("UpgradeDescrizione2", "Descrizione!barriera");
-        PlayerPrefs.SetString("UpgradeDescrizione3", "Descrizione!energia");
-        PlayerPrefs.SetString("UpgradeDescrizione4", "Descrizione!spari");
-        PlayerPrefs.SetString("UpgradeDescrizione5", "Descrizione!scafo");
-        PlayerPrefs.SetString("UpgradeDescrizione6", "Descrizione!calamita");
-
-        //ammontare di quanto cambia l'effetto del potere, ognuno avrà una sua singolarità
-        PlayerPrefs.SetInt("UpgradeEffetto1", 1);
-        PlayerPrefs.SetInt("UpgradeEffetto2", 1);
-        PlayerPrefs.SetInt("UpgradeEffetto3", 1);
-        PlayerPrefs.SetInt("UpgradeEffetto4", 1);
-        PlayerPrefs.SetInt("UpgradeEffetto5", 1);
-        PlayerPrefs.SetInt("UpgradeEffetto6", 1);
-
-        //TBD
-        PlayerPrefs.SetInt("UpgradeTipologia1", 1);
-        PlayerPrefs.SetInt("UpgradeTipologia2", 1);
-        PlayerPrefs.SetInt("UpgradeTipologia3", 1);
-        PlayerPrefs.SetInt("UpgradeTipologia4", 1);
-        PlayerPrefs.SetInt("UpgradeTipologia5", 1);
-        PlayerPrefs.SetInt("UpgradeTipologia6", 1);
-
-    }
 
     void Update() {
         controllo_risoluzione();
