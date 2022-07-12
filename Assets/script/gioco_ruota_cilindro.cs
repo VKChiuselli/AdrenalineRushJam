@@ -3944,15 +3944,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 ok_spari_completi = 0;
 
                 if (energia > energia_base * script_struttura_dati.livello_in_uso * 0.005f) { // se finisce il livello con energia superiore alla met� del livello attuale, quindi al livello 100, dovr� superare il gioco con il 50% di energia
-                    grafica_pos[8] = 5.35f;
-                    grafica_pos[11] = 5.35f;
+                    grafica_pos[8] = .35f;
+                    grafica_pos[11] = .15f;
                     ok_energia_completa = 1;
+
                 }
 
 
-                if (numero_spari > 0) { // se finisce il livello con almeno 1 sparo
-                    grafica_pos[9] = 5.35f;
-                    grafica_pos[12] = 5.35f;
+                if (numero_spari > 0 && energia>0) { // se finisce il livello con almeno 1 sparo
+                    grafica_pos[9] = .35f;
+                    grafica_pos[12] = .15f;
                     ok_spari_completi = 1;
                 }
 
