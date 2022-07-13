@@ -2549,10 +2549,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         Vector3[] pos_direction = new Vector3[10];
 
         pos_direction[0] = new Vector3(0, 0, 0);
-        pos_direction[1] = new Vector3(0, -.75f, 0);
+        pos_direction[1] = new Vector3(0, -.65f, 0);
         pos_direction[2] = new Vector3(-.3f, -.35f, 0);
         pos_direction[3] = new Vector3(.3f, -.35f, 0);
-
+        pos_direction[4] = new Vector3(0, -1.25f, 0);
 
 
 
@@ -2585,7 +2585,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (toccato_astronave == 0) {
 
 
-            for (int n = 0; n <= 3; n++) {
+            for (int n = 0; n <= 4; n++) {
 
                 pos = ogg.transform.position + pos_direction[n];
 
