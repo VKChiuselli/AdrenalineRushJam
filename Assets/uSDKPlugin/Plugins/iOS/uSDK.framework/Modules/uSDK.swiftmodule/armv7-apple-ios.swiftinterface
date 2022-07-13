@@ -1,0 +1,48 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)
+// swift-module-flags: -target armv7-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name uSDK
+import AdSupport
+import AppTrackingTransparency
+import Foundation
+import StoreKit
+import Swift
+import UIKit
+import WebKit
+import _Concurrency
+@_exported import uSDK
+public enum ADRequestVersion : Swift.String {
+  case v20
+  case v21
+  case v22
+  case v30
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class AdRequest : Swift.Decodable {
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class UADManager : ObjectiveC.NSObject {
+  @objc public var deeplinkDelegate: ObjectiveC.NSObject
+  @objc public func configure(context: UIKit.UIApplication, apikey: Swift.String)
+  @objc public class func shared() -> uSDK.UADManager
+  @objc deinit
+}
+public class SkanPayload : Swift.Decodable {
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class UADViewController : UIKit.UIViewController, WebKit.WKNavigationDelegate, WebKit.WKUIDelegate, WebKit.WKScriptMessageHandler, StoreKit.SKStoreProductViewControllerDelegate {
+  @_Concurrency.MainActor(unsafe) public func setUrl(url: Swift.String)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor(unsafe) @objc public func userContentController(_ userContentController: WebKit.WKUserContentController, didReceive message: WebKit.WKScriptMessage)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension uSDK.ADRequestVersion : Swift.Equatable {}
+extension uSDK.ADRequestVersion : Swift.Hashable {}
+extension uSDK.ADRequestVersion : Swift.RawRepresentable {}
