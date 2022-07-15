@@ -1311,7 +1311,7 @@ public class menu : MonoBehaviour {
 
                 grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 15f;
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 25f;
                 grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "How gain STARS!";
 
             }
@@ -1329,7 +1329,7 @@ public class menu : MonoBehaviour {
                 grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.65f, dy2);
                 grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 grafica_testo[202].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 30f;
-                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = "Achieve this STAR every time you reach the end of the level!";
+                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = "You reach the end of the level!";
 
             }
             if (grafica[203] != null)  //descrizione guadagno stelle VITA
@@ -1343,7 +1343,7 @@ public class menu : MonoBehaviour {
                 grafica[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.65f, dy2);
                 grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 30f;
-                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "Achieve this STAR if your health is more than a certain threshold that will increase every level you play!";
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "Your Health is more than a certain threshold that will increase every level you play!";
 
             }
 
@@ -1358,7 +1358,7 @@ public class menu : MonoBehaviour {
                 grafica[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.65f, dy2);
                 grafica[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 grafica_testo[204].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 30f;
-                grafica_testo[204].GetComponent<TextMeshProUGUI>().text = "Achieve this STAR if you end the level with at least one AMMO!";
+                grafica_testo[204].GetComponent<TextMeshProUGUI>().text = "You end the level with at least one AMMO!";
 
             }
             if (grafica[205] != null)  //immagine stella 
@@ -1408,6 +1408,19 @@ public class menu : MonoBehaviour {
                 grafica[208].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[208].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
+            }
+            if (grafica[209] != null)  //testo informativo sotto il titolo
+{
+
+                float dx2 = dime_panel_x * 0.8f;
+                float dy2 = 0;
+                pos_x = dime_panel_x * 0.15f;
+                pos_y = dime_panel_y * 0.33f;
+
+                grafica[209].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[209].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[209].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 30f;
+                grafica_testo[209].GetComponent<TextMeshProUGUI>().text = "Achieve this STAR if...";
             }
 
 
@@ -2004,6 +2017,7 @@ public class menu : MonoBehaviour {
 
 
         crea_grafica_text(204, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", "");
+        crea_grafica_text(209, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", "");
 
 
         crea_grafica_text(205, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1");
