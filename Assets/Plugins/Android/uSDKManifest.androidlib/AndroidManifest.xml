@@ -6,13 +6,13 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="*" android:scheme="com.carlomonzini.astrovortex" />
+                <data android:host="*" android:scheme="usdk2027" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="1" android:scheme="https" android:pathPrefix="/Xyyb" />
+                <data android:host="usdk2027.onelink.me" android:scheme="https" android:pathPrefix="/Xyyb" />
             </intent-filter>
         </activity>
     </application>

@@ -1304,8 +1304,8 @@ public class menu : MonoBehaviour {
             if (grafica[201] != null)  //titolo info battlepass How gain STARS
      {
 
-                float dx2 = dy * .43f;
-                float dy2 = dx2;
+                float dx2 = dime_panel_x * 0.75f;
+                float dy2 = 0;
                 pos_x = 0;
                 pos_y = dime_panel_y * 0.43f;
 
@@ -1321,9 +1321,9 @@ public class menu : MonoBehaviour {
             if (grafica[202] != null)  //descrizione guadagno stelle TRAGUARDO
      {
 
-                float dx2 = dy * .43f;
-                float dy2 = dx2;
-                pos_x = 33f;
+                float dx2 = dime_panel_x * 0.8f;
+                float dy2 = 0;
+                pos_x = dime_panel_x * 0.15f;
                 pos_y = dime_panel_y * 0.2f;
 
                 grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.65f, dy2);
@@ -1335,9 +1335,9 @@ public class menu : MonoBehaviour {
             if (grafica[203] != null)  //descrizione guadagno stelle VITA
           {
 
-                float dx2 = dy * .43f;
-                float dy2 = dx2;
-                pos_x = 33f;
+                float dx2 = dime_panel_x * 0.8f;
+                float dy2 = 0;
+                pos_x = dime_panel_x * 0.15f;
                 pos_y = dime_panel_y * -0.06f;
 
                 grafica[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.65f, dy2);
@@ -1350,9 +1350,9 @@ public class menu : MonoBehaviour {
             if (grafica[204] != null)  //descrizione guadagno stelle AMMO
 {
 
-                float dx2 = dy * .43f;
-                float dy2 = dx2;
-                pos_x = 33f;
+                float dx2 = dime_panel_x * 0.8f;
+                float dy2 = 0;
+                pos_x = dime_panel_x * 0.15f;
                 pos_y = dime_panel_y * -0.35f;
 
                 grafica[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.65f, dy2);
