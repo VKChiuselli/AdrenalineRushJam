@@ -1,0 +1,4196 @@
+﻿{
+    "crea_cilindro": [
+        {
+            "raggio": 10.0,
+            "spostamento_z": 1.0,
+            "spostamento_z2": 0.75,
+            "visione_boss": false,
+            "pos_finale": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1170.0
+            }
+        }
+    ],
+    "crea_blocco": [
+        {
+            "mesh": {
+                "instanceID": -37590
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0089810010000040023",
+            "struttura_procedurale_dz": "5452225456444563563",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 50.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37602
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.6467693448066711,
+            "pos": 70.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37616
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 1.294814109802246,
+            "pos": 70.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37630
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0040000223002000002",
+            "struttura_procedurale_dz": "5636333245232626346",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 90.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37642
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.001988425850868225,
+            "pos": 110.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37656
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.6798080205917358,
+            "pos": 110.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37670
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0002200003002040012",
+            "struttura_procedurale_dz": "3554443655263346246",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 130.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37682
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 2.85571551322937,
+            "pos": 150.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37696
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "1003898000008900300",
+            "struttura_procedurale_dz": "6366234536365445446",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 170.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37708
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 1.4525506496429444,
+            "pos": 190.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37722
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0030010001000002012",
+            "struttura_procedurale_dz": "3656624353425434222",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 210.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37734
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.811052322387695,
+            "pos": 230.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37748
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "4110000100000040001",
+            "struttura_procedurale_dz": "2626555262563434235",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 250.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37760
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.2287211418151859,
+            "pos": 270.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37774
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.767090797424316,
+            "pos": 270.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37788
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0010033440000001013",
+            "struttura_procedurale_dz": "5453555444246452423",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 290.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37800
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.8288092613220219,
+            "pos": 310.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37814
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "2003100210010000210",
+            "struttura_procedurale_dz": "6562362536363342563",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 330.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37826
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.936044216156006,
+            "pos": 350.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37840
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0003138900300100410",
+            "struttura_procedurale_dz": "2565443554344234642",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 370.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37852
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.07931673526763916,
+            "pos": 390.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37866
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0000400022289008982",
+            "struttura_procedurale_dz": "3265223662633535554",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 410.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37878
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 1.277902364730835,
+            "pos": 430.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37892
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 3.3947296142578127,
+            "pos": 430.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37906
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.288515567779541,
+            "pos": 430.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37920
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 5.656341075897217,
+            "pos": 430.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37934
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0020022000000342000",
+            "struttura_procedurale_dz": "4523564532535452436",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 450.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37946
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.798363208770752,
+            "pos": 470.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37960
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 2.1454806327819826,
+            "pos": 470.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37974
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 3.5229501724243166,
+            "pos": 470.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -37988
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 5.472519397735596,
+            "pos": 470.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38002
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0013420000000200320",
+            "struttura_procedurale_dz": "5354326353243262433",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 490.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38014
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.6380605101585388,
+            "pos": 510.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38028
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0002124002000002002",
+            "struttura_procedurale_dz": "5353452252534563634",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 530.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38040
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": -0.02378832921385765,
+            "pos": 550.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38054
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.6299373507499695,
+            "pos": 550.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38068
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "4100100300033001000",
+            "struttura_procedurale_dz": "5234355363545462434",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 570.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38080
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 3.4028873443603517,
+            "pos": 590.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38094
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.267727375030518,
+            "pos": 590.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38108
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "4200000243100100002",
+            "struttura_procedurale_dz": "2445436524236255326",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 610.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38120
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 3.5665621757507326,
+            "pos": 630.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38134
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0890004000002048980",
+            "struttura_procedurale_dz": "3326442242452624622",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 650.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38146
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.103178977966309,
+            "pos": 670.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38160
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0004040043200100403",
+            "struttura_procedurale_dz": "2624445623542465624",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 690.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38172
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": -0.06543036550283432,
+            "pos": 710.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38186
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 1.3781431913375855,
+            "pos": 710.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38200
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 2.713428497314453,
+            "pos": 710.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38214
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.134266376495361,
+            "pos": 710.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38228
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "2331333000000000001",
+            "struttura_procedurale_dz": "6265663462336526252",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 730.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38240
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.09103259444236756,
+            "pos": 750.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38254
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 2.7782785892486574,
+            "pos": 750.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38268
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 5.5866875648498539,
+            "pos": 750.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38282
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "2400002000142003003",
+            "struttura_procedurale_dz": "6642653233226552446",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 770.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38294
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 3.4126136302948,
+            "pos": 790.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38308
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0013320000030110000",
+            "struttura_procedurale_dz": "2542535632562366525",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 810.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38320
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 1.303747296333313,
+            "pos": 830.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38334
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.944749355316162,
+            "pos": 830.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38348
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0100030001100100201",
+            "struttura_procedurale_dz": "4325545535334435432",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 850.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38360
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": -0.10462429374456406,
+            "pos": 870.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38374
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.6044161319732666,
+            "pos": 870.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38388
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.792797088623047,
+            "pos": 870.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38402
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "8980030022008900302",
+            "struttura_procedurale_dz": "2452523664456542242",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 890.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38414
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": -0.11832999438047409,
+            "pos": 910.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38428
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0034003004100200023",
+            "struttura_procedurale_dz": "6455533454544653245",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 930.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38440
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0040333200020000033",
+            "struttura_procedurale_dz": "3524546463464326464",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 970.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38452
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 1.9785062074661255,
+            "pos": 990.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38466
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.185547828674316,
+            "pos": 990.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38480
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0243200020000030022",
+            "struttura_procedurale_dz": "6563462622653436636",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 1010.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38492
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 2.7090163230895998,
+            "pos": 1030.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38506
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 5.592309951782227,
+            "pos": 1030.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38520
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "8982003000113004000",
+            "struttura_procedurale_dz": "5554622533525632236",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 1050.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38532
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.019500605762004854,
+            "pos": 1070.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38546
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 2.685600519180298,
+            "pos": 1070.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38560
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "0000898002022400040",
+            "struttura_procedurale_dz": "3632234563632554325",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 100,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 0.1745329350233078,
+            "pos": 1090.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38572
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 3,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": -0.03505907207727432,
+            "pos": 1110.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38586
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.132572650909424,
+            "pos": 1110.0,
+            "rotazione": 0.0
+        },
+        {
+            "mesh": {
+                "instanceID": -38600
+            },
+            "mesh_dissolve": {
+                "instanceID": 0
+            },
+            "mesh_renderer": {
+                "instanceID": 0
+            },
+            "struttura_procedurale": "",
+            "struttura_procedurale_dz": "",
+            "punto_impatto": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "forza_impatto": 0.0,
+            "tipo": 4,
+            "attivo": 0,
+            "arrivo": 0,
+            "disattiva_coll": 0,
+            "distruzione_oggetto": 0,
+            "valore_dissolve": 0.0,
+            "altezza": 0.0,
+            "rad": 4.823718070983887,
+            "pos": 1110.0,
+            "rotazione": 0.0
+        }
+    ],
+    "crea_bonus": [
+        {
+            "mesh": {
+                "instanceID": -41280
+            },
+            "tipo": 1,
+            "altezza": 10.0,
+            "rad": 0.7422555685043335,
+            "pos": 326.46044921875,
+            "attivo": 0
+        },
+        {
+            "mesh": {
+                "instanceID": -41296
+            },
+            "tipo": 1,
+            "altezza": 10.0,
+            "rad": 2.1883602142333986,
+            "pos": 326.47265625,
+            "attivo": 0
+        },
+        {
+            "mesh": {
+                "instanceID": -41312
+            },
+            "tipo": 1,
+            "altezza": 10.0,
+            "rad": 3.8635008335113527,
+            "pos": 326.3099060058594,
+            "attivo": 0
+        },
+        {
+            "mesh": {
+                "instanceID": -41328
+            },
+            "tipo": 1,
+            "altezza": 10.0,
+            "rad": 5.367656230926514,
+            "pos": 325.90850830078127,
+            "attivo": 0
+        },
+        {
+            "mesh": {
+                "instanceID": -41360
+            },
+            "tipo": 2,
+            "altezza": 10.0,
+            "rad": 5.812620162963867,
+            "pos": 639.3847045898438,
+            "attivo": 0
+        },
+        {
+            "mesh": {
+                "instanceID": -41376
+            },
+            "tipo": 2,
+            "altezza": 10.0,
+            "rad": 0.9740613698959351,
+            "pos": 639.39306640625,
+            "attivo": 0
+        },
+        {
+            "mesh": {
+                "instanceID": -41392
+            },
+            "tipo": 2,
+            "altezza": 10.0,
+            "rad": 2.6851303577423097,
+            "pos": 639.3660278320313,
+            "attivo": 0
+        },
+        {
+            "mesh": {
+                "instanceID": -41408
+            },
+            "tipo": 2,
+            "altezza": 10.0,
+            "rad": 4.215114593505859,
+            "pos": 639.4105834960938,
+            "attivo": 0
+        }
+    ],
+    "crea_malus": [],
+    "crea_moneta": [
+        {
+            "mesh": {
+                "instanceID": -38614
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.267980575561523,
+            "pos": 24.844074249267579
+        },
+        {
+            "mesh": {
+                "instanceID": -38628
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.417980670928955,
+            "pos": 27.23043441772461
+        },
+        {
+            "mesh": {
+                "instanceID": -38642
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.567980766296387,
+            "pos": 29.020946502685548
+        },
+        {
+            "mesh": {
+                "instanceID": -38656
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.71798038482666,
+            "pos": 31.048696517944337
+        },
+        {
+            "mesh": {
+                "instanceID": -38670
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.867980480194092,
+            "pos": 33.015769958496097
+        },
+        {
+            "mesh": {
+                "instanceID": -38684
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 6.017980575561523,
+            "pos": 35.009090423583987
+        },
+        {
+            "mesh": {
+                "instanceID": -38698
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 6.167980670928955,
+            "pos": 36.846160888671878
+        },
+        {
+            "mesh": {
+                "instanceID": -38712
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.7146997451782228,
+            "pos": 64.87223815917969
+        },
+        {
+            "mesh": {
+                "instanceID": -38726
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.7146997451782228,
+            "pos": 67.19145965576172
+        },
+        {
+            "mesh": {
+                "instanceID": -38740
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.7146997451782228,
+            "pos": 69.09135437011719
+        },
+        {
+            "mesh": {
+                "instanceID": -38754
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.7146997451782228,
+            "pos": 71.02716827392578
+        },
+        {
+            "mesh": {
+                "instanceID": -38768
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.7146997451782228,
+            "pos": 73.04698181152344
+        },
+        {
+            "mesh": {
+                "instanceID": -38782
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.7146997451782228,
+            "pos": 74.90325164794922
+        },
+        {
+            "mesh": {
+                "instanceID": -38796
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.7146997451782228,
+            "pos": 76.75484466552735
+        },
+        {
+            "mesh": {
+                "instanceID": -38810
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.7146997451782228,
+            "pos": 78.9009780883789
+        },
+        {
+            "mesh": {
+                "instanceID": -38824
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.3352785110473635,
+            "pos": 104.77883911132813
+        },
+        {
+            "mesh": {
+                "instanceID": -38838
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.3352785110473635,
+            "pos": 107.18258666992188
+        },
+        {
+            "mesh": {
+                "instanceID": -38852
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.3352785110473635,
+            "pos": 109.16354370117188
+        },
+        {
+            "mesh": {
+                "instanceID": -38866
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.3352785110473635,
+            "pos": 110.99726867675781
+        },
+        {
+            "mesh": {
+                "instanceID": -38880
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.3352785110473635,
+            "pos": 112.84461212158203
+        },
+        {
+            "mesh": {
+                "instanceID": -38894
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.155710697174072,
+            "pos": 145.01902770996095
+        },
+        {
+            "mesh": {
+                "instanceID": -38908
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.305710792541504,
+            "pos": 147.22897338867188
+        },
+        {
+            "mesh": {
+                "instanceID": -38922
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.4557108879089359,
+            "pos": 148.78256225585938
+        },
+        {
+            "mesh": {
+                "instanceID": -38936
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.605710506439209,
+            "pos": 151.18368530273438
+        },
+        {
+            "mesh": {
+                "instanceID": -38950
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.755710601806641,
+            "pos": 152.96664428710938
+        },
+        {
+            "mesh": {
+                "instanceID": -38964
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.905710697174072,
+            "pos": 154.80433654785157
+        },
+        {
+            "mesh": {
+                "instanceID": -38978
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.055710792541504,
+            "pos": 157.2056427001953
+        },
+        {
+            "mesh": {
+                "instanceID": -38992
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.205710411071777,
+            "pos": 158.77972412109376
+        },
+        {
+            "mesh": {
+                "instanceID": -39006
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.037217617034912,
+            "pos": 185.11146545410157
+        },
+        {
+            "mesh": {
+                "instanceID": -39020
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.187217712402344,
+            "pos": 187.1273956298828
+        },
+        {
+            "mesh": {
+                "instanceID": -39034
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.337217807769775,
+            "pos": 188.9134063720703
+        },
+        {
+            "mesh": {
+                "instanceID": -39048
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.487217426300049,
+            "pos": 190.75149536132813
+        },
+        {
+            "mesh": {
+                "instanceID": -39062
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.6372175216674809,
+            "pos": 192.99888610839845
+        },
+        {
+            "mesh": {
+                "instanceID": -39076
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.787217617034912,
+            "pos": 195.0203857421875
+        },
+        {
+            "mesh": {
+                "instanceID": -39090
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.966567039489746,
+            "pos": 225.04415893554688
+        },
+        {
+            "mesh": {
+                "instanceID": -39104
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.1165671348571779,
+            "pos": 227.19696044921876
+        },
+        {
+            "mesh": {
+                "instanceID": -39118
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.2665669918060304,
+            "pos": 229.19920349121095
+        },
+        {
+            "mesh": {
+                "instanceID": -39132
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.416567087173462,
+            "pos": 231.03207397460938
+        },
+        {
+            "mesh": {
+                "instanceID": -39146
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.5665669441223146,
+            "pos": 233.2499542236328
+        },
+        {
+            "mesh": {
+                "instanceID": -39160
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.716567039489746,
+            "pos": 235.12144470214845
+        },
+        {
+            "mesh": {
+                "instanceID": -39174
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.8665671348571779,
+            "pos": 237.1121826171875
+        },
+        {
+            "mesh": {
+                "instanceID": -39188
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.3105345964431763,
+            "pos": 265.0733642578125
+        },
+        {
+            "mesh": {
+                "instanceID": -39202
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.3105345964431763,
+            "pos": 266.7864990234375
+        },
+        {
+            "mesh": {
+                "instanceID": -39216
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.3105345964431763,
+            "pos": 269.1883239746094
+        },
+        {
+            "mesh": {
+                "instanceID": -39230
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.3105345964431763,
+            "pos": 270.976318359375
+        },
+        {
+            "mesh": {
+                "instanceID": -39244
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.3105345964431763,
+            "pos": 272.98028564453127
+        },
+        {
+            "mesh": {
+                "instanceID": -39258
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.3105345964431763,
+            "pos": 275.1594543457031
+        },
+        {
+            "mesh": {
+                "instanceID": -39272
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.3105345964431763,
+            "pos": 277.17694091796877
+        },
+        {
+            "mesh": {
+                "instanceID": -39286
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.3105345964431763,
+            "pos": 278.7943115234375
+        },
+        {
+            "mesh": {
+                "instanceID": -39300
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.3105345964431763,
+            "pos": 281.106689453125
+        },
+        {
+            "mesh": {
+                "instanceID": -39314
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 3.748403549194336,
+            "pos": 304.80059814453127
+        },
+        {
+            "mesh": {
+                "instanceID": -39328
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 3.8984036445617677,
+            "pos": 307.15765380859377
+        },
+        {
+            "mesh": {
+                "instanceID": -39342
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.048403739929199,
+            "pos": 308.7556457519531
+        },
+        {
+            "mesh": {
+                "instanceID": -39356
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.198403358459473,
+            "pos": 310.91644287109377
+        },
+        {
+            "mesh": {
+                "instanceID": -39370
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.348403453826904,
+            "pos": 313.0774230957031
+        },
+        {
+            "mesh": {
+                "instanceID": -39384
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.498403549194336,
+            "pos": 314.9433288574219
+        },
+        {
+            "mesh": {
+                "instanceID": -39398
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.648403644561768,
+            "pos": 317.1863708496094
+        },
+        {
+            "mesh": {
+                "instanceID": -39412
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.798403739929199,
+            "pos": 318.8625183105469
+        },
+        {
+            "mesh": {
+                "instanceID": -39426
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.948403358459473,
+            "pos": 321.06866455078127
+        },
+        {
+            "mesh": {
+                "instanceID": -39440
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.235683917999268,
+            "pos": 345.0818176269531
+        },
+        {
+            "mesh": {
+                "instanceID": -39454
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.385684013366699,
+            "pos": 347.08673095703127
+        },
+        {
+            "mesh": {
+                "instanceID": -39468
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.535684108734131,
+            "pos": 348.8892822265625
+        },
+        {
+            "mesh": {
+                "instanceID": -39482
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.685683727264404,
+            "pos": 350.8097839355469
+        },
+        {
+            "mesh": {
+                "instanceID": -39496
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.835683822631836,
+            "pos": 353.0151672363281
+        },
+        {
+            "mesh": {
+                "instanceID": -39510
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.985683917999268,
+            "pos": 354.9146423339844
+        },
+        {
+            "mesh": {
+                "instanceID": -39524
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.733490228652954,
+            "pos": 385.10137939453127
+        },
+        {
+            "mesh": {
+                "instanceID": -39538
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.733490228652954,
+            "pos": 387.2435302734375
+        },
+        {
+            "mesh": {
+                "instanceID": -39552
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.733490228652954,
+            "pos": 388.80535888671877
+        },
+        {
+            "mesh": {
+                "instanceID": -39566
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.733490228652954,
+            "pos": 391.08404541015627
+        },
+        {
+            "mesh": {
+                "instanceID": -39580
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.733490228652954,
+            "pos": 393.1593322753906
+        },
+        {
+            "mesh": {
+                "instanceID": -39594
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.733490228652954,
+            "pos": 394.87518310546877
+        },
+        {
+            "mesh": {
+                "instanceID": -39608
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.1980020999908449,
+            "pos": 424.83050537109377
+        },
+        {
+            "mesh": {
+                "instanceID": -39622
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.1980020999908449,
+            "pos": 426.80377197265627
+        },
+        {
+            "mesh": {
+                "instanceID": -39636
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.1980020999908449,
+            "pos": 429.2230529785156
+        },
+        {
+            "mesh": {
+                "instanceID": -39650
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.1980020999908449,
+            "pos": 430.8367004394531
+        },
+        {
+            "mesh": {
+                "instanceID": -39664
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.1980020999908449,
+            "pos": 432.8990173339844
+        },
+        {
+            "mesh": {
+                "instanceID": -39678
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.4822750091552736,
+            "pos": 464.92742919921877
+        },
+        {
+            "mesh": {
+                "instanceID": -39692
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.4822750091552736,
+            "pos": 466.8804931640625
+        },
+        {
+            "mesh": {
+                "instanceID": -39706
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.4822750091552736,
+            "pos": 469.0209045410156
+        },
+        {
+            "mesh": {
+                "instanceID": -39720
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.4822750091552736,
+            "pos": 470.7956848144531
+        },
+        {
+            "mesh": {
+                "instanceID": -39734
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.4822750091552736,
+            "pos": 473.0288391113281
+        },
+        {
+            "mesh": {
+                "instanceID": -39748
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.4822750091552736,
+            "pos": 475.1606140136719
+        },
+        {
+            "mesh": {
+                "instanceID": -39762
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.4822750091552736,
+            "pos": 477.1457214355469
+        },
+        {
+            "mesh": {
+                "instanceID": -39776
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.4822750091552736,
+            "pos": 479.150146484375
+        },
+        {
+            "mesh": {
+                "instanceID": -39790
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.614396572113037,
+            "pos": 505.1206359863281
+        },
+        {
+            "mesh": {
+                "instanceID": -39804
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.764396667480469,
+            "pos": 507.2377624511719
+        },
+        {
+            "mesh": {
+                "instanceID": -39818
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.9143967628479,
+            "pos": 509.0384216308594
+        },
+        {
+            "mesh": {
+                "instanceID": -39832
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.064396381378174,
+            "pos": 510.7950439453125
+        },
+        {
+            "mesh": {
+                "instanceID": -39846
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.2143964767456059,
+            "pos": 513.1519165039063
+        },
+        {
+            "mesh": {
+                "instanceID": -39860
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.364396572113037,
+            "pos": 515.0492553710938
+        },
+        {
+            "mesh": {
+                "instanceID": -39874
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.514396667480469,
+            "pos": 516.89794921875
+        },
+        {
+            "mesh": {
+                "instanceID": -39888
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.664396286010742,
+            "pos": 519.1900024414063
+        },
+        {
+            "mesh": {
+                "instanceID": -39902
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.814396858215332,
+            "pos": 521.1104125976563
+        },
+        {
+            "mesh": {
+                "instanceID": -39916
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.811253070831299,
+            "pos": 544.7952880859375
+        },
+        {
+            "mesh": {
+                "instanceID": -39930
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.661252975463867,
+            "pos": 546.7678833007813
+        },
+        {
+            "mesh": {
+                "instanceID": -39944
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.5112528800964359,
+            "pos": 549.0934448242188
+        },
+        {
+            "mesh": {
+                "instanceID": -39958
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.361253261566162,
+            "pos": 551.1201782226563
+        },
+        {
+            "mesh": {
+                "instanceID": -39972
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.2112531661987309,
+            "pos": 552.7561645507813
+        },
+        {
+            "mesh": {
+                "instanceID": -39986
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.061253070831299,
+            "pos": 555.1561889648438
+        },
+        {
+            "mesh": {
+                "instanceID": -40000
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.911252975463867,
+            "pos": 556.8265380859375
+        },
+        {
+            "mesh": {
+                "instanceID": -40014
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.761253356933594,
+            "pos": 559.1889038085938
+        },
+        {
+            "mesh": {
+                "instanceID": -40028
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.471965312957764,
+            "pos": 584.99658203125
+        },
+        {
+            "mesh": {
+                "instanceID": -40042
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.471965312957764,
+            "pos": 587.0519409179688
+        },
+        {
+            "mesh": {
+                "instanceID": -40056
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.471965312957764,
+            "pos": 589.2142944335938
+        },
+        {
+            "mesh": {
+                "instanceID": -40070
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.471965312957764,
+            "pos": 591.1219482421875
+        },
+        {
+            "mesh": {
+                "instanceID": -40084
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.471965312957764,
+            "pos": 593.2113037109375
+        },
+        {
+            "mesh": {
+                "instanceID": -40098
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.471965312957764,
+            "pos": 595.0499267578125
+        },
+        {
+            "mesh": {
+                "instanceID": -40112
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.471965312957764,
+            "pos": 596.8465576171875
+        },
+        {
+            "mesh": {
+                "instanceID": -40126
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.5100775361061096,
+            "pos": 624.8509521484375
+        },
+        {
+            "mesh": {
+                "instanceID": -40140
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.5100775361061096,
+            "pos": 627.1937866210938
+        },
+        {
+            "mesh": {
+                "instanceID": -40154
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.5100775361061096,
+            "pos": 629.0079345703125
+        },
+        {
+            "mesh": {
+                "instanceID": -40168
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.5100775361061096,
+            "pos": 630.8561401367188
+        },
+        {
+            "mesh": {
+                "instanceID": -40182
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.5100775361061096,
+            "pos": 633.0637817382813
+        },
+        {
+            "mesh": {
+                "instanceID": -40196
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.5100775361061096,
+            "pos": 635.1527709960938
+        },
+        {
+            "mesh": {
+                "instanceID": -40210
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.5100775361061096,
+            "pos": 637.1625366210938
+        },
+        {
+            "mesh": {
+                "instanceID": -40224
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.5100775361061096,
+            "pos": 639.201904296875
+        },
+        {
+            "mesh": {
+                "instanceID": -40238
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.767823696136475,
+            "pos": 664.9983520507813
+        },
+        {
+            "mesh": {
+                "instanceID": -40252
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.767823696136475,
+            "pos": 666.7551879882813
+        },
+        {
+            "mesh": {
+                "instanceID": -40266
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.767823696136475,
+            "pos": 668.8377685546875
+        },
+        {
+            "mesh": {
+                "instanceID": -40280
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.767823696136475,
+            "pos": 671.2491455078125
+        },
+        {
+            "mesh": {
+                "instanceID": -40294
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.767823696136475,
+            "pos": 672.8369140625
+        },
+        {
+            "mesh": {
+                "instanceID": -40308
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.767823696136475,
+            "pos": 675.1863403320313
+        },
+        {
+            "mesh": {
+                "instanceID": -40322
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.767823696136475,
+            "pos": 676.8001098632813
+        },
+        {
+            "mesh": {
+                "instanceID": -40336
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.767823696136475,
+            "pos": 679.0467529296875
+        },
+        {
+            "mesh": {
+                "instanceID": -40350
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.767823696136475,
+            "pos": 680.8865356445313
+        },
+        {
+            "mesh": {
+                "instanceID": -40364
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 3.441128969192505,
+            "pos": 705.20458984375
+        },
+        {
+            "mesh": {
+                "instanceID": -40378
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 3.5911290645599367,
+            "pos": 706.8368530273438
+        },
+        {
+            "mesh": {
+                "instanceID": -40392
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 3.741128921508789,
+            "pos": 708.9912719726563
+        },
+        {
+            "mesh": {
+                "instanceID": -40406
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 3.8911290168762209,
+            "pos": 711.2029418945313
+        },
+        {
+            "mesh": {
+                "instanceID": -40420
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.041129112243652,
+            "pos": 712.9073486328125
+        },
+        {
+            "mesh": {
+                "instanceID": -40434
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.191128730773926,
+            "pos": 714.8763427734375
+        },
+        {
+            "mesh": {
+                "instanceID": -40448
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.130115270614624,
+            "pos": 744.97119140625
+        },
+        {
+            "mesh": {
+                "instanceID": -40462
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.980115294456482,
+            "pos": 747.1874389648438
+        },
+        {
+            "mesh": {
+                "instanceID": -40476
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.8301153182983399,
+            "pos": 749.2083740234375
+        },
+        {
+            "mesh": {
+                "instanceID": -40490
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.6801152229309083,
+            "pos": 750.9666748046875
+        },
+        {
+            "mesh": {
+                "instanceID": -40504
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.5301152467727662,
+            "pos": 753.2485961914063
+        },
+        {
+            "mesh": {
+                "instanceID": -40518
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.380115270614624,
+            "pos": 755.0786743164063
+        },
+        {
+            "mesh": {
+                "instanceID": -40532
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.230115294456482,
+            "pos": 757.1690063476563
+        },
+        {
+            "mesh": {
+                "instanceID": -40546
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.916948318481445,
+            "pos": 785.1954345703125
+        },
+        {
+            "mesh": {
+                "instanceID": -40560
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.066948413848877,
+            "pos": 786.9945678710938
+        },
+        {
+            "mesh": {
+                "instanceID": -40574
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.216948509216309,
+            "pos": 789.0982666015625
+        },
+        {
+            "mesh": {
+                "instanceID": -40588
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.366948127746582,
+            "pos": 790.8952026367188
+        },
+        {
+            "mesh": {
+                "instanceID": -40602
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.516948223114014,
+            "pos": 793.2178955078125
+        },
+        {
+            "mesh": {
+                "instanceID": -40616
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.666948318481445,
+            "pos": 795.0554809570313
+        },
+        {
+            "mesh": {
+                "instanceID": -40630
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.816948413848877,
+            "pos": 797.2291870117188
+        },
+        {
+            "mesh": {
+                "instanceID": -40644
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.966948509216309,
+            "pos": 798.763671875
+        },
+        {
+            "mesh": {
+                "instanceID": -40658
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 6.116948127746582,
+            "pos": 800.9132080078125
+        },
+        {
+            "mesh": {
+                "instanceID": -40672
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.110723495483398,
+            "pos": 825.2264404296875
+        },
+        {
+            "mesh": {
+                "instanceID": -40686
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.110723495483398,
+            "pos": 826.7540283203125
+        },
+        {
+            "mesh": {
+                "instanceID": -40700
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.110723495483398,
+            "pos": 829.2263793945313
+        },
+        {
+            "mesh": {
+                "instanceID": -40714
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.110723495483398,
+            "pos": 830.8966674804688
+        },
+        {
+            "mesh": {
+                "instanceID": -40728
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.110723495483398,
+            "pos": 832.7572631835938
+        },
+        {
+            "mesh": {
+                "instanceID": -40742
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.110723495483398,
+            "pos": 835.015380859375
+        },
+        {
+            "mesh": {
+                "instanceID": -40756
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.110723495483398,
+            "pos": 837.05029296875
+        },
+        {
+            "mesh": {
+                "instanceID": -40770
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 4.110723495483398,
+            "pos": 838.9069213867188
+        },
+        {
+            "mesh": {
+                "instanceID": -40784
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.5883636474609376,
+            "pos": 864.982666015625
+        },
+        {
+            "mesh": {
+                "instanceID": -40798
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.5883636474609376,
+            "pos": 866.9351806640625
+        },
+        {
+            "mesh": {
+                "instanceID": -40812
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.5883636474609376,
+            "pos": 869.0311889648438
+        },
+        {
+            "mesh": {
+                "instanceID": -40826
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.5883636474609376,
+            "pos": 870.7837524414063
+        },
+        {
+            "mesh": {
+                "instanceID": -40840
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.5883636474609376,
+            "pos": 872.938232421875
+        },
+        {
+            "mesh": {
+                "instanceID": -40854
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.5883636474609376,
+            "pos": 874.9127807617188
+        },
+        {
+            "mesh": {
+                "instanceID": -40868
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.5883636474609376,
+            "pos": 876.9884643554688
+        },
+        {
+            "mesh": {
+                "instanceID": -40882
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.17462158203125,
+            "pos": 905.0744018554688
+        },
+        {
+            "mesh": {
+                "instanceID": -40896
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.17462158203125,
+            "pos": 907.1829223632813
+        },
+        {
+            "mesh": {
+                "instanceID": -40910
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.17462158203125,
+            "pos": 909.1396484375
+        },
+        {
+            "mesh": {
+                "instanceID": -40924
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.17462158203125,
+            "pos": 911.0806274414063
+        },
+        {
+            "mesh": {
+                "instanceID": -40938
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 2.17462158203125,
+            "pos": 912.8369750976563
+        },
+        {
+            "mesh": {
+                "instanceID": -40952
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.4319945573806763,
+            "pos": 945.0001220703125
+        },
+        {
+            "mesh": {
+                "instanceID": -40966
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.4319945573806763,
+            "pos": 947.1961059570313
+        },
+        {
+            "mesh": {
+                "instanceID": -40980
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.4319945573806763,
+            "pos": 948.771240234375
+        },
+        {
+            "mesh": {
+                "instanceID": -40994
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.4319945573806763,
+            "pos": 951.188720703125
+        },
+        {
+            "mesh": {
+                "instanceID": -41008
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.4319945573806763,
+            "pos": 953.026123046875
+        },
+        {
+            "mesh": {
+                "instanceID": -41022
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 1.4319945573806763,
+            "pos": 954.9418334960938
+        },
+        {
+            "mesh": {
+                "instanceID": -41036
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.9118568897247315,
+            "pos": 985.2379150390625
+        },
+        {
+            "mesh": {
+                "instanceID": -41050
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.9118568897247315,
+            "pos": 987.1756591796875
+        },
+        {
+            "mesh": {
+                "instanceID": -41064
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.9118568897247315,
+            "pos": 988.9232177734375
+        },
+        {
+            "mesh": {
+                "instanceID": -41078
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.9118568897247315,
+            "pos": 990.8884887695313
+        },
+        {
+            "mesh": {
+                "instanceID": -41092
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.9118568897247315,
+            "pos": 992.9662475585938
+        },
+        {
+            "mesh": {
+                "instanceID": -41106
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.938834190368652,
+            "pos": 1025.1055908203125
+        },
+        {
+            "mesh": {
+                "instanceID": -41120
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 5.788834095001221,
+            "pos": 1026.8809814453125
+        },
+        {
+            "mesh": {
+                "instanceID": -41134
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.7510591745376587,
+            "pos": 1065.064697265625
+        },
+        {
+            "mesh": {
+                "instanceID": -41148
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.6010591983795166,
+            "pos": 1067.013671875
+        },
+        {
+            "mesh": {
+                "instanceID": -41162
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.45105916261672976,
+            "pos": 1068.92236328125
+        },
+        {
+            "mesh": {
+                "instanceID": -41176
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.30105918645858767,
+            "pos": 1071.246826171875
+        },
+        {
+            "mesh": {
+                "instanceID": -41190
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.15105915069580079,
+            "pos": 1073.158447265625
+        },
+        {
+            "mesh": {
+                "instanceID": -41204
+            },
+            "tipo": 0,
+            "presa": 0,
+            "altezza": 0.0,
+            "rad": 0.0010591745376586915,
+            "pos": 1075.0594482421875
+        }
+    ],
+    "crea_gemma": []
+}
