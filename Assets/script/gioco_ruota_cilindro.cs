@@ -264,6 +264,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         cam0 = GameObject.Find("Main Camera");
 
         carica_effetto_UI(1, "audio/Prefabs/click");
+        carica_effetto_UI(2, "audio/Prefabs/shot");
+        carica_effetto_UI(3, "audio/Prefabs/impact");
+        carica_effetto_UI(4, "audio/Prefabs/explosion");
+
+        carica_effetto_UI(5, "audio/Prefabs/success");
+        carica_effetto_UI(6, "audio/Prefabs/lose");
+        carica_effetto_UI(7, "audio/Prefabs/monete");
+        carica_effetto_UI(8, "audio/Prefabs/preso_bonus");
+
+
+
         carica_musica("audio/Prefabs/musica");
 
         leggi_vertici_cilindro();
@@ -373,7 +384,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 Debug.Log("energia " + energia);
 
-                attiva_barriera = tempo_barriera;
+                attiva_barriera = tempo_barriera*.5f;
             }
         }
 
@@ -515,10 +526,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 Vector3 pos_astronave = astronave.transform.position;
 
-                sparo[n].transform.position = new Vector3(pos_astronave.x, pos_astronave.y, pos_astronave.z + 2);
+                sparo[n].transform.position = new Vector3(pos_astronave.x, pos_astronave.y-.5f, pos_astronave.z + 2);
 
+                suona_effetto_UI(2, .7f);
 
-                sparo[n].name = "sparo_personaggio " + n;
+                    sparo[n].name = "sparo_personaggio " + n;
 
                 attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio_base;
 
@@ -572,6 +584,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     Destroy(c_save.crea_moneta[k].mesh);
 
                     monete_partita_corrente = monete_partita_corrente + 1;
+
+                    suona_effetto_UI(7, 1);
+
 
                     if (ogg_struttura_dati != null) {
                         script_struttura_dati.monete = script_struttura_dati.monete + 1;
@@ -2314,9 +2329,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                                 c_save.crea_blocco[num_block].disattiva_coll = 1;
 
 
-                                analisi_energia(20);
+                                analisi_energia(40);
 
+                                suona_effetto_UI(3, 1);
 
+                                suona_effetto_UI(4, .5f);
 
                             }
                         }
@@ -2350,6 +2367,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                         int num_bonus = int.Parse(str_bonus);
 
+                        suona_effetto_UI(8, 1);
+
                         numero_spari = numero_spari + 1;
                         if (c_save.crea_bonus[num_bonus].attivo == 0) {
                             c_save.crea_bonus[num_bonus].attivo = 1;
@@ -2368,6 +2387,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                         str_bonus = str_bonus.Replace("bonus2_", "");
 
                         int num_bonus = int.Parse(str_bonus);
+
+                        suona_effetto_UI(8, 1);
 
                         if (c_save.crea_bonus[num_bonus].attivo == 0) {
                             c_save.crea_bonus[num_bonus].attivo = 1;
@@ -2399,6 +2420,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                         carica_particles("particles/CFXR Explosion 2", hit_collider.point);
 
+                        suona_effetto_UI(3, 1);
 
                         DestroyImmediate(boss_potere_mesh[num_boss_potere_mesh]);
 
@@ -2431,13 +2453,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                    analisi_energia(15);
+                    analisi_energia(25);
 
                     carica_particles("particles/CFXR Hit B", punto_coll_uso);
 
                     c_save.crea_blocco[num_block].punto_impatto = punto_coll_uso;
                     c_save.crea_blocco[num_block].forza_impatto = velocita_personaggio * 8;
 
+                    suona_effetto_UI(3, 1);
 
                     c_save.crea_blocco[num_block].distruzione_oggetto = 1;
 
@@ -2536,7 +2559,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         RaycastHit hit_collider;
 
-        Vector3[] pos_ray_direction = new Vector3[5];
+        Vector3[] pos_ray_direction = new Vector3[10];
 
         pos_ray_direction[0] = new Vector3(0, 0, 10);
         pos_ray_direction[1] = new Vector3(0, 0, 10);
@@ -2571,14 +2594,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (distanza_coll < 2 && tipo == 1) {
 
-
+            toccato_astronave = 1;
 
             carica_particles("particles/CFXR Explosion 3", ogg.transform.position);
 
             DestroyImmediate(ogg);
             analisi_energia(30);
 
-
+            suona_effetto_UI(3, 1);
         }
 
 
@@ -2607,7 +2630,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                         if (hit_collider.collider.name.IndexOf("blocco") > -1)
                         {
 
+                            float dis_z = hit_collider.point.z;
 
+
+                           // Debug.Log("dis_z "+ dis_z);
+
+                            float volume = (60 - hit_collider.point.z) / 60;
+                            if (volume < 0)
+                            {
+                                volume = 0;
+                            }
 
 
                             string str_block = "" + hit_collider.collider.name;
@@ -2633,6 +2665,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                                 carica_particles("particles/CFXR Hit A", hit_collider.point);
 
+
+                                
+
+                                suona_effetto_UI(4, volume);
+
+
                                 if (tipo == 0)
                                 {
                                     attivo_tempo_sparo[num] = 0;
@@ -2642,6 +2680,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                                     attivo_tempo_sparo_boss[num] = 0;
                                 }
                                 DestroyImmediate(ogg);
+                                n = 100;
 
                                 c_save.crea_blocco[num_block].disattiva_coll = 1;
 
@@ -2660,6 +2699,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                                 carica_particles("particles/CFXR Explosion 3", hit_collider.collider.transform.position);
 
+                                suona_effetto_UI(4, volume*2);
 
                                 if (tipo == 0)
                                 {
@@ -2676,7 +2716,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                                 c_save.crea_blocco[num_block].distruzione_oggetto = 1;
                                 c_save.crea_blocco[num_block].disattiva_coll = 1;
 
-
+                                n = 100;
 
                             }
 
@@ -3002,6 +3042,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         Debug.Log("pulsante " + num);
 
 #endif
+
+
+        suona_effetto_UI(1, 1);
 
 
         if (num == 0) {
@@ -3630,6 +3673,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             grafica_dime[3] = 4;
 
+
+            suona_effetto_UI(5, 1);
+
         }
 
         if (num == 2) {
@@ -3684,6 +3730,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             grafica_dime[3] = 4;
 
+            suona_effetto_UI(6, 1);
+
         }
 
 
@@ -3705,6 +3753,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_button_text(209, "Next Level", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
             crea_button_text(210, "Repeat Level", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
+            if (monete_partita_corrente > 0)
+            {
+                suona_effetto_UI(7, 1);
+            }
 
 
             pulsante_testo[208].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
@@ -3725,6 +3777,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             crea_button_text(203, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
+           
 
         }
 
@@ -3911,30 +3964,28 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                for (int n = 4; n <= 9; n++) {
-                    grafica_pos[n] = .35f;
-
-                }
-
-                for (int n = 10; n <= 12; n++) {
-                    grafica_pos[n] = .15f;
+                for (int n = 4; n <= 12; n++) {
+                    grafica_pos[n] = 5.35f;
 
                 }
 
 
                 if (crea_popup_finale >= 1) {
-                    if (energia <= 0) {
+                    if (energia <= 0)
+                    {
                         grafica_pos[1] = .25f;
                         grafica_pos[2] = .1f;
                         grafica_pos[3] = -.2f;
 
-
-                        for (int n = 4; n <= 12; n++) {
-                            grafica_pos[n] = 5.35f;
-
-                        }
+                    }
+                    else
+                    {
+                        grafica_pos[7] = .35f;
+                        grafica_pos[10] = .15f;
 
                     }
+
+                     
 
 
                 }
@@ -3948,6 +3999,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     grafica_pos[11] = .15f;
                     ok_energia_completa = 1;
 
+                  //  Debug.Log("ok_energia_completa "+ energia);
+
                 }
 
 
@@ -3955,6 +4008,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     grafica_pos[9] = .35f;
                     grafica_pos[12] = .15f;
                     ok_spari_completi = 1;
+
+                 //   Debug.Log("ok_spari_completi "+numero_spari);
                 }
 
 
