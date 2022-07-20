@@ -355,17 +355,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (ogg_struttura_dati != null) {
 
-            agilita = 1.0f + script_struttura_dati.livello_upgrade[0] * .1f;
+            agilita = 1.0f + script_struttura_dati.livello_upgrade[1] * .1f;
 
-            tempo_barriera = 2.0f + script_struttura_dati.livello_upgrade[1] * .25f;
+            tempo_barriera = 2.0f + script_struttura_dati.livello_upgrade[2] * .25f;
 
-            energia = 100.0f + script_struttura_dati.livello_upgrade[2] * 10;
+            energia = 100.0f + script_struttura_dati.livello_upgrade[3] * 10;
 
-            numero_spari = 3 + script_struttura_dati.livello_upgrade[3];
+            numero_spari = 3 + script_struttura_dati.livello_upgrade[4];
 
-            scafo = 1.0f + script_struttura_dati.livello_upgrade[4] * .1f;
+            scafo = 1.0f + script_struttura_dati.livello_upgrade[5] * .1f;
 
-            calamita = 1.0f + script_struttura_dati.livello_upgrade[5] * .05f;
+            calamita = 1.0f + script_struttura_dati.livello_upgrade[6] * .05f;
 
 
         }
