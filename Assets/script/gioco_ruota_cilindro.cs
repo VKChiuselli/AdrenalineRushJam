@@ -246,6 +246,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     int ok_fine_livello = 0;
 
+    float fade_intro = 1;
 
 
     // Start is called before the first frame update
@@ -393,13 +394,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     void Update() {
 
+
+
+
+
         if (carica_dati_online == 1 && carica_dati_livello_online == 1) {
 
             update_game();
 
         }
-        else {
-            aggiorna_menu();
+        else { 
+            aggiorna_menu_offline();
         }
 
     }
@@ -585,7 +590,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     monete_partita_corrente = monete_partita_corrente + 1;
 
-                    suona_effetto_UI(7, 1);
+                    suona_effetto_UI(7, .35f);
 
 
                     if (ogg_struttura_dati != null) {
@@ -3155,12 +3160,37 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         crea_grafica_text(10, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
 
+        crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
+
 
 
     }
 
 
-    void aggiorna_menu() {
+    void aggiorna_menu_offline()
+    {
+
+
+      
+        if (grafica[11] != null)  
+        {
+
+            float dx2 = risoluzione_x;
+            float dy2 = risoluzione_y;
+      
+
+            grafica[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+        }
+
+
+    }
+
+
+
+
+        void aggiorna_menu() {
         font_size = (int)(risoluzione_x / 25);
 
         float valore_yy = .445f;
@@ -3387,6 +3417,24 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica[10].GetComponent<Image>().color = new Color(1, 1, 1, alpha);
             grafica_testo[10].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, alpha);
 
+
+
+        }
+
+        fade_intro = fade_intro - Time.deltaTime*2; 
+
+        if (fade_intro < 0)
+        {
+            fade_intro = 0;
+        }
+
+        if (grafica[11] != null)  // energia
+        {
+
+         
+
+            grafica[11].GetComponent<Image>().color = new Color(1,1,1,fade_intro);
+          
 
 
         }
