@@ -275,7 +275,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        carica_musica("audio/Prefabs/musica");
+        carica_musica("audio/Prefabs/musicaGioco");
 
         leggi_vertici_cilindro();
 

@@ -109,7 +109,7 @@ public class menu : MonoBehaviour {
         cam0 = GameObject.Find("Main Camera");
 
         carica_effetto_UI(1, "audio/Prefabs/click");
-        carica_musica("audio/Prefabs/musica");
+        carica_musica("audio/Prefabs/musicaMenu");
 
         canvas_popup.SetActive(false);
 
