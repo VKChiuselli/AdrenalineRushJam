@@ -1457,6 +1457,59 @@ public class menu : MonoBehaviour {
             uscita_popup(dime_panel_x, dime_panel_y);
 
         }
+        else if (attivo_popup == 6)//popup info upgrade
+ {
+            if (grafica[200] != null) {
+
+                float dx2 = dx * .8f;
+                float dy2 = dy * .8f;
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+            if (grafica[201] != null)  //titolo upgrade 
+     {
+
+                float dx2 = dime_panel_x * 0.75f;
+                float dy2 = 0;
+                pos_x = 0;
+                pos_y = dime_panel_y * 0.43f;
+
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 25f;
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "" + upgrade_titolo[indice_upgrade_corrente];
+
+            }
+
+
+
+            if (grafica[203] != null)  //descrizione upgrade
+          {
+
+                float dx2 = dime_panel_x * 0.8f;
+                float dy2 = 0;
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.65f, dy2);
+                grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 30f;
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "" + upgrade_descrittore[indice_upgrade_corrente];
+
+            }
+
+
+            uscita_popup(dime_panel_x, dime_panel_y);
+
+        }
 
 
     }
@@ -1869,6 +1922,10 @@ public class menu : MonoBehaviour {
         upgrade_titolo[2] = "BARRIER";
         upgrade_titolo[3] = "ENERGY";
         upgrade_titolo[4] = "SHIELD";
+        upgrade_descrittore[1] = "Description AGILITY coming soon";
+        upgrade_descrittore[2] = "Description BARRIER coming soon ";
+        upgrade_descrittore[3] = "Description ENERGY coming soon ";
+        upgrade_descrittore[4] = "Description SHIELD coming soon ";
         upgrade_titolo[5] = "AMMO";
         upgrade_titolo[6] = "CALAMITY";
 
