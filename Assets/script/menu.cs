@@ -1568,7 +1568,7 @@ public class menu : MonoBehaviour {
 
             float dx2 = dy * .8f / 2;
             float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * .5f - dx2 * 2;
+            pos_x = risoluzione_x * 0.3f - dx2 * 2;
             pos_y = risoluzione_y * 0.45f;
 
             grafica[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -1581,7 +1581,7 @@ public class menu : MonoBehaviour {
 
             float dx2 = dy * .8f;
             float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * .5f - dx2;
+            pos_x = risoluzione_x * 0.3f - dx2;
             pos_y = risoluzione_y * 0.5f - dy2 * .9f;
 
             grafica[12].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -1591,13 +1591,14 @@ public class menu : MonoBehaviour {
             grafica_testo[12].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.monete;
 
         }
+  
 
         if (grafica[13] != null)  //gem
         {
 
             float dx2 = dy * .8f / 2;
             float dy2 = dx2 * (84f / 70f);
-            pos_x = 0;
+            pos_x = risoluzione_x * 0.01f - dx2 * 2;
             pos_y = risoluzione_y * 0.45f;
 
             grafica[13].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -1610,7 +1611,7 @@ public class menu : MonoBehaviour {
 
             float dx2 = dy * .8f;
             float dy2 = dx2 * (76f / 72f);
-            pos_x = 0;
+            pos_x = risoluzione_x * 0.01f - dx2;
             pos_y = risoluzione_y * 0.5f - dy2 * .9f;
 
             grafica[14].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -1619,6 +1620,20 @@ public class menu : MonoBehaviour {
             grafica_testo[14].GetComponent<TextMeshProUGUI>().fontSize = font_size;
             grafica_testo[14].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.gemme;
 
+
+        }
+
+
+        if (pulsante[15] != null)  //home pulsante
+        {
+
+            float dx2 = dy * 0.65f;
+            float dy2 = dx2 * (76f / 72f);
+            pos_x = risoluzione_x * .53f - dx2;
+            pos_y = risoluzione_y * 0.52f - dy2 * .9f;
+
+            pulsante[15].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            pulsante[15].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
         }
 
@@ -1894,7 +1909,7 @@ public class menu : MonoBehaviour {
         crea_grafica_text(13, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gem");
         crea_grafica_text(14, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-
+        crea_button_text(15, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Home"); //pulsante seleziona livelli
 
 
     }
@@ -2219,6 +2234,10 @@ public class menu : MonoBehaviour {
         if (num == 11) {
 
             crea_popup_seleziona_livelli(4);
+        }
+        
+        if (num == 15) {
+            pagina = 0;
         }
 
 
