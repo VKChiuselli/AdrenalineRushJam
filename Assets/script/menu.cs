@@ -1741,7 +1741,7 @@ public class menu : MonoBehaviour {
         float pos_y = risoluzione_y * .3f;
 
         if (pulsante[0] != null) {
-            pos_y = risoluzione_y * -.2f;
+            pos_y = risoluzione_y * -0.15f;
 
             pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
             pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
@@ -1757,7 +1757,7 @@ public class menu : MonoBehaviour {
             float dx2 = dy2 * (65.0f / 69.0f);
 
 
-            float pos_x2 = risoluzione_x * 0.5f - dx2 * .55f;
+            float pos_x2 = risoluzione_x * 0.45f - dx2 * .55f;
             pos_y = risoluzione_y * 0.28f;
 
             pulsante[29].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
@@ -1804,8 +1804,8 @@ public class menu : MonoBehaviour {
             }
         }
 
-        if (grafica[20] != null) {
-            pos_y = risoluzione_y * 0.15f;
+        if (grafica[20] != null) { //scritta level 
+            pos_y = risoluzione_y *0.27f;
 
             grafica[20].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dy);
             grafica[20].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
@@ -1813,7 +1813,7 @@ public class menu : MonoBehaviour {
             grafica_testo[20].GetComponent<TextMeshProUGUI>().fontSize = font_size * 3f;
 
         }
-        if (pulsante[11] != null) {
+        if (pulsante[11] != null) { //pulsante seleziona livelli
 
 
             float dy2 = risoluzione_y * 0.8f * 0.45f * 0.535f;
@@ -1821,7 +1821,7 @@ public class menu : MonoBehaviour {
 
 
 
-            pos_y = 0;
+            pos_y = risoluzione_y * 0.04f;
 
             pulsante[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
@@ -2506,6 +2506,7 @@ public class menu : MonoBehaviour {
                         grafica_testo[20].GetComponent<TextMeshProUGUI>().text = "Level " + script_struttura_dati.livello_in_uso;
                         reset_colori_testo_selezionati();
                         pulsante[202 + n].GetComponent<Image>().color = Color.green;
+                        SceneManager.LoadScene("gioco");
                     }
                 }
                 else {
