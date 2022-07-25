@@ -1875,7 +1875,7 @@ public class menu : MonoBehaviour {
 
         crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
         crea_button_text(29, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/info_icon_menu");
-        crea_button_text(30, "BATTLEPASS", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/battlepass");
+      //  crea_button_text(30, "BATTLEPASS", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/battlepass");
         crea_button_text(31, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/chest_main_page_1");
         pulsante[31].AddComponent<timer_reward>();
         crea_grafica_text(20, new Color(1, 1, 1, 0), "Level " + script_struttura_dati.livello_in_uso, canvas, "Canvas", "");
