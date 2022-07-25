@@ -1829,8 +1829,8 @@ public class menu : MonoBehaviour {
         upgrade_titolo[1] = "AGILITY";
         upgrade_titolo[2] = "BARRIER";
         upgrade_titolo[3] = "ENERGY";
-        upgrade_titolo[4] = "AMMO";
-        upgrade_titolo[5] = "SHIELD";
+        upgrade_titolo[4] = "SHIELD";
+        upgrade_titolo[5] = "AMMO";
         upgrade_titolo[6] = "CALAMITY";
 
         shop_quantita_monete[1] = 100;
@@ -1846,6 +1846,9 @@ public class menu : MonoBehaviour {
 
 
         for (int n = 0; n < 6; n++) {
+            if (n == 4 || n == 5) {
+                break;
+            }
             crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
             crea_grafica_text(150 + n, new Color(1, 1, 1, 0), "" + upgrade_titolo[n + 1], canvas, "Canvas", "");
             crea_grafica_text(160 + n, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/upgrade_carta " + (n + 1));
