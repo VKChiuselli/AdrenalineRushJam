@@ -32,6 +32,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     public float variabile_x;
     public float variabile_y;
+    public float variabile_y2;
 
     public float[] touch_x = new float[15];
     public float[] touch_y = new float[15];
@@ -223,6 +224,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float tempo_inizio_livello = 1.5f;
 
     float spostamento_ui_verticale = .75f;
+    float spostamento_ui_verticale_coin = .75f;
 
     float potenziometro_touch = 0;
 
@@ -248,6 +250,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     float fade_intro = 1;
 
+    int partenza_gioco = 0;
+
+    float ui_partenza = 1;
 
     // Start is called before the first frame update
     void Start() {
@@ -362,14 +367,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             energia = 100.0f + script_struttura_dati.livello_upgrade[3] * 10;
 
-            numero_spari = 3 + script_struttura_dati.livello_upgrade[4];
+          //  numero_spari = 3;
 
             scafo = 1.0f + script_struttura_dati.livello_upgrade[5] * .1f;
 
-            calamita = 1.0f + script_struttura_dati.livello_upgrade[6] * .05f;
+           // calamita = 1.0f + script_struttura_dati.livello_upgrade[6] * .05f;
 
 
         }
+
 
         energia_base = energia;
         numero_spari_base = numero_spari;
@@ -412,35 +418,49 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     void update_game() {
 
+
+        astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio + 1.0f, 0);
+
         aggiorna_audio();
 
-        controllo_risoluzione();
-
-        controllo();
-
-        controllo_monete();
+            controllo_risoluzione();
 
         gestione_camera();
 
-        gestione_boss();
+        if (partenza_gioco == 1)
+        {
 
-        aggiorna_blocco();
+            controllo();
 
-        gestione_cilindro();
+            controllo_monete();
 
-        gestione_collisione();
+           
 
-        gestione_coll_special_bonus_malus();
+            gestione_boss();
 
-        gestione_fine_gioco();
+            aggiorna_blocco();
 
-        aggiorna_menu();
+            gestione_cilindro();
 
-        aggiorna_menu_popup();
+            gestione_collisione();
 
-        aggiorna_menu_tutorial();
+            gestione_coll_special_bonus_malus();
 
-        aggiorna_potere_boss();
+            gestione_fine_gioco();
+
+            aggiorna_potere_boss();
+
+        }
+
+            aggiorna_menu();
+
+            aggiorna_menu_popup();
+
+            aggiorna_menu_tutorial();
+
+          
+
+        
 
 
 #if UNITY_EDITOR
@@ -640,7 +660,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         astronave_barriera.GetComponent<Renderer>().material.SetColor("_Color", new Color32(118, 255, 200, (byte)(attiva_barriera * 85)));
 
-
+       
 
         if (energia < 0 || crea_popup_finale == 1) {
             blocco_velocita = blocco_velocita * .9f;
@@ -665,7 +685,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        astronave.transform.position = new Vector3(0, c_save.crea_cilindro[0].raggio + 1.0f, 0);
+        
 
 
 
@@ -3074,12 +3094,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         }
 
-        if (num == 208) // ads raddoppia
+        if (num == 218) // ads raddoppia
         {
 
         }
 
-        if (num == 209) // next level da salvare e poi 
+        if (num == 219) // next level da salvare e poi 
         {
             if (script_struttura_dati != null) {
 
@@ -3104,7 +3124,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (num == 210) // repeat level
+        if (num == 220) // repeat level
         {
 
             SceneManager.LoadScene("gioco");
@@ -3138,15 +3158,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         crea_grafica_text(0, new Color(0, 0, 0, .5f), "", canvas, "Canvas", "");
 
-        crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/menu");
+       
 
 
+           crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme");
+           crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-        //   crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme");
-        //   crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+           crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete_game");
+           crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-        //   crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete");
-        //    crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
         crea_grafica_text(5, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
@@ -3161,6 +3181,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         crea_grafica_text(10, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
 
         crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
+
+        crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/menu");
+        crea_button_text(1, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/button_shop_game");
+        crea_button_text(2, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/button_shop_game");
+
+        crea_button_text(3, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
+        crea_button_text(4, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
+
 
 
 
@@ -3193,15 +3221,45 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         void aggiorna_menu() {
         font_size = (int)(risoluzione_x / 25);
 
-        float valore_yy = .445f;
+        float valore_yy = .415f;
+        float valore_yy_coin = .75f;
 
-        if (crea_popup_finale > 0 || attivo_popup > 0) {
+        if (crea_popup_finale > 0 || attivo_popup > 0 || partenza_gioco == 0)
+        {
             valore_yy = .75f;
 
         }
 
+        if (partenza_gioco == 0)
+        {
+            valore_yy_coin = .435f;
+
+        }
+
+
+        for (int n = 1; n <= 5; n++)
+        {
+            if (pulsante[n] != null)
+            {
+                pulsante[n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
+            }
+        }
+
+
+        float ui_partenza_valore = -1.0f;
+
+        if (partenza_gioco == 0)
+        {
+            ui_partenza_valore = 0;
+
+        }
+
+        ui_partenza = Mathf.Lerp(ui_partenza, ui_partenza_valore, Time.deltaTime * 2);
+
 
         spostamento_ui_verticale = Mathf.Lerp(spostamento_ui_verticale, valore_yy, Time.deltaTime * 2);
+        spostamento_ui_verticale_coin = Mathf.Lerp(spostamento_ui_verticale_coin, valore_yy_coin, Time.deltaTime * 2);
+
 
 
         float dy = risoluzione_y * .125f;
@@ -3226,14 +3284,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        float pos_y2 = pos_y = risoluzione_y * (spostamento_ui_verticale);
+        float pos_y2 =  risoluzione_y * (spostamento_ui_verticale);
 
 
-        if (pulsante[0] != null)  //settings
+        if (pulsante[0] != null)  //menu
         {
-            float dx2 = dy * .4f;
+            float dx2 = dy * .55f;
             float dy2 = dx2 * (79f / 75f);
-            pos_x = risoluzione_x * -.5f + dx2 * .65f;
+            pos_x = risoluzione_x * -.5f + dx2 * .85f;
             pos_y = pos_y2;
             pulsante[0].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -3242,13 +3300,69 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         }
 
+       
+
+            if (pulsante[1] != null)  //skin
+            {
+                float dx2 = dy * 1.55f;
+                float dy2 = dx2 * (199.0f / 165f);
+            pos_x = risoluzione_x * -.5f + dx2 * ui_partenza;
+                pos_y = -.05f * risoluzione_y;
+            pulsante[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                pulsante[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+
+            if (pulsante[2] != null)  //upgrade
+            {
+                float dx2 = dy * 1.55f;
+                float dy2 = dx2 * (199.0f / 165f);
+                pos_x = risoluzione_x * .5f - dx2 *ui_partenza;
+                pos_y = -.05f*risoluzione_y;
+                pulsante[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                pulsante[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+
+
+        if (pulsante[3] != null)  //compra ammo
+        {
+            float dx2 = risoluzione_x * .75f;
+            float dy2 = risoluzione_y * .125f;
+            pos_x = 0;
+            pos_y = risoluzione_y * .3f;
+
+            pulsante[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            pulsante[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+         
+            pulsante_testo[3].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_y / 22);
+            pulsante_testo[3].GetComponent<TextMeshProUGUI>().text = "BUY AMNO 100 COINS";
+        }
+
+        if (pulsante[4] != null)  //compra ammo
+        {
+            float dx2 = risoluzione_x*.75f;
+            float dy2 = risoluzione_y*.125f;
+            pos_x = 0;
+            pos_y = risoluzione_y*.16f;
+            pulsante[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            pulsante[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            pulsante_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_y / 22);
+            pulsante_testo[4].GetComponent<TextMeshProUGUI>().text = "BUY INITIAL BARRIER 100 COINS";
+        }
+
+
+     
+
+
         if (grafica[3] != null)  //coin
         {
 
-            float dx2 = dy * .8f;
-            float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * .5f;
-            pos_y = pos_y2;
+            float dx2 = dy * 1.7f;
+            float dy2 = dx2*(512/800.0f);
+            pos_x =  dx2 * 0.0f;
+            pos_y = risoluzione_y * spostamento_ui_verticale_coin;
 
             grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -3258,19 +3372,19 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (grafica[4] != null)  //coin  txt
         {
 
-            float dx2 = dy * .8f;
+            float dx2 = dy * 1.7f;
             float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * .31f;
-            pos_y = pos_y2;
+            pos_x = dx2 * .09f;
+            pos_y = risoluzione_y * spostamento_ui_verticale_coin;
 
             grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (int) (risoluzione_x/15);
             grafica_testo[4].GetComponent<TextMeshProUGUI>().text = "" + (monete_partita_corrente);
 
         }
-
+        /*
         if (grafica[1] != null)  //gem
         {
 
@@ -3283,6 +3397,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
         }
+
 
         if (grafica[2] != null)  //gem  txt
         {
@@ -3298,7 +3413,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica_testo[2].GetComponent<TextMeshProUGUI>().fontSize = font_size;
             grafica_testo[2].GetComponent<TextMeshProUGUI>().text = "" + gemme_prese;
 
-        }
+        }*/
 
 
         if (grafica[8] != null)  //gem
@@ -3306,7 +3421,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             float dx2 = dy * .8f;
             float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * .5f;
+            pos_x = risoluzione_x * .5f - dx2 * .85f;
             pos_y = pos_y2;
 
             grafica[8].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -3319,7 +3434,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             float dx2 = dy * .8f;
             float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * (.5f - .17f);
+            pos_x = risoluzione_x * .5f - dx2 * (.85f - .17f);
             pos_y = pos_y2;
 
             grafica[9].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -3670,21 +3785,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 1) {
 
-            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP_win"); //pannello shop
 
             crea_grafica_text(201, new Color(1, 1, 1, 0), "LEVEL " + script_struttura_dati.livello_in_uso, canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
-
-
-
-
 
 
             crea_grafica_text(202, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
             crea_grafica_text(203, new Color(1, 1, 1, 0), "COMPLETED", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
-            grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
+            grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(0,.8f, 0, 1);
 
-            grafica[203].transform.localEulerAngles = new Vector3(0, 0, 10);
+            
 
             for (int n = 0; n <= 2; n++) {
                 crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
@@ -3702,6 +3813,35 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_grafica_text(211, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_energia"); // stelle
             crea_grafica_text(212, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_ammo"); // stelle
 
+
+
+
+            crea_grafica_text(213, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/carta_shop 2"); //monete
+            crea_grafica_text(214, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+            crea_grafica_text(215, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/carta_shop 7"); //gemme
+            crea_grafica_text(216, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
+
+            crea_button_text(218, "Double ALL!", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_Blue"); //pannello shop
+
+            crea_button_text(219, "Next", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_Blue"); //pannello shop
+            crea_button_text(220, "Repeat", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_Blue"); //pannello shop
+
+
+        //    pulsante_testo[218].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+        //    pulsante_testo[219].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+        //    pulsante_testo[220].GetComponent<TextMeshProUGUI>().color = Color.black;
+
+
+            if (monete_partita_corrente > 0)
+            {
+                suona_effetto_UI(7, 1);
+            }
+
+
+
             grafica_dime[10] = 2;
             grafica_dime[11] = 2;
             grafica_dime[12] = 2;
@@ -3709,6 +3849,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica_tempo[10] = 2.0f;
             grafica_tempo[11] = 2.25f;
             grafica_tempo[12] = 2.5f;
+
+
+            grafica_tempo[13] = 3.0f;
+            grafica_tempo[14] = 3.25f;
+            grafica_tempo[15] = 3.5f;
+            grafica_tempo[16] = 3.75f;
+
+            grafica_tempo[18] = 4.25f;
+            grafica_tempo[19] = 4.5f;
+            grafica_tempo[20] = 4.75f;
+     
 
             grafica_tempo[1] = .5f;
             grafica_tempo[2] = 1;
@@ -3732,51 +3883,37 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             crea_grafica_text(201, new Color(1, 1, 1, 0), "TRY", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
-
-
             crea_grafica_text(202, new Color(1, 1, 1, 0), "AGAIN", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
 
-            crea_grafica_text(203, new Color(1, 1, 1, 0), "CLICK\nTO CONTINUE", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
-            grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
+            crea_grafica_text(203, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/carta_shop 2"); //monete
+            crea_grafica_text(204, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+            crea_grafica_text(205, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/carta_shop 7"); //gemme
+            crea_grafica_text(206, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
+            crea_grafica_text(207, new Color(1, 1, 1, 0), "CLICK\nTO CONTINUE", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+            grafica_testo[201].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
+            grafica_testo[202].GetComponent<TextMeshProUGUI>().color = new Color(.8f, 0, 0, 1);
 
 
 
-            for (int n = 0; n <= 2; n++) {
-                crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
-                crea_grafica_text(207 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1"); // stelle
+            for (int n = 1; n < 20; n++)
+            {
+                grafica_tempo[n] = .5f+n*.35f;
 
-                grafica_dime[4 + n] = 1;
-                grafica_dime[7 + n] = 2;
-
-                grafica_tempo[4 + n] = .0f;
-                grafica_tempo[7 + n] = 2.0f + n * .25f;
             }
-
-            crea_grafica_text(210, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_livello"); // stelle
-
-            crea_grafica_text(211, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_energia"); // stelle
-            crea_grafica_text(212, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_ammo"); // stelle
-
-            grafica_dime[10] = 2;
-            grafica_dime[11] = 2;
-            grafica_dime[12] = 2;
-
-            grafica_tempo[10] = 2.0f;
-            grafica_tempo[11] = 2.25f;
-            grafica_tempo[12] = 2.5f;
-
-            grafica_tempo[1] = .5f;
-            grafica_tempo[2] = 1;
-            grafica_tempo[3] = 1.5f;
+          
 
 
             grafica_dime[1] = 4;
 
             grafica_dime[2] = 4;
 
-            grafica_dime[3] = 4;
+            grafica_dime[7] = 4;
 
             suona_effetto_UI(6, 1);
 
@@ -3963,13 +4100,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         int font_size = (int)(risoluzione_x / 5.5f);
         int font_size2 = (int)(risoluzione_x / 5);
         int font_size3 = (int)(risoluzione_x / 7.5f);
+        int font_size4 = (int)(risoluzione_x / 11.5f);
 
         if (attivo_popup == 2) {
             font_size3 = (int)(risoluzione_x / 11);
 
         }
 
-        for (int n = 0; n <= 20; n++) {
+        for (int n = 0; n <= 30; n++) {
             if (grafica[200 + n] != null) {
                 grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
@@ -3982,14 +4120,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-        if (attivo_popup == 1 || attivo_popup == 2) {
+        if (attivo_popup == 1 ) {
             if (grafica[200] != null)  //pannello
             {
 
-                float dx2 = dx * .8f;
-                float dy2 = dy * .8f;
+                float dx2 = dx * .9f;
+                float dy2 = dy * .9f;
 
-                float dx_stelle = dx2 * .275f;
+                float dx_stelle = dx2 * .25f;
 
 
 
@@ -4004,15 +4142,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
+                float sposta_grafica_y = variabile_y;
 
-
-                grafica_pos[1] = -.13f;
+                grafica_pos[1] = .05f;
                 grafica_pos[2] = -.175f;
-                grafica_pos[3] = -.33f;
+                grafica_pos[3] = -.07f;
 
+                grafica[203].transform.localEulerAngles = new Vector3(0, 0, 0);
 
-
-                for (int n = 4; n <= 12; n++) {
+                for (int n = 4; n <= 20; n++) {
                     grafica_pos[n] = 5.35f;
 
                 }
@@ -4028,23 +4166,44 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     }
                     else
                     {
-                        grafica_pos[7] = .35f;
-                        grafica_pos[10] = .15f;
+                        grafica_pos[7] = .3f + sposta_grafica_y;
+                        grafica_pos[10] = .145f + sposta_grafica_y;
+
+                        grafica_pos[19] = -.35f;
+                        grafica_pos[20] = grafica_pos[19];
 
                     }
 
-                     
-
-
                 }
+
+                float pos_y_monete = -.2f;
+
+                grafica_pos[13] = pos_y_monete;
+                grafica_pos[14] = pos_y_monete;
+
+                grafica_pos[15] = pos_y_monete;
+                grafica_pos[16] = pos_y_monete;
+
+
+                monete_UI = Mathf.MoveTowards(monete_UI, monete_partita_corrente, Time.deltaTime * 100);
+
+                grafica_testo[214].GetComponent<TextMeshProUGUI>().text = "" + (int)(monete_UI);
+
+                gemme_UI = Mathf.MoveTowards(gemme_UI, gemme_partita_corrente, Time.deltaTime * 100);
+
+
+
+                grafica_testo[216].GetComponent<TextMeshProUGUI>().text = "" + (int)(gemme_UI);
+
+
 
 
                 ok_energia_completa = 0;
                 ok_spari_completi = 0;
 
                 if (energia > energia_base * script_struttura_dati.livello_in_uso * 0.005f) { // se finisce il livello con energia superiore alla met� del livello attuale, quindi al livello 100, dovr� superare il gioco con il 50% di energia
-                    grafica_pos[8] = .35f;
-                    grafica_pos[11] = .15f;
+                    grafica_pos[8] = .375f+ sposta_grafica_y;
+                    grafica_pos[11] = .215f+ sposta_grafica_y;
                     ok_energia_completa = 1;
 
                   //  Debug.Log("ok_energia_completa "+ energia);
@@ -4053,8 +4212,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
                 if (numero_spari > 0 && energia>0) { // se finisce il livello con almeno 1 sparo
-                    grafica_pos[9] = .35f;
-                    grafica_pos[12] = .15f;
+                    grafica_pos[9] = .3f+ sposta_grafica_y;
+                    grafica_pos[12] = .145f+ sposta_grafica_y;
                     ok_spari_completi = 1;
 
                  //   Debug.Log("ok_spari_completi "+numero_spari);
@@ -4070,7 +4229,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                for (int n = 1; n <= 12; n++) {
+               
+
+
+                for (int n = 1; n <= 20; n++) {
+
+
                     if (grafica[200 + n] != null) {
 
                         grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
@@ -4106,6 +4270,26 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                                     pos_x = dx2 * .3f;
                                 }
 
+                                if (n == 13)
+                                {
+                                    pos_x = dx2 * -.35f;
+                                }
+
+                                if (n == 14)
+                                {
+                                    pos_x = dx2 * -.15f;
+                                }
+
+                                if (n == 15)
+                                {
+                                    pos_x = dx2 * .15f;
+                                }
+
+                                if (n == 16)
+                                {
+                                    pos_x = dx2 * .35f;
+                                }
+
 
                                 grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stelle, dx_stelle);
                                 grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -4128,28 +4312,94 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                             if (n == 3) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
                             }
+                            if (n == 14)
+                            {
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
+                            }
+                            if (n == 16)
+                            {
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
+                            }
 
                         }
 
                     }
 
+
+                    if (pulsante[200 + n] != null)
+                    {
+
+                        grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
+
+
+
+                        if (grafica_tempo[n] < 0)
+                        {
+                            
+                            grafica_dime[n] = Mathf.MoveTowards(grafica_dime[n], 1, Time.deltaTime * 5);
+                        
+
+                            pos_y = dime_panel_y * grafica_pos[n];
+
+                            float dxp = dime_panel_x * .4f;
+                            float dyp = dime_panel_y * .1f;
+
+                            if (n == 19)
+                            {
+                                pos_x = dime_panel_x * .225f;
+
+                            }
+
+
+                            if (n == 20)
+                            {
+                                pos_x = dime_panel_x * -.225f;
+
+                            }
+
+
+                            pulsante[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dxp, dyp);
+                            pulsante[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                            
+
+
+                            pulsante[200 + n].transform.localScale = new Vector3(grafica_dime[n], grafica_dime[n], 1);
+
+
+
+                            if (n == 19)
+                            {
+                                pulsante_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size4;
+                            }
+                            if (n == 20)
+                            {
+                                pulsante_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size4;
+                            }
+                            
+
+                        }
+
+                    }
+
+
                 }
 
             }
 
-            if (grafica_tempo[12] < -2) {
-
-                crea_popup(3);
-
-            }
+           
         }
 
-        if (attivo_popup == 3) {
-            if (grafica[200] != null)  // monete
+
+        if (attivo_popup == 2)
+        {
+            if (grafica[200] != null)  //pannello
             {
 
-                float dx2 = dx * .8f;
-                float dy2 = dy * .8f;
+                float dx2 = dx * .9f;
+                float dy2 = dy * .9f;
+
+                float dx_stelle = dx2 * .25f;
 
 
 
@@ -4164,88 +4414,154 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
+               
 
-                pos_x = dime_panel_x * -.2f;
-                pos_y = dime_panel_y * .3f;
+                grafica_pos[1] = .25f;
+                grafica_pos[2] = .11f;
+                grafica_pos[3] = -.07f;
 
-                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .4f, dx2 * .4f);
-                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_pos[7] = -.3f;
 
-                pos_x = dime_panel_x * .2f;
-                grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .4f, dx2 * .4f);
-                grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                grafica_testo[202].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 10);
+                grafica[203].transform.localEulerAngles = new Vector3(0, 0, 0);
+
+               
+
+              
+
+                float pos_y_monete = -.1f;
+
+                grafica_pos[3] = pos_y_monete;
+                grafica_pos[4] = pos_y_monete;
+
+                grafica_pos[5] = pos_y_monete;
+                grafica_pos[6] = pos_y_monete;
+
 
                 monete_UI = Mathf.MoveTowards(monete_UI, monete_partita_corrente, Time.deltaTime * 100);
 
-
-
-                grafica_testo[202].GetComponent<TextMeshProUGUI>().text = "" + (int)(monete_UI);
-
-
-                pos_x = dime_panel_x * -.2f;
-                pos_y = dime_panel_y * .13f;
-
-                grafica[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .4f, dx2 * .4f);
-                grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
-                pos_x = dime_panel_x * .2f;
-                grafica[204].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .4f, dx2 * .4f);
-                grafica[204].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                grafica_testo[204].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 10);
+                grafica_testo[204].GetComponent<TextMeshProUGUI>().text = "" + (int)(monete_UI);
 
                 gemme_UI = Mathf.MoveTowards(gemme_UI, gemme_partita_corrente, Time.deltaTime * 100);
 
-
-
-                grafica_testo[204].GetComponent<TextMeshProUGUI>().text = "" + (int)(gemme_UI);
+                grafica_testo[206].GetComponent<TextMeshProUGUI>().text = "" + (int)(gemme_UI);
 
 
 
-                if (pulsante[208] != null)  //raddoppia
+                ok_energia_completa = 0;
+                ok_spari_completi = 0;
+
+               
+
+
+
+                if (ok_fine_livello == 0)
                 {
-                    float dx3 = risoluzione_x * .5f;
-                    float dy3 = risoluzione_x * .15f;
-                    pos_x = 0;
-                    pos_y = dime_panel_y * -.15f;
+                    ok_fine_livello = 1;
 
-
-                    pulsante[208].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
-                    pulsante[208].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                    pulsante_testo[208].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 13f);
-                }
-
-                if (pulsante[209] != null && energia > 0)  //next level
-                {
-                    float dx3 = risoluzione_x * .5f;
-                    float dy3 = risoluzione_x * .15f;
-                    pos_x = 0;
-                    pos_y = dime_panel_y * -.35f;
-
-
-                    pulsante[209].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
-                    pulsante[209].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                    pulsante_testo[209].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 13f);
-                }
-
-
-                if (pulsante[210] != null && energia <= 0)  //repeat level
-                {
-                    float dx3 = risoluzione_x * .5f;
-                    float dy3 = risoluzione_x * .15f;
-                    pos_x = 0;
-                    pos_y = dime_panel_y * -.35f;
-
-
-                    pulsante[210].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
-                    pulsante[210].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                    pulsante_testo[210].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 13f);
+                    salva_le_stelle();
                 }
 
 
 
+                for (int n = 1; n <= 20; n++)
+                {
+
+
+                    if (grafica[200 + n] != null)
+                    {
+
+                        grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
+
+
+                        if (grafica_tempo[n] < 0)
+                        {
+
+                            //  grafica_pos[n] = Mathf.MoveTowards(grafica_pos[n], 1, Time.deltaTime);
+
+                            grafica_dime[n] = Mathf.MoveTowards(grafica_dime[n], 1, Time.deltaTime * 5);
+
+
+                            pos_y = dime_panel_y * grafica_pos[n];
+
+                            if (n == 1 || n==2 || n == 7)
+                            {
+
+                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x*.85f, dime_panel_y * .25f);
+                                grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, pos_y);
+                            }
+                            else
+                            {
+
+
+
+                                if (n == 3)
+                                {
+                                    pos_x = dx2 * -.35f;
+                                }
+
+                                if (n == 4)
+                                {
+                                    pos_x = dx2 * -.15f;
+                                }
+
+                                if (n == 5)
+                                {
+                                    pos_x = dx2 * .15f;
+                                }
+
+                                if (n == 6)
+                                {
+                                    pos_x = dx2 * .35f;
+                                }
+
+
+                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stelle, dx_stelle);
+                                grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                            }
+
+
+                            
+
+
+                            grafica[200 + n].transform.localScale = new Vector3(grafica_dime[n], grafica_dime[n], 1);
+
+
+
+                            if (n == 1)
+                            {
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size2;
+                            }
+                            if (n == 2)
+                            {
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size2;
+                            }
+                           
+
+                            if (n == 4)
+                            {
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
+                            }
+                            if (n == 6)
+                            {
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
+                            }
+
+                            if (n == 7)
+                            {
+                                grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
+                            }
+
+                        }
+
+                    }
+
+
+
+                }
 
             }
+
 
         }
 
@@ -4431,6 +4747,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (crea_popup_finale == 0) {
 
             Vector3 pos_finale = c_save.crea_cilindro[0].pos_finale;
+
+        //   pos_finale = new Vector3(0, 0, 20);
 
             //  Debug.Log(pos_finale +" "+ cilindro.transform.position.z);
 
