@@ -59,6 +59,13 @@ public class timer_reward : MonoBehaviour {
     public void SetTimeToWait(float timeAmountInMs) {
         msToWait = timeAmountInMs;
     }
+    public int GetTimeLeft() {
+        ulong diff = ((ulong)DateTime.Now.Ticks - lastTimeClicked);
+        ulong m = diff / TimeSpan.TicksPerMillisecond;
+
+        float secondsLeft = (float)(msToWait - m) / 1000.0f;
+        return (int)secondsLeft;
+    }
 
 }
 

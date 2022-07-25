@@ -483,13 +483,15 @@ public class menu : MonoBehaviour {
                 grafica[100 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[100 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_sx + dy2 * -.33f);
                 grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
-                if (100 + n == 100)
-                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "FREE";
-                else if (100 + n == 101)
-                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "FREE";
-                else
-                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "BUY";
-
+            
+                    if (pulsante[100 + n].GetComponent<Button>().interactable) {
+                        grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "FREE";
+                    }
+                    else {
+                        grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "" + pulsante[100].GetComponent<timer_reward>().GetTimeLeft();
+                    }
+                
+          
             }
 
             if (grafica[120 + n] != null) {
@@ -1771,6 +1773,24 @@ public class menu : MonoBehaviour {
             pulsante[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
         }
+        if (grafica[31] != null) {
+
+
+            float dy2 = risoluzione_y * 0.1f;
+
+            float dx2 = dy2 * (133.0f / 124.0f);
+
+
+            pos_y = risoluzione_y * -0.33f;
+            grafica[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
+            grafica_testo[31].GetComponent<TextMeshProUGUI>().fontSize = font_size * 1.5f;
+            if (!pulsante[31].GetComponent<Button>().interactable)
+                grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "" + pulsante[31].GetComponent<timer_reward>().GetTimeLeft();
+            else {
+                grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "";
+            }
+        }
 
         if (grafica[20] != null) {
             pos_y = risoluzione_y * 0.15f;
@@ -1871,6 +1891,7 @@ public class menu : MonoBehaviour {
             crea_button_text(100 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_shop " + (n + 1));
             crea_grafica_text(100 + n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
             crea_grafica_text(120 + n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+            crea_grafica_text(130 + n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
             pulsante[100 + n].AddComponent<timer_reward>();
 
@@ -1879,6 +1900,8 @@ public class menu : MonoBehaviour {
             grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
             grafica[120 + n].GetComponent<Image>().raycastTarget = false;
             grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+            grafica[130 + n].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[130 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
         }
 
         //pagina battlepass 
@@ -1983,6 +2006,7 @@ public class menu : MonoBehaviour {
         //  crea_button_text(30, "BATTLEPASS", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/battlepass");
         crea_button_text(31, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/chest_main_page_1");
         pulsante[31].AddComponent<timer_reward>();
+        crea_grafica_text(31, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
         crea_grafica_text(20, new Color(1, 1, 1, 0), "Level " + script_struttura_dati.livello_in_uso, canvas, "Canvas", "");
         crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/immagine_centrale_1"); //pulsante seleziona livelli
 
@@ -1994,7 +2018,8 @@ public class menu : MonoBehaviour {
 
         crea_button_text(15, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Home"); //pulsante seleziona livelli
 
-
+        grafica[31].GetComponent<Image>().raycastTarget = false;
+        grafica_testo[31].GetComponent<TextMeshProUGUI>().raycastTarget = false;
     }
 
     void crea_popup(int num = 1) {
