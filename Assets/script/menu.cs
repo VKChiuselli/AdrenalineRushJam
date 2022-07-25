@@ -488,7 +488,8 @@ public class menu : MonoBehaviour {
                         grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "FREE";
                     }
                     else {
-                        grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "" + pulsante[100].GetComponent<timer_reward>().GetTimeLeft();
+                  
+                        grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "" + espositore_data(pulsante[100].GetComponent<timer_reward>().GetTimeLeft()); 
                     }
                 
           
@@ -511,6 +512,17 @@ public class menu : MonoBehaviour {
 
         }
 
+    }
+
+    private string espositore_data(int secondiRimanenti) {
+        TimeSpan t = TimeSpan.FromSeconds(secondiRimanenti);
+
+        string answer = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                        t.Hours,
+                        t.Minutes,
+                        t.Seconds);
+
+        return answer;
     }
 
     private void aggiorna_menu_battlepass() {
@@ -1784,9 +1796,9 @@ public class menu : MonoBehaviour {
             pos_y = risoluzione_y * -0.33f;
             grafica[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
-            grafica_testo[31].GetComponent<TextMeshProUGUI>().fontSize = font_size * 1.5f;
+            grafica_testo[31].GetComponent<TextMeshProUGUI>().fontSize = font_size * 0.8f;
             if (!pulsante[31].GetComponent<Button>().interactable)
-                grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "" + pulsante[31].GetComponent<timer_reward>().GetTimeLeft();
+                grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "" + espositore_data(pulsante[31].GetComponent<timer_reward>().GetTimeLeft()); 
             else {
                 grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "";
             }

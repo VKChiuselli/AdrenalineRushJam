@@ -9,7 +9,12 @@ public class timer_reward : MonoBehaviour {
     public ulong lastTimeClicked;
 
     private void Start() {
-        msToWait = 300000f;
+        if(gameObject.name== "pulsante_text31") {
+        msToWait = 43200000f;
+        }
+        else {
+            msToWait = 10800000f;
+        }
         ClickButton = gameObject.GetComponent<Button>();
 
 
@@ -17,7 +22,7 @@ public class timer_reward : MonoBehaviour {
             lastTimeClicked = ulong.Parse(PlayerPrefs.GetString("LastTimeClicked"));
         }
         else {
-            msToWait = 300f;
+            msToWait = 400f;
             lastTimeClicked = (ulong)DateTime.Now.Ticks;
             PlayerPrefs.SetString("LastTimeClicked", lastTimeClicked.ToString());
         }
