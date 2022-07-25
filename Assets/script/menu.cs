@@ -90,6 +90,7 @@ public class menu : MonoBehaviour {
     string[] upgrade_titolo = new string[20];
     string[] upgrade_descrittore = new string[20];
     int[] shop_quantita_monete = new int[20];
+    int[] shop_quantita_gemme = new int[20];
 
     int controllo_mobile = 0;
 
@@ -485,7 +486,7 @@ public class menu : MonoBehaviour {
                 if (100 + n == 100)
                     grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "FREE";
                 else if (100 + n == 101)
-                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "AD";
+                    grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "FREE";
                 else
                     grafica_testo[100 + n].GetComponent<TextMeshProUGUI>().text = "BUY";
 
@@ -496,7 +497,12 @@ public class menu : MonoBehaviour {
                 grafica[120 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[120 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_sx + dy2 * 0.33f);
                 grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
-                grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().text = "" + shop_quantita_monete[n + 1];
+                if (n == 0) {
+                grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().text = "" + shop_quantita_monete[1];
+                }
+                else {
+                    grafica_testo[120 + n].GetComponent<TextMeshProUGUI>().text = "" + shop_quantita_gemme[1];
+                }
 
 
             }
@@ -1767,16 +1773,14 @@ public class menu : MonoBehaviour {
 
         // pagina sinistra
 
-        for (int n = 0; n < 10; n++) {
+        for (int n = 0; n < 2; n++) {
 
 
             crea_button_text(100 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_shop " + (n + 1));
             crea_grafica_text(100 + n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
             crea_grafica_text(120 + n, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-            if (n == 0) {
-                pulsante[100].AddComponent<timer_reward>();
-            }
+                pulsante[100 + n].AddComponent<timer_reward>();
 
 
             grafica[100 + n].GetComponent<Image>().raycastTarget = false;
@@ -1834,11 +1838,11 @@ public class menu : MonoBehaviour {
         shop_quantita_monete[3] = 1000;
         shop_quantita_monete[4] = 2000;
         shop_quantita_monete[5] = 5000;
-        shop_quantita_monete[6] = 10;
-        shop_quantita_monete[7] = 20;
-        shop_quantita_monete[8] = 40;
-        shop_quantita_monete[9] = 80;
-        shop_quantita_monete[10] = 120;
+        shop_quantita_gemme[1] = 5;
+        shop_quantita_gemme[2] = 20;
+        shop_quantita_gemme[3] = 40;
+        shop_quantita_gemme[4] = 80;
+        shop_quantita_gemme[5] = 120;
 
 
         for (int n = 0; n < 6; n++) {
@@ -1901,13 +1905,25 @@ public class menu : MonoBehaviour {
         canvas_popup.SetActive(true);
 
         crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
-        crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/carta_shop {indice_shop_corrente}");  //testo/titolo oggetto shop
-        crea_grafica_text(202, new Color(1, 1, 1, 0), $"{shop_quantita_monete[indice_shop_corrente]}", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
+        if(indice_shop_corrente==1)
+        crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/carta_shop 1");  //testo/titolo oggetto shop
+        else if (indice_shop_corrente == 2) {
+            crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/carta_shop 6");
+        }
+
+        if (indice_shop_corrente == 1) {
+            crea_grafica_text(202, new Color(1, 1, 1, 0), $"{shop_quantita_monete[indice_shop_corrente]}", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
+
+        }
+        else if (indice_shop_corrente ==2) {
+            crea_grafica_text(202, new Color(1, 1, 1, 0), $"{shop_quantita_gemme[1]}", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
+        }
+
         if (indice_shop_corrente == 1) {
             crea_button_text(200, "FREE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
         }
         else if (indice_shop_corrente == 2) {
-            crea_button_text(200, "AD", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
+            crea_button_text(200, "FREE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
         }
         else {
             crea_button_text(200, "9.99€", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White");  //tasto COMPRA SHOP
@@ -2476,8 +2492,11 @@ public class menu : MonoBehaviour {
             }
         }
         if (indice_shop_corrente == 2) {
-            script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
-            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            script_struttura_dati.gemme += shop_quantita_gemme[1];
+            PlayerPrefs.SetInt("gemme", script_struttura_dati.gemme);
+            if (pulsante[101].GetComponent<timer_reward>() != null) {
+                pulsante[101].GetComponent<timer_reward>().Click();
+            }
         }
         if (indice_shop_corrente == 3) {
             script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
