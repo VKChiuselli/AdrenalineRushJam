@@ -59,6 +59,7 @@ public class struttura_dati : MonoBehaviour {
         {
             astronave_skin_comprate[i] = PlayerPrefs.GetInt($"astronave_skin_comprate{i}");
         }
+        astronave_skin_comprate[0] = 1;
         
 
         SceneManager.LoadScene("menu");
