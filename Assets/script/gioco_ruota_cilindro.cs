@@ -207,6 +207,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     float attiva_barriera = 0;
 
+    int attivazione_barriera_infinity = 0;
+
     float tempo_fire_work = 0;
 
     int che_livello = 1;
@@ -253,9 +255,18 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     int partenza_gioco = 0;
 
     float ui_partenza = 1;
+    float aum_coseno = 0;
 
-    // Start is called before the first frame update
-    void Start() {
+
+    float alpha_buy_ammo = 1.0f;
+ 
+    float alpha_buy_barrier = 1.0f;
+
+
+
+
+// Start is called before the first frame update
+void Start() {
 
         controllo_risoluzione();
 
@@ -348,7 +359,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         agilita = 1;
 
-        tempo_barriera = 2;
+        tempo_barriera = 1;
         energia = 100;
 
 
@@ -363,7 +374,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             agilita = 1.0f + script_struttura_dati.livello_upgrade[1] * .1f;
 
-            tempo_barriera = 2.0f + script_struttura_dati.livello_upgrade[2] * .25f;
+            tempo_barriera = 1.0f + script_struttura_dati.livello_upgrade[2] * .25f;
 
             energia = 100.0f + script_struttura_dati.livello_upgrade[3] * 10;
 
@@ -386,6 +397,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     void analisi_energia(float riduttore) {
         if (crea_popup_finale == 0) {
+
+            attivazione_barriera_infinity = 0;
+
             if (attiva_barriera < 0) {
                 energia = energia - riduttore / scafo;
 
@@ -416,6 +430,28 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     }
 
 
+    void controllo_barriera()
+    {
+
+        attiva_barriera = attiva_barriera - Time.deltaTime;
+
+        if (attivazione_barriera_infinity == 1)
+        {
+            attiva_barriera = 1.0f;
+        }
+
+        if (attiva_barriera < 0)
+        {
+            attiva_barriera = -.001f;
+        }
+
+
+        astronave_barriera.GetComponent<Renderer>().material.SetColor("_Color", new Color32(118, 255, 200, (byte)(attiva_barriera * 85)));
+
+
+    }
+
+
     void update_game() {
 
 
@@ -426,6 +462,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             controllo_risoluzione();
 
         gestione_camera();
+
+
+        controllo_barriera();
+
 
         if (partenza_gioco == 1)
         {
@@ -650,16 +690,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        attiva_barriera = attiva_barriera - Time.deltaTime;
-
-
-        if (attiva_barriera < 0) {
-            attiva_barriera = -.001f;
-        }
-
-
-        astronave_barriera.GetComponent<Renderer>().material.SetColor("_Color", new Color32(118, 255, 200, (byte)(attiva_barriera * 85)));
-
+     
        
 
         if (energia < 0 || crea_popup_finale == 1) {
@@ -2354,6 +2385,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                                 c_save.crea_blocco[num_block].disattiva_coll = 1;
 
 
+
                                 analisi_energia(40);
 
                                 suona_effetto_UI(3, 1);
@@ -3080,6 +3112,54 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
+        if (num == 3)
+        {
+
+           
+            suona_effetto_UI(6, .5f);
+
+            if (script_struttura_dati.monete >= 50)
+            {
+                script_struttura_dati.monete = script_struttura_dati.monete - 50;
+                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+
+                numero_spari = numero_spari + 1;
+
+            }
+
+
+        }
+
+
+        if (num == 4 && attivazione_barriera_infinity==0)
+        {
+
+           
+
+            if (script_struttura_dati.monete >= 100)
+            {
+
+                attivazione_barriera_infinity = 1;
+
+                suona_effetto_UI(6, .5f);
+
+                script_struttura_dati.monete = script_struttura_dati.monete - 100;
+                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+
+            }
+
+
+        }
+
+
+        if (num == 5 && partenza_gioco == 0)
+        {
+            partenza_gioco = 1;
+
+            suona_effetto_UI(1, .5f);
+        }
+
+
         if (num == 202) {
 
             SceneManager.LoadScene("menu");
@@ -3161,7 +3241,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
        
 
 
-           crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme");
+           crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme_game");
            crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
            crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete_game");
@@ -3173,7 +3253,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         crea_grafica_text(6, new Color(0, .5f, 1, 1), "", canvas, "Canvas", "");
         crea_grafica_text(7, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/energia");
 
-        crea_grafica_text(8, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/ammo");
+        crea_grafica_text(8, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/ammo_game");
         crea_grafica_text(9, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
@@ -3182,6 +3262,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
 
+        crea_grafica_text(12, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/ammo");
+        crea_grafica_text(13, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+
+
         crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/menu");
         crea_button_text(1, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/button_shop_game");
         crea_button_text(2, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/button_shop_game");
@@ -3189,8 +3273,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         crea_button_text(3, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
         crea_button_text(4, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
 
+        crea_button_text(5, "PRESS TO START", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/trasparente");
 
-
+        pulsante[5].GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
     }
 
@@ -3219,6 +3304,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
         void aggiorna_menu() {
+
+
+        aum_coseno = aum_coseno + Time.deltaTime;
+        if (aum_coseno > Mathf.PI*2)
+        {
+            aum_coseno = 0;
+        }
+
         font_size = (int)(risoluzione_x / 25);
 
         float valore_yy = .415f;
@@ -3324,44 +3417,162 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             }
 
+        pos_y = risoluzione_y * .3f;
+
+        if (partenza_gioco == 0)
+        {
+
+            alpha_buy_ammo = 1.0f;
+           
+
+            if (script_struttura_dati.monete < 50)
+            {
+                alpha_buy_ammo = .25f;
+
+            }
+
+        }
+        else
+        {
+            alpha_buy_ammo = alpha_buy_ammo * .9f - .01f;
+
+            if (alpha_buy_ammo < 0)
+            {
+                alpha_buy_ammo = 0;
+                pos_y = risoluzione_y ;
+            }
+        }
+
 
         if (pulsante[3] != null)  //compra ammo
         {
             float dx2 = risoluzione_x * .75f;
             float dy2 = risoluzione_y * .125f;
             pos_x = 0;
-            pos_y = risoluzione_y * .3f;
+           
 
             pulsante[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
          
-            pulsante_testo[3].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_y / 22);
-            pulsante_testo[3].GetComponent<TextMeshProUGUI>().text = "BUY AMNO 100 COINS";
+            pulsante_testo[3].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 15);
+            pulsante_testo[3].GetComponent<TextMeshProUGUI>().text = "BUY AMMO\n50 COINS";
+
+            pulsante[3].GetComponent<Image>().color = new Color(1, 1, 1, alpha_buy_ammo);
+            pulsante_testo[3].GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, alpha_buy_ammo);
         }
+
+        pos_y = risoluzione_y * .16f;
+
+        if (partenza_gioco == 0)
+        {
+
+            alpha_buy_barrier = 1.0f;
+
+            if (script_struttura_dati.monete < 100)
+            {
+                alpha_buy_barrier = .25f;
+
+            }
+           
+
+            if (attivazione_barriera_infinity == 1)
+            {
+                pos_y = risoluzione_y;
+
+            }
+
+        }
+        else
+        {
+            alpha_buy_barrier = alpha_buy_barrier * .9f - .01f;
+
+           
+
+            if (alpha_buy_barrier < 0)
+            {
+                alpha_buy_barrier = 0;
+                pos_y = risoluzione_y;
+            }
+        }
+
 
         if (pulsante[4] != null)  //compra ammo
         {
             float dx2 = risoluzione_x*.75f;
             float dy2 = risoluzione_y*.125f;
             pos_x = 0;
-            pos_y = risoluzione_y*.16f;
+            
             pulsante[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            pulsante_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_y / 22);
-            pulsante_testo[4].GetComponent<TextMeshProUGUI>().text = "BUY INITIAL BARRIER 100 COINS";
+            pulsante_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 15);
+            pulsante_testo[4].GetComponent<TextMeshProUGUI>().text = "BUY INITIAL BARRIER\n100 COINS";
+
+            pulsante[4].GetComponent<Image>().color = new Color(1, 1, 1, alpha_buy_barrier);
+            pulsante_testo[4].GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, alpha_buy_barrier);
+
+
+        }
+
+        pos_y = risoluzione_y * -.35f;
+        if (partenza_gioco == 1)
+        {
+            pos_y = risoluzione_y ;
         }
 
 
-     
+        if (pulsante[5] != null)  //press to start
+        {
+            float dx2 = risoluzione_x ;
+            float dy2 = risoluzione_y * .33f;
+            pos_x = 0;
+           
+            pulsante[5].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            pulsante[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            pulsante_testo[5].GetComponent<TextMeshProUGUI>().fontSize = (risoluzione_x / (14+Mathf.Cos( aum_coseno)*2  ));
+            pulsante_testo[5].GetComponent<TextMeshProUGUI>().text = "PRESS TO START";
+        }
+
+
+
+        if (grafica[1] != null)  //gem
+        {
+
+            float dx2 = risoluzione_x * .33f;
+            float dy2 = dx2 * (512 / 800.0f);
+            pos_x = risoluzione_x * -.3f;
+            pos_y = risoluzione_y * spostamento_ui_verticale_coin;
+
+            grafica[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+
+        if (grafica[2] != null)  //gem  txt
+        {
+
+            float dx2 = risoluzione_x * .33f;
+            float dy2 = dx2;
+            pos_x = risoluzione_x*-.3f;
+            pos_y = risoluzione_y * spostamento_ui_verticale_coin;
+
+            grafica[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[2].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 15);
+            grafica_testo[2].GetComponent<TextMeshProUGUI>().text = "" + (script_struttura_dati.gemme);
+
+        }
 
 
         if (grafica[3] != null)  //coin
         {
 
-            float dx2 = dy * 1.7f;
+            float dx2 = risoluzione_x * .33f;
             float dy2 = dx2*(512/800.0f);
-            pos_x =  dx2 * 0.0f;
+            pos_x =  0;
             pos_y = risoluzione_y * spostamento_ui_verticale_coin;
 
             grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
@@ -3372,57 +3583,33 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (grafica[4] != null)  //coin  txt
         {
 
-            float dx2 = dy * 1.7f;
+            float dx2 = risoluzione_x * .33f;
             float dy2 = dx2;
-            pos_x = dx2 * .09f;
+            pos_x = 0;
             pos_y = risoluzione_y * spostamento_ui_verticale_coin;
 
             grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (int) (risoluzione_x/15);
-            grafica_testo[4].GetComponent<TextMeshProUGUI>().text = "" + (monete_partita_corrente);
+            grafica_testo[4].GetComponent<TextMeshProUGUI>().text = "" + (script_struttura_dati.monete);
 
         }
-        /*
-        if (grafica[1] != null)  //gem
-        {
+        
 
-            float dx2 = dy * .8f;
-            float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * 1.5f;
-            pos_y = pos_y2;
-
-            grafica[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-            grafica[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
-        }
+       
 
 
-        if (grafica[2] != null)  //gem  txt
-        {
 
-            float dx2 = dy * .8f;
-            float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * (1.5f - .17f);
-            pos_y = pos_y2;
-
-            grafica[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-            grafica[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
-            grafica_testo[2].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-            grafica_testo[2].GetComponent<TextMeshProUGUI>().text = "" + gemme_prese;
-
-        }*/
 
 
         if (grafica[8] != null)  //gem
         {
 
-            float dx2 = dy * .8f;
-            float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * .85f;
-            pos_y = pos_y2;
+            float dx2 = risoluzione_x * .33f;
+            float dy2 = dx2 * (512 / 800.0f);
+            pos_x = risoluzione_x * .3f;
+            pos_y = risoluzione_y * spostamento_ui_verticale_coin;
 
             grafica[8].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
             grafica[8].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
@@ -3432,21 +3619,49 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (grafica[9] != null)  //ammo  txt
         {
 
-            float dx2 = dy * .8f;
+            float dx2 = risoluzione_x * .33f;
             float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * (.85f - .17f);
-            pos_y = pos_y2;
+            pos_x = risoluzione_x * .3f;
+            pos_y = risoluzione_y * spostamento_ui_verticale_coin;
 
             grafica[9].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
             grafica[9].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            grafica_testo[9].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            grafica_testo[9].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 15);
             grafica_testo[9].GetComponent<TextMeshProUGUI>().text = "" + numero_spari;
 
         }
 
 
 
+        if (grafica[12] != null)  //ammo
+        {
+
+            float dx2 = dy * 1.0f;
+            float dy2 = dx2 ;
+            pos_x = risoluzione_x * .5f - dx2 * .85f;
+            pos_y = pos_y2;
+
+            grafica[12].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[12].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+        if (grafica[13] != null)  //ammo  txt
+        {
+
+            float dx2 = dy * 1.0f;
+            float dy2 = dx2;
+            pos_x = risoluzione_x * .5f - dx2 * (.85f-.19f);
+            pos_y = pos_y2;
+
+            grafica[13].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[13].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[13].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 15);
+            grafica_testo[13].GetComponent<TextMeshProUGUI>().text = "" + numero_spari;
+
+        }
 
         pos_x = risoluzione_x * -.1f;
 
@@ -4155,6 +4370,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 }
 
+                grafica_pos[5] = .375f + sposta_grafica_y;
+                grafica_pos[4] = .3f + sposta_grafica_y;
+                grafica_pos[6] = .3f + sposta_grafica_y;
 
                 if (crea_popup_finale >= 1) {
                     if (energia <= 0)
@@ -4163,10 +4381,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                         grafica_pos[2] = .1f;
                         grafica_pos[3] = -.2f;
 
+
+
                     }
                     else
                     {
-                        grafica_pos[7] = .3f + sposta_grafica_y;
+                       
+                        grafica_pos[7] = grafica_pos[4];
                         grafica_pos[10] = .145f + sposta_grafica_y;
 
                         grafica_pos[19] = -.35f;
@@ -4202,7 +4423,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 ok_spari_completi = 0;
 
                 if (energia > energia_base * script_struttura_dati.livello_in_uso * 0.005f) { // se finisce il livello con energia superiore alla met� del livello attuale, quindi al livello 100, dovr� superare il gioco con il 50% di energia
-                    grafica_pos[8] = .375f+ sposta_grafica_y;
+
+                    
+                    grafica_pos[8] = grafica_pos[5];
                     grafica_pos[11] = .215f+ sposta_grafica_y;
                     ok_energia_completa = 1;
 
@@ -4212,7 +4435,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
                 if (numero_spari > 0 && energia>0) { // se finisce il livello con almeno 1 sparo
-                    grafica_pos[9] = .3f+ sposta_grafica_y;
+
+                    
+                    grafica_pos[9] = grafica_pos[6];
                     grafica_pos[12] = .145f+ sposta_grafica_y;
                     ok_spari_completi = 1;
 
@@ -4291,7 +4516,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                                 }
 
 
-                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stelle, dx_stelle);
+                                float dx_stella_base = dx_stelle;
+
+                                if (n == 8)
+                                {
+                                    dx_stella_base = dx_stelle*1.25f;
+                                }
+
+                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stella_base, dx_stella_base);
                                 grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
 
@@ -4416,8 +4648,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                
 
-                grafica_pos[1] = .25f;
-                grafica_pos[2] = .11f;
+                grafica_pos[1] = .35f;
+                grafica_pos[2] = .21f;
                 grafica_pos[3] = -.07f;
 
                 grafica_pos[7] = -.3f;
@@ -4428,13 +4660,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
               
 
-                float pos_y_monete = -.1f;
+                float pos_y_monete = -.01f;
 
                 grafica_pos[3] = pos_y_monete;
-                grafica_pos[4] = pos_y_monete;
+                grafica_pos[4] = pos_y_monete-.091f;
 
                 grafica_pos[5] = pos_y_monete;
-                grafica_pos[6] = pos_y_monete;
+                grafica_pos[6] = pos_y_monete-.091f;
 
 
                 monete_UI = Mathf.MoveTowards(monete_UI, monete_partita_corrente, Time.deltaTime * 100);
@@ -4492,30 +4724,33 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                             else
                             {
 
+                                float dx_stelle_base = dx_stelle;
 
 
                                 if (n == 3)
                                 {
-                                    pos_x = dx2 * -.35f;
+                                    dx_stelle_base = dx_stelle*1.5f;
+                                    pos_x = dx2 * -.2f;
                                 }
 
                                 if (n == 4)
                                 {
-                                    pos_x = dx2 * -.15f;
+                                    pos_x = dx2 * -.2f;
                                 }
 
                                 if (n == 5)
                                 {
-                                    pos_x = dx2 * .15f;
+                                    dx_stelle_base = dx_stelle * 1.5f;
+                                    pos_x = dx2 * .2f;
                                 }
 
                                 if (n == 6)
                                 {
-                                    pos_x = dx2 * .35f;
+                                    pos_x = dx2 * .2f;
                                 }
 
 
-                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stelle, dx_stelle);
+                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stelle_base, dx_stelle_base);
                                 grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                             }
