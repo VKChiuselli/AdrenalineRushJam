@@ -1794,9 +1794,9 @@ public class menu : MonoBehaviour {
 
 
             pos_y = risoluzione_y * -0.33f;
-            grafica[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2* 10f, dy2* 10f);
             grafica[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
-            grafica_testo[31].GetComponent<TextMeshProUGUI>().fontSize = font_size * 0.8f;
+            grafica_testo[31].GetComponent<TextMeshProUGUI>().fontSize = font_size * 2.5f;
             if (!pulsante[31].GetComponent<Button>().interactable)
                 grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "" + espositore_data(pulsante[31].GetComponent<timer_reward>().GetTimeLeft()); 
             else {

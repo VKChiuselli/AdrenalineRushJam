@@ -9,6 +9,7 @@ public class tutorial_primo_livello : MonoBehaviour {
     public bool avvisato_bonus_speed;
     public bool avvisato_raccogli_ammo;
     public bool avvisato_spara_ammo;
+    public bool avvisato_barriera;
     public bool ammo_raccolta;
     float distanza_raycast_tutorial = 9f;
 
@@ -17,7 +18,7 @@ public class tutorial_primo_livello : MonoBehaviour {
     gioco_ruota_cilindro Gioco_ruota_cilindro;
     void Start() {
 
-
+        avvisato_barriera = false;
         Gioco_ruota_cilindro = FindObjectOfType<gioco_ruota_cilindro>();
 
 
@@ -244,6 +245,14 @@ public class tutorial_primo_livello : MonoBehaviour {
     private void tutorial_bonus_speed() {
         Debug.Log("tutorial_bonus_speed");
         Gioco_ruota_cilindro.crea_tutorial("You will find a variety of boosts in every level, this one speeds you up!");
+    }
+    private void tutorial_bonus_magnete() {
+        Debug.Log("tutorial_bonus_magnete");
+        Gioco_ruota_cilindro.crea_tutorial("This magnet allows you to grab all the coins far away from you!");
+    }
+    private void tutorial_bonus_barriera() {
+        Debug.Log("tutorial_bonus_barriera");
+        Gioco_ruota_cilindro.crea_tutorial("Buying this barrier will soak your first hit against walls and mines!");
     }
 
     private void ResumeGame() {
