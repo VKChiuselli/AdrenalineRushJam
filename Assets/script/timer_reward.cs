@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class timer_reward : MonoBehaviour {
    float msToWait;
     Button ClickButton;
-    public ulong lastTimeClicked;
+    public ulong LastTimeClick90;
 
     private void Start() {
-        if(gameObject.name== "pulsante_text31") {
+
+        if (gameObject.name== "pulsante_text31") {
         msToWait = 43200000f;
         }
         else {
@@ -18,17 +19,19 @@ public class timer_reward : MonoBehaviour {
         ClickButton = gameObject.GetComponent<Button>();
 
 
-        if (PlayerPrefs.HasKey("LastTimeClicked")) {
-            lastTimeClicked = ulong.Parse(PlayerPrefs.GetString("LastTimeClicked"));
+        if (PlayerPrefs.HasKey($"LastTimeClick{gameObject.name}2")) {
+            LastTimeClick90 = ulong.Parse(PlayerPrefs.GetString($"LastTimeClick{gameObject.name}2"));
+            if (!Ready())
+                ClickButton.interactable = false;
         }
         else {
-            msToWait = 400f;
-            lastTimeClicked = (ulong)DateTime.Now.Ticks;
-            PlayerPrefs.SetString("LastTimeClicked", lastTimeClicked.ToString());
+     
+            LastTimeClick90 = (ulong)DateTime.Now.Ticks;
+            ClickButton.interactable = true;
+            PlayerPrefs.SetString($"LastTimeClick{gameObject.name}2", LastTimeClick90.ToString());
         }
 
-        if (!Ready())
-            ClickButton.interactable = false;
+       
     }
 
     private void Update() {
@@ -42,30 +45,36 @@ public class timer_reward : MonoBehaviour {
 
 
     public void Click() {
-        lastTimeClicked = (ulong)DateTime.Now.Ticks;
-        PlayerPrefs.SetString("LastTimeClicked", lastTimeClicked.ToString());
+        LastTimeClick90 = (ulong)DateTime.Now.Ticks;
+        PlayerPrefs.SetString($"LastTimeClick{gameObject.name}2", LastTimeClick90.ToString());
         ClickButton.interactable = false;
     }
 
     private bool Ready() {
-        ulong diff = ((ulong)DateTime.Now.Ticks - lastTimeClicked);
-        ulong m = diff / TimeSpan.TicksPerMillisecond;
+        if (PlayerPrefs.HasKey($"LastTimeClick{gameObject.name}2")) {
+            ulong diff = ((ulong)DateTime.Now.Ticks - LastTimeClick90);
+            ulong m = diff / TimeSpan.TicksPerMillisecond;
 
-        float secondsLeft = (float)(msToWait - m) / 1000.0f;
+            float secondsLeft = (float)(msToWait - m) / 1000.0f;
 
-        if (secondsLeft < 0) {
-          //  TODO azione quando viene cliccato
-            return true;
+            if (secondsLeft < 0) {
+                //  TODO azione quando viene cliccato
+                return true;
+            }
+
+            return false;
         }
-
-        return false;
+        else {
+        return true;
+        }
+     
     }
 
     public void SetTimeToWait(float timeAmountInMs) {
         msToWait = timeAmountInMs;
     }
     public int GetTimeLeft() {
-        ulong diff = ((ulong)DateTime.Now.Ticks - lastTimeClicked);
+        ulong diff = ((ulong)DateTime.Now.Ticks - LastTimeClick90);
         ulong m = diff / TimeSpan.TicksPerMillisecond;
 
         float secondsLeft = (float)(msToWait - m) / 1000.0f;
