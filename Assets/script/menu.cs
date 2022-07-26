@@ -660,35 +660,6 @@ public class menu : MonoBehaviour {
 
                 limite_verticale_dx = pos_y - dy2 * .15f;
             }
-            if (pulsante[160 + n] != null) {
-
-                float dx3 = risoluzione_x * 0.05f;
-                float dy3 = risoluzione_x * 0.05f;
-                float pos_x2 = 0;
-                float pos_y2 = 0;
-                if (n == 0) {
-                    pos_x2 = pos_x * 1.22f;
-                    pos_y2 = pos_y * 2.82f;
-                }
-                else if (n == 1) {
-                    pos_x2 = pos_x * 1.13f;
-                    pos_y2 = pos_y * 2.82f;
-                }
-                else if (n == 2) {
-                    pos_x2 = pos_x * 1.22f;
-                    pos_y2 = pos_y * 0.56f;
-                }
-                else if (n == 3) {
-                    pos_x2 = pos_x * 1.13f;
-                    pos_y2 = pos_y * 0.56f;
-                }
-
-                pulsante[160 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
-                pulsante[160 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x2 + spostamento_x, pos_y2 + scroll_verticale_dx);
-
-
-                limite_verticale_dx = pos_y - dy2 * .15f;
-            }
 
             if (grafica[150 + n] != null) {
 
@@ -1019,6 +990,15 @@ public class menu : MonoBehaviour {
                 pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[200].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+            }
+            if (pulsante[160] != null)  //info tasto
+            {
+                float dx2 = dime_panel_x * 0.1f;
+                float dy2 = dime_panel_y * 0.05f;
+                pos_x =  dime_panel_x * 0.35f;
+                pos_y = dime_panel_y * 0.3f;
+                pulsante[160].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[160].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
             }
 
             if (pulsante[201] != null)  //exit tasto
@@ -1520,6 +1500,15 @@ public class menu : MonoBehaviour {
 
             }
 
+            if (pulsante[170] != null) //pulsante testo lista scelta
+{
+                float dx2 = dime_panel_x * 0.2f;
+                float dy2 = dime_panel_y * 0.2f;
+                pos_x = dime_panel_x * -0.3f;
+                pos_y = dime_panel_y * 0.35f;
+                pulsante[170].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                pulsante[170].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            }
 
             uscita_popup(dime_panel_x, dime_panel_y);
 
@@ -1858,7 +1847,7 @@ public class menu : MonoBehaviour {
 
         canvas_popup.SetActive(false);
 
-        for (int n = 200; n < 300; n++) {
+        for (int n = 170; n < 300; n++) {
             if (pulsante[n] != null) {
                 DestroyImmediate(pulsante[n]);
             }
@@ -1986,7 +1975,7 @@ public class menu : MonoBehaviour {
             crea_grafica_text(170 + n, new Color(1, 1, 1, 0), "" + script_struttura_dati.livello_upgrade[n + 1], canvas, "Canvas", "");
 
 
-            crea_button_text(160 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/info_icon_menu");
+      
 
             grafica[150 + n].GetComponent<Image>().raycastTarget = false;
             grafica_testo[150 + n].GetComponent<TextMeshProUGUI>().raycastTarget = false;
@@ -2122,6 +2111,7 @@ public class menu : MonoBehaviour {
             crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         }
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
+        crea_button_text(160, "", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/info_icon_menu"); //info
 
     }
     void crea_popup_opzioni(int num = 3) {
@@ -2183,6 +2173,10 @@ public class menu : MonoBehaviour {
 
 
         crea_grafica_text(208, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ok_ammo");
+
+        for(int i=0; i<5; i++) {
+            crea_button_text(170 + i, "", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/freccia_sinistra"); //back freccia
+        }
 
     }
 
@@ -2403,20 +2397,24 @@ public class menu : MonoBehaviour {
             crea_popup(1);
         }
 
+        if(num == 170) {
+            crea_popup_upgrade(2);
+        }
+
         if (num == 150) {
             indice_upgrade_corrente = 1;
             crea_popup_upgrade(2);
         }
-        if (num == 151) {
+        if (num == 151  ) {
             indice_upgrade_corrente = 2;
             crea_popup_upgrade(2);
         }
-        if (num == 152) {
+        if (num == 152)  {
             indice_upgrade_corrente = 3;
             crea_popup_upgrade(2);
         }
 
-        if (num == 153) {
+        if (num == 153 ) {
             indice_upgrade_corrente = 4;
             crea_popup_upgrade(2);
         }
@@ -2431,21 +2429,9 @@ public class menu : MonoBehaviour {
         }
 
         if (num == 160) {
-            indice_upgrade_corrente = 1;
             crea_popup_info(6);
         }
-        if (num == 161) {
-            indice_upgrade_corrente = 2;
-            crea_popup_info(6);
-        }
-        if (num == 162) {
-            indice_upgrade_corrente = 3;
-            crea_popup_info(6);
-        }
-        if (num == 163) {
-            indice_upgrade_corrente = 4;
-            crea_popup_info(6);
-        }
+   
 
 
 
