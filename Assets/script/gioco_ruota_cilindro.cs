@@ -262,7 +262,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
  
     float alpha_buy_barrier = 1.0f;
 
+    float rotazione_ruota = 0;
+    float rotazione_ruota_tick = 0;
 
+    float rotazione_ruota_arrivo = 0;
+
+    float somma_rotazione = 0;
+
+    int attiva_rotazione_ruota = 0;
+    int che_zona_ruota_vinta = -1;
 
 
 // Start is called before the first frame update
@@ -514,7 +522,7 @@ void Start() {
 
         if (Input.GetKeyUp(KeyCode.Alpha2)) {
 
-            crea_potere_boss();
+            crea_popup(5);
 
         }
 
@@ -3055,6 +3063,49 @@ void Start() {
     }
 
 
+    void crea_button_text2(int num, string txt, Color colore_testo, GameObject parent, string path = "Canvas", string path_sprite = "")
+    {
+
+        pulsante[num] = Instantiate(Resources.Load("UI/Button_text2", typeof(GameObject))) as GameObject;
+
+        pulsante[num].name = "pulsante_text" + num;
+
+        pulsante[num].transform.SetParent(parent.transform);
+
+        pulsante[num].GetComponent<Button>().onClick.AddListener(() => pressione_pulsante(num));
+
+        ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
+        cb.selectedColor = newColor;
+        pulsante[num].GetComponent<Button>().colors = cb;
+
+
+        if (path_sprite != "")
+        {
+            pulsante[num].GetComponent<Image>().sprite = Resources.Load<Sprite>(path_sprite);
+        }
+
+
+        pulsante[num].GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+
+
+        Debug.Log(path + "/pulsante_text" + num + "/Text_TMP");
+
+        pulsante_testo[num] = GameObject.Find(path + "/pulsante_text" + num + "/Text_TMP");
+
+        pulsante_testo[num].GetComponent<TextMeshProUGUI>().text = "" + txt;
+
+        pulsante_testo[num].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_y / 20);
+
+
+        pulsante_testo[num].GetComponent<TextMeshProUGUI>().color = colore_testo;
+
+
+
+        pulsante_testo[num].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+
+    }
+
+
     void crea_grafica_text(int num, Color colore, string txt, GameObject parent, string path = "Canvas", string path_sprite = "") {
 
         //    Debug.Log("entratooo");
@@ -3173,6 +3224,32 @@ void Start() {
 
 
         }
+
+
+        if (num == 205)
+        {
+            attiva_rotazione_ruota = 1;
+
+            rotazione_ruota = 3600;
+            rotazione_ruota_arrivo = 330+UnityEngine.Random.Range(-27.0f,27.0f); // qua metti angolo vincente monete
+            
+            
+            
+            // 30 monete
+            // 90 barriera
+            // 150 monete
+            //210 energia
+            //270 menete
+            //330 spin rotazione
+
+
+            rotazione_ruota_tick = 0;
+            somma_rotazione = 0;
+
+            che_zona_ruota_vinta = -1;
+
+        }
+
 
         if (num == 218) // ads raddoppia
         {
@@ -4041,8 +4118,8 @@ void Start() {
 
             crea_button_text(218, "Double ALL!", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_Blue"); //pannello shop
 
-            crea_button_text(219, "Next", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_Blue"); //pannello shop
-            crea_button_text(220, "Repeat", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_Blue"); //pannello shop
+            crea_button_text2(219, "NEXT", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/button_next"); //pannello shop
+            crea_button_text2(220, "RESTART", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/button_restart"); //pannello shop
 
 
         //    pulsante_testo[218].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
@@ -4177,7 +4254,24 @@ void Start() {
 
             crea_button_text(203, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
-           
+        }
+
+
+        if (num == 5)
+        {
+
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
+
+            crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ruota"); //pannello shop
+
+            crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/tick"); //pannello shop
+
+            crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
+            crea_button_text(205, "SPIN", new Color(1, 1, 1, 0), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pannello shop
+
+            crea_button_text(206, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
         }
 
@@ -4573,8 +4667,8 @@ void Start() {
 
                             pos_y = dime_panel_y * grafica_pos[n];
 
-                            float dxp = dime_panel_x * .4f;
-                            float dyp = dime_panel_y * .1f;
+                            float dxp = dime_panel_x * .2f;
+                            float dyp = dxp*(199.0f/165.0f);
 
                             if (n == 19)
                             {
@@ -4602,11 +4696,13 @@ void Start() {
 
                             if (n == 19)
                             {
-                                pulsante_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size4;
+                                pulsante_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 20;
+                                pulsante_testo[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dyp*.575f);
                             }
                             if (n == 20)
                             {
-                                pulsante_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size4;
+                                pulsante_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 20 ;
+                                pulsante_testo[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0,  -dyp * .575f);
                             }
                             
 
@@ -4806,8 +4902,8 @@ void Start() {
             if (grafica[200] != null)  //pannello
             {
 
-                float dx2 = dx * .8f;
-                float dy2 = dy * .8f;
+                float dx2 = dx * .9f;
+                float dy2 = dy * .9f;
 
 
 
@@ -4866,6 +4962,129 @@ void Start() {
 
         }
 
+        if (attivo_popup == 5)
+        {
+            if (grafica[200] != null)  //pannello
+            {
+
+                float dx2 = dx * .9f;
+                float dy2 = dy * .9f;
+
+
+
+                float dy_t = dy * .2f;
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                pos_y = dime_panel_y * .3f;
+
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_x * .9f);
+                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+
+                grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .1f, dime_panel_x * .1f);
+                grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x*.45f);
+
+                pos_y = dime_panel_y * .4f;
+
+                grafica[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_x * .1f);
+                grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, pos_y);
+
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "Gets your reward".ToUpper();
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
+
+
+                pos_y = dime_panel_y * -.375f;
+
+
+                if (pulsante[205] != null && attiva_rotazione_ruota == 0)  //ruota
+                {
+                    pulsante[205].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .4f, dy2 * .12f);
+                    pulsante[205].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
+                    pulsante_testo[205].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 15;
+
+                    pulsante_testo[205].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+
+                }
+
+
+                if (attiva_rotazione_ruota == 1)
+                {
+
+                    float rotazione_old = rotazione_ruota;
+
+                    rotazione_ruota = Mathf.Lerp(rotazione_ruota, rotazione_ruota_arrivo, Time.deltaTime );
+
+
+                    float diff_rotazione = rotazione_old - rotazione_ruota;
+
+                    Debug.Log(diff_rotazione);
+
+
+                    somma_rotazione = somma_rotazione + diff_rotazione;
+
+                    int somma_rotazione_int = (int)(somma_rotazione/60);
+
+
+                    if (Mathf.Abs( somma_rotazione- somma_rotazione_int * 60)< diff_rotazione*.5f)
+                    {
+
+                        rotazione_ruota_tick = diff_rotazione * 2;
+
+                        if (rotazione_ruota_tick < 20)
+                        {
+                            rotazione_ruota_tick = 20;
+                        }
+                       
+
+                    }
+
+
+
+                   if (rotazione_ruota < rotazione_ruota_arrivo+1.0f)
+                    {
+                        attiva_rotazione_ruota = 0;
+
+                        // dai i premi
+                    }
+
+                }
+
+                rotazione_ruota_tick = Mathf.LerpAngle(rotazione_ruota_tick, 0, Time.deltaTime*2);
+
+
+                grafica[201].transform.localEulerAngles = new Vector3(0, 0, rotazione_ruota);
+                grafica[202].transform.localEulerAngles = new Vector3(0, 0, rotazione_ruota_tick);
+
+
+                if (pulsante[206] != null && attiva_rotazione_ruota==0)  //exit
+                {
+                    float dx3 = risoluzione_x * 0.12f;
+                    float dy3 = dx3;
+                    pos_x = dime_panel_x * .465f;
+                    pos_y = dime_panel_y * .465f;
+
+
+                    pulsante[206].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
+                    pulsante[206].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                }
+
+
+                uscita_popup(dime_panel_x, dime_panel_y);
+
+            }
+
+        }
 
     }
 
