@@ -233,17 +233,17 @@ public class tutorial_primo_livello : MonoBehaviour {
     }
     private void tutorial_raccogli_ammo() {
         Debug.Log("tutorial_raccogli_ammo");
-        Gioco_ruota_cilindro.crea_tutorial("Pick up ammo to shooting");
+        Gioco_ruota_cilindro.crea_tutorial("Pick Missiles up to gain ammo");
     }
 
     private void tutorial_sparare() {
         Debug.Log("tutorial_sparare");
-        Gioco_ruota_cilindro.crea_tutorial("Tap the center of screen to shoot");
+        Gioco_ruota_cilindro.crea_tutorial("ou can destroy obstacles by shooting at them. Tap the center of the screen to shoot!");
     }
 
     private void tutorial_bonus_speed() {
         Debug.Log("tutorial_bonus_speed");
-        Gioco_ruota_cilindro.crea_tutorial("There is a variaty of bonus, this speed you up!");
+        Gioco_ruota_cilindro.crea_tutorial("You will find a variety of boosts in every level, this one speeds you up!");
     }
 
     private void ResumeGame() {
