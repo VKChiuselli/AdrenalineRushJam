@@ -262,6 +262,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
  
     float alpha_buy_barrier = 1.0f;
 
+    // variabili ruota
+
     float rotazione_ruota = 0;
     float rotazione_ruota_tick = 0;
 
@@ -272,6 +274,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     int attiva_rotazione_ruota = 0;
     int che_zona_ruota_vinta = -1;
 
+    float sposta_button_x = 1;
+
+    GameObject[] astronave_struttura = new GameObject[10];
 
 // Start is called before the first frame update
 void Start() {
@@ -364,8 +369,9 @@ void Start() {
         // scafo 4
         // calamita 5
 
+        int skin_colore = 0;
 
-        agilita = 1;
+       agilita = 1;
 
         tempo_barriera = 1;
         energia = 100;
@@ -390,16 +396,56 @@ void Start() {
 
             scafo = 1.0f + script_struttura_dati.livello_upgrade[5] * .1f;
 
-           // calamita = 1.0f + script_struttura_dati.livello_upgrade[6] * .05f;
+            // calamita = 1.0f + script_struttura_dati.livello_upgrade[6] * .05f;
 
-
+           skin_colore = script_struttura_dati.astronave_skin;
         }
+
+
+        // skin_colore = script_struttura_dati.astronave_skin;
+
+        cambio_skin_colore(skin_colore);
+       
+        
+
 
 
         energia_base = energia;
         numero_spari_base = numero_spari;
 
     }
+
+
+    void cambio_skin_colore(int skin_colore)
+    {
+
+        Material material_skin = Resources.Load("grafica_personaggio/Materials/StarSparrow " + skin_colore) as Material;
+
+        string[] path_astronave = new string[10];
+
+
+        path_astronave[0] = "personaggio/StarSparrow_finale/StarSparrow_Core";
+        path_astronave[1] = "personaggio/StarSparrow_finale/StarSparrow_Thruster";
+        path_astronave[2] = "personaggio/StarSparrow_finale/StarSparrow_Weapon";
+        path_astronave[3] = "personaggio/StarSparrow_finale/StarSparrow_Wing";
+        path_astronave[4] = "personaggio/StarSparrow_finale/StarSparrow_Wing_1";
+        path_astronave[5] = "personaggio/StarSparrow_finale/StarSparrow_Wing_2";
+        path_astronave[6] = "personaggio/StarSparrow_finale/StarSparrow_Wing_3";
+
+
+        for (int n = 0; n <= 6; n++)
+        {
+            if (astronave_struttura[n] == null)
+            {
+                astronave_struttura[n] = GameObject.Find(path_astronave[n]);
+            }
+
+            astronave_struttura[n].GetComponent<Renderer>().sharedMaterial = material_skin;
+
+        }
+    }
+
+
 
 
 
@@ -526,7 +572,12 @@ void Start() {
 
         }
 
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        {
 
+            crea_popup(6);
+
+        }
 
 #endif
 
@@ -3034,9 +3085,9 @@ void Start() {
 
         pulsante[num].GetComponent<Button>().onClick.AddListener(() => pressione_pulsante(num));
 
-        ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
-        cb.selectedColor = newColor;
-        pulsante[num].GetComponent<Button>().colors = cb;
+    //    ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
+    //    cb.selectedColor = new Color(1,1,1,1);
+    //    pulsante[num].GetComponent<Button>().colors = cb;
 
 
         if (path_sprite != "") {
@@ -3074,9 +3125,9 @@ void Start() {
 
         pulsante[num].GetComponent<Button>().onClick.AddListener(() => pressione_pulsante(num));
 
-        ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
-        cb.selectedColor = newColor;
-        pulsante[num].GetComponent<Button>().colors = cb;
+    //    ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
+    //    cb.selectedColor = newColor;
+    //    pulsante[num].GetComponent<Button>().colors = cb;
 
 
         if (path_sprite != "")
@@ -3143,7 +3194,8 @@ void Start() {
     }
 
 
-    void pressione_pulsante(int num) {
+    void pressione_pulsante(int num)
+    {
 
 #if UNITY_EDITOR
 
@@ -3155,9 +3207,18 @@ void Start() {
         suona_effetto_UI(1, 1);
 
 
-        if (num == 0) {
+        if (num == 0)
+        {
 
             crea_popup(4);
+
+
+        }
+
+        if (num == 1)
+        {
+
+            crea_popup(6);
 
 
         }
@@ -3166,7 +3227,7 @@ void Start() {
         if (num == 3)
         {
 
-           
+
             suona_effetto_UI(6, .5f);
 
             if (script_struttura_dati.monete >= 50)
@@ -3182,10 +3243,10 @@ void Start() {
         }
 
 
-        if (num == 4 && attivazione_barriera_infinity==0)
+        if (num == 4 && attivazione_barriera_infinity == 0)
         {
 
-           
+
 
             if (script_struttura_dati.monete >= 100)
             {
@@ -3211,14 +3272,16 @@ void Start() {
         }
 
 
-        if (num == 202) {
+        if (num == 202)
+        {
 
             SceneManager.LoadScene("menu");
 
 
         }
 
-        if (num == 203) {
+        if (num == 203)
+        {
 
             distruggi_menu_popup();
 
@@ -3231,10 +3294,10 @@ void Start() {
             attiva_rotazione_ruota = 1;
 
             rotazione_ruota = 3600;
-            rotazione_ruota_arrivo = 330+UnityEngine.Random.Range(-27.0f,27.0f); // qua metti angolo vincente monete
-            
-            
-            
+            rotazione_ruota_arrivo = 330 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
+
+
+
             // 30 monete
             // 90 barriera
             // 150 monete
@@ -3251,6 +3314,14 @@ void Start() {
         }
 
 
+        if (num == 206 || num == 246)
+        {
+
+            distruggi_menu_popup();
+
+
+        }
+
         if (num == 218) // ads raddoppia
         {
 
@@ -3258,7 +3329,8 @@ void Start() {
 
         if (num == 219) // next level da salvare e poi 
         {
-            if (script_struttura_dati != null) {
+            if (script_struttura_dati != null)
+            {
 
 
                 // da passare i parametri stelle
@@ -3266,7 +3338,8 @@ void Start() {
 
                 script_struttura_dati.livello_in_uso = script_struttura_dati.livello_in_uso + 1;
 
-                if (script_struttura_dati.livello_massimo_raggiunto < script_struttura_dati.livello_in_uso) {
+                if (script_struttura_dati.livello_massimo_raggiunto < script_struttura_dati.livello_in_uso)
+                {
                     script_struttura_dati.livello_massimo_raggiunto = script_struttura_dati.livello_massimo_raggiunto + 1;
                     PlayerPrefs.SetInt("livello_massimo_raggiunto", script_struttura_dati.livello_massimo_raggiunto);
                 }
@@ -3288,6 +3361,25 @@ void Start() {
 
 
         }
+
+
+        for (int n = 0; n <= 7; n++)
+        {
+
+            if (num == 230 + n)
+            {
+                int skin_old = script_struttura_dati.astronave_skin;
+
+                script_struttura_dati.astronave_skin = n;
+                PlayerPrefs.SetInt("astronave_skin", n);
+
+                if (skin_old != script_struttura_dati.astronave_skin)
+                {
+                    cambio_skin_colore(script_struttura_dati.astronave_skin);
+                }
+            }
+        }
+
 
 
     }
@@ -3334,25 +3426,25 @@ void Start() {
         crea_grafica_text(9, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
-
+        crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
         crea_grafica_text(10, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
 
-        crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
+        
 
         crea_grafica_text(12, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/ammo");
         crea_grafica_text(13, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
         crea_button_text(0, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/menu");
-        crea_button_text(1, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/button_shop_game");
-        crea_button_text(2, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/button_shop_game");
+        crea_button_text2(1, "SKIN", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/button_shop_game");
+        crea_button_text2(2, "UPGRADE", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/button_shop_game");
 
-        crea_button_text(3, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
-        crea_button_text(4, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
+        crea_button_text2(3, "", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/button_ammo");
+        crea_button_text2(4, "", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/button_barrier");
 
-        crea_button_text(5, "PRESS TO START", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/trasparente");
+        crea_button_text(5, "PRESS TO START", new Color(0,0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
 
-        pulsante[5].GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        pulsante[5].GetComponent<Image>().color = new Color(1, 1, 1, .6f);
 
     }
 
@@ -3381,6 +3473,13 @@ void Start() {
 
 
         void aggiorna_menu() {
+
+        fade_intro = fade_intro - Time.deltaTime * 2;
+
+        if (fade_intro < 0)
+        {
+            fade_intro = 0;
+        }
 
 
         aum_coseno = aum_coseno + Time.deltaTime;
@@ -3476,25 +3575,33 @@ void Start() {
             {
                 float dx2 = dy * 1.55f;
                 float dy2 = dx2 * (199.0f / 165f);
-            pos_x = risoluzione_x * -.5f + dx2 * ui_partenza;
+            pos_x = risoluzione_x * -(.5f+ ui_partenza);
                 pos_y = -.05f * risoluzione_y;
             pulsante[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 pulsante[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            }
 
-            if (pulsante[2] != null)  //upgrade
+            pulsante_testo[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(dx2*.275f, -dy2 * .45f);
+            pulsante_testo[1].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
+            pulsante_testo[1].transform.localEulerAngles = new Vector3(0, 0, 30);
+        }
+
+        if (pulsante[2] != null)  //upgrade
             {
                 float dx2 = dy * 1.55f;
                 float dy2 = dx2 * (199.0f / 165f);
-                pos_x = risoluzione_x * .5f - dx2 *ui_partenza;
-                pos_y = -.05f*risoluzione_y;
+                pos_x = risoluzione_x * (.5f + ui_partenza);
+            pos_y = -.05f*risoluzione_y;
                 pulsante[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 pulsante[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            }
+            pulsante_testo[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-dx2 * .275f, -dy2 * .45f);
+            pulsante_testo[2].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 24);
+            pulsante_testo[2].transform.localEulerAngles = new Vector3(0, 0, -30);
 
-        pos_y = risoluzione_y * .3f;
+        }
+
+        pos_y = risoluzione_y * -.3f;
 
         if (partenza_gioco == 0)
         {
@@ -3520,25 +3627,40 @@ void Start() {
             }
         }
 
+        float sposta_button_x_valore = 1;
+
+        if (fade_intro == 0)
+        {
+            sposta_button_x_valore = .24f;
+        }
+
+
+        sposta_button_x = Mathf.Lerp(sposta_button_x, sposta_button_x_valore, Time.deltaTime * 2);
+
+        
+
 
         if (pulsante[3] != null)  //compra ammo
         {
-            float dx2 = risoluzione_x * .75f;
-            float dy2 = risoluzione_y * .125f;
-            pos_x = 0;
-           
+            float dx2 = risoluzione_x * .215f;
+            float dy2 = dx2 * (199 / 165.0f);
+            pos_x = -risoluzione_x * sposta_button_x;
+
 
             pulsante[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-         
-            pulsante_testo[3].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 15);
-            pulsante_testo[3].GetComponent<TextMeshProUGUI>().text = "BUY AMMO\n50 COINS";
+
+            pulsante_testo[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dy2*.6f);
+            pulsante_testo[3].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
+            pulsante_testo[3].GetComponent<TextMeshProUGUI>().text = "AMMO";
 
             pulsante[3].GetComponent<Image>().color = new Color(1, 1, 1, alpha_buy_ammo);
-            pulsante_testo[3].GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, alpha_buy_ammo);
+            
+            pulsante_testo[3].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, alpha_buy_ammo);
+
         }
 
-        pos_y = risoluzione_y * .16f;
+        pos_y = risoluzione_y * -.3f;
 
         if (partenza_gioco == 0)
         {
@@ -3575,40 +3697,41 @@ void Start() {
 
         if (pulsante[4] != null)  //compra ammo
         {
-            float dx2 = risoluzione_x*.75f;
-            float dy2 = risoluzione_y*.125f;
-            pos_x = 0;
+            float dx2 = risoluzione_x*.215f;
+            float dy2 = dx2*(199/165.0f);
+            pos_x = risoluzione_x* sposta_button_x;
             
             pulsante[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            pulsante_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 15);
-            pulsante_testo[4].GetComponent<TextMeshProUGUI>().text = "BUY INITIAL BARRIER\n100 COINS";
+            pulsante_testo[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dy2 * .6f);
+            pulsante_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
+            pulsante_testo[4].GetComponent<TextMeshProUGUI>().text = "BARRIER";
 
             pulsante[4].GetComponent<Image>().color = new Color(1, 1, 1, alpha_buy_barrier);
-            pulsante_testo[4].GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, alpha_buy_barrier);
+            pulsante_testo[4].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, alpha_buy_barrier);
 
 
         }
 
-        pos_y = risoluzione_y * -.35f;
+        pos_y = risoluzione_y * .05f;
         if (partenza_gioco == 1)
         {
             pos_y = risoluzione_y ;
         }
 
 
-        if (pulsante[5] != null)  //press to start
+        if (pulsante[5] != null && fade_intro==0)  //press to start
         {
-            float dx2 = risoluzione_x ;
-            float dy2 = risoluzione_y * .33f;
+            float dx2 = risoluzione_x*(.5f + Mathf.Cos(aum_coseno) * .05f) ;
+            float dy2 = dx2/3.0f;
             pos_x = 0;
            
             pulsante[5].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            pulsante_testo[5].GetComponent<TextMeshProUGUI>().fontSize = (risoluzione_x / (14+Mathf.Cos( aum_coseno)*2  ));
-            pulsante_testo[5].GetComponent<TextMeshProUGUI>().text = "PRESS TO START";
+            pulsante_testo[5].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / (16 - Mathf.Cos(aum_coseno) );
+            pulsante_testo[5].GetComponent<TextMeshProUGUI>().text = "TAP TO START";
         }
 
 
@@ -3793,7 +3916,7 @@ void Start() {
             float dx2 = risoluzione_x;
             float dy2 = risoluzione_y;
             pos_x = 0;
-            pos_y = 0;
+            pos_y = risoluzione_y*.2f;
 
 
 
@@ -3821,28 +3944,26 @@ void Start() {
             grafica[10].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[10].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            grafica[10].GetComponent<Image>().color = new Color(1, 1, 1, alpha);
+            grafica[10].GetComponent<Image>().color = new Color(1, 1, 1, 0);
             grafica_testo[10].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, alpha);
 
 
 
         }
 
-        fade_intro = fade_intro - Time.deltaTime*2; 
-
-        if (fade_intro < 0)
-        {
-            fade_intro = 0;
-        }
+        
 
         if (grafica[11] != null)  // energia
         {
 
-         
+
+            float dx2 = risoluzione_x;
+            float dy2 = risoluzione_y;
 
             grafica[11].GetComponent<Image>().color = new Color(1,1,1,fade_intro);
-          
 
+            grafica[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
         }
 
@@ -4272,6 +4393,23 @@ void Start() {
             crea_button_text(205, "SPIN", new Color(1, 1, 1, 0), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pannello shop
 
             crea_button_text(206, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
+
+        }
+
+        if (num == 6)
+        {
+
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
+            crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+
+
+            for (int n = 0; n <= 7; n++)
+            {
+                crea_button_text(230+n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/skin "+n);
+            }
+
+
+            crea_button_text(246, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
         }
 
@@ -4962,7 +5100,7 @@ void Start() {
 
         }
 
-        if (attivo_popup == 5)
+        if (attivo_popup == 5) // ruota
         {
             if (grafica[200] != null)  //pannello
             {
@@ -5085,6 +5223,103 @@ void Start() {
             }
 
         }
+
+
+        if (attivo_popup == 6) // skin
+        {
+            if (grafica[200] != null)  
+            {
+
+                float dx2 = dx * .9f;
+                float dy2 = dy * .9f;
+
+
+
+                float dy_t = dy * .2f;
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+         
+                pos_y = dime_panel_y * .4f;
+
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_x * .1f);
+                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, pos_y);
+
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "SKIN".ToUpper();
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
+
+
+                pos_y = dime_panel_y * .25f;
+
+                int aum_skin= -1;
+
+                for (int n = 0; n <= 7; n++)
+                {
+
+                    float dime_skin = dx2 * .35f;
+
+                    if (script_struttura_dati.astronave_skin == n)
+                    {
+                        dime_skin = dx2 * .4f;
+                    }
+
+                    aum_skin = aum_skin + 1;
+
+                    if (aum_skin > 1)
+                    {
+                        aum_skin = 0;
+                        pos_y = pos_y - dx2*.325f;
+                    }
+
+                    if (aum_skin == 0)
+                    {
+                        pos_x = dime_panel_x * -.2f;
+                    }
+
+                    if (aum_skin == 1)
+                    {
+                        pos_x = dime_panel_x * +.2f;
+                       
+                    }
+
+                    if (pulsante[230+n] != null ) 
+                    {
+                        pulsante[230 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_skin, dime_skin);
+                        pulsante[230 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                    }
+
+                }
+
+             
+
+                if (pulsante[246] != null && attiva_rotazione_ruota == 0)  //exit
+                {
+                    float dx3 = risoluzione_x * 0.12f;
+                    float dy3 = dx3;
+                    pos_x = dime_panel_x * .465f;
+                    pos_y = dime_panel_y * .465f;
+
+
+                    pulsante[246].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
+                    pulsante[246].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                }
+
+
+                uscita_popup(dime_panel_x, dime_panel_y);
+
+            }
+
+        }
+
 
     }
 

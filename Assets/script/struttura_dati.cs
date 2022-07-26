@@ -12,6 +12,9 @@ public class struttura_dati : MonoBehaviour {
     public int[] costo_livello = new int[50];
     public string[] stelle_livello = new string[400];
     public int stelle_battle_pass;
+    public int astronave_skin;
+
+    public int[] astronave_skin_comprate = new int[20];
 
     public float energia;
     public string battle_pass_reward_free;
@@ -32,6 +35,9 @@ public class struttura_dati : MonoBehaviour {
         monete = PlayerPrefs.GetInt("monete");
         gemme = PlayerPrefs.GetInt("gemme");
         energia = PlayerPrefs.GetInt("energia");
+        astronave_skin = PlayerPrefs.GetInt("astronave_skin");
+
+
 
         stelle_battle_pass = PlayerPrefs.GetInt("stelle_battle_pass");
         livello_massimo_raggiunto = PlayerPrefs.GetInt("livello_massimo_raggiunto");
@@ -49,6 +55,11 @@ public class struttura_dati : MonoBehaviour {
         for (int i = 0; i < 400; i++) {
             stelle_livello[i] = PlayerPrefs.GetString($"stelle_livello{i}");
         }
+        for (int i = 0; i < 10; i++)
+        {
+            astronave_skin_comprate[i] = PlayerPrefs.GetInt($"astronave_skin_comprate{i}");
+        }
+        
 
         SceneManager.LoadScene("menu");
 
