@@ -71,7 +71,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     public float distanza_disolve = -15;
 
     public bool online_dati = true;
- 
+
     public int monete_partita_corrente = 0;
     public int gemme_partita_corrente = 0;
 
@@ -121,6 +121,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     GameObject canvas_tutorial;
     public bool tutorial_in_corso;
     public bool tutorial_raccogli_ammo_finito;
+    public bool tutorial_ho_sparato;
     public int tipo_tutorial;
 
     float period = 2f;
@@ -800,7 +801,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             if (pressione_tasto_up != 0 && attivo_tempo_sparo_personaggio < 0 && numero_spari > 0 && blocco_velocita > .99f) {
 
                 //   Debug.Log("attivo_tempo_sparo_personaggio"+attivo_tempo_sparo_personaggio);
-
+                tutorial_ho_sparato = true;
                 crea_sparo();
 
             }
@@ -4484,7 +4485,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 pos_x = 0;
                 pos_y = 0;
 
-                grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy* 0.75f);
+                grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy * 0.75f);
                 grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
             }
             if (grafica[101] != null)  //text tip info
@@ -4506,7 +4507,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 pos_y = dy * -0.41f;
 
                 grafica[102].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
-                grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y* 0.75f);
+                grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y * 0.75f);
                 grafica_testo[102].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.8f;
             }
             if (grafica[103] != null)  //mano indicatore
@@ -4522,7 +4523,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 animazione_oscillazione_posizione_oggetto(grafica[103]);
             }
 
-        }     else if (tipo_tutorial == 2) { //indicatore sparare
+        }
+        else if (tipo_tutorial == 2) { //indicatore sparare
             if (grafica[100] != null)  //overlay scuro TODO cambiare grafica
  {
 
@@ -4552,7 +4554,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 pos_y = dy * -0.41f;
 
                 grafica[102].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
-                grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y* 0.75f);
+                grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y * 0.75f);
                 grafica_testo[102].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.8f;
             }
             if (grafica[103] != null)  //mano indicatore
@@ -4577,7 +4579,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 grafica[104].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
                 grafica[104].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-              fade_continuo(grafica[104].GetComponent<Image>());
+                fade_continuo(grafica[104].GetComponent<Image>());
             }
 
         }
@@ -4610,7 +4612,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         movementFactor = (rawSinWave + 1f) / 2f; // recalculated to go from 0 to 1 so its cleaner
 
-        gameObject.transform.Rotate(0,0,movementFactor);
+        gameObject.transform.Rotate(0, 0, movementFactor);
     }
     private void animazione_oscillazione_posizione_oggetto(GameObject gameObject) {
 
@@ -4620,9 +4622,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         const float tau = Mathf.PI * 2;  // constant value of 6.283
         float rawSinWave = Mathf.Sin(cycles * tau * 4f);  // going from -1 to 1
 
-        movementFactor = (rawSinWave + 1) /2f;   // recalculated to go from 0 to 1 so its cleaner
+        movementFactor = (rawSinWave + 1) / 2f;   // recalculated to go from 0 to 1 so its cleaner
 
-        gameObject.transform.Translate(0, movementFactor , 0);
+        gameObject.transform.Translate(0, movementFactor, 0);
     }
 
 
@@ -4631,7 +4633,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         canvas_tutorial.SetActive(false);
         if (tipo_tutorial == 1) {
             tutorial_raccogli_ammo_finito = true;
-        } 
+        }
 
         for (int n = 100; n < grafica.Length; n++) {
             if (grafica[n] != null) {
