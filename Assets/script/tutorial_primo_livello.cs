@@ -10,7 +10,6 @@ public class tutorial_primo_livello : MonoBehaviour {
     public bool avvisato_raccogli_ammo;
     public bool avvisato_spara_ammo;
     public bool avvisato_barriera;
-    public bool ammo_raccolta;
 
     float distanza_raycast_tutorial = 9f;
 
@@ -51,7 +50,7 @@ public class tutorial_primo_livello : MonoBehaviour {
         if (script_struttura_dati.livello_in_uso <= 2) {//    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
 
 
-            if (Gioco_ruota_cilindro.tutorial_in_corso || ammo_raccolta) {
+            if (Gioco_ruota_cilindro.tutorial_in_corso || Gioco_ruota_cilindro.tutorial_raccogli_ammo_finito) {
                 gestione_collisione_mina();
             }
 
@@ -196,7 +195,6 @@ public class tutorial_primo_livello : MonoBehaviour {
                         }
 
                         if (hit_collider.collider.name.IndexOf("bonus1_") > -1) {
-                            ammo_raccolta = true;
 
                             Debug.Log("TRIGGERASR TUTORIAL BONUS SPEED");
 
@@ -250,14 +248,14 @@ public class tutorial_primo_livello : MonoBehaviour {
     private void ResumeGame() {
 
         if (Gioco_ruota_cilindro.crea_popup_finale == 0) {
-            if ((Gioco_ruota_cilindro.touch_x[0] > 0)) { //TODO implementare i comandi touch in ascolto
+            if ((Gioco_ruota_cilindro.touch_x[0] > 0) || Input.GetKeyDown(KeyCode.S)) { //TODO implementare i comandi touch in ascolto
                 if (Gioco_ruota_cilindro.tipo_tutorial != 2) {
                     Time.timeScale = 1;
                     Gioco_ruota_cilindro.distruggi_menu_tutorial();
 
                 }
                 else if (Gioco_ruota_cilindro.tipo_tutorial == 2) {
-                    if (Gioco_ruota_cilindro.tutorial_ho_sparato) {
+                    if (Gioco_ruota_cilindro.tutorial_ho_sparato ) {
                         Time.timeScale = 1;
                         Gioco_ruota_cilindro.distruggi_menu_tutorial();
                     }
