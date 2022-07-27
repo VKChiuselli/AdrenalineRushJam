@@ -168,6 +168,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     GameObject[] sparo = new GameObject[20];
     float[] attivo_tempo_sparo = new float[20];
+    float[] sparo_rz = new float[20];
 
     float attivo_tempo_sparo_personaggio = 0;
     float attivo_tempo_sparo_boss2 = 0;
@@ -277,6 +278,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float sposta_button_x = 1;
 
     GameObject[] astronave_struttura = new GameObject[10];
+
+    float[] scala_testo = new float[300];
 
 // Start is called before the first frame update
 void Start() {
@@ -650,7 +653,7 @@ void Start() {
 
                 Vector3 pos_astronave = astronave.transform.position;
 
-                sparo[n].transform.position = new Vector3(pos_astronave.x, pos_astronave.y-.5f, pos_astronave.z + 2);
+                sparo[n].transform.position = new Vector3(pos_astronave.x, pos_astronave.y+.5f, pos_astronave.z + 2);
 
                 suona_effetto_UI(2, .7f);
 
@@ -978,8 +981,16 @@ void Start() {
 
                 if (attivo_tempo_sparo[n] > 0) {
 
+                    sparo_rz[n] = sparo_rz[n] + 10;
+
+                    if (sparo_rz[n] > 360)
+                    {
+                        sparo_rz[n] = sparo_rz[n] - 360;
+                    }
 
                     sparo[n].transform.Translate(new Vector3(0, 0, velocita_sparo * Time.deltaTime));
+
+                    sparo[n].transform.localEulerAngles = new Vector3(0,0,sparo_rz[n]);
 
                     gestione_collisione_sparo(n, sparo[n]);
 
@@ -3228,7 +3239,7 @@ void Start() {
         {
 
 
-            suona_effetto_UI(6, .5f);
+            suona_effetto_UI(7, .5f);
 
             if (script_struttura_dati.monete >= 50)
             {
@@ -3236,6 +3247,9 @@ void Start() {
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
 
                 numero_spari = numero_spari + 1;
+
+                scala_testo[4] = 5;
+                scala_testo[9] = 5;
 
             }
 
@@ -3253,11 +3267,12 @@ void Start() {
 
                 attivazione_barriera_infinity = 1;
 
-                suona_effetto_UI(6, .5f);
+                suona_effetto_UI(7, .5f);
 
                 script_struttura_dati.monete = script_struttura_dati.monete - 100;
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
 
+                scala_testo[4] = 5;
             }
 
 
@@ -3515,7 +3530,7 @@ void Start() {
         }
 
 
-        float ui_partenza_valore = -1.0f;
+        float ui_partenza_valore = 1.0f;
 
         if (partenza_gioco == 0)
         {
@@ -3735,6 +3750,15 @@ void Start() {
         }
 
 
+        for (int n = 0; n < 10; n++)
+        {
+            scala_testo[n] = scala_testo[n] - Time.deltaTime*4;
+            if (scala_testo[n] < 0)
+            {
+                scala_testo[n] = 0;
+            }
+        }
+
 
         if (grafica[1] != null)  //gem
         {
@@ -3761,7 +3785,7 @@ void Start() {
             grafica[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            grafica_testo[2].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 15);
+            grafica_testo[2].GetComponent<TextMeshProUGUI>().fontSize = (risoluzione_x / (15 - scala_testo[2]));
             grafica_testo[2].GetComponent<TextMeshProUGUI>().text = "" + (script_struttura_dati.gemme);
 
         }
@@ -3783,6 +3807,7 @@ void Start() {
         if (grafica[4] != null)  //coin  txt
         {
 
+
             float dx2 = risoluzione_x * .33f;
             float dy2 = dx2;
             pos_x = 0;
@@ -3791,7 +3816,7 @@ void Start() {
             grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (int) (risoluzione_x/15);
+            grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize =  (risoluzione_x/(15-scala_testo[4]));
             grafica_testo[4].GetComponent<TextMeshProUGUI>().text = "" + (script_struttura_dati.monete);
 
         }
@@ -3827,7 +3852,7 @@ void Start() {
             grafica[9].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
             grafica[9].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            grafica_testo[9].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 15);
+            grafica_testo[9].GetComponent<TextMeshProUGUI>().fontSize = (risoluzione_x / (15 - scala_testo[9]));
             grafica_testo[9].GetComponent<TextMeshProUGUI>().text = "" + numero_spari;
 
         }
@@ -5135,7 +5160,7 @@ void Start() {
                 grafica[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_x * .1f);
                 grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, pos_y);
 
-                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "Gets your reward".ToUpper();
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "Get your reward".ToUpper();
                 grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
 
 
