@@ -71,8 +71,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     public float distanza_disolve = -15;
 
     public bool online_dati = true;
-    public bool tutorial_in_corso;
-
+ 
     public int monete_partita_corrente = 0;
     public int gemme_partita_corrente = 0;
 
@@ -120,11 +119,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     // sezione tutorial 
     GameObject canvas_tutorial;
+    public bool tutorial_in_corso;
+    public bool tutorial_raccogli_ammo_finito;
+    public int tipo_tutorial;
 
     float period = 2f;
     float movementFactor = 2f;
 
-    int tipo_tutorial;
 
     // fine sezione tutorial
 
@@ -291,7 +292,6 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     float[] scala_testo = new float[300];
 
-    // Start is called before the first frame update
     void Start() {
 
         controllo_risoluzione();
@@ -4629,6 +4629,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     public void distruggi_menu_tutorial() {
 
         canvas_tutorial.SetActive(false);
+        if (tipo_tutorial == 1) {
+            tutorial_raccogli_ammo_finito = true;
+        } 
 
         for (int n = 100; n < grafica.Length; n++) {
             if (grafica[n] != null) {

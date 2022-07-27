@@ -11,6 +11,7 @@ public class tutorial_primo_livello : MonoBehaviour {
     public bool avvisato_spara_ammo;
     public bool avvisato_barriera;
     public bool ammo_raccolta;
+
     float distanza_raycast_tutorial = 9f;
 
     struttura_dati script_struttura_dati;
@@ -175,11 +176,9 @@ public class tutorial_primo_livello : MonoBehaviour {
                     }
 
 
-                    if (script_struttura_dati.livello_in_uso == 2 && Gioco_ruota_cilindro.numero_spari > 0) {
-                        if (!avvisato_spara_ammo) {
-                            avvisato_spara_ammo = true;
-                            StartCoroutine(ShootingTime());
-                        }
+                    if (script_struttura_dati.livello_in_uso == 2 && Gioco_ruota_cilindro.tutorial_raccogli_ammo_finito && !avvisato_spara_ammo) {
+                        avvisato_spara_ammo = true;
+                        StartCoroutine(ShootingTime());
                     }
 
 
