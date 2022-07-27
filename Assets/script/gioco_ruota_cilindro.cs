@@ -117,7 +117,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     GameObject canvas;
     GameObject canvas_popup;
+
+    // sezione tutorial 
     GameObject canvas_tutorial;
+
+    float period = 2f;
+    float movementFactor = 2f;
+
+    int tipo_tutorial;
+
+    // fine sezione tutorial
 
     GameObject ogg_struttura_dati;
 
@@ -261,7 +270,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     float alpha_buy_ammo = 1.0f;
- 
+
     float alpha_buy_barrier = 1.0f;
 
     // variabili ruota
@@ -282,8 +291,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     float[] scala_testo = new float[300];
 
-// Start is called before the first frame update
-void Start() {
+    // Start is called before the first frame update
+    void Start() {
 
         controllo_risoluzione();
 
@@ -375,7 +384,7 @@ void Start() {
 
         int skin_colore = 0;
 
-       agilita = 1;
+        agilita = 1;
 
         tempo_barriera = 1;
         energia = 100;
@@ -396,32 +405,26 @@ void Start() {
 
             energia = 100.0f + script_struttura_dati.livello_upgrade[3] * 10;
 
-          //  numero_spari = 3;
+            //  numero_spari = 3;
 
             scafo = 1.0f + script_struttura_dati.livello_upgrade[5] * .1f;
 
             // calamita = 1.0f + script_struttura_dati.livello_upgrade[6] * .05f;
 
-           skin_colore = script_struttura_dati.astronave_skin;
+            skin_colore = script_struttura_dati.astronave_skin;
         }
 
 
         // skin_colore = script_struttura_dati.astronave_skin;
 
         cambio_skin_colore(skin_colore);
-       
-        
-
-
 
         energia_base = energia;
         numero_spari_base = numero_spari;
 
     }
 
-
-    void cambio_skin_colore(int skin_colore)
-    {
+    void cambio_skin_colore(int skin_colore) {
 
         Material material_skin = Resources.Load("grafica_personaggio/Materials/StarSparrow " + skin_colore) as Material;
 
@@ -437,10 +440,8 @@ void Start() {
         path_astronave[6] = "personaggio/StarSparrow_finale/StarSparrow_Wing_3";
 
 
-        for (int n = 0; n <= 6; n++)
-        {
-            if (astronave_struttura[n] == null)
-            {
+        for (int n = 0; n <= 6; n++) {
+            if (astronave_struttura[n] == null) {
                 astronave_struttura[n] = GameObject.Find(path_astronave[n]);
             }
 
@@ -463,7 +464,7 @@ void Start() {
 
                 Debug.Log("energia " + energia);
 
-                attiva_barriera = tempo_barriera*.5f;
+                attiva_barriera = tempo_barriera * .5f;
             }
         }
 
@@ -481,25 +482,22 @@ void Start() {
             update_game();
 
         }
-        else { 
+        else {
             aggiorna_menu_offline();
         }
 
     }
 
 
-    void controllo_barriera()
-    {
+    void controllo_barriera() {
 
         attiva_barriera = attiva_barriera - Time.deltaTime;
 
-        if (attivazione_barriera_infinity == 1)
-        {
+        if (attivazione_barriera_infinity == 1) {
             attiva_barriera = 1.0f;
         }
 
-        if (attiva_barriera < 0)
-        {
+        if (attiva_barriera < 0) {
             attiva_barriera = -.001f;
         }
 
@@ -517,7 +515,7 @@ void Start() {
 
         aggiorna_audio();
 
-            controllo_risoluzione();
+        controllo_risoluzione();
 
         gestione_camera();
 
@@ -525,14 +523,13 @@ void Start() {
         controllo_barriera();
 
 
-        if (partenza_gioco == 1)
-        {
+        if (partenza_gioco == 1) {
 
             controllo();
 
             controllo_monete();
 
-           
+
 
             gestione_boss();
 
@@ -550,15 +547,15 @@ void Start() {
 
         }
 
-            aggiorna_menu();
+        aggiorna_menu();
 
-            aggiorna_menu_popup();
+        aggiorna_menu_popup();
 
-            aggiorna_menu_tutorial();
+        aggiorna_menu_tutorial();
 
-          
 
-        
+
+
 
 
 #if UNITY_EDITOR
@@ -576,8 +573,7 @@ void Start() {
 
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha3))
-        {
+        if (Input.GetKeyUp(KeyCode.Alpha3)) {
 
             crea_popup(6);
 
@@ -654,11 +650,11 @@ void Start() {
 
                 Vector3 pos_astronave = astronave.transform.position;
 
-                sparo[n].transform.position = new Vector3(pos_astronave.x, pos_astronave.y+.5f, pos_astronave.z + 2);
+                sparo[n].transform.position = new Vector3(pos_astronave.x, pos_astronave.y + .5f, pos_astronave.z + 2);
 
                 suona_effetto_UI(2, .7f);
 
-                    sparo[n].name = "sparo_personaggio " + n;
+                sparo[n].name = "sparo_personaggio " + n;
 
                 attivo_tempo_sparo_personaggio = attivo_tempo_sparo_personaggio_base;
 
@@ -753,8 +749,8 @@ void Start() {
         }
 
 
-     
-       
+
+
 
         if (energia < 0 || crea_popup_finale == 1) {
             blocco_velocita = blocco_velocita * .9f;
@@ -780,7 +776,7 @@ void Start() {
 
 
 
-        
+
 
 
 
@@ -985,14 +981,13 @@ void Start() {
 
                     sparo_rz[n] = sparo_rz[n] + 10;
 
-                    if (sparo_rz[n] > 360)
-                    {
+                    if (sparo_rz[n] > 360) {
                         sparo_rz[n] = sparo_rz[n] - 360;
                     }
 
                     sparo[n].transform.Translate(new Vector3(0, 0, velocita_sparo * Time.deltaTime));
 
-                    sparo[n].transform.localEulerAngles = new Vector3(0,0,sparo_rz[n]);
+                    sparo[n].transform.localEulerAngles = new Vector3(0, 0, sparo_rz[n]);
 
                     gestione_collisione_sparo(n, sparo[n]);
 
@@ -2247,8 +2242,7 @@ void Start() {
 
 
 
-    void crea_finale()
-    {
+    void crea_finale() {
 
         GameObject ogg2 = Instantiate(Resources.Load("grafica_3d/blocchi_cilindro/Prefabs/cilindro_esatto_finale", typeof(GameObject))) as GameObject;
 
@@ -2265,22 +2259,20 @@ void Start() {
         ogg2.transform.localPosition = new Vector3(0, 0, pos_z);
 
 
-        crea_blocco_finale(80,1);
+        crea_blocco_finale(80, 1);
 
-     //   crea_blocco_finale(100,0);
+        //   crea_blocco_finale(100,0);
 
     }
 
 
 
-    void crea_blocco_finale(float sposta_z,int aumento=0)
-    {
+    void crea_blocco_finale(float sposta_z, int aumento = 0) {
 
 
 
 
-        for (int n = 0; n <18; n++)
-        {
+        for (int n = 0; n < 18; n++) {
             int rnd = (int)(UnityEngine.Random.Range(.0f, 3.99f));
 
             GameObject ogg = Instantiate(Resources.Load("grafica_3d/blocchi_cilindro/Prefabs/blocco_city " + rnd, typeof(GameObject))) as GameObject;
@@ -2299,8 +2291,8 @@ void Start() {
 
 
 
-            Vector3 snap_n = snap_rif[n*2+ aumento].transform.position;
-            Vector3 snap_n1 = snap_rif[n*2+2+ aumento].transform.position;
+            Vector3 snap_n = snap_rif[n * 2 + aumento].transform.position;
+            Vector3 snap_n1 = snap_rif[n * 2 + 2 + aumento].transform.position;
 
 
             Vector3 p0 = snap_n;
@@ -2308,7 +2300,7 @@ void Start() {
 
 
 
-           
+
 
             Vector3 pm = (snap_n + snap_n1) * .5f;
 
@@ -2320,18 +2312,18 @@ void Start() {
             float yy = snap_n.y - snap_n1.y;
 
 
-            float dis = Mathf.Sqrt(xx*xx+yy*yy);
+            float dis = Mathf.Sqrt(xx * xx + yy * yy);
 
             float rad = Mathf.Atan2(xx, yy);
 
 
 
 
-            ogg.transform.localEulerAngles = new Vector3(0, 0,-20+ -20*n);
+            ogg.transform.localEulerAngles = new Vector3(0, 0, -20 + -20 * n);
 
 
             float dx = dis;
-            float dy =UnityEngine.Random.Range( dis, dis*8);
+            float dy = UnityEngine.Random.Range(dis, dis * 8);
 
 
             ogg.transform.localScale = new Vector3(dx, dx, dx);
@@ -2749,24 +2741,21 @@ void Start() {
 
                 if (Physics.Raycast(pos, pos_ray_direction[n], out hit_collider, 15)) {
 
-                float dis = hit_collider.distance;
+                    float dis = hit_collider.distance;
 
 
-                    if (dis < 3.6f)
-                    {
+                    if (dis < 3.6f) {
 
 
-                        if (hit_collider.collider.name.IndexOf("blocco") > -1)
-                        {
+                        if (hit_collider.collider.name.IndexOf("blocco") > -1) {
 
                             float dis_z = hit_collider.point.z;
 
 
-                           // Debug.Log("dis_z "+ dis_z);
+                            // Debug.Log("dis_z "+ dis_z);
 
                             float volume = (60 - hit_collider.point.z) / 60;
-                            if (volume < 0)
-                            {
+                            if (volume < 0) {
                                 volume = 0;
                             }
 
@@ -2781,8 +2770,7 @@ void Start() {
                             int indice = str_block.IndexOf("blocco_mesh");
 
 
-                            if (indice == -1)
-                            {
+                            if (indice == -1) {
                                 str_block = str_block.Replace("blocco ", "");
 
                                 num_block = int.Parse(str_block);
@@ -2795,17 +2783,15 @@ void Start() {
                                 carica_particles("particles/CFXR Hit A", hit_collider.point);
 
 
-                                
+
 
                                 suona_effetto_UI(4, volume);
 
 
-                                if (tipo == 0)
-                                {
+                                if (tipo == 0) {
                                     attivo_tempo_sparo[num] = 0;
                                 }
-                                else
-                                {
+                                else {
                                     attivo_tempo_sparo_boss[num] = 0;
                                 }
                                 DestroyImmediate(ogg);
@@ -2815,8 +2801,7 @@ void Start() {
 
                             }
 
-                            if (indice > -1)
-                            {
+                            if (indice > -1) {
 
                                 str_block = str_block.Replace("blocco_mesh ", "");
 
@@ -2828,14 +2813,12 @@ void Start() {
 
                                 carica_particles("particles/CFXR Explosion 3", hit_collider.collider.transform.position);
 
-                                suona_effetto_UI(4, volume*2);
+                                suona_effetto_UI(4, volume * 2);
 
-                                if (tipo == 0)
-                                {
+                                if (tipo == 0) {
                                     attivo_tempo_sparo[num] = 0;
                                 }
-                                else
-                                {
+                                else {
                                     attivo_tempo_sparo_boss[num] = 0;
                                 }
 
@@ -3098,9 +3081,9 @@ void Start() {
 
         pulsante[num].GetComponent<Button>().onClick.AddListener(() => pressione_pulsante(num));
 
-    //    ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
-    //    cb.selectedColor = new Color(1,1,1,1);
-    //    pulsante[num].GetComponent<Button>().colors = cb;
+        //    ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
+        //    cb.selectedColor = new Color(1,1,1,1);
+        //    pulsante[num].GetComponent<Button>().colors = cb;
 
 
         if (path_sprite != "") {
@@ -3127,8 +3110,7 @@ void Start() {
     }
 
 
-    void crea_button_text2(int num, string txt, Color colore_testo, GameObject parent, string path = "Canvas", string path_sprite = "")
-    {
+    void crea_button_text2(int num, string txt, Color colore_testo, GameObject parent, string path = "Canvas", string path_sprite = "") {
 
         pulsante[num] = Instantiate(Resources.Load("UI/Button_text2", typeof(GameObject))) as GameObject;
 
@@ -3138,13 +3120,12 @@ void Start() {
 
         pulsante[num].GetComponent<Button>().onClick.AddListener(() => pressione_pulsante(num));
 
-    //    ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
-    //    cb.selectedColor = newColor;
-    //    pulsante[num].GetComponent<Button>().colors = cb;
+        //    ColorBlock cb = pulsante[num].GetComponent<Button>().colors;
+        //    cb.selectedColor = newColor;
+        //    pulsante[num].GetComponent<Button>().colors = cb;
 
 
-        if (path_sprite != "")
-        {
+        if (path_sprite != "") {
             pulsante[num].GetComponent<Image>().sprite = Resources.Load<Sprite>(path_sprite);
         }
 
@@ -3207,8 +3188,7 @@ void Start() {
     }
 
 
-    void pressione_pulsante(int num)
-    {
+    void pressione_pulsante(int num) {
 
 #if UNITY_EDITOR
 
@@ -3220,16 +3200,14 @@ void Start() {
         suona_effetto_UI(1, 1);
 
 
-        if (num == 0)
-        {
+        if (num == 0) {
 
             crea_popup(4);
 
 
         }
 
-        if (num == 1)
-        {
+        if (num == 1) {
 
             crea_popup(6);
 
@@ -3237,14 +3215,12 @@ void Start() {
         }
 
 
-        if (num == 3)
-        {
+        if (num == 3) {
 
 
             suona_effetto_UI(7, .5f);
 
-            if (script_struttura_dati.monete >= 50)
-            {
+            if (script_struttura_dati.monete >= 50) {
                 script_struttura_dati.monete = script_struttura_dati.monete - 50;
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
 
@@ -3259,13 +3235,11 @@ void Start() {
         }
 
 
-        if (num == 4 && attivazione_barriera_infinity == 0)
-        {
+        if (num == 4 && attivazione_barriera_infinity == 0) {
 
 
 
-            if (script_struttura_dati.monete >= 100)
-            {
+            if (script_struttura_dati.monete >= 100) {
 
                 attivazione_barriera_infinity = 1;
 
@@ -3281,24 +3255,21 @@ void Start() {
         }
 
 
-        if (num == 5 && partenza_gioco == 0)
-        {
+        if (num == 5 && partenza_gioco == 0) {
             partenza_gioco = 1;
 
             suona_effetto_UI(1, .5f);
         }
 
 
-        if (num == 202)
-        {
+        if (num == 202) {
 
             SceneManager.LoadScene("menu");
 
 
         }
 
-        if (num == 203)
-        {
+        if (num == 203) {
 
             distruggi_menu_popup();
 
@@ -3306,8 +3277,7 @@ void Start() {
         }
 
 
-        if (num == 205)
-        {
+        if (num == 205) {
             attiva_rotazione_ruota = 1;
 
             rotazione_ruota = 3600;
@@ -3331,8 +3301,7 @@ void Start() {
         }
 
 
-        if (num == 206 || num == 246)
-        {
+        if (num == 206 || num == 246) {
 
             distruggi_menu_popup();
 
@@ -3346,8 +3315,7 @@ void Start() {
 
         if (num == 219) // next level da salvare e poi 
         {
-            if (script_struttura_dati != null)
-            {
+            if (script_struttura_dati != null) {
 
 
                 // da passare i parametri stelle
@@ -3355,8 +3323,7 @@ void Start() {
 
                 script_struttura_dati.livello_in_uso = script_struttura_dati.livello_in_uso + 1;
 
-                if (script_struttura_dati.livello_massimo_raggiunto < script_struttura_dati.livello_in_uso)
-                {
+                if (script_struttura_dati.livello_massimo_raggiunto < script_struttura_dati.livello_in_uso) {
                     script_struttura_dati.livello_massimo_raggiunto = script_struttura_dati.livello_massimo_raggiunto + 1;
                     PlayerPrefs.SetInt("livello_massimo_raggiunto", script_struttura_dati.livello_massimo_raggiunto);
                 }
@@ -3380,18 +3347,15 @@ void Start() {
         }
 
 
-        for (int n = 0; n <= 7; n++)
-        {
+        for (int n = 0; n <= 7; n++) {
 
-            if (num == 230 + n)
-            {
+            if (num == 230 + n) {
                 int skin_old = script_struttura_dati.astronave_skin;
 
                 script_struttura_dati.astronave_skin = n;
                 PlayerPrefs.SetInt("astronave_skin", n);
 
-                if (skin_old != script_struttura_dati.astronave_skin)
-                {
+                if (skin_old != script_struttura_dati.astronave_skin) {
                     cambio_skin_colore(script_struttura_dati.astronave_skin);
                 }
             }
@@ -3424,14 +3388,14 @@ void Start() {
 
         crea_grafica_text(0, new Color(0, 0, 0, .5f), "", canvas, "Canvas", "");
 
-       
 
 
-           crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme_game");
-           crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-           crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete_game");
-           crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+        crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme_game");
+        crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+
+        crea_grafica_text(3, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/monete_game");
+        crea_grafica_text(4, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
 
@@ -3446,7 +3410,7 @@ void Start() {
         crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
         crea_grafica_text(10, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
 
-        
+
 
         crea_grafica_text(12, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/ammo");
         crea_grafica_text(13, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
@@ -3459,24 +3423,22 @@ void Start() {
         crea_button_text2(3, "", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/button_ammo");
         crea_button_text2(4, "", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/button_barrier");
 
-        crea_button_text(5, "PRESS TO START", new Color(0,0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
+        crea_button_text(5, "PRESS TO START", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
 
         pulsante[5].GetComponent<Image>().color = new Color(1, 1, 1, .6f);
 
     }
 
 
-    void aggiorna_menu_offline()
-    {
+    void aggiorna_menu_offline() {
 
 
-      
-        if (grafica[11] != null)  
-        {
+
+        if (grafica[11] != null) {
 
             float dx2 = risoluzione_x;
             float dy2 = risoluzione_y;
-      
+
 
             grafica[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
@@ -3489,19 +3451,17 @@ void Start() {
 
 
 
-        void aggiorna_menu() {
+    void aggiorna_menu() {
 
         fade_intro = fade_intro - Time.deltaTime * 2;
 
-        if (fade_intro < 0)
-        {
+        if (fade_intro < 0) {
             fade_intro = 0;
         }
 
 
         aum_coseno = aum_coseno + Time.deltaTime;
-        if (aum_coseno > Mathf.PI*2)
-        {
+        if (aum_coseno > Mathf.PI * 2) {
             aum_coseno = 0;
         }
 
@@ -3510,23 +3470,19 @@ void Start() {
         float valore_yy = .415f;
         float valore_yy_coin = .75f;
 
-        if (crea_popup_finale > 0 || attivo_popup > 0 || partenza_gioco == 0)
-        {
+        if (crea_popup_finale > 0 || attivo_popup > 0 || partenza_gioco == 0) {
             valore_yy = .75f;
 
         }
 
-        if (partenza_gioco == 0)
-        {
+        if (partenza_gioco == 0) {
             valore_yy_coin = .435f;
 
         }
 
 
-        for (int n = 1; n <= 5; n++)
-        {
-            if (pulsante[n] != null)
-            {
+        for (int n = 1; n <= 5; n++) {
+            if (pulsante[n] != null) {
                 pulsante[n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
         }
@@ -3534,8 +3490,7 @@ void Start() {
 
         float ui_partenza_valore = 1.0f;
 
-        if (partenza_gioco == 0)
-        {
+        if (partenza_gioco == 0) {
             ui_partenza_valore = 0;
 
         }
@@ -3570,7 +3525,7 @@ void Start() {
 
 
 
-        float pos_y2 =  risoluzione_y * (spostamento_ui_verticale);
+        float pos_y2 = risoluzione_y * (spostamento_ui_verticale);
 
 
         if (pulsante[0] != null)  //menu
@@ -3586,31 +3541,31 @@ void Start() {
 
         }
 
-       
 
-            if (pulsante[1] != null)  //skin
-            {
-                float dx2 = dy * 1.55f;
-                float dy2 = dx2 * (199.0f / 165f);
-            pos_x = risoluzione_x * -(.5f+ ui_partenza);
-                pos_y = -.05f * risoluzione_y;
+
+        if (pulsante[1] != null)  //skin
+        {
+            float dx2 = dy * 1.55f;
+            float dy2 = dx2 * (199.0f / 165f);
+            pos_x = risoluzione_x * -(.5f + ui_partenza);
+            pos_y = -.05f * risoluzione_y;
             pulsante[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-                pulsante[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            pulsante[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
 
-            pulsante_testo[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(dx2*.275f, -dy2 * .45f);
+            pulsante_testo[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(dx2 * .275f, -dy2 * .45f);
             pulsante_testo[1].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
             pulsante_testo[1].transform.localEulerAngles = new Vector3(0, 0, 30);
         }
 
         if (pulsante[2] != null)  //upgrade
             {
-                float dx2 = dy * 1.55f;
-                float dy2 = dx2 * (199.0f / 165f);
-                pos_x = risoluzione_x * (.5f + ui_partenza);
-            pos_y = -.05f*risoluzione_y;
-                pulsante[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-                pulsante[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            float dx2 = dy * 1.55f;
+            float dy2 = dx2 * (199.0f / 165f);
+            pos_x = risoluzione_x * (.5f + ui_partenza);
+            pos_y = -.05f * risoluzione_y;
+            pulsante[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            pulsante[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             pulsante_testo[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-dx2 * .275f, -dy2 * .45f);
             pulsante_testo[2].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 24);
@@ -3620,41 +3575,36 @@ void Start() {
 
         pos_y = risoluzione_y * -.3f;
 
-        if (partenza_gioco == 0)
-        {
+        if (partenza_gioco == 0) {
 
             alpha_buy_ammo = 1.0f;
-           
 
-            if (script_struttura_dati.monete < 50)
-            {
+
+            if (script_struttura_dati.monete < 50) {
                 alpha_buy_ammo = .25f;
 
             }
 
         }
-        else
-        {
+        else {
             alpha_buy_ammo = alpha_buy_ammo * .9f - .01f;
 
-            if (alpha_buy_ammo < 0)
-            {
+            if (alpha_buy_ammo < 0) {
                 alpha_buy_ammo = 0;
-                pos_y = risoluzione_y ;
+                pos_y = risoluzione_y;
             }
         }
 
         float sposta_button_x_valore = 1;
 
-        if (fade_intro == 0)
-        {
+        if (fade_intro == 0) {
             sposta_button_x_valore = .24f;
         }
 
 
         sposta_button_x = Mathf.Lerp(sposta_button_x, sposta_button_x_valore, Time.deltaTime * 2);
 
-        
+
 
 
         if (pulsante[3] != null)  //compra ammo
@@ -3667,45 +3617,40 @@ void Start() {
             pulsante[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            pulsante_testo[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dy2*.6f);
+            pulsante_testo[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dy2 * .6f);
             pulsante_testo[3].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
             pulsante_testo[3].GetComponent<TextMeshProUGUI>().text = "AMMO";
 
             pulsante[3].GetComponent<Image>().color = new Color(1, 1, 1, alpha_buy_ammo);
-            
+
             pulsante_testo[3].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, alpha_buy_ammo);
 
         }
 
         pos_y = risoluzione_y * -.3f;
 
-        if (partenza_gioco == 0)
-        {
+        if (partenza_gioco == 0) {
 
             alpha_buy_barrier = 1.0f;
 
-            if (script_struttura_dati.monete < 100)
-            {
+            if (script_struttura_dati.monete < 100) {
                 alpha_buy_barrier = .25f;
 
             }
-           
 
-            if (attivazione_barriera_infinity == 1)
-            {
+
+            if (attivazione_barriera_infinity == 1) {
                 pos_y = risoluzione_y;
 
             }
 
         }
-        else
-        {
+        else {
             alpha_buy_barrier = alpha_buy_barrier * .9f - .01f;
 
-           
 
-            if (alpha_buy_barrier < 0)
-            {
+
+            if (alpha_buy_barrier < 0) {
                 alpha_buy_barrier = 0;
                 pos_y = risoluzione_y;
             }
@@ -3714,10 +3659,10 @@ void Start() {
 
         if (pulsante[4] != null)  //compra ammo
         {
-            float dx2 = risoluzione_x*.215f;
-            float dy2 = dx2*(199/165.0f);
-            pos_x = risoluzione_x* sposta_button_x;
-            
+            float dx2 = risoluzione_x * .215f;
+            float dy2 = dx2 * (199 / 165.0f);
+            pos_x = risoluzione_x * sposta_button_x;
+
             pulsante[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
@@ -3732,31 +3677,28 @@ void Start() {
         }
 
         pos_y = risoluzione_y * .05f;
-        if (partenza_gioco == 1)
-        {
-            pos_y = risoluzione_y ;
+        if (partenza_gioco == 1) {
+            pos_y = risoluzione_y;
         }
 
 
-        if (pulsante[5] != null && fade_intro==0)  //press to start
+        if (pulsante[5] != null && fade_intro == 0)  //press to start
         {
-            float dx2 = risoluzione_x*(.5f + Mathf.Cos(aum_coseno) * .05f) ;
-            float dy2 = dx2/3.0f;
+            float dx2 = risoluzione_x * (.5f + Mathf.Cos(aum_coseno) * .05f);
+            float dy2 = dx2 / 3.0f;
             pos_x = 0;
-           
+
             pulsante[5].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[5].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            pulsante_testo[5].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / (16 - Mathf.Cos(aum_coseno) );
+            pulsante_testo[5].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / (16 - Mathf.Cos(aum_coseno));
             pulsante_testo[5].GetComponent<TextMeshProUGUI>().text = "TAP TO START";
         }
 
 
-        for (int n = 0; n < 10; n++)
-        {
-            scala_testo[n] = scala_testo[n] - Time.deltaTime*4;
-            if (scala_testo[n] < 0)
-            {
+        for (int n = 0; n < 10; n++) {
+            scala_testo[n] = scala_testo[n] - Time.deltaTime * 4;
+            if (scala_testo[n] < 0) {
                 scala_testo[n] = 0;
             }
         }
@@ -3781,7 +3723,7 @@ void Start() {
 
             float dx2 = risoluzione_x * .33f;
             float dy2 = dx2;
-            pos_x = risoluzione_x*-.3f;
+            pos_x = risoluzione_x * -.3f;
             pos_y = risoluzione_y * spostamento_ui_verticale_coin;
 
             grafica[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
@@ -3797,8 +3739,8 @@ void Start() {
         {
 
             float dx2 = risoluzione_x * .33f;
-            float dy2 = dx2*(512/800.0f);
-            pos_x =  0;
+            float dy2 = dx2 * (512 / 800.0f);
+            pos_x = 0;
             pos_y = risoluzione_y * spostamento_ui_verticale_coin;
 
             grafica[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
@@ -3818,13 +3760,13 @@ void Start() {
             grafica[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize =  (risoluzione_x/(15-scala_testo[4]));
+            grafica_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (risoluzione_x / (15 - scala_testo[4]));
             grafica_testo[4].GetComponent<TextMeshProUGUI>().text = "" + (script_struttura_dati.monete);
 
         }
-        
 
-       
+
+
 
 
 
@@ -3865,7 +3807,7 @@ void Start() {
         {
 
             float dx2 = dy * 1.0f;
-            float dy2 = dx2 ;
+            float dy2 = dx2;
             pos_x = risoluzione_x * .5f - dx2 * .85f;
             pos_y = pos_y2;
 
@@ -3879,7 +3821,7 @@ void Start() {
 
             float dx2 = dy * 1.0f;
             float dy2 = dx2;
-            pos_x = risoluzione_x * .5f - dx2 * (.85f-.19f);
+            pos_x = risoluzione_x * .5f - dx2 * (.85f - .19f);
             pos_y = pos_y2;
 
             grafica[13].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -3943,7 +3885,7 @@ void Start() {
             float dx2 = risoluzione_x;
             float dy2 = risoluzione_y;
             pos_x = 0;
-            pos_y = risoluzione_y*.2f;
+            pos_y = risoluzione_y * .2f;
 
 
 
@@ -3978,7 +3920,7 @@ void Start() {
 
         }
 
-        
+
 
         if (grafica[11] != null)  // energia
         {
@@ -3987,7 +3929,7 @@ void Start() {
             float dx2 = risoluzione_x;
             float dy2 = risoluzione_y;
 
-            grafica[11].GetComponent<Image>().color = new Color(1,1,1,fade_intro);
+            grafica[11].GetComponent<Image>().color = new Color(1, 1, 1, fade_intro);
 
             grafica[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
@@ -4233,9 +4175,9 @@ void Start() {
             crea_grafica_text(202, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
             crea_grafica_text(203, new Color(1, 1, 1, 0), "COMPLETED", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
-            grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(0,.8f, 0, 1);
+            grafica_testo[203].GetComponent<TextMeshProUGUI>().color = new Color(0, .8f, 0, 1);
 
-            
+
 
             for (int n = 0; n <= 2; n++) {
                 crea_grafica_text(204 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 0"); // stelle
@@ -4270,13 +4212,12 @@ void Start() {
             crea_button_text2(220, "RESTART", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/button_restart"); //pannello shop
 
 
-        //    pulsante_testo[218].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
-        //    pulsante_testo[219].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
-        //    pulsante_testo[220].GetComponent<TextMeshProUGUI>().color = Color.black;
+            //    pulsante_testo[218].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+            //    pulsante_testo[219].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+            //    pulsante_testo[220].GetComponent<TextMeshProUGUI>().color = Color.black;
 
 
-            if (monete_partita_corrente > 0)
-            {
+            if (monete_partita_corrente > 0) {
                 suona_effetto_UI(7, 1);
             }
 
@@ -4299,7 +4240,7 @@ void Start() {
             grafica_tempo[18] = 4.25f;
             grafica_tempo[19] = 4.5f;
             grafica_tempo[20] = 4.75f;
-     
+
 
             grafica_tempo[1] = .5f;
             grafica_tempo[2] = 1;
@@ -4341,12 +4282,11 @@ void Start() {
 
 
 
-            for (int n = 1; n < 20; n++)
-            {
-                grafica_tempo[n] = .5f+n*.35f;
+            for (int n = 1; n < 20; n++) {
+                grafica_tempo[n] = .5f + n * .35f;
 
             }
-          
+
 
 
             grafica_dime[1] = 4;
@@ -4378,8 +4318,7 @@ void Start() {
             crea_button_text(209, "Next Level", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
             crea_button_text(210, "Repeat Level", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
-            if (monete_partita_corrente > 0)
-            {
+            if (monete_partita_corrente > 0) {
                 suona_effetto_UI(7, 1);
             }
 
@@ -4405,8 +4344,7 @@ void Start() {
         }
 
 
-        if (num == 5)
-        {
+        if (num == 5) {
 
             crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
@@ -4423,16 +4361,14 @@ void Start() {
 
         }
 
-        if (num == 6)
-        {
+        if (num == 6) {
 
             crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
             crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
 
-            for (int n = 0; n <= 7; n++)
-            {
-                crea_button_text(230+n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/skin "+n);
+            for (int n = 0; n <= 7; n++) {
+                crea_button_text(230 + n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/skin " + n);
             }
 
 
@@ -4444,8 +4380,9 @@ void Start() {
 
 
 
-    public void crea_tutorial(string testo_informativo) {
+    public void crea_tutorial_frecce_laterali(string testo_informativo, int tipologia) { //tutorial  con mano frecce che indicano fuori
 
+        tipo_tutorial = tipologia;
 
         canvas_tutorial.SetActive(true);
 
@@ -4458,6 +4395,18 @@ void Start() {
 
     }
 
+    public void crea_tutorial_con_indicatore(string testo_informativo, int tipologia) { //tutorial  con mano che indica un punto
+
+        tipo_tutorial = tipologia;
+        canvas_tutorial.SetActive(true);
+
+        crea_grafica_text(100, new Color(1, 1, 1, 0.74f), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/sfondo_menu");//overlay scuro TODO cambiare grafica
+        crea_grafica_text(101, new Color(1, 1, 1, 0), testo_informativo, canvas_tutorial, "Canvas_tutorial", ""); //text testo_informativo
+        crea_grafica_text(102, new Color(1, 1, 1, 0), "Tap to continue", canvas_tutorial, "Canvas_tutorial", ""); //text Tap to continue
+        crea_grafica_text(103, new Color(1, 1, 1, 1), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/hand"); //
+        crea_grafica_text(104, new Color(1, 1, 1, 1), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/cerchio"); //
+    }
+
 
     void aggiorna_menu_tutorial() {
 
@@ -4467,67 +4416,176 @@ void Start() {
         float pos_x = 0;
         float pos_y = 0;
 
-        if (grafica[100] != null)  //overlay scuro TODO cambiare grafica
-        {
+
+        if (tipo_tutorial == 0) { //frecce laterali
+            if (grafica[100] != null)  //overlay scuro TODO cambiare grafica
+      {
 
 
-            pos_x = 0;
-            pos_y = 0;
+                pos_x = 0;
+                pos_y = 0;
 
-            grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
-            grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
+                grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            }
+            if (grafica[101] != null)  //text tip info
+            {
+
+
+                pos_x = 0;
+                pos_y = dy * 0.3f;
+
+                grafica[101].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
+                grafica[101].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[101].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.5f;
+            }
+            if (grafica[102] != null)  //text Tap to continue
+            {
+
+
+                pos_x = 0;
+                pos_y = dy * -0.41f;
+
+                grafica[102].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
+                grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[102].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.8f;
+            }
+            if (grafica[103] != null)  //text aarrow left
+            {
+
+                float dx2 = dx * 0.3f;
+                float dy2 = dy * 0.3f;
+                pos_x = dx2 * -1f;
+                pos_y = 0;
+
+                grafica[103].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
+                grafica[103].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                fade_continuo(grafica[103].GetComponent<Image>());
+            }
+            if (grafica[104] != null)  //text aarrow right
+            {
+
+                float dx2 = dx * 0.3f;
+                float dy2 = dy * 0.3f;
+                pos_x = dx2 * 1f;
+                pos_y = 0;
+
+                grafica[104].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
+                grafica[104].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                fade_continuo(grafica[104].GetComponent<Image>());
+            }
         }
-        if (grafica[101] != null)  //text tip info
-        {
+        else if (tipo_tutorial == 1) { //indicatore posizione ammo
+            if (grafica[100] != null)  //overlay scuro TODO cambiare grafica
+ {
 
 
-            pos_x = 0;
-            pos_y = dy * 0.3f;
+                pos_x = 0;
+                pos_y = 0;
 
-            grafica[101].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
-            grafica[101].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-            grafica_testo[101].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.5f;
+                grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy* 0.75f);
+                grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            }
+            if (grafica[101] != null)  //text tip info
+            {
+
+
+                pos_x = 0;
+                pos_y = dy * 0.3f;
+
+                grafica[101].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
+                grafica[101].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[101].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.5f;
+            }
+            if (grafica[102] != null)  //text Tap to continue
+            {
+
+
+                pos_x = 0;
+                pos_y = dy * -0.41f;
+
+                grafica[102].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
+                grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y* 0.75f);
+                grafica_testo[102].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.8f;
+            }
+            if (grafica[103] != null)  //mano indicatore
+      {
+
+                float dx2 = dx * 0.1f;
+                float dy2 = dy * 0.1f;
+                pos_x = risoluzione_x * 0.45f;
+                pos_y = risoluzione_y * 0.38f;
+
+                grafica[103].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
+                grafica[103].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                animazione_oscillazione_posizione_oggetto(grafica[103]);
+            }
+
+        }     else if (tipo_tutorial == 2) { //indicatore sparare
+            if (grafica[100] != null)  //overlay scuro TODO cambiare grafica
+ {
+
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[100].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
+                grafica[100].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            }
+            if (grafica[101] != null)  //text tip info
+            {
+
+
+                pos_x = 0;
+                pos_y = dy * 0.3f;
+
+                grafica[101].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
+                grafica[101].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[101].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.5f;
+            }
+            if (grafica[102] != null)  //text Tap to continue
+            {
+
+
+                pos_x = 0;
+                pos_y = dy * -0.41f;
+
+                grafica[102].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
+                grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y* 0.75f);
+                grafica_testo[102].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.8f;
+            }
+            if (grafica[103] != null)  //mano indicatore
+      {
+
+                float dx2 = dx * 0.3f;
+                float dy2 = dy * 0.3f;
+                pos_x = risoluzione_x * 0.15f;
+                pos_y = risoluzione_y * -0.12f;
+
+                grafica[103].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
+                grafica[103].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                animazione_oscillazione_posizione_oggetto(grafica[103]);
+            }
+            if (grafica[104] != null)  //cerchio animato
+      {
+
+                float dx2 = dx * 0.6f;
+                float dy2 = dy * 0.6f;
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[104].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
+                grafica[104].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+              fade_continuo(grafica[104].GetComponent<Image>());
+            }
+
         }
-        if (grafica[102] != null)  //text Tap to continue
-        {
 
 
-            pos_x = 0;
-            pos_y = dy * -0.41f;
-
-            grafica[102].GetComponent<RectTransform>().sizeDelta = new Vector2(dx * 0.85f, dy);
-            grafica[102].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-            grafica_testo[102].GetComponent<TextMeshProUGUI>().fontSize = font_size / 0.8f;
-        }
-        if (grafica[103] != null)  //text aarrow left
-        {
-
-            float dx2 = dx * 0.3f;
-            float dy2 = dy * 0.3f;
-            pos_x = dx2 * -1f;
-            pos_y = 0;
-
-            grafica[103].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
-            grafica[103].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
-            fade_continuo(grafica[103].GetComponent<Image>());
-        }
-        if (grafica[104] != null)  //text aarrow right
-        {
-
-            float dx2 = dx * 0.3f;
-            float dy2 = dy * 0.3f;
-            pos_x = dx2 * 1f;
-            pos_y = 0;
-
-            grafica[104].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
-            grafica[104].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-            fade_continuo(grafica[104].GetComponent<Image>());
-        }
     }
 
-    [SerializeField] float period = 2f;
-    [SerializeField] float movementFactor = 2f;
+
 
 
     private void fade_continuo(Image image) {
@@ -4541,6 +4599,30 @@ void Start() {
         movementFactor = (rawSinWave + 1f) / 2f;   // recalculated to go from 0 to 1 so its cleaner
 
         image.color = new Color(1, 1, 1, movementFactor);
+    }
+    private void animazione_oscillazione_rotante_oggetto(GameObject gameObject) {
+
+        if (period <= Mathf.Epsilon) { return; }
+        float cycles = Time.realtimeSinceStartup / period;  // continually growing over time
+
+        const float tau = Mathf.PI * 2;  // constant value of 6.283
+        float rawSinWave = Mathf.Sin(cycles * tau);  // going from -1 to 1
+
+        movementFactor = (rawSinWave + 1f) / 2f; // recalculated to go from 0 to 1 so its cleaner
+
+        gameObject.transform.Rotate(0,0,movementFactor);
+    }
+    private void animazione_oscillazione_posizione_oggetto(GameObject gameObject) {
+
+        if (period <= Mathf.Epsilon) { return; }
+        float cycles = Time.realtimeSinceStartup / period;  // continually growing over time
+
+        const float tau = Mathf.PI * 2;  // constant value of 6.283
+        float rawSinWave = Mathf.Sin(cycles * tau * 4f);  // going from -1 to 1
+
+        movementFactor = (rawSinWave + 1) /2f;   // recalculated to go from 0 to 1 so its cleaner
+
+        gameObject.transform.Translate(0, movementFactor , 0);
     }
 
 
@@ -4594,7 +4676,7 @@ void Start() {
 
 
 
-        if (attivo_popup == 1 ) {
+        if (attivo_popup == 1) {
             if (grafica[200] != null)  //pannello
             {
 
@@ -4634,8 +4716,7 @@ void Start() {
                 grafica_pos[6] = .3f + sposta_grafica_y;
 
                 if (crea_popup_finale >= 1) {
-                    if (energia <= 0)
-                    {
+                    if (energia <= 0) {
                         grafica_pos[1] = .25f;
                         grafica_pos[2] = .1f;
                         grafica_pos[3] = -.2f;
@@ -4643,9 +4724,8 @@ void Start() {
 
 
                     }
-                    else
-                    {
-                       
+                    else {
+
                         grafica_pos[7] = grafica_pos[4];
                         grafica_pos[10] = .145f + sposta_grafica_y;
 
@@ -4683,24 +4763,24 @@ void Start() {
 
                 if (energia > energia_base * script_struttura_dati.livello_in_uso * 0.005f) { // se finisce il livello con energia superiore alla met� del livello attuale, quindi al livello 100, dovr� superare il gioco con il 50% di energia
 
-                    
+
                     grafica_pos[8] = grafica_pos[5];
-                    grafica_pos[11] = .215f+ sposta_grafica_y;
+                    grafica_pos[11] = .215f + sposta_grafica_y;
                     ok_energia_completa = 1;
 
-                  //  Debug.Log("ok_energia_completa "+ energia);
+                    //  Debug.Log("ok_energia_completa "+ energia);
 
                 }
 
 
-                if (numero_spari > 0 && energia>0) { // se finisce il livello con almeno 1 sparo
+                if (numero_spari > 0 && energia > 0) { // se finisce il livello con almeno 1 sparo
 
-                    
+
                     grafica_pos[9] = grafica_pos[6];
-                    grafica_pos[12] = .145f+ sposta_grafica_y;
+                    grafica_pos[12] = .145f + sposta_grafica_y;
                     ok_spari_completi = 1;
 
-                 //   Debug.Log("ok_spari_completi "+numero_spari);
+                    //   Debug.Log("ok_spari_completi "+numero_spari);
                 }
 
 
@@ -4713,7 +4793,7 @@ void Start() {
 
 
 
-               
+
 
 
                 for (int n = 1; n <= 20; n++) {
@@ -4754,32 +4834,27 @@ void Start() {
                                     pos_x = dx2 * .3f;
                                 }
 
-                                if (n == 13)
-                                {
+                                if (n == 13) {
                                     pos_x = dx2 * -.35f;
                                 }
 
-                                if (n == 14)
-                                {
+                                if (n == 14) {
                                     pos_x = dx2 * -.15f;
                                 }
 
-                                if (n == 15)
-                                {
+                                if (n == 15) {
                                     pos_x = dx2 * .15f;
                                 }
 
-                                if (n == 16)
-                                {
+                                if (n == 16) {
                                     pos_x = dx2 * .35f;
                                 }
 
 
                                 float dx_stella_base = dx_stelle;
 
-                                if (n == 8)
-                                {
-                                    dx_stella_base = dx_stelle*1.25f;
+                                if (n == 8) {
+                                    dx_stella_base = dx_stelle * 1.25f;
                                 }
 
                                 grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stella_base, dx_stella_base);
@@ -4803,12 +4878,10 @@ void Start() {
                             if (n == 3) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
                             }
-                            if (n == 14)
-                            {
+                            if (n == 14) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
                             }
-                            if (n == 16)
-                            {
+                            if (n == 16) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
                             }
 
@@ -4817,33 +4890,29 @@ void Start() {
                     }
 
 
-                    if (pulsante[200 + n] != null)
-                    {
+                    if (pulsante[200 + n] != null) {
 
                         grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
 
 
 
-                        if (grafica_tempo[n] < 0)
-                        {
-                            
+                        if (grafica_tempo[n] < 0) {
+
                             grafica_dime[n] = Mathf.MoveTowards(grafica_dime[n], 1, Time.deltaTime * 5);
-                        
+
 
                             pos_y = dime_panel_y * grafica_pos[n];
 
                             float dxp = dime_panel_x * .2f;
-                            float dyp = dxp*(199.0f/165.0f);
+                            float dyp = dxp * (199.0f / 165.0f);
 
-                            if (n == 19)
-                            {
+                            if (n == 19) {
                                 pos_x = dime_panel_x * .225f;
 
                             }
 
 
-                            if (n == 20)
-                            {
+                            if (n == 20) {
                                 pos_x = dime_panel_x * -.225f;
 
                             }
@@ -4852,24 +4921,22 @@ void Start() {
                             pulsante[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dxp, dyp);
                             pulsante[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-                            
+
 
 
                             pulsante[200 + n].transform.localScale = new Vector3(grafica_dime[n], grafica_dime[n], 1);
 
 
 
-                            if (n == 19)
-                            {
+                            if (n == 19) {
                                 pulsante_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 20;
-                                pulsante_testo[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dyp*.575f);
+                                pulsante_testo[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dyp * .575f);
                             }
-                            if (n == 20)
-                            {
-                                pulsante_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 20 ;
-                                pulsante_testo[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0,  -dyp * .575f);
+                            if (n == 20) {
+                                pulsante_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 20;
+                                pulsante_testo[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dyp * .575f);
                             }
-                            
+
 
                         }
 
@@ -4880,12 +4947,11 @@ void Start() {
 
             }
 
-           
+
         }
 
 
-        if (attivo_popup == 2)
-        {
+        if (attivo_popup == 2) {
             if (grafica[200] != null)  //pannello
             {
 
@@ -4907,7 +4973,7 @@ void Start() {
                 grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-               
+
 
                 grafica_pos[1] = .35f;
                 grafica_pos[2] = .21f;
@@ -4917,17 +4983,17 @@ void Start() {
 
                 grafica[203].transform.localEulerAngles = new Vector3(0, 0, 0);
 
-               
 
-              
+
+
 
                 float pos_y_monete = -.01f;
 
                 grafica_pos[3] = pos_y_monete;
-                grafica_pos[4] = pos_y_monete-.091f;
+                grafica_pos[4] = pos_y_monete - .091f;
 
                 grafica_pos[5] = pos_y_monete;
-                grafica_pos[6] = pos_y_monete-.091f;
+                grafica_pos[6] = pos_y_monete - .091f;
 
 
                 monete_UI = Mathf.MoveTowards(monete_UI, monete_partita_corrente, Time.deltaTime * 100);
@@ -4943,12 +5009,11 @@ void Start() {
                 ok_energia_completa = 0;
                 ok_spari_completi = 0;
 
-               
 
 
 
-                if (ok_fine_livello == 0)
-                {
+
+                if (ok_fine_livello == 0) {
                     ok_fine_livello = 1;
 
                     salva_le_stelle();
@@ -4956,18 +5021,15 @@ void Start() {
 
 
 
-                for (int n = 1; n <= 20; n++)
-                {
+                for (int n = 1; n <= 20; n++) {
 
 
-                    if (grafica[200 + n] != null)
-                    {
+                    if (grafica[200 + n] != null) {
 
                         grafica_tempo[n] = grafica_tempo[n] - Time.deltaTime;
 
 
-                        if (grafica_tempo[n] < 0)
-                        {
+                        if (grafica_tempo[n] < 0) {
 
                             //  grafica_pos[n] = Mathf.MoveTowards(grafica_pos[n], 1, Time.deltaTime);
 
@@ -4976,37 +5038,31 @@ void Start() {
 
                             pos_y = dime_panel_y * grafica_pos[n];
 
-                            if (n == 1 || n==2 || n == 7)
-                            {
+                            if (n == 1 || n == 2 || n == 7) {
 
-                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x*.85f, dime_panel_y * .25f);
+                                grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .85f, dime_panel_y * .25f);
                                 grafica[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, pos_y);
                             }
-                            else
-                            {
+                            else {
 
                                 float dx_stelle_base = dx_stelle;
 
 
-                                if (n == 3)
-                                {
-                                    dx_stelle_base = dx_stelle*1.5f;
+                                if (n == 3) {
+                                    dx_stelle_base = dx_stelle * 1.5f;
                                     pos_x = dx2 * -.2f;
                                 }
 
-                                if (n == 4)
-                                {
+                                if (n == 4) {
                                     pos_x = dx2 * -.2f;
                                 }
 
-                                if (n == 5)
-                                {
+                                if (n == 5) {
                                     dx_stelle_base = dx_stelle * 1.5f;
                                     pos_x = dx2 * .2f;
                                 }
 
-                                if (n == 6)
-                                {
+                                if (n == 6) {
                                     pos_x = dx2 * .2f;
                                 }
 
@@ -5017,34 +5073,29 @@ void Start() {
                             }
 
 
-                            
+
 
 
                             grafica[200 + n].transform.localScale = new Vector3(grafica_dime[n], grafica_dime[n], 1);
 
 
 
-                            if (n == 1)
-                            {
+                            if (n == 1) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size2;
                             }
-                            if (n == 2)
-                            {
+                            if (n == 2) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size2;
                             }
-                           
 
-                            if (n == 4)
-                            {
+
+                            if (n == 4) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
                             }
-                            if (n == 6)
-                            {
+                            if (n == 6) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
                             }
 
-                            if (n == 7)
-                            {
+                            if (n == 7) {
                                 grafica_testo[200 + n].GetComponent<TextMeshProUGUI>().fontSize = font_size3;
                             }
 
@@ -5155,7 +5206,7 @@ void Start() {
 
 
                 grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .1f, dime_panel_x * .1f);
-                grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x*.45f);
+                grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .45f);
 
                 pos_y = dime_panel_y * .4f;
 
@@ -5182,12 +5233,11 @@ void Start() {
                 }
 
 
-                if (attiva_rotazione_ruota == 1)
-                {
+                if (attiva_rotazione_ruota == 1) {
 
                     float rotazione_old = rotazione_ruota;
 
-                    rotazione_ruota = Mathf.Lerp(rotazione_ruota, rotazione_ruota_arrivo, Time.deltaTime );
+                    rotazione_ruota = Mathf.Lerp(rotazione_ruota, rotazione_ruota_arrivo, Time.deltaTime);
 
 
                     float diff_rotazione = rotazione_old - rotazione_ruota;
@@ -5197,26 +5247,23 @@ void Start() {
 
                     somma_rotazione = somma_rotazione + diff_rotazione;
 
-                    int somma_rotazione_int = (int)(somma_rotazione/60);
+                    int somma_rotazione_int = (int)(somma_rotazione / 60);
 
 
-                    if (Mathf.Abs( somma_rotazione- somma_rotazione_int * 60)< diff_rotazione*.5f)
-                    {
+                    if (Mathf.Abs(somma_rotazione - somma_rotazione_int * 60) < diff_rotazione * .5f) {
 
                         rotazione_ruota_tick = diff_rotazione * 2;
 
-                        if (rotazione_ruota_tick < 20)
-                        {
+                        if (rotazione_ruota_tick < 20) {
                             rotazione_ruota_tick = 20;
                         }
-                       
+
 
                     }
 
 
 
-                   if (rotazione_ruota < rotazione_ruota_arrivo+1.0f)
-                    {
+                    if (rotazione_ruota < rotazione_ruota_arrivo + 1.0f) {
                         attiva_rotazione_ruota = 0;
 
                         // dai i premi
@@ -5224,14 +5271,14 @@ void Start() {
 
                 }
 
-                rotazione_ruota_tick = Mathf.LerpAngle(rotazione_ruota_tick, 0, Time.deltaTime*2);
+                rotazione_ruota_tick = Mathf.LerpAngle(rotazione_ruota_tick, 0, Time.deltaTime * 2);
 
 
                 grafica[201].transform.localEulerAngles = new Vector3(0, 0, rotazione_ruota);
                 grafica[202].transform.localEulerAngles = new Vector3(0, 0, rotazione_ruota_tick);
 
 
-                if (pulsante[206] != null && attiva_rotazione_ruota==0)  //exit
+                if (pulsante[206] != null && attiva_rotazione_ruota == 0)  //exit
                 {
                     float dx3 = risoluzione_x * 0.12f;
                     float dy3 = dx3;
@@ -5254,8 +5301,7 @@ void Start() {
 
         if (attivo_popup == 6) // skin
         {
-            if (grafica[200] != null)  
-            {
+            if (grafica[200] != null) {
 
                 float dx2 = dx * .9f;
                 float dy2 = dy * .9f;
@@ -5273,7 +5319,7 @@ void Start() {
                 grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-         
+
                 pos_y = dime_panel_y * .4f;
 
                 grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_x * .1f);
@@ -5285,39 +5331,33 @@ void Start() {
 
                 pos_y = dime_panel_y * .25f;
 
-                int aum_skin= -1;
+                int aum_skin = -1;
 
-                for (int n = 0; n <= 7; n++)
-                {
+                for (int n = 0; n <= 7; n++) {
 
                     float dime_skin = dx2 * .35f;
 
-                    if (script_struttura_dati.astronave_skin == n)
-                    {
+                    if (script_struttura_dati.astronave_skin == n) {
                         dime_skin = dx2 * .4f;
                     }
 
                     aum_skin = aum_skin + 1;
 
-                    if (aum_skin > 1)
-                    {
+                    if (aum_skin > 1) {
                         aum_skin = 0;
-                        pos_y = pos_y - dx2*.325f;
+                        pos_y = pos_y - dx2 * .325f;
                     }
 
-                    if (aum_skin == 0)
-                    {
+                    if (aum_skin == 0) {
                         pos_x = dime_panel_x * -.2f;
                     }
 
-                    if (aum_skin == 1)
-                    {
+                    if (aum_skin == 1) {
                         pos_x = dime_panel_x * +.2f;
-                       
+
                     }
 
-                    if (pulsante[230+n] != null ) 
-                    {
+                    if (pulsante[230 + n] != null) {
                         pulsante[230 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_skin, dime_skin);
                         pulsante[230 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
@@ -5325,7 +5365,7 @@ void Start() {
 
                 }
 
-             
+
 
                 if (pulsante[246] != null && attiva_rotazione_ruota == 0)  //exit
                 {
@@ -5465,7 +5505,7 @@ void Start() {
 
             Vector3 pos_finale = c_save.crea_cilindro[0].pos_finale;
 
-        //   pos_finale = new Vector3(0, 0, 20);
+            //   pos_finale = new Vector3(0, 0, 20);
 
             //  Debug.Log(pos_finale +" "+ cilindro.transform.position.z);
 
