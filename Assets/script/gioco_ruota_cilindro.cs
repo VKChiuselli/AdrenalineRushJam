@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEditor;
 using System.IO;
+using GameAnalyticsSDK;
 
 public class gioco_ruota_cilindro : MonoBehaviour {
 
@@ -765,6 +766,7 @@ void Start() {
 
                     if (crea_popup_finale == 0) {
                         crea_popup_finale = 10;
+                        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, $"Level {script_struttura_dati.livello_in_uso}, FAILED");
                         crea_popup(2);
                     }
 
@@ -1343,7 +1345,7 @@ void Start() {
         string path2 = path_server + "livello_" + num_livello + ".json";
 
         Debug.Log("" + path2);
-
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, $"Level {script_struttura_dati.livello_in_uso}, STARTED!");
 
         using (UnityWebRequest www = UnityWebRequest.Get(path2)) {
             yield return www.SendWebRequest();
@@ -5352,6 +5354,7 @@ void Start() {
 
     void salva_le_stelle() {
 
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, $"Level {script_struttura_dati.livello_in_uso}, COMPLETE", 1 + ok_energia_completa + ok_spari_completi);
 
         if (script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso].Substring(1, 1) == "1") {
             ok_energia_completa = 1;
