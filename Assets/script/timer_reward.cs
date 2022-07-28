@@ -19,16 +19,15 @@ public class timer_reward : MonoBehaviour {
         ClickButton = gameObject.GetComponent<Button>();
 
 
-        if (PlayerPrefs.HasKey($"LastTimeClick{gameObject.name}2")) {
-            LastTimeClick90 = ulong.Parse(PlayerPrefs.GetString($"LastTimeClick{gameObject.name}2"));
+        if (PlayerPrefs.HasKey($"LastTimeClick{gameObject.name}X")) {
+            LastTimeClick90 = ulong.Parse(PlayerPrefs.GetString($"LastTimeClick{gameObject.name}X"));
             if (!Ready())
                 ClickButton.interactable = false;
         }
         else {
-     
-            LastTimeClick90 = (ulong)DateTime.Now.Ticks;
+                   LastTimeClick90 = 0;
             ClickButton.interactable = true;
-            PlayerPrefs.SetString($"LastTimeClick{gameObject.name}2", LastTimeClick90.ToString());
+            PlayerPrefs.SetString($"LastTimeClick{gameObject.name}X", LastTimeClick90.ToString());
         }
 
        
@@ -46,12 +45,12 @@ public class timer_reward : MonoBehaviour {
 
     public void Click() {
         LastTimeClick90 = (ulong)DateTime.Now.Ticks;
-        PlayerPrefs.SetString($"LastTimeClick{gameObject.name}2", LastTimeClick90.ToString());
+        PlayerPrefs.SetString($"LastTimeClick{gameObject.name}X", LastTimeClick90.ToString());
         ClickButton.interactable = false;
     }
 
     private bool Ready() {
-        if (PlayerPrefs.HasKey($"LastTimeClick{gameObject.name}2")) {
+        if (PlayerPrefs.HasKey($"LastTimeClick{gameObject.name}X")) {
             ulong diff = ((ulong)DateTime.Now.Ticks - LastTimeClick90);
             ulong m = diff / TimeSpan.TicksPerMillisecond;
 
