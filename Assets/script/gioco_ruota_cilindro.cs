@@ -304,13 +304,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     Vector2[] particles_pos = new Vector2[num_particles];
 
     float[] particles_scale = new float[num_particles];
-    float[] particles_time = new float[num_particles];
+    float[] particles_time_scale = new float[num_particles];
+    float[] particles_scale_dx = new float[num_particles];
     float[] particles_alpha = new float[num_particles];
 
-
-
+    float tempo_click_premio = 0;
 
     float tempo_generatore_particles = 0;
+    int skin_vinta = -1;
+
 
     void Start() {
 
@@ -3322,6 +3324,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             suona_effetto_UI(1, .5f);
         }
 
+        if (num == 6 && partenza_gioco == 0)
+        {
+          
+
+            suona_effetto_UI(1, .5f);
+
+            SceneManager.LoadScene("menu");
+        }
+
 
         if (num == 202) {
 
@@ -3347,7 +3358,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             rotazione_ruota = 3600;
 
+
+
+
+
+
             premio_vinto = 1;
+
+            ricerca_skin();
+
 
             rotazione_ruota_arrivo = premio_vinto*60-30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
 
@@ -3416,20 +3435,67 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         for (int n = 0; n <= 7; n++) {
 
             if (num == 230 + n) {
-                int skin_old = script_struttura_dati.astronave_skin;
 
-                script_struttura_dati.astronave_skin = n;
-                PlayerPrefs.SetInt("astronave_skin", n);
+                if (script_struttura_dati.astronave_skin_comprate[n] == 1)
+                {
 
-                if (skin_old != script_struttura_dati.astronave_skin) {
-                    cambio_skin_colore(script_struttura_dati.astronave_skin);
+                    int skin_old = script_struttura_dati.astronave_skin;
+
+                    script_struttura_dati.astronave_skin = n;
+                    PlayerPrefs.SetInt("astronave_skin", n);
+
+                    if (skin_old != script_struttura_dati.astronave_skin)
+                    {
+                        cambio_skin_colore(script_struttura_dati.astronave_skin);
+                    }
+
                 }
+
             }
         }
 
 
 
     }
+
+
+
+    void ricerca_skin()
+    {
+
+        skin_vinta = -1;
+
+        int[] skin_v = new int[10];
+
+        int aum_skin = -1;
+
+
+        for (int n = 0;n<= 7; n++)
+        {
+            if (script_struttura_dati.astronave_skin_comprate[n] == 0)
+            {
+                aum_skin = aum_skin + 1;
+                skin_v[aum_skin] = n;
+            }
+
+        }
+
+
+        if (aum_skin > -1)
+        {
+            skin_vinta = (int)(UnityEngine.Random.Range(aum_skin, aum_skin+.99f));
+
+            if (skin_vinta > 7)
+            {
+                skin_vinta = 7;
+            }
+
+        }
+
+
+
+    }
+
 
 
 
@@ -3490,6 +3556,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         crea_button_text2(4, "", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/button_barrier");
 
         crea_button_text(5, "PRESS TO START", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
+
+        crea_button_text(6, "", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/menu");
+
+
 
         pulsante[5].GetComponent<Image>().color = new Color(1, 1, 1, .6f);
 
@@ -3618,7 +3688,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             pulsante[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-
+            pulsante_testo[1].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*2, dy2);
             pulsante_testo[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(dx2 * .275f, -dy2 * .45f);
             pulsante_testo[1].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
             pulsante_testo[1].transform.localEulerAngles = new Vector3(0, 0, 30);
@@ -3634,8 +3704,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             pulsante[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             pulsante_testo[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(-dx2 * .275f, -dy2 * .45f);
-            pulsante_testo[2].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 24);
+            pulsante_testo[2].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*2 , dy2);
+            pulsante_testo[2].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 25);
             pulsante_testo[2].transform.localEulerAngles = new Vector3(0, 0, -30);
+
+
 
         }
 
@@ -3683,6 +3756,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             pulsante[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
+            pulsante_testo[3].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*2, dy2);
             pulsante_testo[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dy2 * .6f);
             pulsante_testo[3].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
             pulsante_testo[3].GetComponent<TextMeshProUGUI>().text = "AMMO";
@@ -3732,6 +3806,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             pulsante[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
+            pulsante_testo[4].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*2, dy2);
             pulsante_testo[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dy2 * .6f);
             pulsante_testo[4].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
             pulsante_testo[4].GetComponent<TextMeshProUGUI>().text = "BARRIER";
@@ -3759,6 +3834,18 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             pulsante_testo[5].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / (16 - Mathf.Cos(aum_coseno));
             pulsante_testo[5].GetComponent<TextMeshProUGUI>().text = "TAP TO START";
+        }
+
+        if (pulsante[6] != null && fade_intro == 0)  //press to start
+        {
+            float dx2 = risoluzione_x * (.15f );
+            float dy2 = dx2 ;
+            pos_x = 0;
+
+            pulsante[6].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            pulsante[6].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, -risoluzione_y*.48f+ dy2*.5f);
+
+
         }
 
 
@@ -4320,7 +4407,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica_dime[3] = 4;
 
 
-            suona_effetto_UI(5, 1);
+            script_struttura_dati.monete = script_struttura_dati.monete + monete_partita_corrente;
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+
 
         }
 
@@ -4362,6 +4451,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica_dime[7] = 4;
 
             suona_effetto_UI(6, 1);
+
+            script_struttura_dati.monete = script_struttura_dati.monete + monete_partita_corrente;
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
 
         }
 
@@ -4435,7 +4527,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             for (int n = 0; n <= 7; n++) {
                 crea_button_text(230 + n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/skin " + n);
+
+                crea_button_text(238 + n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/lucchetto");
+
             }
+
+
 
 
             crea_button_text(246, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
@@ -4454,10 +4551,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         attivo_popup_premio = num;
 
+        tempo_click_premio = 1.0f;
 
         canvas_premio.SetActive(true);
 
-
+        suona_effetto_UI(5,1);
 
         if (num == 1)
         {
@@ -4470,7 +4568,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             if (premio_vinto == 1)
             {
-                nome_premio = "skin 2" ;
+                nome_premio = "skin "+ skin_vinta;
 
             }
 
@@ -4480,7 +4578,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_grafica_text(263, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
             crea_grafica_text(264, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
 
-          
+            crea_grafica_text(265, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
+
 
 
         }
@@ -5378,7 +5477,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     if (rotazione_ruota < rotazione_ruota_arrivo + 1.0f) {
                         attiva_rotazione_ruota = 0;
 
-                        // dai i premi
+
+                        crea_popup_premio(1);
+
                     }
 
                 }
@@ -5447,17 +5548,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 for (int n = 0; n <= 7; n++) {
 
-                    float dime_skin = dx2 * .35f;
+                    float dime_skin = dime_panel_y * .19f;
 
                     if (script_struttura_dati.astronave_skin == n) {
-                        dime_skin = dx2 * .4f;
+                        dime_skin = dime_skin* 1.2f;
                     }
 
                     aum_skin = aum_skin + 1;
 
                     if (aum_skin > 1) {
                         aum_skin = 0;
-                        pos_y = pos_y - dx2 * .325f;
+                        pos_y = pos_y - dime_skin;
                     }
 
                     if (aum_skin == 0) {
@@ -5469,11 +5570,46 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     }
 
-                    if (pulsante[230 + n] != null) {
+                    if (pulsante[230 + n] != null)
+                    {
                         pulsante[230 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_skin, dime_skin);
                         pulsante[230 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
+                        Color colore_skin= new Color(1, 1, 1, 1);
+                       
+                        if (script_struttura_dati.astronave_skin_comprate[n] == 0)
+                        {
+                            colore_skin = new Color(1, 1, 1, .55f);
+
+                        }
+
+                        pulsante[230 + n].GetComponent<Image>().color = colore_skin;
+
+
                     }
+
+
+                    if (script_struttura_dati.astronave_skin_comprate[n] == 0)
+                    {
+                        if (pulsante[238 + n] != null)
+                        {
+                            pulsante[238 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_skin * .3f, dime_skin * .3f);
+                            pulsante[238 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + dime_skin * .235f, pos_y - dime_skin * .18f);
+
+                            Color colore_skin = new Color(1, 1, 1, 1);
+
+                            if (script_struttura_dati.astronave_skin_comprate[n] == 0)
+                            {
+                                colore_skin = new Color(1, 1, 1, .55f);
+
+                            }
+
+                            pulsante[238 + n].GetComponent<Image>().color = colore_skin;
+
+
+                        }
+                    }
+
 
                 }
 
@@ -5542,7 +5678,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             {
 
                 float dx2 = dx * .7f;
-                float dy2 = dx * .7f;
+                float dy2 = dx * .85f;
 
 
 
@@ -5559,32 +5695,72 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
                 grafica[261].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .8f, dime_panel_x * .8f);
-                grafica[261].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+                grafica[261].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
                 grafica[261].transform.localEulerAngles = new Vector3(0, 0, rotazione_effetto_premio);
 
                 grafica[262].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .6f, dime_panel_x * .6f);
-                grafica[262].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+                grafica[262].GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0 );
 
                 aggiorna_particles(dime_panel_x);
 
 
-                if (premio_vinto == 2)
+
+                if (premio_vinto == 1)
                 {
 
                     grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x*.3f);
+                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_y * .315f);
 
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "UPGRADE\nSHIELD" ;
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x/12.0f;
+
+
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "RED SKIN";
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 14.0f;
+
+
+                }
+
+
+
+                    if (premio_vinto == 2 || premio_vinto==4 || premio_vinto==6)
+                {
+
+                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_y * .315f);
+
+
+
+                    string testo = ""+ "UPGRADE SHIELD";
+
+                    if (premio_vinto == 4)
+                    {
+                        testo = "" + "UPGRADE AGILITY";
+                    }
+
+                    if (premio_vinto == 6)
+                    {
+                        testo = "" + "UPGRADE non mi ricordo";
+                    }
+
+  
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = testo;
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x/14.0f;
 
                     grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
                     grafica_testo[264].GetComponent<TextMeshProUGUI>().text = "3";
                     grafica_testo[264].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 6.0f;
                     grafica_testo[264].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
 
+
+                    grafica[265].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[265].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .315f);
+
+                    grafica_testo[265].GetComponent<TextMeshProUGUI>().text = "LEVEL UP";
+                    grafica_testo[265].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12.0f;
+                    grafica_testo[265].GetComponent<TextMeshProUGUI>().color = new Color(1, 1,1, 1);
+                
                 }
 
 
@@ -5597,26 +5773,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "100";
                     grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 8.0f;
 
+
+
+
+
                 }
 
 
-                if (premio_vinto == 4)
-                {
-
-                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
-
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "UPGRADE\nENERGY";
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12.0f;
-
-                    grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
-
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().text = "3";
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 6.0f;
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
-
-                }
+                
 
                 if (premio_vinto == 5)
                 {
@@ -5630,25 +5794,19 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
 
-                if (premio_vinto == 6)
-                {
-
-                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
-
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "UPGRADE\nAGILITY";
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12.0f;
-
-                    grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
-
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().text = "3";
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 6.0f;
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
-
-                }
+                
 
             }
+
+            tempo_click_premio = tempo_click_premio - Time.deltaTime;
+
+            if (tempo_click_premio<0 && Input.GetMouseButtonUp(0))
+            {
+
+                distruggi_menu_popup();
+                distruggi_menu_popup_premio();
+            }
+
 
         }
 
@@ -6461,15 +6619,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             if (particles[n] != null)
             {
 
-                particles_scale[n] = particles_scale[n] + particles_time[n]*Time.deltaTime;
+                particles_scale[n] = particles_scale[n] + particles_time_scale[n]*Time.deltaTime;
 
-                float dx = risoluzione_x * .05f * Mathf.Sin( particles_scale[n]);
+                float dx = risoluzione_x * .075f * Mathf.Sin( particles_scale[n])* particles_scale_dx[n];
 
 
                 particles[n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dx);
                 particles[n].GetComponent<RectTransform>().anchoredPosition = particles_pos[n];
 
-                float alpha = Mathf.Sin(particles_scale[n])*1.5f;
+                float alpha = Mathf.Sin(particles_scale[n])* particles_alpha[n];
 
 
                 particles[n].GetComponent<Image>().color = new Color(1,1,1,alpha);
@@ -6519,9 +6677,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         particles_pos[num] = pos;
 
         particles_scale[num] = 0;
-        particles_time[num] = 1;
-        particles_alpha[num] = 0;
+        particles_time_scale[num] = UnityEngine.Random.Range(1.0f,2.0f) ;
+        particles_scale_dx[num]= UnityEngine.Random.Range(.5f, 1.0f);
 
+        particles_alpha[num] = UnityEngine.Random.Range(.5f, 1.25f);
 
     }
 
