@@ -168,3 +168,6 @@ public class parametri
     public Color colore_blocco_3;
 
 }
+
+
+

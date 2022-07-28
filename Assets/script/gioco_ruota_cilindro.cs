@@ -116,6 +116,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     GameObject canvas;
     GameObject canvas_popup;
+    GameObject canvas_premio;
 
     // sezione tutorial 
     GameObject canvas_tutorial;
@@ -193,6 +194,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     int gemme_prese = 0;
 
     int attivo_popup = 0;
+    int attivo_popup_premio = 0;
 
     float resetTimerPopup = 0;
 
@@ -285,13 +287,30 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float somma_rotazione = 0;
 
     int attiva_rotazione_ruota = 0;
-    int che_zona_ruota_vinta = -1;
+    int premio_vinto = -1;
+
+    float rotazione_effetto_premio = 0;
 
     float sposta_button_x = 1;
 
     GameObject[] astronave_struttura = new GameObject[10];
 
     float[] scala_testo = new float[300];
+
+    static int num_particles = 10;
+
+
+    GameObject[] particles = new GameObject[num_particles];
+    Vector2[] particles_pos = new Vector2[num_particles];
+
+    float[] particles_scale = new float[num_particles];
+    float[] particles_time = new float[num_particles];
+    float[] particles_alpha = new float[num_particles];
+
+
+
+
+    float tempo_generatore_particles = 0;
 
     void Start() {
 
@@ -346,10 +365,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         canvas = GameObject.Find("Canvas");
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
         canvas_tutorial = GameObject.Find("Canvas_tutorial");
-
+        canvas_premio = GameObject.Find("Canvas_premio/Panel");
         canvas_popup.SetActive(false);
         canvas_tutorial.SetActive(false);
-
+        canvas_premio.SetActive(false);
 
         ogg_struttura_dati = GameObject.Find("base_struttura");
 
@@ -551,6 +570,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         aggiorna_menu();
 
         aggiorna_menu_popup();
+        aggiorna_menu_popup_premio();
 
         aggiorna_menu_tutorial();
 
@@ -578,6 +598,46 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             crea_popup(6);
 
+        }
+
+
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        {
+            premio_vinto = 1;
+            crea_popup_premio(1);
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Alpha5))
+        {
+            premio_vinto = 2;
+            crea_popup_premio(1);
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Alpha6))
+        {
+            premio_vinto = 3;
+            crea_popup_premio(1);
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Alpha7))
+        {
+            premio_vinto = 4;
+            crea_popup_premio(1);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Alpha8))
+        {
+            premio_vinto = 5;
+            crea_popup_premio(1);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Alpha9))
+        {
+            premio_vinto = 6;
+            crea_popup_premio(1);
         }
 
 #endif
@@ -3279,25 +3339,30 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
         if (num == 205) {
+
+
+
+
             attiva_rotazione_ruota = 1;
 
             rotazione_ruota = 3600;
-            rotazione_ruota_arrivo = 330 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
 
+            premio_vinto = 1;
 
+            rotazione_ruota_arrivo = premio_vinto*60-30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
 
-            // 30 monete
-            // 90 barriera
-            // 150 monete
-            //210 energia
-            //270 menete
-            //330 spin rotazione
+            // 30 monete 1
+            // 90 barriera 2
+            // 150 monete 3
+            //210 energia 4
+            //270 monete 5
+            //330 spin rotazione 6
 
 
             rotazione_ruota_tick = 0;
             somma_rotazione = 0;
 
-            che_zona_ruota_vinta = -1;
+           
 
         }
 
@@ -4379,6 +4444,48 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     }
 
+    void crea_popup_premio(int num = 1)
+    {
+
+
+
+
+        distruggi_menu_popup_premio();
+
+        attivo_popup_premio = num;
+
+
+        canvas_premio.SetActive(true);
+
+
+
+        if (num == 1)
+        {
+
+            crea_grafica_text(260, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/sfondo_popUP_premio"); //pannello shop
+
+            crea_grafica_text(261, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/effetto_premio"); //pannello shop
+
+            string nome_premio = "premio "+premio_vinto;
+
+            if (premio_vinto == 1)
+            {
+                nome_premio = "skin 2" ;
+
+            }
+
+            crea_grafica_text(262, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/"+ nome_premio); //pannello shop
+
+
+            crea_grafica_text(263, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
+            crea_grafica_text(264, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
+
+          
+
+
+        }
+
+    }
 
 
     public void crea_tutorial_frecce_laterali(string testo_informativo, int tipologia) { //tutorial  con mano frecce che indicano fuori
@@ -5395,6 +5502,158 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     }
 
+    void aggiorna_menu_popup_premio()
+    {
+
+
+        float dy = risoluzione_y;
+        float dx = risoluzione_x;
+
+        float pos_x = 0;
+        float pos_y = 0;
+
+        float dime_panel_x = 0;
+        float dime_panel_y = 0;
+
+       
+
+        for (int n = 0; n <= 30; n++)
+        {
+            if (grafica[260 + n] != null)
+            {
+                grafica[260 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
+            }
+
+            if (pulsante[260 + n] != null)
+            {
+                pulsante[260 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
+            }
+        }
+
+
+
+
+    
+ 
+
+        if (attivo_popup_premio == 1) //
+        {
+            if (grafica[260] != null)
+            {
+
+                float dx2 = dx * .7f;
+                float dy2 = dx * .7f;
+
+
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[260].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dx2);
+                grafica[260].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                rotazione_effetto_premio = rotazione_effetto_premio + 25 * Time.deltaTime;
+
+
+                grafica[261].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .8f, dime_panel_x * .8f);
+                grafica[261].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+
+                grafica[261].transform.localEulerAngles = new Vector3(0, 0, rotazione_effetto_premio);
+
+                grafica[262].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .6f, dime_panel_x * .6f);
+                grafica[262].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+
+                aggiorna_particles(dime_panel_x);
+
+
+                if (premio_vinto == 2)
+                {
+
+                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x*.3f);
+
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "UPGRADE\nSHIELD" ;
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x/12.0f;
+
+                    grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+
+                    grafica_testo[264].GetComponent<TextMeshProUGUI>().text = "3";
+                    grafica_testo[264].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 6.0f;
+                    grafica_testo[264].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+
+                }
+
+
+                if (premio_vinto == 3)
+                {
+
+                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
+
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "100";
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 8.0f;
+
+                }
+
+
+                if (premio_vinto == 4)
+                {
+
+                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
+
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "UPGRADE\nENERGY";
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12.0f;
+
+                    grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+
+                    grafica_testo[264].GetComponent<TextMeshProUGUI>().text = "3";
+                    grafica_testo[264].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 6.0f;
+                    grafica_testo[264].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+
+                }
+
+                if (premio_vinto == 5)
+                {
+
+                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
+
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "200";
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 8.0f;
+
+                }
+
+
+                if (premio_vinto == 6)
+                {
+
+                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
+
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "UPGRADE\nAGILITY";
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12.0f;
+
+                    grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+
+                    grafica_testo[264].GetComponent<TextMeshProUGUI>().text = "3";
+                    grafica_testo[264].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 6.0f;
+                    grafica_testo[264].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+
+                }
+
+            }
+
+        }
+
+
+    }
 
 
     void salva_le_stelle() {
@@ -5496,6 +5755,45 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         for (int n = 200; n < grafica.Length; n++) {
             if (grafica[n] != null) {
                 DestroyImmediate(grafica[n]);
+            }
+
+        }
+
+
+    }
+
+
+    void distruggi_menu_popup_premio()
+    {
+
+
+        attivo_popup_premio = 0;
+
+        canvas_premio.SetActive(false);
+
+        for (int n = 260; n < pulsante.Length; n++)
+        {
+            if (pulsante[n] != null)
+            {
+                DestroyImmediate(pulsante[n]);
+            }
+
+        }
+
+        for (int n = 260; n < grafica.Length; n++)
+        {
+            if (grafica[n] != null)
+            {
+                DestroyImmediate(grafica[n]);
+            }
+
+        }
+
+        for (int n = 0; n < particles.Length; n++)
+        {
+            if (particles[n] != null)
+            {
+                DestroyImmediate(particles[n]);
             }
 
         }
@@ -6109,6 +6407,127 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         musica.volume = volume_musica;
 
     }
+
+
+    void aggiorna_particles(float dime_panel)
+    {
+
+        tempo_generatore_particles = tempo_generatore_particles - Time.deltaTime;
+
+        if (tempo_generatore_particles < 0)
+        {
+            tempo_generatore_particles = .75f;
+
+            int num_particles = -1;
+
+            for (int n = 0; n < 10; n++)
+            {
+                if (particles[n] == null)
+                {
+                    num_particles = n;
+
+
+                    int segno_x = 1;
+
+                    if (UnityEngine.Random.Range(0, 10) > 5)
+                    {
+                        segno_x = -1;
+                    }
+
+                    int segno_y = 1;
+
+                    if (UnityEngine.Random.Range(0, 10) > 5)
+                    {
+                        segno_y = -1;
+                    }
+
+                    float xx =  UnityEngine.Random.Range(dime_panel * .25f, dime_panel * .38f);
+                    float yy = dime_panel*-.1f+  UnityEngine.Random.Range(dime_panel * .25f, dime_panel * .38f);
+
+
+                    crea_particles(n, new Vector2(xx*segno_x, yy*segno_y));
+
+                    break;
+                }
+
+
+            }
+
+        }
+
+
+        for (int n = 0; n < 10; n++)
+        {
+            if (particles[n] != null)
+            {
+
+                particles_scale[n] = particles_scale[n] + particles_time[n]*Time.deltaTime;
+
+                float dx = risoluzione_x * .05f * Mathf.Sin( particles_scale[n]);
+
+
+                particles[n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dx);
+                particles[n].GetComponent<RectTransform>().anchoredPosition = particles_pos[n];
+
+                float alpha = Mathf.Sin(particles_scale[n])*1.5f;
+
+
+                particles[n].GetComponent<Image>().color = new Color(1,1,1,alpha);
+
+
+
+                if (particles_scale[n] > 3.14f)
+                {
+                    DestroyImmediate(particles[n]);
+                }
+
+
+            }
+
+
+        }
+
+
+
+
+    }
+
+
+    void crea_particles(int num,Vector2 pos)
+    {
+        if (particles[num] != null)
+        {
+            DestroyImmediate(particles[num]);
+        }
+
+
+
+
+        particles[num] = Instantiate(Resources.Load("UI/Image", typeof(GameObject))) as GameObject;
+
+        particles[num].name = "particles" + num;
+
+        particles[num].transform.SetParent(canvas_premio.transform);
+
+
+
+
+        particles[num].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/grafica_UI/particles_effect 0");
+
+
+
+        particles_pos[num] = pos;
+
+        particles_scale[num] = 0;
+        particles_time[num] = 1;
+        particles_alpha[num] = 0;
+
+
+    }
+
+
+
+
 
 }
 
