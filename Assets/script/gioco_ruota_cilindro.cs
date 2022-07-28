@@ -2753,10 +2753,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         Vector3[] pos_ray_direction = new Vector3[10];
 
-        pos_ray_direction[0] = new Vector3(0, 0, 10);
-        pos_ray_direction[1] = new Vector3(0, 0, 10);
-        pos_ray_direction[2] = new Vector3(0, 0, 10);
-        pos_ray_direction[3] = new Vector3(0, 0, 10);
+        pos_ray_direction[0] = new Vector3(0, -2, 10);
+        pos_ray_direction[1] = new Vector3(0, -2, 10);
+        pos_ray_direction[2] = new Vector3(0, -2, 10);
+        pos_ray_direction[3] = new Vector3(0, -2, 10);
 
 
         Vector3 pos;
