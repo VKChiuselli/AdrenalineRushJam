@@ -1329,15 +1329,38 @@ public class menu : MonoBehaviour {
 
 
             }
-            if (pulsante[217] != null) //pulsante gioca dal seleziona menu
-{
-                float dx2 = dime_panel_x * 0.45f;
-                float dy2 = dime_panel_y * 0.09f;
-                pos_x = 0;
-                pos_y = dime_panel_y * -0.42f;
-                pulsante[217].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-                pulsante[217].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
-                pulsante_testo[217].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 15f;
+
+            if (grafica[210] != null)  //stelle guadagnate testo
+       {
+
+                float dx2 = dy * .43f;
+                float dy2 = dx2;
+                pos_x = dime_panel_x * -0.13f;
+                pos_y = dime_panel_y * -0.41f;
+
+                grafica[210].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[210].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                grafica_testo[210].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 30f;
+                grafica_testo[210].GetComponent<TextMeshProUGUI>().text = "Chapter Stars 10/15";
+
+                //int totale_stelle_capitolo=0;
+                //for(int i=indice_pagina_livello_corrente * 5 - 5; i<indice_pagina_livello_corrente*5; i++) {
+                //    totale_stelle_capitolo += converti_stelle(script_struttura_dati.stelle_livello[i]);
+                //}
+
+            }
+            if (grafica[211] != null)  //stelle achieved
+      
+
+ {
+
+                    float dx2 = dime_panel_x * 0.2f;
+                    float dy2 = dime_panel_y * 0.1f;
+
+                    pos_x = dime_panel_x * 0.3f;
+                    pos_y = dime_panel_y * -0.4f;
+                    grafica[211].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                    grafica[211].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             }
 
@@ -1673,7 +1696,17 @@ public class menu : MonoBehaviour {
 
     }
 
+    int converti_stelle(string stelle_da_converire) {
 
+        int valore_finale=0;
+        char ch1 = stelle_da_converire[0];
+     //   valore_finale =+ 
+        valore_finale =ch1 - 0;
+     //   valore_finale =+ stelle_da_converire[2];
+
+        return valore_finale;
+
+    }
 
     void uscita_popup(float dime_panel_x, float dime_panel_y) {
         resetTimerPopup += Time.deltaTime;
@@ -2299,7 +2332,9 @@ public class menu : MonoBehaviour {
 
         crea_button_text(215, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/freccia_destra");//pulsante freccia cambio capitolo
         crea_button_text(216, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/freccia_sinistra"); //pulsante freccia cambio capitolo
-        crea_button_text(217, "PLAY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pulsante gioca dentro il popup seleziona
+                                                                                                                                //   crea_button_text(217, "PLAY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pulsante gioca dentro il popup seleziona
+        crea_grafica_text(210, new Color(1, 1, 1, 0), "Stars Gained 0/5", canvas_popup, "Canvas_popup/Panel", ""); //titolo capitolo selezionato
+        crea_grafica_text(211, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1");  //testo/titolo oggetto shop
 
         aggiorna_nome_livello();
     }
