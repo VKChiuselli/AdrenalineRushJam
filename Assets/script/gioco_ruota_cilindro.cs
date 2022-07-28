@@ -313,6 +313,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float tempo_generatore_particles = 0;
     int skin_vinta = -1;
 
+    float pos_home = 0;
+
 
     void Start() {
 
@@ -436,6 +438,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             skin_colore = script_struttura_dati.astronave_skin;
         }
 
+       // energia = 1;
 
         // skin_colore = script_struttura_dati.astronave_skin;
 
@@ -484,7 +487,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             if (attiva_barriera < 0) {
                 energia = energia - riduttore / scafo;
 
-                Debug.Log("energia " + energia);
+             //   Debug.Log("energia " + energia);
 
                 attiva_barriera = tempo_barriera * .5f;
             }
@@ -1200,6 +1203,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             if (attivo_popup > 0) {
                 velo_popup = 0;
             }
+
+
+            velocita_bonus = Mathf.Lerp(velocita_bonus, 1, Time.deltaTime*.1f);
+
+
 
             cilindro.transform.Translate(new Vector3(0, 0, -velocita_personaggio * Time.deltaTime * velo_popup * blocco_velocita * velocita_bonus * aumento_velo));
 
@@ -3341,12 +3349,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         }
 
-        if (num == 203) {
-
-            distruggi_menu_popup();
-
-
-        }
+      
 
 
         if (num == 205) {
@@ -3386,7 +3389,23 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (num == 206 || num == 246) {
+        if (num == 206 || num == 246)
+        {
+
+            distruggi_menu_popup();
+
+
+        }
+
+        if (num == 211)
+        {
+
+           SceneManager.LoadScene("menu");
+
+
+        }
+
+        if (num == 212 ) {
 
             distruggi_menu_popup();
 
@@ -3836,6 +3855,21 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             pulsante_testo[5].GetComponent<TextMeshProUGUI>().text = "TAP TO START";
         }
 
+
+        float pos_home_base = -1;
+
+        if (partenza_gioco == 0)
+        {
+
+            pos_home_base = -.48f;
+
+        }
+
+        pos_home = Mathf.Lerp(pos_home, pos_home_base, Time.deltaTime * 2);
+
+
+
+
         if (pulsante[6] != null && fade_intro == 0)  //press to start
         {
             float dx2 = risoluzione_x * (.15f );
@@ -3843,7 +3877,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             pos_x = 0;
 
             pulsante[6].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-            pulsante[6].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, -risoluzione_y*.48f+ dy2*.5f);
+            pulsante[6].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, risoluzione_y* pos_home+ dy2*.5f);
 
 
         }
@@ -4493,11 +4527,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
 
-            crea_grafica_text(201, new Color(1, 1, 1, 0), "ENTER MENU", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
 
-            crea_button_text(202, "CONFIRM", new Color(1, 1, 1, 0), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pannello shop
+
+
+            crea_button_text2(211, "MENU", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/button_home");
+            crea_button_text2(212, "RESUME", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/button_next");
+
 
             crea_button_text(203, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
+
+
 
         }
 
@@ -5318,6 +5357,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 }
 
+                if (grafica_tempo[6] < 0 && Input.GetMouseButtonUp(0))
+                {
+                    SceneManager.LoadScene("gioco");
+
+                }
+
             }
 
 
@@ -5330,7 +5375,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             {
 
                 float dx2 = dx * .9f;
-                float dy2 = dy * .9f;
+                float dy2 = dx2*.7f;
 
 
 
@@ -5347,43 +5392,45 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 pos_y = dime_panel_y * .3f;
 
-                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .9f, dx2 * .7f);
-                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+              
 
 
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 10);
-
-                pos_y = dime_panel_y * -.3f;
-
-
-                if (pulsante[202] != null)  //exit
+                if (pulsante[211] != null)  //home
                 {
-                    pulsante[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .6f, dy2 * .12f);
-                    pulsante[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                    float dx_button = risoluzione_x * .215f;
+                    float dy_button = dx_button * (199 / 165.0f);
+                    pos_x = -risoluzione_x * .2f;
 
 
-                    pulsante_testo[202].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 25);
+                    pulsante[211].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_button, dy_button);
+                    pulsante[211].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, 0);
 
-                    pulsante_testo[202].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+                    pulsante_testo[211].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_button * 2, dy_button);
+                    pulsante_testo[211].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dy_button * .65f);
+                    pulsante_testo[211].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
+                    pulsante_testo[211].GetComponent<TextMeshProUGUI>().text = "MENU";
+                    pulsante_testo[211].GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1);
+                }
 
+                if (pulsante[212] != null)  //resume
+                {
+                    float dx_button = risoluzione_x * .215f;
+                    float dy_button = dx_button * (199 / 165.0f);
+                    pos_x = risoluzione_x * .2f;
+
+
+                    pulsante[212].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_button, dy_button);
+                    pulsante[212].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, 0);
+
+                    pulsante_testo[212].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_button * 2, dy_button);
+                    pulsante_testo[212].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dy_button * .65f);
+                    pulsante_testo[212].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
+                    pulsante_testo[212].GetComponent<TextMeshProUGUI>().text = "RESUME";
+                    pulsante_testo[212].GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1);
                 }
 
 
-                if (pulsante[203] != null)  //exit
-                {
-                    float dx3 = risoluzione_x * 0.12f;
-                    float dy3 = dx3;
-                    pos_x = dime_panel_x * .465f;
-                    pos_y = dime_panel_y * .465f;
-
-
-                    pulsante[203].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
-                    pulsante[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
-                }
-
-
-                uscita_popup(dime_panel_x, dime_panel_y);
+                
 
             }
 
@@ -5489,6 +5536,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 grafica[201].transform.localEulerAngles = new Vector3(0, 0, rotazione_ruota);
                 grafica[202].transform.localEulerAngles = new Vector3(0, 0, rotazione_ruota_tick);
+
+
+               
+
 
 
                 if (pulsante[206] != null && attiva_rotazione_ruota == 0)  //exit
