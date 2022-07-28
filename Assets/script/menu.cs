@@ -1994,12 +1994,12 @@ public class menu : MonoBehaviour {
         if (pulsante[11] != null) { //pulsante seleziona livelli
 
 
-            float dy2 = risoluzione_y * 0.8f * 0.45f * 0.535f;
-            float dx2 = dy2 * (1316.0f / 1408.0f);
+            float dy2 = risoluzione_y * 0.3f  ;
+            float dx2 = dy2 ;
 
 
 
-            pos_y = risoluzione_y * 0.04f;
+            pos_y = risoluzione_y * 0.07f;
 
             pulsante[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
@@ -2198,7 +2198,7 @@ public class menu : MonoBehaviour {
         pulsante[31].AddComponent<timer_reward>();
         crea_grafica_text(31, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
         crea_grafica_text(20, new Color(1, 1, 1, 0), "Level " + script_struttura_dati.livello_in_uso, canvas, "Canvas", "");
-        crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/immagine_centrale_1"); //pulsante seleziona livelli
+        crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/skinc "+ script_struttura_dati.astronave_skin); //pulsante seleziona livelli
 
         crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
         crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");

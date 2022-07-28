@@ -3400,7 +3400,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (num == 211)
         {
 
-           SceneManager.LoadScene("menu");
+           SceneManager.LoadScene("gioco");
 
 
         }
@@ -4530,7 +4530,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-            crea_button_text2(211, "MENU", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/button_home");
+            crea_button_text2(211, "RESTART", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/button_restart");
             crea_button_text2(212, "RESUME", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/button_next");
 
 
@@ -4620,6 +4620,18 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_grafica_text(265, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
 
 
+            if (premio_vinto == 3)
+            {
+                script_struttura_dati.monete = script_struttura_dati.monete + 100;
+                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            }
+
+
+            if (premio_vinto == 5)
+            {
+                script_struttura_dati.monete = script_struttura_dati.monete + 200;
+                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            }
 
         }
 
@@ -5408,7 +5420,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     pulsante_testo[211].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_button * 2, dy_button);
                     pulsante_testo[211].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dy_button * .65f);
                     pulsante_testo[211].GetComponent<TextMeshProUGUI>().fontSize = (int)(risoluzione_x / 20);
-                    pulsante_testo[211].GetComponent<TextMeshProUGUI>().text = "MENU";
+                    pulsante_testo[211].GetComponent<TextMeshProUGUI>().text = "RESTART";
                     pulsante_testo[211].GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1);
                 }
 
@@ -5764,8 +5776,40 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_y * .315f);
 
 
+                    string nome_skin = "RED SKIN";
 
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "RED SKIN";
+                    if (skin_vinta == 2)
+                    {
+                        nome_skin = "YELLOW SKIN";
+                    }
+
+                    if (skin_vinta == 3)
+                    {
+                        nome_skin = "GREEN SKIN";
+                    }
+
+                    if (skin_vinta == 4)
+                    {
+                        nome_skin = "BLACK SKIN";
+                    }
+
+                    if (skin_vinta == 5)
+                    {
+                        nome_skin = "GRAY SKIN";
+                    }
+
+                    if (skin_vinta == 6)
+                    {
+                        nome_skin = "LIGHT BLUE SKIN";
+                    }
+
+                    if (skin_vinta == 7)
+                    {
+                        nome_skin = "ORANGE SKIN";
+                    }
+
+
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = nome_skin;
                     grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 14.0f;
 
 
