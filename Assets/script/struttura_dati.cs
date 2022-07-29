@@ -59,8 +59,8 @@ public class struttura_dati : MonoBehaviour {
         {
             astronave_skin_comprate[i] = PlayerPrefs.GetInt($"astronave_skin_comprate{i}");
         }
-        astronave_skin_comprate[0] = 1;
-        
+        PlayerPrefs.SetInt("astronave_skin_comprate0", 1); //todo da rimuovere questa riga quando si rilascia l'app
+
 
         SceneManager.LoadScene("menu");
 
@@ -74,6 +74,8 @@ public class struttura_dati : MonoBehaviour {
         PlayerPrefs.SetInt("gemme", 0);
         PlayerPrefs.SetInt("energia", 100);
         PlayerPrefs.SetInt("stelle_battle_pass", 0);
+        PlayerPrefs.SetInt("astronave_skin_comprate0", 1);
+
         for (int i = 1; i < 7; i++) {
          PlayerPrefs.SetInt($"LivelloUpgrade{i}", 1);
         }

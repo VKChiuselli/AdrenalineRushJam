@@ -131,7 +131,8 @@ public class menu : MonoBehaviour {
     Vector2[] particles_pos = new Vector2[num_particles];
 
     float[] particles_scale = new float[num_particles];
-    float[] particles_time = new float[num_particles];
+    float[] particles_time_scale = new float[num_particles];
+    float[] particles_scale_dx = new float[num_particles];
     float[] particles_alpha = new float[num_particles];
 
 
@@ -169,6 +170,38 @@ public class menu : MonoBehaviour {
 
 
         crea_menu();
+    }
+
+    int skin_vinta = -1;
+    void ricerca_skin() {
+
+        skin_vinta = -1;
+
+        int[] skin_v = new int[10];
+
+        int aum_skin = -1;
+
+
+        for (int n = 0; n <= 7; n++) {
+            if (script_struttura_dati.astronave_skin_comprate[n] == 0) {
+                aum_skin = aum_skin + 1;
+                skin_v[aum_skin] = n;
+            }
+
+        }
+
+
+        if (aum_skin > -1) {
+            skin_vinta = (int)(UnityEngine.Random.Range(aum_skin, aum_skin + .99f));
+
+            if (skin_vinta > 7) {
+                skin_vinta = 7;
+            }
+
+        }
+
+
+
     }
 
     private void conta_nuove_stelle() {
@@ -1575,7 +1608,7 @@ public class menu : MonoBehaviour {
         }
         else if (attivo_popup == 7) {
             if (grafica[200] != null)  //pannello
-           {
+            {
 
                 float dx2 = dx * .9f;
                 float dy2 = dy * .9f;
@@ -1616,8 +1649,8 @@ public class menu : MonoBehaviour {
 
                 if (pulsante[205] != null && attiva_rotazione_ruota == 0)  //ruota
                 {
-                    pulsante[205].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.5f, dy2 * 0.1f);
-                    pulsante[205].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y * 1.05f);
+                    pulsante[205].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .4f, dy2 * .12f);
+                    pulsante[205].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
 
                     pulsante_testo[205].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 15;
@@ -1660,7 +1693,9 @@ public class menu : MonoBehaviour {
                     if (rotazione_ruota < rotazione_ruota_arrivo + 1.0f) {
                         attiva_rotazione_ruota = 0;
 
-                        // dai i premi
+
+                        crea_popup_premio(8);
+
                     }
 
                 }
@@ -1670,6 +1705,10 @@ public class menu : MonoBehaviour {
 
                 grafica[201].transform.localEulerAngles = new Vector3(0, 0, rotazione_ruota);
                 grafica[202].transform.localEulerAngles = new Vector3(0, 0, rotazione_ruota_tick);
+
+
+
+
 
 
                 if (pulsante[206] != null && attiva_rotazione_ruota == 0)  //exit
@@ -1689,6 +1728,7 @@ public class menu : MonoBehaviour {
                 uscita_popup(dime_panel_x, dime_panel_y);
 
             }
+
         }
         else if (attivo_popup == 8) {
             aggiorna_menu_popup_premio();
@@ -2380,20 +2420,20 @@ public class menu : MonoBehaviour {
         canvas_popup.SetActive(true);
 
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //SFONDO
 
-        crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ruota"); //pannello shop
+        crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ruota"); //ruota immagine
 
-        crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/tick"); //pannello shop
+        crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/tick"); //indicatore della ruota
 
-        crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+        crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello
 
 
-        crea_button_text(205, "SPIN", new Color(1, 1, 1, 0), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pannello shop
+        crea_button_text(205, "SPIN", new Color(1, 1, 1, 0), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //bottone spin
 
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
     }
-
+    float tempo_click_premio = 0;
     void crea_popup_premio(int num = 8) {
 
 
@@ -2403,10 +2443,11 @@ public class menu : MonoBehaviour {
 
         attivo_popup_premio = num;
 
+        tempo_click_premio = 1.0f;
 
         canvas_premio.SetActive(true);
 
-
+        suona_effetto_UI(5, 1);
 
         if (num == 1) {
 
@@ -2417,7 +2458,7 @@ public class menu : MonoBehaviour {
             string nome_premio = "premio " + premio_vinto;
 
             if (premio_vinto == 1) {
-                nome_premio = "skin 2";
+                nome_premio = "skin " + skin_vinta;
 
             }
 
@@ -2427,8 +2468,19 @@ public class menu : MonoBehaviour {
             crea_grafica_text(263, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
             crea_grafica_text(264, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
 
+            crea_grafica_text(265, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
 
 
+            if (premio_vinto == 3) {
+                script_struttura_dati.monete = script_struttura_dati.monete + 100;
+                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            }
+
+
+            if (premio_vinto == 5) {
+                script_struttura_dati.monete = script_struttura_dati.monete + 200;
+                PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            }
 
         }
 
@@ -2607,7 +2659,6 @@ public class menu : MonoBehaviour {
 
 
     }
-
     void aggiorna_particles(float dime_panel) {
 
         tempo_generatore_particles = tempo_generatore_particles - Time.deltaTime;
@@ -2652,15 +2703,15 @@ public class menu : MonoBehaviour {
         for (int n = 0; n < 10; n++) {
             if (particles[n] != null) {
 
-                particles_scale[n] = particles_scale[n] + particles_time[n] * Time.deltaTime;
+                particles_scale[n] = particles_scale[n] + particles_time_scale[n] * Time.deltaTime;
 
-                float dx = risoluzione_x * .05f * Mathf.Sin(particles_scale[n]);
+                float dx = risoluzione_x * .075f * Mathf.Sin(particles_scale[n]) * particles_scale_dx[n];
 
 
                 particles[n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx, dx);
                 particles[n].GetComponent<RectTransform>().anchoredPosition = particles_pos[n];
 
-                float alpha = Mathf.Sin(particles_scale[n]) * 1.5f;
+                float alpha = Mathf.Sin(particles_scale[n]) * particles_alpha[n];
 
 
                 particles[n].GetComponent<Image>().color = new Color(1, 1, 1, alpha);
@@ -2707,9 +2758,10 @@ public class menu : MonoBehaviour {
         particles_pos[num] = pos;
 
         particles_scale[num] = 0;
-        particles_time[num] = 1;
-        particles_alpha[num] = 0;
+        particles_time_scale[num] = UnityEngine.Random.Range(1.0f, 2.0f);
+        particles_scale_dx[num] = UnityEngine.Random.Range(.5f, 1.0f);
 
+        particles_alpha[num] = UnityEngine.Random.Range(.5f, 1.25f);
 
     }
 
@@ -2893,7 +2945,13 @@ public class menu : MonoBehaviour {
 
             rotazione_ruota = 3600;
 
-            premio_vinto = 1;
+            if (!PlayerPrefs.HasKey("primoPremioSkin")) {
+                premio_vinto = 1;
+                PlayerPrefs.SetInt("astronave_skin_comprate1", 1);
+                PlayerPrefs.SetInt("primoPremioSkin", 1);
+            }
+         
+            
 
             rotazione_ruota_arrivo = premio_vinto * 60 - 30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
 

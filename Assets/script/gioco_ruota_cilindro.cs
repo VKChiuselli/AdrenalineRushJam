@@ -3368,7 +3368,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             premio_vinto = 1;
 
-            ricerca_skin();
+            ricerca_skin(); // a cosa serve questo metodo se non ritorna un valore? e non c'è neanche un setting dei playerPrefs 
 
 
             rotazione_ruota_arrivo = premio_vinto*60-30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
@@ -4543,16 +4543,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 5) {
 
-            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //SCRIVERE COSA è
 
-            crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ruota"); //pannello shop
+            crea_grafica_text(201, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ruota"); //SCRIVERE COSA è
 
-            crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/tick"); //pannello shop
+            crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/tick"); //SCRIVERE COSA è
 
-            crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+            crea_grafica_text(203, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //SCRIVERE COSA è
 
 
-            crea_button_text(205, "SPIN", new Color(1, 1, 1, 0), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pannello shop
+            crea_button_text(205, "SPIN", new Color(1, 1, 1, 0), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //SCRIVERE COSA è
 
             crea_button_text(206, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
@@ -4560,8 +4560,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 6) {
 
-            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //pannello shop
-            crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //pannello shop
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //SCRIVERE COSA è
+            crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //SCRIVERE COSA è
 
 
             for (int n = 0; n <= 7; n++) {
