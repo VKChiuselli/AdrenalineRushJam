@@ -1388,7 +1388,7 @@ public class menu : MonoBehaviour {
  {
 
                     float dx2 = dime_panel_x * 0.2f;
-                    float dy2 = dime_panel_y * 0.1f;
+                    float dy2 = dx2;
 
                     pos_x = dime_panel_x * 0.3f;
                     pos_y = dime_panel_y * -0.4f;

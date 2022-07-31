@@ -220,7 +220,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     float scafo = 0;
     float calamita = 0;
 
-    float attiva_barriera = 0;
+   public float attiva_barriera = 0;
 
     int attivazione_barriera_infinity = 0;
 
@@ -315,6 +315,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     float pos_home = 0;
 
+    string[] upgrade_titolo = new string[10];
+
+    int indice_upgrade_corrente;
 
     void Start() {
 
@@ -489,7 +492,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
              //   Debug.Log("energia " + energia);
 
-                attiva_barriera = tempo_barriera * .5f;
+                attiva_barriera = tempo_barriera ;
             }
         }
 
@@ -609,7 +612,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.Alpha4))
         {
             premio_vinto = 1;
-            crea_popup_premio(1);
+            crea_popup_premio(2);
 
         }
 
@@ -1476,6 +1479,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void load_project() {
 
 
+        Debug.Log("entra load project");
+
+
         try {
 
             if (level_json != null) {
@@ -1487,6 +1493,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 }
 
+
+                Debug.Log("level_json "+ level_json.name);
 
 
                 c_save = null;
@@ -2585,7 +2593,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                         if (c_save.crea_bonus[num_bonus].attivo == 0) {
                             c_save.crea_bonus[num_bonus].attivo = 1;
 
-                            attiva_barriera = tempo_barriera;
+                            attiva_barriera = tempo_barriera*3;
+
+                          //  Debug.Log("attiva_barriera "+ attiva_barriera);
 
                             Destroy(c_save.crea_bonus[num_bonus].mesh);
 
@@ -3259,7 +3269,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     }
 
 
-    void pressione_pulsante(int num) {
+    void pressione_pulsante(int num)
+    {
 
 #if UNITY_EDITOR
 
@@ -3271,14 +3282,16 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         suona_effetto_UI(1, 1);
 
 
-        if (num == 0) {
+        if (num == 0)
+        {
 
             crea_popup(4);
 
 
         }
 
-        if (num == 1) {
+        if (num == 1)
+        {
 
             crea_popup(6);
 
@@ -3286,12 +3299,23 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (num == 3) {
+        if (num == 2)
+        {
+
+            crea_popup(7);
+
+
+        }
+
+
+        if (num == 3)
+        {
 
 
             suona_effetto_UI(7, .5f);
 
-            if (script_struttura_dati.monete >= 50) {
+            if (script_struttura_dati.monete >= 50)
+            {
                 script_struttura_dati.monete = script_struttura_dati.monete - 50;
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
 
@@ -3306,11 +3330,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (num == 4 && attivazione_barriera_infinity == 0) {
+        if (num == 4 && attivazione_barriera_infinity == 0)
+        {
 
 
 
-            if (script_struttura_dati.monete >= 100) {
+            if (script_struttura_dati.monete >= 100)
+            {
 
                 attivazione_barriera_infinity = 1;
 
@@ -3326,7 +3352,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (num == 5 && partenza_gioco == 0) {
+        if (num == 5 && partenza_gioco == 0)
+        {
             partenza_gioco = 1;
 
             suona_effetto_UI(1, .5f);
@@ -3334,7 +3361,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 6 && partenza_gioco == 0)
         {
-          
+
 
             suona_effetto_UI(1, .5f);
 
@@ -3342,17 +3369,19 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (num == 202) {
+        if (num == 202)
+        {
 
             SceneManager.LoadScene("menu");
 
 
         }
 
-      
 
 
-        if (num == 205) {
+
+        if (num == 205)
+        {
 
 
 
@@ -3371,7 +3400,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             ricerca_skin(); // a cosa serve questo metodo se non ritorna un valore? e non c'è neanche un setting dei playerPrefs 
 
 
-            rotazione_ruota_arrivo = premio_vinto*60-30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
+            rotazione_ruota_arrivo = premio_vinto * 60 - 30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
 
             // 30 monete 1
             // 90 barriera 2
@@ -3384,12 +3413,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             rotazione_ruota_tick = 0;
             somma_rotazione = 0;
 
-           
+
 
         }
 
 
-        if (num == 206 || num == 246)
+        if (num == 206 || num == 239)
         {
 
             distruggi_menu_popup();
@@ -3400,12 +3429,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (num == 211)
         {
 
-           SceneManager.LoadScene("gioco");
+            SceneManager.LoadScene("gioco");
 
 
         }
 
-        if (num == 212 ) {
+        if (num == 212)
+        {
 
             distruggi_menu_popup();
 
@@ -3419,7 +3449,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 219) // next level da salvare e poi 
         {
-            if (script_struttura_dati != null) {
+            if (script_struttura_dati != null)
+            {
 
 
                 // da passare i parametri stelle
@@ -3427,7 +3458,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 script_struttura_dati.livello_in_uso = script_struttura_dati.livello_in_uso + 1;
 
-                if (script_struttura_dati.livello_massimo_raggiunto < script_struttura_dati.livello_in_uso) {
+                if (script_struttura_dati.livello_massimo_raggiunto < script_struttura_dati.livello_in_uso)
+                {
                     script_struttura_dati.livello_massimo_raggiunto = script_struttura_dati.livello_massimo_raggiunto + 1;
                     PlayerPrefs.SetInt("livello_massimo_raggiunto", script_struttura_dati.livello_massimo_raggiunto);
                 }
@@ -3451,9 +3483,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        for (int n = 0; n <= 7; n++) {
+        for (int n = 0; n <= 7; n++)
+        {
 
-            if (num == 230 + n) {
+            if (num == 230 + n)
+            {
 
                 if (script_struttura_dati.astronave_skin_comprate[n] == 1)
                 {
@@ -3473,10 +3507,75 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             }
         }
 
+        for (int n = 0; n <= 2; n++)
+        {
 
+            if (num == 240 + n)
+            {
+
+                indice_upgrade_corrente = n+1;
+
+                crea_popup_upgrade(2);
+
+            }
+        }
+
+
+        if (num == 266)
+        {
+           
+                if (script_struttura_dati.livello_upgrade[indice_upgrade_corrente] != 10)
+                {
+                    acquista_upgrade(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
+                }
+            
+
+        }
+
+
+
+        if (num == 267)
+        {
+
+            distruggi_menu_popup_premio();
+
+
+        }
+
+        if (num == 268)
+        {
+
+            Debug.Log("info");
+
+
+        }
 
     }
 
+
+
+    private void acquista_upgrade(int costoUpgrade)
+    {
+        if (script_struttura_dati.monete >= costoUpgrade)
+        {
+
+            script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
+            PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            script_struttura_dati.livello_upgrade[indice_upgrade_corrente] = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] + 1;
+            PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (script_struttura_dati.livello_upgrade[indice_upgrade_corrente]));
+
+            if (grafica[264] != null)
+            {
+                Destroy(grafica[264]);
+            }
+
+            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
+
+
+            Debug.Log("Oggetto acquistato da modificare");
+        }
+
+    }
 
 
     void ricerca_skin()
@@ -3581,6 +3680,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
         pulsante[5].GetComponent<Image>().color = new Color(1, 1, 1, .6f);
+
+        upgrade_titolo[1] = "AGILITY";
+        upgrade_titolo[2] = "BARRIER";
+        upgrade_titolo[3] = "ENERGY";
 
     }
 
@@ -4574,11 +4677,53 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-            crea_button_text(246, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
+            crea_button_text(239, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
         }
 
+        if (num == 7)
+        {
+
+            Debug.Log("num "+num);
+
+            crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //SCRIVERE COSA è
+            crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //SCRIVERE COSA è
+
+            crea_button_text(239, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
+
+           
+
+
+
+            for (int n = 0; n <= 2; n++)
+            {
+                crea_grafica_text(210 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_1");
+                crea_grafica_text(213 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_carta "+(n+1));
+
+                crea_grafica_text(216 + n, new Color(1, 1, 1, 0), ""+script_struttura_dati.livello_upgrade[n + 1], canvas_popup, "Canvas_popup/Panel", "");
+                crea_grafica_text(219 + n, new Color(1, 1, 1, 0), ""+ upgrade_titolo[n+1], canvas_popup, "Canvas_popup/Panel", "");
+
+
+                crea_button_text(240+n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "");
+                pulsante[240 + n].GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            }
+
+
+
+
+
+
+
+        }
+
+
+
     }
+
+
+
+
+
 
     void crea_popup_premio(int num = 1)
     {
@@ -4635,7 +4780,57 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         }
 
+
+      
+
+
+
     }
+
+
+    void crea_popup_upgrade(int num = 2)
+    {
+
+
+
+
+        distruggi_menu_popup_premio();
+
+        attivo_popup_premio = num;
+
+        tempo_click_premio = 1.0f;
+
+        canvas_premio.SetActive(true);
+
+        suona_effetto_UI(1, 1);
+
+    
+
+        if (num == 2)
+        {
+
+
+
+            crea_grafica_text(260, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello upgrade
+            crea_grafica_text(261, new Color(1, 1, 1, 0), "titolo", canvas_premio, "Canvas_premio/Panel", ""); //testo/titolo oggetto upgrade
+            crea_grafica_text(262, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_carta "+ indice_upgrade_corrente); //immagine upgrade
+            crea_grafica_text(263, new Color(1, 1, 1, 0), "prezzo", canvas_premio, "Canvas_premio/Panel", ""); //testo/prezzo oggetto upgrade
+            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
+
+
+            crea_button_text(266, "UPGRADE", new Color(0, 0, 0, 1), canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
+
+            crea_button_text(267, "", new Color(0, 0, 0, 1), canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
+            crea_button_text(268, "", new Color(1, 1, 1, 1), canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/info_icon_menu"); //info
+
+        }
+
+
+
+
+    }
+
+
 
 
     public void crea_tutorial_frecce_laterali(string testo_informativo, int tipologia) { //tutorial  con mano frecce che indicano fuori
@@ -5678,7 +5873,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                if (pulsante[246] != null && attiva_rotazione_ruota == 0)  //exit
+                if (pulsante[239] != null && attiva_rotazione_ruota == 0)  //exit
                 {
                     float dx3 = risoluzione_x * 0.12f;
                     float dy3 = dx3;
@@ -5686,8 +5881,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     pos_y = dime_panel_y * .465f;
 
 
-                    pulsante[246].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
-                    pulsante[246].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                    pulsante[239].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
+                    pulsante[239].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 }
 
@@ -5698,6 +5893,125 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         }
 
+        if (attivo_popup == 7) // updgrade
+        {
+            if (grafica[200] != null)
+            {
+
+                float dx2 = dx * .9f;
+                float dy2 = dy * .8f;
+
+
+
+                float dy_t = dy * .2f;
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                pos_x = 0;
+                pos_y = 0;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
+                pos_y = dime_panel_y * .4f;
+
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_x * .1f);
+                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, pos_y);
+
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "UPGRADE".ToUpper();
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
+
+
+                pos_y = dime_panel_y * .15f;
+                int aum_upgrade = -1;
+
+                for (int n = 0; n <= 2; n++)
+                {
+
+                    if (grafica[210 + n] != null)
+                    {
+
+                        aum_upgrade = aum_upgrade + 1;
+
+                        float dime_x = dime_panel_x * .395f;
+                        float dime_y = dime_x * (650.0f / 450.0f);
+
+                        if (aum_upgrade > 1)
+                            {
+                            aum_upgrade = 0;
+                                pos_y = pos_y - dime_y;
+                            }
+
+                            if (aum_upgrade == 0)
+                            {
+                                pos_x = dime_panel_x * -.2f;
+                            }
+
+                            if (aum_upgrade == 1)
+                            {
+                                pos_x = dime_panel_x * +.2f;
+
+                            }
+
+
+
+                        grafica[210 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x, dime_y);
+                        grafica[210 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                        grafica[213 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x*.8f, dime_x*.8f);
+                        grafica[213 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
+                        grafica[216 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x*.2f , dime_x * .2f);
+                        grafica[216 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x-dime_x*.35f, pos_y+dime_y*.37f);
+                        grafica_testo[216 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 20;
+                        grafica_testo[216 + n].GetComponent<TextMeshProUGUI>().text = ""+script_struttura_dati.livello_upgrade[n + 1];
+
+
+                       
+
+                        grafica[219 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x * .8f, dime_x * .2f);
+                        grafica[219 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y - dime_y * .38f);
+                        grafica_testo[219 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 20;
+
+
+                        pulsante[240 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x, dime_y);
+                        pulsante[240 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+
+                    }
+
+
+
+
+
+                }
+
+
+
+                if (pulsante[239] != null )  //exit
+                {
+                    float dx3 = risoluzione_x * 0.12f;
+                    float dy3 = dx3;
+                    pos_x = dime_panel_x * .465f;
+                    pos_y = dime_panel_y * .465f;
+
+
+                    pulsante[239].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
+                    pulsante[239].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                }
+
+                if (attivo_popup_premio < 1)
+                {
+                    uscita_popup(dime_panel_x, dime_panel_y);
+                }
+
+            }
+
+        }
 
     }
 
@@ -5906,7 +6220,124 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-    }
+        if (attivo_popup_premio == 2) //
+        {
+            if (grafica[260] != null)  //pannello
+        {
+
+            float dx2 = dx * .8f;
+            float dy2 = dy * .8f;
+
+            dime_panel_x = dx2;
+            dime_panel_y = dy2;
+
+            pos_x = 0;
+            pos_y = 0;
+
+            grafica[260].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+            grafica[260].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+        if (grafica[261] != null)  //titolo  txt
+        {
+
+            float dx2 = dy * .8f;
+            float dy2 = dx2 * (76f / 72f);
+            pos_x = 0;
+            pos_y = risoluzione_y * 0.5f - dy2 * .25f;
+
+            grafica[261].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[261].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[261].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 8f;
+            grafica_testo[261].GetComponent<TextMeshProUGUI>().text = upgrade_titolo[indice_upgrade_corrente];
+
+
+        }
+
+
+        if (grafica[262] != null)  //immagine oggetto
+        {
+
+            float dx2 = dy * .333f;
+            float dy2 = dx2;
+            pos_x = 0;
+            pos_y = dime_panel_y * .1f;
+
+            grafica[262].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[262].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+        if (grafica[263] != null)  //testo costo valuta
+        {
+            float dx2 = dy * .8f;
+            float dy2 = dx2 * (76f / 72f);
+            pos_x = dime_panel_x * 0.2f;
+            pos_y = dime_panel_y * -0.32f;
+
+            grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
+
+
+            grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]];
+
+            }
+
+        if (grafica[264] != null)  //immagine valuta
+        {
+            float dx2 = dx * .8f;
+            float dy2 = dx2 * (118f / 596f);
+            pos_x = 0;
+            pos_y = dime_panel_y * -0.18f;
+            grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+
+
+        if (pulsante[266] != null)  //buy tasto
+        {
+            float dx2 = dime_panel_x * 0.45f;
+            float dy2 = dime_panel_y * 0.09f;
+            pos_x = 0;
+            pos_y = dime_panel_y * -0.42f;
+            pulsante[266].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            pulsante[266].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+            pulsante_testo[266].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+        }
+        if (pulsante[268] != null)  //info tasto
+        {
+            float dx2 = dime_panel_x * 0.1f;
+            float dy2 = dime_panel_y * 0.05f;
+            pos_x = dime_panel_x * 0.35f;
+            pos_y = dime_panel_y * 0.3f;
+            pulsante[268].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            pulsante[268].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+        }
+
+        if (pulsante[267] != null)  //exit tasto
+        {
+            float dx2 = risoluzione_x * 0.12f;
+            float dy2 = dx2;
+            pos_x = dime_panel_x * .46f;
+            pos_y = dime_panel_y * .48f;
+
+
+            pulsante[267].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            pulsante[267].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+
+        uscita_popup_premio(dime_panel_x, dime_panel_y);
+
+    } //popup upgrade
+
+}
 
 
     void salva_le_stelle() {
@@ -5967,6 +6398,43 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     }
+
+    void uscita_popup_premio(float dime_panel_x, float dime_panel_y)
+    {
+        resetTimerPopup += Time.deltaTime;
+
+       
+
+
+        if (Input.GetMouseButtonDown(0) && resetTimerPopup > 0.5f)
+        {
+            resetTimerPopup = 0;
+            float dx = (risoluzione_x - dime_panel_x) * .5f;
+            float dy = (risoluzione_y - dime_panel_y) * .5f;
+
+
+            if (xm < dx || xm > risoluzione_x - dx)
+            {
+                distruggi_menu_popup_premio();
+            }
+
+
+            if (ym < dy || ym > risoluzione_y - dy)
+            {
+                distruggi_menu_popup_premio();
+            }
+
+
+
+
+        }
+
+
+
+
+
+    }
+
 
 
     void distruggi_menu() {
@@ -6182,9 +6650,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 #endif
 
 
+                    Debug.Log("online_dati" + online_dati);
+
 
                     if (online_dati == true) {
 
+                        Debug.Log("online");
 
                         StartCoroutine(load_project_online(livello_uso)); //TODO mettere il livello da script_struttura_dati
                     }

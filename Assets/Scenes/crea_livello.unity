@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -409,21 +409,21 @@ MonoBehaviour:
     crea_malus: []
     crea_moneta: []
     crea_gemma: []
-  level_json: {fileID: 4900000, guid: adf48ec06ba729c43b3f677a1dee3d0f, type: 3}
+  level_json: {fileID: 4900000, guid: 7628eb9807080fd46b6d8cd98a2214dc, type: 3}
   max_blocchi: 20
-  max_linee_blocchi: 15
   buchi_doppi: 1
-  solo_mine_e_ostacoli: 1
+  solo_mine_e_ostacoli: 0
+  max_linee_blocchi: 15
   distanza_partenza_blocchi: 35
   distanza_blocchi: 35
-  distanza_random: 12
   numero_aperture_minimo: 12
   numero_aperture_massimo: 14
+  percentuale_altri_blocchi: 79
+  distanza_random: 12
   fila_monete_cirolari: 4
   numero_monete_linea: 8
   numero_mine_ostacoli: 8
   percentuale_monete: 60
-  percentuale_altri_blocchi: 79
   percentuale_blocchi_rotanti: 0
   visione_boss: 0
   spostamento_z: 1
