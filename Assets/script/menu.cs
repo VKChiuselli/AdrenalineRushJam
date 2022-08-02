@@ -1374,12 +1374,7 @@ public class menu : MonoBehaviour {
                 grafica[210].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[210].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 grafica_testo[210].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 30f;
-                grafica_testo[210].GetComponent<TextMeshProUGUI>().text = "Chapter Stars 10/15";
-
-                //int totale_stelle_capitolo=0;
-                //for(int i=indice_pagina_livello_corrente * 5 - 5; i<indice_pagina_livello_corrente*5; i++) {
-                //    totale_stelle_capitolo += converti_stelle(script_struttura_dati.stelle_livello[i]);
-                //}
+                grafica_testo[210].GetComponent<TextMeshProUGUI>().text = $"Chapter Stars {totale_stelle_capitolo()}/15";
 
             }
             if (grafica[211] != null)  //stelle achieved
@@ -1736,13 +1731,22 @@ public class menu : MonoBehaviour {
 
     }
 
+    private int totale_stelle_capitolo() {
+
+        int totale_stelle_capitolo = 0;
+
+        for (int i = indice_pagina_livello_corrente * 5 - 5; i < indice_pagina_livello_corrente * 5; i++) {
+            totale_stelle_capitolo += converti_stelle(script_struttura_dati.stelle_livello[i]);
+        }
+
+        return totale_stelle_capitolo;
+    }
+
     int converti_stelle(string stelle_da_converire) {
 
         int valore_finale=0;
         char ch1 = stelle_da_converire[0];
-     //   valore_finale =+ 
-        valore_finale =ch1 - 0;
-     //   valore_finale =+ stelle_da_converire[2];
+        valore_finale =ch1 - '0';
 
         return valore_finale;
 
