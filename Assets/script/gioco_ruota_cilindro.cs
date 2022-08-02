@@ -4847,6 +4847,19 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
     }
+    
+    public void crea_tutorial_base(string testo_informativo, int tipologia) { //tutorial  con mano frecce che indicano fuori
+
+        tipo_tutorial = tipologia;
+
+        canvas_tutorial.SetActive(true);
+
+        crea_grafica_text(100, new Color(1, 1, 1, 0.74f), "", canvas_tutorial, "Canvas_tutorial", "UI/grafica_UI/sfondo_menu");//overlay scuro TODO cambiare grafica
+        crea_grafica_text(101, new Color(1, 1, 1, 0), testo_informativo, canvas_tutorial, "Canvas_tutorial", ""); //text testo_informativo
+        crea_grafica_text(102, new Color(1, 1, 1, 0), "Tap to continue", canvas_tutorial, "Canvas_tutorial", ""); //text Tap to continue
+
+
+    }
 
     public void crea_tutorial_con_indicatore(string testo_informativo, int tipologia) { //tutorial  con mano che indica un punto
 

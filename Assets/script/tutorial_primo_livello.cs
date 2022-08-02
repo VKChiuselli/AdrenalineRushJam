@@ -234,7 +234,7 @@ public class tutorial_primo_livello : MonoBehaviour {
 
     private void tutorial_bonus_speed() {
         Debug.Log("tutorial_bonus_speed");
-        Gioco_ruota_cilindro.crea_tutorial_frecce_laterali("You will find a variety of boosts in every level, this one speeds you up!", 0);
+        Gioco_ruota_cilindro.crea_tutorial_base("You will find a variety of boosts in every level, this one speeds you up!", 0);
     }
     private void tutorial_bonus_magnete() {
         Debug.Log("tutorial_bonus_magnete");
