@@ -832,7 +832,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     if (crea_popup_finale == 0) {
                         crea_popup_finale = 10;
                    //     GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, $"Level {script_struttura_dati.livello_in_uso}, FAILED");
-                        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, "Fail", $"Level {script_struttura_dati.livello_in_uso}, FAILED", "Level_Progress_Failed");
+                        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, "Fail", $"Level {script_struttura_dati.livello_in_uso}, FAILED", "Level_Progress");
                         crea_popup(2);
                     }
 
@@ -6359,7 +6359,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     void salva_le_stelle() {
 
        // GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, $"Level {script_struttura_dati.livello_in_uso}, COMPLETE", 1 + ok_energia_completa + ok_spari_completi);
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Complete", $"Level {script_struttura_dati.livello_in_uso}, COMPLETE!", $"Level_Progress{1 + ok_energia_completa + ok_spari_completi}");
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Complete", $"Level {script_struttura_dati.livello_in_uso}, COMPLETE!", "Level_Progress");
         if (script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso].Substring(1, 1) == "1") {
             ok_energia_completa = 1;
         }
