@@ -1881,7 +1881,7 @@ public class menu : MonoBehaviour {
 
             float dx2 = dy * .8f / 2;
             float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * 0.3f - dx2 * 2;
+            pos_x = risoluzione_x * .5f - dx2 * 2;
             pos_y = risoluzione_y * 0.45f;
 
             grafica[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -1894,7 +1894,7 @@ public class menu : MonoBehaviour {
 
             float dx2 = dy * .8f;
             float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * 0.3f - dx2;
+            pos_x = risoluzione_x * .5f - dx2;
             pos_y = risoluzione_y * 0.5f - dy2 * .9f;
 
             grafica[12].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -1911,7 +1911,7 @@ public class menu : MonoBehaviour {
 
             float dx2 = dy * .8f / 2;
             float dy2 = dx2 * (84f / 70f);
-            pos_x = risoluzione_x * 0.01f - dx2 * 2;
+            pos_x = 0;
             pos_y = risoluzione_y * 0.45f;
 
             grafica[13].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -1924,7 +1924,7 @@ public class menu : MonoBehaviour {
 
             float dx2 = dy * .8f;
             float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * 0.01f - dx2;
+            pos_x = 0;
             pos_y = risoluzione_y * 0.5f - dy2 * .9f;
 
             grafica[14].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
@@ -1936,19 +1936,6 @@ public class menu : MonoBehaviour {
 
         }
 
-
-        if (pulsante[15] != null)  //home pulsante
-        {
-
-            float dx2 = dy * 0.65f;
-            float dy2 = dx2 * (76f / 72f);
-            pos_x = risoluzione_x * .53f - dx2;
-            pos_y = risoluzione_y * 0.52f - dy2 * .9f;
-
-            pulsante[15].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-            pulsante[15].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-
-        }
 
     }
 
@@ -2250,7 +2237,7 @@ public class menu : MonoBehaviour {
         crea_grafica_text(13, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gem");
         crea_grafica_text(14, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
-        crea_button_text(15, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Home"); //pulsante seleziona livelli
+ //       crea_button_text(15, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Home"); //pulsante seleziona livelli
 
         grafica[31].GetComponent<Image>().raycastTarget = false;
         grafica_testo[31].GetComponent<TextMeshProUGUI>().raycastTarget = false;
