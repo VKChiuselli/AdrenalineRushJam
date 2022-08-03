@@ -1403,7 +1403,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
 
                 grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 15f;
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_x / 10f;
                 grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "Chapter " + indice_pagina_livello_corrente;
 
             }
@@ -1412,7 +1412,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
 
                 if (pulsante[202 + n] != null) //pulsante testo lista scelta
    {
-                    float dx2 = dime_panel_x * 0.4f;
+                    float dx2 = dime_panel_x * 0.38f;
                     float dy2 = dime_panel_y * 0.09f;
                     pos_x = dime_panel_x * 0.25f;
                     pos_y = dime_panel_y * 0.33f + n * dime_panel_y * -0.15f;
@@ -1420,7 +1420,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
                     pulsante[202 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(-pos_x, pos_y);
 
 
-                    pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 20f;
+                    pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 23f;
                 }
 
             }
@@ -1430,8 +1430,10 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
                 if (grafica[202 + n] != null) //stelle acquisite
    {
 
-                    float dy2 = dime_panel_y * 0.075f;
-                    float dx2 = dy2 * 3;
+                    
+                    float dx2 = dime_panel_x * 0.41f;
+                    float dy2 = dx2*.3333f;
+
 
                     pos_x = dime_panel_x * -0.2f;
                     pos_y = dime_panel_y * 0.33f + n * dime_panel_y * -0.15f;
@@ -1472,8 +1474,8 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             if (grafica[210] != null)  //stelle guadagnate testo
        {
 
-                float dx2 = dy * .43f;
-                float dy2 = dx2;
+                float dx2 = dime_panel_x * 0.6f;
+                float dy2 = dx2*.5f;
                 pos_x = dime_panel_x * -0.13f;
                 pos_y = dime_panel_y * -0.41f;
 
@@ -1858,10 +1860,12 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
                     pulsante[206].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
                     pulsante[206].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
+
+
+
+                    uscita_popup(dime_panel_x, dime_panel_y);
+
                 }
-
-
-                uscita_popup(dime_panel_x, dime_panel_y);
 
             }
 

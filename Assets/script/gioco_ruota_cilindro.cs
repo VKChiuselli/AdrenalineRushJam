@@ -5513,7 +5513,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                             pulsante[200 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
 
-
+                            pulsante_testo[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dxp*2, dyp);
 
                             pulsante[200 + n].transform.localScale = new Vector3(grafica_dime[n], grafica_dime[n], 1);
 
@@ -5879,7 +5879,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 grafica[202].transform.localEulerAngles = new Vector3(0, 0, rotazione_ruota_tick);
 
 
-               
+
 
 
 
@@ -5894,10 +5894,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     pulsante[206].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
                     pulsante[206].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
+
+
+
+                    uscita_popup(dime_panel_x, dime_panel_y);
+
                 }
-
-
-                uscita_popup(dime_panel_x, dime_panel_y);
 
             }
 
@@ -6088,7 +6090,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                                 pos_x = dime_panel_x * +.2f;
 
                             }
-
+                       
+                            if (n == 2)
+                        {
+                            pos_x = 0;
+                        }
 
 
                         grafica[210 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x, dime_y);
