@@ -1358,23 +1358,25 @@ public class menu : MonoBehaviour {
 
                 if (grafica[200] != null)  //pannello ruota
             {
-                if (diff_xm < -risoluzione_x / 75f && slider_avaiable == 0) {
-                    if (indice_pagina_livello_corrente != 40) {
-                        silder_time = 1f;
-                        indice_pagina_livello_corrente++;
-                        aggiorna_grafica_testo_menu_selezionato();
-                        aggiorna_grafica_stelle();
-                        aggiorna_nome_livello();
+                if (click_navicella == 0) {
+                    if (diff_xm < -risoluzione_x / 75f && slider_avaiable == 0) {
+                        if (indice_pagina_livello_corrente != 40) {
+                            silder_time = 1f;
+                            indice_pagina_livello_corrente++;
+                            aggiorna_grafica_testo_menu_selezionato();
+                            aggiorna_grafica_stelle();
+                            aggiorna_nome_livello();
+                        }
                     }
-                }
-                else
-     if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
-                    if (indice_pagina_livello_corrente != 1) {
-                        silder_time = 1f;
-                        indice_pagina_livello_corrente--;
-                        aggiorna_grafica_testo_menu_selezionato();
-                        aggiorna_grafica_stelle();
-                        aggiorna_nome_livello();
+                    else
+if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
+                        if (indice_pagina_livello_corrente != 1) {
+                            silder_time = 1f;
+                            indice_pagina_livello_corrente--;
+                            aggiorna_grafica_testo_menu_selezionato();
+                            aggiorna_grafica_stelle();
+                            aggiorna_nome_livello();
+                        }
                     }
                 }
 
