@@ -180,13 +180,13 @@ public class menu : MonoBehaviour {
         aggiorno_stelle();
 
 
-        crea_menu();
+      
 
         if (!PlayerPrefs.HasKey("tutorial_seleziona_menu")) {
             click_navicella = 1;
 
         }
-
+        crea_menu();
     }
 
 
@@ -473,8 +473,52 @@ public class menu : MonoBehaviour {
         aggiorna_menu_sinistra();
         aggiorna_menu_destra();
         aggiorna_menu_battlepass();
+
+        if (click_navicella == 1) {
+            aggiorna_testo_tutorial();
+        }
     }
 
+    private void aggiorna_testo_tutorial() {
+
+        float dx = risoluzione_x;
+        float dy = risoluzione_y;
+
+        float pos_x = 0;
+        float pos_y = 0;
+
+
+
+        if (grafica[50] != null)  //mano tutorial 
+        {
+
+            float dx2 = dx * 0.15f;
+            float dy2 = dy * 0.15f;
+            pos_x = risoluzione_x * 0.15f;
+            pos_y = 0;
+
+            grafica[50].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[50].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+        }
+
+        if (grafica[51] != null) //descrizione tutorial
+        {
+
+            float dx2 = dx * 1.5f;
+            float dy2 = 0;
+            pos_x = 0;
+            pos_y = risoluzione_y * 0.215f;
+
+            grafica[51].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+            grafica[51].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            grafica_testo[51].GetComponent<TextMeshProUGUI>().text = "CLICK THE AIRSHIP TO SELECT WHICH LEVEL TO PLAY";
+            grafica_testo[51].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 26f;
+
+        }
+
+    }
 
     private void aggiorna_menu_sfondo() {
         float dy = risoluzione_y * .125f;
@@ -1310,9 +1354,9 @@ public class menu : MonoBehaviour {
         } //popup opzioni
         else if (attivo_popup == 4)//popup seleziona livelli
         {
-          
+      
 
-            if (grafica[200] != null)  //pannello ruota
+                if (grafica[200] != null)  //pannello ruota
             {
                 if (diff_xm < -risoluzione_x / 75f && slider_avaiable == 0) {
                     if (indice_pagina_livello_corrente != 40) {
@@ -1451,6 +1495,41 @@ public class menu : MonoBehaviour {
                 grafica[211].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             }
+
+
+
+            if (click_navicella == 1) {
+                if (grafica[220] != null)  //mano tutorial 
+  {
+
+                    float dx2 = dx * 0.15f;
+                    float dy2 = dy * 0.15f;
+                    pos_x = risoluzione_x * -.1f;
+                    pos_y = risoluzione_y * 0.18f;
+
+                    grafica[220].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                    grafica[220].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                }
+
+                if (grafica[221] != null) //descrizione tutorial
+                {
+
+                    float dx2 = dx * 1.5f;
+                    float dy2 = 0;
+                    pos_x = 0;
+                    pos_y = risoluzione_y * 0.085f;
+
+                    grafica[221].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
+                    grafica[221].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+                    grafica_testo[221].GetComponent<TextMeshProUGUI>().text = "CLICK LEVEL 1 TO PLAY";
+                    grafica_testo[221].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 26f;
+
+                }
+
+            }
+
 
 
             uscita_popup(dime_panel_x, dime_panel_y);
@@ -2306,12 +2385,20 @@ public class menu : MonoBehaviour {
         crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
         crea_button_text(4, "UPGRADE", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
         crea_grafica_text(13, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gem");
-        crea_grafica_text(14, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+        if (click_navicella == 1) {
+            crea_grafica_text(50, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/hand");
+            crea_grafica_text(51, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
+            grafica[50].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[50].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+            grafica[51].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[51].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+        }
 
-        //       crea_button_text(15, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Home"); //pulsante seleziona livelli
+        crea_grafica_text(14, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
         grafica[31].GetComponent<Image>().raycastTarget = false;
         grafica_testo[31].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+
     }
 
     void crea_popup(int num = 1) {
@@ -2443,6 +2530,17 @@ public class menu : MonoBehaviour {
                                                                                                                                 //   crea_button_text(217, "PLAY", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //pulsante gioca dentro il popup seleziona
         crea_grafica_text(210, new Color(1, 1, 1, 0), "Stars Gained 0/5", canvas_popup, "Canvas_popup/Panel", ""); //titolo capitolo selezionato
         crea_grafica_text(211, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/stella 1");  //testo/titolo oggetto shop
+
+        if (click_navicella==1) {
+            crea_grafica_text(220, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/hand");
+            crea_grafica_text(221, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", "");
+            grafica[220].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[220].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+            grafica[221].GetComponent<Image>().raycastTarget = false;
+            grafica_testo[221].GetComponent<TextMeshProUGUI>().raycastTarget = false;
+        }
+  
+
 
         aggiorna_nome_livello();
     }
@@ -3337,7 +3435,7 @@ public class menu : MonoBehaviour {
                 }
             }
 
-            if (attivo_popup == 4 &&  grafica[200] != null) {
+            if (attivo_popup == 4 && grafica[200] != null) {
                 for (int n = 0; n < 5; n++) {
                     if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 5 - (5 - (n + 1)))) {
                         if (num == 202 + n) {
