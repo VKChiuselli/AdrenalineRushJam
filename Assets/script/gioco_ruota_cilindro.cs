@@ -3432,14 +3432,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     int valore_rnd = (int)(UnityEngine.Random.Range(.0f, 10.0f));
 
 
-                    if (valore_rnd<=2 && ok_skin==1)
+                    if (valore_rnd <= 2 && ok_skin == 1)
                     {
                         premio_vinto = 1;
 
                     }
 
 
-                    if (ok_skin==0 || valore_rnd>=3)  // vinci upgrade
+                    if (ok_skin == 0 || valore_rnd >= 3)  // vinci upgrade
                     {
                         premio_vinto = 2;
 
@@ -3450,7 +3450,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                         }
 
-                        if (valore_rnd >= 7 )
+                        if (valore_rnd >= 7)
                         {
                             premio_vinto = 6;
 
@@ -3461,8 +3461,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                    }
-                    else
+                }
+                else
                 {
 
                     // vinci monete
@@ -3478,9 +3478,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     }
 
 
+                }
+
             }
-
-
 
 
 
