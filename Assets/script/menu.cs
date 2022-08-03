@@ -120,7 +120,7 @@ public class menu : MonoBehaviour {
     float rotazione_effetto_premio = 0;
 
     float sposta_button_x = 1;
-
+    int skin_vinta = -1;
 
 
     //UI particles
@@ -179,10 +179,9 @@ public class menu : MonoBehaviour {
         crea_menu();
     }
 
-    int skin_vinta = -1;
 
-    void ricerca_skin()
-    {
+
+    void ricerca_skin() {
 
         skin_vinta = -1;
 
@@ -191,10 +190,8 @@ public class menu : MonoBehaviour {
         int aum_skin = -1;
 
 
-        for (int n = 0; n <= 7; n++)
-        {
-            if (script_struttura_dati.astronave_skin_comprate[n] == 0)
-            {
+        for (int n = 0; n <= 7; n++) {
+            if (script_struttura_dati.astronave_skin_comprate[n] == 0) {
                 aum_skin = aum_skin + 1;
                 skin_v[aum_skin] = n;
             }
@@ -202,14 +199,12 @@ public class menu : MonoBehaviour {
         }
 
 
-        if (aum_skin > -1)
-        {
+        if (aum_skin > -1) {
             int skin_vinta_calcoolo = (int)(UnityEngine.Random.Range(aum_skin, aum_skin + .99f));
 
 
 
-            if (skin_vinta_calcoolo > 7)
-            {
+            if (skin_vinta_calcoolo > 7) {
                 skin_vinta_calcoolo = 7;
             }
 
@@ -221,7 +216,6 @@ public class menu : MonoBehaviour {
 
 
     }
-
     private void conta_nuove_stelle() {
 
         int stelle_nuove = 0;
@@ -2488,8 +2482,7 @@ public class menu : MonoBehaviour {
 
             string nome_premio = "premio " + premio_vinto;
 
-            if (premio_vinto == 1)
-            {
+            if (premio_vinto == 1) {
                 nome_premio = "skin " + skin_vinta;
 
                 script_struttura_dati.astronave_skin_comprate[skin_vinta] = 1;
@@ -3076,19 +3069,91 @@ public class menu : MonoBehaviour {
             pagina = 0;
         }
 
+
         if (num == 205) {
 
             attiva_rotazione_ruota = 1;
 
             rotazione_ruota = 3600;
 
-            if (!PlayerPrefs.HasKey("primoPremioSkin")) {
+            int player_vinto_skin_prima_volta = PlayerPrefs.GetInt("player_vinto_skin_prima_volta");
+
+            if (player_vinto_skin_prima_volta == 0) {
+
                 premio_vinto = 1;
-                PlayerPrefs.SetInt("astronave_skin_comprate1", 1);
-                PlayerPrefs.SetInt("primoPremioSkin", 1);
+
             }
-         
-            
+            else {
+
+                if (UnityEngine.Random.Range(.0f, 10.0f) < 3) {
+
+
+                    // vinci updgrade
+                    // vinci una skin
+
+
+                    // controlla se hai tuttte le skin
+
+                    int ok_skin = 0;
+
+                    for (int n = 0; n <= 7; n++) {
+                        if (script_struttura_dati.astronave_skin_comprate[n] == 0) {
+                            ok_skin = 1;
+                        }
+
+                    }
+
+
+                    int valore_rnd = (int)(UnityEngine.Random.Range(.0f, 10.0f));
+
+
+                    if (valore_rnd <= 2 && ok_skin == 1) {
+                        premio_vinto = 1;
+
+                    }
+
+
+                    if (ok_skin == 0 || valore_rnd >= 3)  // vinci upgrade
+                    {
+                        premio_vinto = 2;
+
+
+                        if (valore_rnd >= 5 && valore_rnd <= 7) {
+                            premio_vinto = 4;
+
+                        }
+
+                        if (valore_rnd >= 7) {
+                            premio_vinto = 6;
+
+                        }
+
+                    }
+
+                }
+                else {
+
+                    // vinci monete
+
+                    premio_vinto = 3;
+
+
+
+                    if (UnityEngine.Random.Range(.0f, 10.0f) > 6) {
+
+                        premio_vinto = 5;
+                    }
+
+
+                }
+
+            }
+
+
+
+
+            ricerca_skin(); 
+
 
             rotazione_ruota_arrivo = premio_vinto * 60 - 30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
 
@@ -3106,8 +3171,9 @@ public class menu : MonoBehaviour {
             if (pulsante[31].GetComponent<timer_reward>() != null) {
                 pulsante[31].GetComponent<timer_reward>().Click();
             }
-        }
 
+        }
+      
 
 
         if (num == 100) {

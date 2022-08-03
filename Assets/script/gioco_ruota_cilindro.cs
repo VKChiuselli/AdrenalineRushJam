@@ -3485,8 +3485,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-            ricerca_skin(); // a cosa serve questo metodo se non ritorna un valore? e non c'è neanche un setting dei playerPrefs 
-
+            ricerca_skin(); 
 
             rotazione_ruota_arrivo = premio_vinto * 60 - 30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
 
