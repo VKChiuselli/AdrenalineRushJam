@@ -6476,8 +6476,13 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     void salva_le_stelle() {
 
-       // GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, $"Level {script_struttura_dati.livello_in_uso}, COMPLETE", 1 + ok_energia_completa + ok_spari_completi);
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Complete", $"Level {script_struttura_dati.livello_in_uso}, COMPLETE!", "Level_Progress");
+
+        script_struttura_dati.livelli_completati_per_sbloccare_cassa = script_struttura_dati.livelli_completati_per_sbloccare_cassa + 1;
+        if (script_struttura_dati.livelli_completati_per_sbloccare_cassa > 5) {
+            script_struttura_dati.livelli_completati_per_sbloccare_cassa = 5;
+        }
+        PlayerPrefs.SetInt("livelli_completati_per__sbloccare_cassa", script_struttura_dati.livelli_completati_per_sbloccare_cassa);
         if (script_struttura_dati.stelle_livello[script_struttura_dati.livello_in_uso].Substring(1, 1) == "1") {
             ok_energia_completa = 1;
         }

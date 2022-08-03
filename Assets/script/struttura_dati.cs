@@ -22,6 +22,7 @@ public class struttura_dati : MonoBehaviour {
 
     public int disattiva_musica = 0;
     public int disattiva_effetti = 0;
+    public int livelli_completati_per_sbloccare_cassa = 0;
 
     void Start() {
         DontDestroyOnLoad(this.gameObject);
@@ -36,8 +37,7 @@ public class struttura_dati : MonoBehaviour {
         gemme = PlayerPrefs.GetInt("gemme");
         energia = PlayerPrefs.GetInt("energia");
         astronave_skin = PlayerPrefs.GetInt("astronave_skin");
-
-
+        livelli_completati_per_sbloccare_cassa = PlayerPrefs.GetInt("livelli_completati_per_sbloccare_cassa");
 
         stelle_battle_pass = PlayerPrefs.GetInt("stelle_battle_pass");
         livello_massimo_raggiunto = PlayerPrefs.GetInt("livello_massimo_raggiunto");
@@ -69,6 +69,7 @@ public class struttura_dati : MonoBehaviour {
     public void primo_login() {
         inizializzazione_dati();
         PlayerPrefs.SetInt("livello_in_uso", 1);
+        PlayerPrefs.SetInt("livelli_completati_per_sbloccare_cassa", 0);
         PlayerPrefs.SetInt("livello_massimo_raggiunto", 1);
         PlayerPrefs.SetInt("monete", 0);
         PlayerPrefs.SetInt("gemme", 0);
