@@ -303,8 +303,7 @@ public class menu : MonoBehaviour {
 
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        {
+        if (Input.GetKeyUp(KeyCode.Alpha2)) {
 
             crea_popup_ruota(7);
 
@@ -785,8 +784,8 @@ public class menu : MonoBehaviour {
         }
 
     }
-    float silder_time=0;
-    int slider_avaiable=0;
+    float silder_time = 0;
+    int slider_avaiable = 0;
     public void controllo_risoluzione() {
 
         controllo_mobile = 0;
@@ -796,12 +795,12 @@ public class menu : MonoBehaviour {
             silder_time = silder_time - Time.deltaTime;
             slider_avaiable = 1;
         }
-        else { 
+        else {
             slider_avaiable = 0;
         }
-      
 
-#if (UNITY_ANDROID || UNITY_IOS) &&  !UNITY_EDITOR
+
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
 
         controllo_mobile = 1;
 
@@ -1301,7 +1300,7 @@ public class menu : MonoBehaviour {
         } //popup opzioni
         else if (attivo_popup == 4)//popup seleziona livelli
         {
-            if (diff_xm < -risoluzione_x / 75f && slider_avaiable==0) {
+            if (diff_xm < -risoluzione_x / 75f && slider_avaiable == 0) {
                 if (indice_pagina_livello_corrente != 40) {
                     silder_time = 1f;
                     indice_pagina_livello_corrente++;
@@ -1311,7 +1310,7 @@ public class menu : MonoBehaviour {
                 }
             }
             else
-       if (diff_xm >  risoluzione_x / 75f && slider_avaiable == 0) {
+       if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
                 if (indice_pagina_livello_corrente != 1) {
                     silder_time = 1f;
                     indice_pagina_livello_corrente--;
@@ -1428,17 +1427,17 @@ public class menu : MonoBehaviour {
 
             }
             if (grafica[211] != null)  //stelle achieved
-      
+
 
  {
 
-                    float dx2 = dime_panel_x * 0.2f;
-                    float dy2 = dx2;
+                float dx2 = dime_panel_x * 0.2f;
+                float dy2 = dx2;
 
-                    pos_x = dime_panel_x * 0.3f;
-                    pos_y = dime_panel_y * -0.4f;
-                    grafica[211].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
-                    grafica[211].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                pos_x = dime_panel_x * 0.3f;
+                pos_y = dime_panel_y * -0.4f;
+                grafica[211].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[211].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
             }
 
@@ -1785,7 +1784,7 @@ public class menu : MonoBehaviour {
 
         int totale_stelle_capitolo = 0;
 
-        for (int i = indice_pagina_livello_corrente * 5 - 5; i < indice_pagina_livello_corrente * 5; i++) {
+        for (int i = indice_pagina_livello_corrente * 5 - 4; i < indice_pagina_livello_corrente * 5 + 1; i++) {
             totale_stelle_capitolo += converti_stelle(script_struttura_dati.stelle_livello[i]);
         }
 
@@ -1794,13 +1793,13 @@ public class menu : MonoBehaviour {
 
     int converti_stelle(string stelle_da_converire) {
 
-        int valore_finale=0;
+        int valore_finale = 0;
         char ch1 = stelle_da_converire[0];
         char ch2 = stelle_da_converire[1];
         char ch3 = stelle_da_converire[2];
-        valore_finale =ch1 - '0';
-        valore_finale +=ch2 - '0';
-        valore_finale +=ch3 - '0';
+        valore_finale = ch1 - '0';
+        valore_finale += ch2 - '0';
+        valore_finale += ch3 - '0';
 
         return valore_finale;
 
@@ -2068,7 +2067,7 @@ public class menu : MonoBehaviour {
             else if (!pulsante[31].GetComponent<Button>().interactable) {
                 grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "" + espositore_data(pulsante[31].GetComponent<timer_reward>().GetTimeLeft());
             }
-            else if(pulsante[31].GetComponent<Button>().interactable && script_struttura_dati.livelli_completati_per_sbloccare_cassa != 5) {
+            else if (pulsante[31].GetComponent<Button>().interactable && script_struttura_dati.livelli_completati_per_sbloccare_cassa != 5) {
                 grafica_testo[31].GetComponent<TextMeshProUGUI>().text = $"{script_struttura_dati.livelli_completati_per_sbloccare_cassa}/5";
                 grafica_testo[31].GetComponent<TextMeshProUGUI>().color = Color.black;
             }
@@ -2086,8 +2085,8 @@ public class menu : MonoBehaviour {
         if (pulsante[11] != null) { //pulsante seleziona livelli
 
 
-            float dy2 = risoluzione_y * 0.3f  ;
-            float dx2 = dy2 ;
+            float dy2 = risoluzione_y * 0.3f;
+            float dx2 = dy2;
 
 
 
@@ -2290,7 +2289,7 @@ public class menu : MonoBehaviour {
         pulsante[31].AddComponent<timer_reward>();
         crea_grafica_text(31, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
         crea_grafica_text(20, new Color(1, 1, 1, 0), "Level " + script_struttura_dati.livello_in_uso, canvas, "Canvas", "");
-        crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/skinc "+ script_struttura_dati.astronave_skin); //pulsante seleziona livelli
+        crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/skinc " + script_struttura_dati.astronave_skin); //pulsante seleziona livelli
 
         crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
         crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
@@ -2298,7 +2297,7 @@ public class menu : MonoBehaviour {
         crea_grafica_text(13, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/StatusBarIcon_Gem");
         crea_grafica_text(14, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
- //       crea_button_text(15, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Home"); //pulsante seleziona livelli
+        //       crea_button_text(15, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Home"); //pulsante seleziona livelli
 
         grafica[31].GetComponent<Image>().raycastTarget = false;
         grafica_testo[31].GetComponent<TextMeshProUGUI>().raycastTarget = false;
@@ -2495,11 +2494,10 @@ public class menu : MonoBehaviour {
     }
 
 
- 
 
 
-    void crea_popup_premio(int num = 8)
-    {
+
+    void crea_popup_premio(int num = 8) {
 
 
 
@@ -2514,8 +2512,7 @@ public class menu : MonoBehaviour {
 
         suona_effetto_UI(5, 1);
 
-        if (num == 8)
-        {
+        if (num == 8) {
 
             crea_grafica_text(260, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/sfondo_popUP_premio"); //pannello shop
 
@@ -2542,22 +2539,19 @@ public class menu : MonoBehaviour {
             crea_grafica_text(265, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
 
 
-            if (premio_vinto == 2)
-            {
+            if (premio_vinto == 2) {
 
                 script_struttura_dati.livello_upgrade[0] = script_struttura_dati.livello_upgrade[0] + 1;
                 PlayerPrefs.SetInt($"LivelloUpgrade{0}", (script_struttura_dati.livello_upgrade[0]));
 
             }
 
-            if (premio_vinto == 3)
-            {
+            if (premio_vinto == 3) {
                 script_struttura_dati.monete = script_struttura_dati.monete + 100;
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
             }
 
-            if (premio_vinto == 4)
-            {
+            if (premio_vinto == 4) {
 
                 script_struttura_dati.livello_upgrade[1] = script_struttura_dati.livello_upgrade[1] + 1;
                 PlayerPrefs.SetInt($"LivelloUpgrade{1}", (script_struttura_dati.livello_upgrade[1]));
@@ -2565,14 +2559,12 @@ public class menu : MonoBehaviour {
             }
 
 
-            if (premio_vinto == 5)
-            {
+            if (premio_vinto == 5) {
                 script_struttura_dati.monete = script_struttura_dati.monete + 200;
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
             }
 
-            if (premio_vinto == 6)
-            {
+            if (premio_vinto == 6) {
 
                 script_struttura_dati.livello_upgrade[2] = script_struttura_dati.livello_upgrade[2] + 1;
                 PlayerPrefs.SetInt($"LivelloUpgrade{2}", (script_struttura_dati.livello_upgrade[2]));
@@ -2590,8 +2582,7 @@ public class menu : MonoBehaviour {
 
 
 
-    void aggiorna_menu_popup_premio()
-    {
+    void aggiorna_menu_popup_premio() {
 
 
         float dy = risoluzione_y;
@@ -2605,15 +2596,12 @@ public class menu : MonoBehaviour {
 
 
 
-        for (int n = 0; n <= 30; n++)
-        {
-            if (grafica[260 + n] != null)
-            {
+        for (int n = 0; n <= 30; n++) {
+            if (grafica[260 + n] != null) {
                 grafica[260 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
 
-            if (pulsante[260 + n] != null)
-            {
+            if (pulsante[260 + n] != null) {
                 pulsante[260 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
         }
@@ -2626,8 +2614,7 @@ public class menu : MonoBehaviour {
 
         if (attivo_popup_premio == 8) //
         {
-            if (grafica[260] != null)
-            {
+            if (grafica[260] != null) {
 
                 float dx2 = dx * .7f;
                 float dy2 = dx * .85f;
@@ -2658,8 +2645,7 @@ public class menu : MonoBehaviour {
 
 
 
-                if (premio_vinto == 1)
-                {
+                if (premio_vinto == 1) {
 
                     grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
                     grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_y * .315f);
@@ -2667,33 +2653,27 @@ public class menu : MonoBehaviour {
 
                     string nome_skin = "RED SKIN";
 
-                    if (skin_vinta == 2)
-                    {
+                    if (skin_vinta == 2) {
                         nome_skin = "YELLOW SKIN";
                     }
 
-                    if (skin_vinta == 3)
-                    {
+                    if (skin_vinta == 3) {
                         nome_skin = "GREEN SKIN";
                     }
 
-                    if (skin_vinta == 4)
-                    {
+                    if (skin_vinta == 4) {
                         nome_skin = "BLACK SKIN";
                     }
 
-                    if (skin_vinta == 5)
-                    {
+                    if (skin_vinta == 5) {
                         nome_skin = "GRAY SKIN";
                     }
 
-                    if (skin_vinta == 6)
-                    {
+                    if (skin_vinta == 6) {
                         nome_skin = "LIGHT BLUE SKIN";
                     }
 
-                    if (skin_vinta == 7)
-                    {
+                    if (skin_vinta == 7) {
                         nome_skin = "ORANGE SKIN";
                     }
 
@@ -2706,8 +2686,7 @@ public class menu : MonoBehaviour {
 
 
 
-                if (premio_vinto == 2 || premio_vinto == 4 || premio_vinto == 6)
-                {
+                if (premio_vinto == 2 || premio_vinto == 4 || premio_vinto == 6) {
 
                     grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
                     grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_y * .315f);
@@ -2716,13 +2695,11 @@ public class menu : MonoBehaviour {
 
                     string testo = "" + "UPGRADE BARRIER";
 
-                    if (premio_vinto == 4)
-                    {
+                    if (premio_vinto == 4) {
                         testo = "" + "UPGRADE AGILITY";
                     }
 
-                    if (premio_vinto == 6)
-                    {
+                    if (premio_vinto == 6) {
                         testo = "" + "UPGRADE ENERGY";
                     }
 
@@ -2748,8 +2725,7 @@ public class menu : MonoBehaviour {
                 }
 
 
-                if (premio_vinto == 3)
-                {
+                if (premio_vinto == 3) {
 
                     grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
                     grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
@@ -2766,8 +2742,7 @@ public class menu : MonoBehaviour {
 
 
 
-                if (premio_vinto == 5)
-                {
+                if (premio_vinto == 5) {
 
                     grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
                     grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
@@ -2784,8 +2759,7 @@ public class menu : MonoBehaviour {
 
             tempo_click_premio = tempo_click_premio - Time.deltaTime;
 
-            if (tempo_click_premio < 0 && Input.GetMouseButtonUp(0))
-            {
+            if (tempo_click_premio < 0 && Input.GetMouseButtonUp(0)) {
 
                 distruggi_menu_popup();
                 distruggi_menu_popup_premio();
@@ -3058,7 +3032,7 @@ public class menu : MonoBehaviour {
             SceneManager.LoadScene("gioco");
         }
 
-        if (num == 31 && script_struttura_dati.livelli_completati_per_sbloccare_cassa==5) {
+        if (num == 31 && script_struttura_dati.livelli_completati_per_sbloccare_cassa == 5) {
 
             crea_popup_ruota(7);
             //script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
@@ -3195,7 +3169,7 @@ public class menu : MonoBehaviour {
 
 
 
-            ricerca_skin(); 
+            ricerca_skin();
 
 
             rotazione_ruota_arrivo = premio_vinto * 60 - 30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
@@ -3216,7 +3190,7 @@ public class menu : MonoBehaviour {
             }
 
         }
-      
+
 
 
         if (num == 100) {
@@ -3608,8 +3582,7 @@ public class menu : MonoBehaviour {
         if (script_struttura_dati != null) {
             if (script_struttura_dati.disattiva_effetti == 0) {
 
-                if (effetto_source_UI[tipologia] != null)
-                {
+                if (effetto_source_UI[tipologia] != null) {
 
                     effetto_source_UI[tipologia].Play();
                     effetto_source_UI[tipologia].volume = volume;
