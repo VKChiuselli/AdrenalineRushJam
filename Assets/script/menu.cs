@@ -3501,26 +3501,6 @@ public class menu : MonoBehaviour {
                 }
             }
 
-            if (num == 215) { //pulsante seleziona livello destra
-                if (indice_pagina_livello_corrente != 40) {
-                    indice_pagina_livello_corrente++;
-                    aggiorna_grafica_testo_menu_selezionato();
-                    aggiorna_grafica_stelle();
-                    aggiorna_nome_livello();
-                }
-            }
-
-            if (num == 216) {//pulsante seleziona livello sinistra
-                if (indice_pagina_livello_corrente != 1) {
-                    indice_pagina_livello_corrente--;
-                    aggiorna_grafica_testo_menu_selezionato();
-                    aggiorna_grafica_stelle();
-                    aggiorna_nome_livello();
-                }
-
-
-            }
-
         }
     }
 
