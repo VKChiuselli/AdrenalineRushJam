@@ -719,7 +719,7 @@ public class menu : MonoBehaviour {
         int aumento_pos_x = -1;
         int aumento_pos_y = 0;
 
-        for (int n = 0; n < 9; n++) {
+        for (int n = 0; n < 4; n++) {
 
             float dx2 = risoluzione_x * .44f;
             float dy2 = dx2 * (650 / 470.0f);
@@ -785,11 +785,21 @@ public class menu : MonoBehaviour {
         }
 
     }
-
+    float silder_time=0;
+    int slider_avaiable=0;
     public void controllo_risoluzione() {
 
         controllo_mobile = 0;
 
+
+        if (silder_time > 0.5f) {
+            silder_time = silder_time - Time.deltaTime;
+            slider_avaiable = 1;
+        }
+        else { 
+            slider_avaiable = 0;
+        }
+      
 
 #if (UNITY_ANDROID || UNITY_IOS) &&  !UNITY_EDITOR
 
@@ -1291,8 +1301,9 @@ public class menu : MonoBehaviour {
         } //popup opzioni
         else if (attivo_popup == 4)//popup seleziona livelli
         {
-            if (diff_xm > risoluzione_x / 75f) {
+            if (diff_xm < -risoluzione_x / 75f && slider_avaiable==0) {
                 if (indice_pagina_livello_corrente != 40) {
+                    silder_time = 1f;
                     indice_pagina_livello_corrente++;
                     aggiorna_grafica_testo_menu_selezionato();
                     aggiorna_grafica_stelle();
@@ -1300,8 +1311,9 @@ public class menu : MonoBehaviour {
                 }
             }
             else
-       if (diff_xm < -risoluzione_x / 75f) {
+       if (diff_xm >  risoluzione_x / 75f && slider_avaiable == 0) {
                 if (indice_pagina_livello_corrente != 1) {
+                    silder_time = 1f;
                     indice_pagina_livello_corrente--;
                     aggiorna_grafica_testo_menu_selezionato();
                     aggiorna_grafica_stelle();
@@ -2223,8 +2235,8 @@ public class menu : MonoBehaviour {
         shop_quantita_gemme[5] = 120;
 
 
-        for (int n = 0; n < 6; n++) {
-            if (n == 4 || n == 5) {
+        for (int n = 0; n < 4; n++) {
+            if (n == 3) {
                 break;
             }
             crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
