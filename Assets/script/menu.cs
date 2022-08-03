@@ -1291,6 +1291,24 @@ public class menu : MonoBehaviour {
         } //popup opzioni
         else if (attivo_popup == 4)//popup seleziona livelli
         {
+            if (diff_xm > risoluzione_x / 75f) {
+                if (indice_pagina_livello_corrente != 40) {
+                    indice_pagina_livello_corrente++;
+                    aggiorna_grafica_testo_menu_selezionato();
+                    aggiorna_grafica_stelle();
+                    aggiorna_nome_livello();
+                }
+            }
+            else
+       if (diff_xm < -risoluzione_x / 75f) {
+                if (indice_pagina_livello_corrente != 1) {
+                    indice_pagina_livello_corrente--;
+                    aggiorna_grafica_testo_menu_selezionato();
+                    aggiorna_grafica_stelle();
+                    aggiorna_nome_livello();
+                }
+            }
+
             if (grafica[200] != null)  //pannello opzioni
             {
 

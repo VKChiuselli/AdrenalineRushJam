@@ -3505,7 +3505,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         }
 
 
-        if (num == 206 || num == 239)
+        if (num == 206 || num == 229)
         {
 
             distruggi_menu_popup();
@@ -4769,7 +4769,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-            crea_button_text(239, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
+            crea_button_text(229, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
         }
 
@@ -4781,7 +4781,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/sfondo_popUP"); //SCRIVERE COSA è
             crea_grafica_text(201, new Color(1, 1, 1, 0), "", canvas_popup, "Canvas_popup/Panel", ""); //SCRIVERE COSA è
 
-            crea_button_text(239, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
+            crea_button_text(229, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
 
            
 
@@ -6007,7 +6007,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                if (pulsante[239] != null && attiva_rotazione_ruota == 0)  //exit
+                if (pulsante[229] != null && attiva_rotazione_ruota == 0)  //exit
                 {
                     float dx3 = risoluzione_x * 0.12f;
                     float dy3 = dx3;
@@ -6015,8 +6015,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     pos_y = dime_panel_y * .465f;
 
 
-                    pulsante[239].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
-                    pulsante[239].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                    pulsante[229].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
+                    pulsante[229].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 }
 
@@ -6125,7 +6125,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                if (pulsante[239] != null )  //exit
+                if (pulsante[229] != null )  //exit
                 {
                     float dx3 = risoluzione_x * 0.12f;
                     float dy3 = dx3;
@@ -6133,8 +6133,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                     pos_y = dime_panel_y * .465f;
 
 
-                    pulsante[239].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
-                    pulsante[239].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+                    pulsante[229].GetComponent<RectTransform>().sizeDelta = new Vector2(dx3, dy3);
+                    pulsante[229].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 }
 
