@@ -1796,7 +1796,11 @@ public class menu : MonoBehaviour {
 
         int valore_finale=0;
         char ch1 = stelle_da_converire[0];
+        char ch2 = stelle_da_converire[1];
+        char ch3 = stelle_da_converire[2];
         valore_finale =ch1 - '0';
+        valore_finale +=ch2 - '0';
+        valore_finale +=ch3 - '0';
 
         return valore_finale;
 

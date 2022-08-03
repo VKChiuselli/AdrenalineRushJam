@@ -12,6 +12,7 @@ public class tutorial_primo_livello : MonoBehaviour {
     public bool avvisato_barriera;
 
     float distanza_raycast_tutorial = 9f;
+    float blocco_schermo_tutorial_forzato;
 
     struttura_dati script_struttura_dati;
 
@@ -21,7 +22,7 @@ public class tutorial_primo_livello : MonoBehaviour {
         avvisato_barriera = false;
         Gioco_ruota_cilindro = FindObjectOfType<gioco_ruota_cilindro>();
 
-
+        blocco_schermo_tutorial_forzato = 0;
 
         GameObject ogg_struttura_dati = GameObject.Find("base_struttura");
 
@@ -41,6 +42,10 @@ public class tutorial_primo_livello : MonoBehaviour {
         if (script_struttura_dati.livello_in_uso == 1 || script_struttura_dati.livello_in_uso == 2) {//    if (Gioco_ruota_cilindro.script_struttura_dati.livello_in_uso == 1)
             Gioco_ruota_cilindro.tutorial_in_corso = true;
             Gioco_ruota_cilindro.numero_spari = 0;
+        }
+
+        if (script_struttura_dati.livello_in_uso == 1) {
+            distanza_raycast_tutorial = 35f;
         }
 
     }
@@ -216,52 +221,66 @@ public class tutorial_primo_livello : MonoBehaviour {
         Gioco_ruota_cilindro.tutorial_in_corso = false;
         tutorial_sparare();
     }
+    private IEnumerator ReadingTime() {
+        yield return new WaitForSecondsRealtime(1.5f);
+        blocco_schermo_tutorial_forzato = 1;
+    }
 
     private void tutorial_comandi_e_mine() {
         Debug.Log("tutorial_comandi_e_mine");
         Gioco_ruota_cilindro.crea_tutorial_frecce_laterali("Dodge mines and craters tapping left or right", 0);
-
+        StartCoroutine(ReadingTime());
     }
     private void tutorial_raccogli_ammo() {
         Debug.Log("tutorial_raccogli_ammo");
         Gioco_ruota_cilindro.crea_tutorial_con_indicatore("Pick Missiles up to gain ammo", 1);
+        StartCoroutine(ReadingTime());
     }
 
     private void tutorial_sparare() {
         Debug.Log("tutorial_sparare");
         Gioco_ruota_cilindro.crea_tutorial_con_indicatore("You can destroy obstacles by shooting at them. Tap the center of the screen to shoot!", 2);
+        StartCoroutine(ReadingTime());
     }
 
     private void tutorial_bonus_speed() {
         Debug.Log("tutorial_bonus_speed");
         Gioco_ruota_cilindro.crea_tutorial_base("You will find a variety of boosts in every level, this one speeds you up!", 0);
+        StartCoroutine(ReadingTime());
     }
     private void tutorial_bonus_magnete() {
         Debug.Log("tutorial_bonus_magnete");
         Gioco_ruota_cilindro.crea_tutorial_frecce_laterali("This magnet allows you to grab all the coins far away from you!", 0);
+        StartCoroutine(ReadingTime());
     }
     private void tutorial_bonus_barriera() {
         Debug.Log("tutorial_bonus_barriera");
         Gioco_ruota_cilindro.crea_tutorial_frecce_laterali("Buying this barrier will soak your first hit against walls and mines!", 0);
+        StartCoroutine(ReadingTime());
     }
 
     private void ResumeGame() {
 
-        if (Gioco_ruota_cilindro.crea_popup_finale == 0) {
-            if ((Gioco_ruota_cilindro.touch_x[0] > 0) || Input.GetKeyDown(KeyCode.S)) { //TODO implementare i comandi touch in ascolto
-                if (Gioco_ruota_cilindro.tipo_tutorial != 2) {
-                    Time.timeScale = 1;
-                    Gioco_ruota_cilindro.distruggi_menu_tutorial();
 
-                }
-                else if (Gioco_ruota_cilindro.tipo_tutorial == 2) {
-                    if (Gioco_ruota_cilindro.tutorial_ho_sparato ) {
+        if (blocco_schermo_tutorial_forzato == 1) {
+            if (Gioco_ruota_cilindro.crea_popup_finale == 0) {
+                if ((Gioco_ruota_cilindro.touch_x[0] > 0) || Input.GetKeyDown(KeyCode.S)) { //TODO implementare i comandi touch in ascolto
+                    if (Gioco_ruota_cilindro.tipo_tutorial != 2) {
                         Time.timeScale = 1;
                         Gioco_ruota_cilindro.distruggi_menu_tutorial();
+
                     }
+                    else if (Gioco_ruota_cilindro.tipo_tutorial == 2) {
+                        if (Gioco_ruota_cilindro.tutorial_ho_sparato) {
+                            Time.timeScale = 1;
+                            Gioco_ruota_cilindro.distruggi_menu_tutorial();
+                        }
+                    }
+                    blocco_schermo_tutorial_forzato = 0;
                 }
             }
         }
+    
 
     }
 
