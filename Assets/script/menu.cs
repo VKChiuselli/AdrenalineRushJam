@@ -102,6 +102,10 @@ public class menu : MonoBehaviour {
 
 
     GameObject cam0;
+    //variabile tutorial seleziona livello
+
+    int click_navicella = 0;
+
 
     // variabili ruota
 
@@ -179,7 +183,8 @@ public class menu : MonoBehaviour {
         crea_menu();
 
         if (!PlayerPrefs.HasKey("tutorial_seleziona_menu")) {
-            
+            click_navicella = 1;
+
         }
 
     }
@@ -3031,342 +3036,394 @@ public class menu : MonoBehaviour {
 
 
 #endif
-        suona_effetto_UI(1, 1);
 
-
-        if (num == 0 || num == 217) {
-            SceneManager.LoadScene("gioco");
-        }
-
-        if (num == 31 && script_struttura_dati.livelli_completati_per_sbloccare_cassa == 5) {
-
-            crea_popup_ruota(7);
-            //script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
-            //PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+        if (click_navicella == 0) {
 
 
 
-        }
+            suona_effetto_UI(1, 1);
 
 
-        if (num == 1) {
-            crea_popup_opzioni(3);
+            if (num == 0 || num == 217) {
+                SceneManager.LoadScene("gioco");
+            }
+
+            if (num == 31 && script_struttura_dati.livelli_completati_per_sbloccare_cassa == 5) {
+
+                crea_popup_ruota(7);
+                //script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
+                //PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
 
 
-        }
-
-        if (num == 20) {
-            crea_popup_opzioni(3);
-        }
-
-        if (num == 2) {
-            pagina = -1;
-        }
-
-        if (num == 3) {
-            pagina = 0;
-        }
-
-        if (num == 4) {
-            pagina = 1;
-        }
-
-        //pulsante info battlepass
-        if (num == 29) {
-            crea_popup_info(5);
-        }
-
-        //pulsante battlepass
-        if (num == 30) {
-            pagina = 2;
-        }
-
-        if (num == 11) {
-
-            crea_popup_seleziona_livelli(4);
-        }
-
-        if (num == 15) {
-            pagina = 0;
-        }
-
-
-        if (num == 205) {
-
-            script_struttura_dati.livelli_completati_per_sbloccare_cassa = 0;
-            PlayerPrefs.SetInt("livelli_completati_per_sbloccare_cassa", 0);
-            attiva_rotazione_ruota = 1;
-
-            rotazione_ruota = 3600;
-
-            int player_vinto_skin_prima_volta = PlayerPrefs.GetInt("player_vinto_skin_prima_volta");
-
-            if (player_vinto_skin_prima_volta == 0) {
-
-                premio_vinto = 1;
 
             }
-            else {
-
-                if (UnityEngine.Random.Range(.0f, 10.0f) < 3) {
 
 
-                    // vinci updgrade
-                    // vinci una skin
+            if (num == 1) {
+                crea_popup_opzioni(3);
 
 
-                    // controlla se hai tuttte le skin
+            }
 
-                    int ok_skin = 0;
+            if (num == 20) {
+                crea_popup_opzioni(3);
+            }
 
-                    for (int n = 0; n <= 7; n++) {
-                        if (script_struttura_dati.astronave_skin_comprate[n] == 0) {
-                            ok_skin = 1;
-                        }
+            if (num == 2) {
+                pagina = -1;
+            }
 
-                    }
+            if (num == 3) {
+                pagina = 0;
+            }
+
+            if (num == 4) {
+                pagina = 1;
+            }
+
+            //pulsante info battlepass
+            if (num == 29) {
+                crea_popup_info(5);
+            }
+
+            //pulsante battlepass
+            if (num == 30) {
+                pagina = 2;
+            }
+
+            if (num == 11) {
+
+                crea_popup_seleziona_livelli(4);
+            }
+
+            if (num == 15) {
+                pagina = 0;
+            }
 
 
-                    int valore_rnd = (int)(UnityEngine.Random.Range(.0f, 10.0f));
+            if (num == 205) {
 
+                script_struttura_dati.livelli_completati_per_sbloccare_cassa = 0;
+                PlayerPrefs.SetInt("livelli_completati_per_sbloccare_cassa", 0);
+                attiva_rotazione_ruota = 1;
 
-                    if (valore_rnd <= 2 && ok_skin == 1) {
-                        premio_vinto = 1;
+                rotazione_ruota = 3600;
 
-                    }
+                int player_vinto_skin_prima_volta = PlayerPrefs.GetInt("player_vinto_skin_prima_volta");
 
+                if (player_vinto_skin_prima_volta == 0) {
 
-                    if (ok_skin == 0 || valore_rnd >= 3)  // vinci upgrade
-                    {
-                        premio_vinto = 2;
-
-
-                        if (valore_rnd >= 5 && valore_rnd <= 7) {
-                            premio_vinto = 4;
-
-                        }
-
-                        if (valore_rnd >= 7) {
-                            premio_vinto = 6;
-
-                        }
-
-                    }
+                    premio_vinto = 1;
 
                 }
                 else {
 
-                    // vinci monete
-
-                    premio_vinto = 3;
+                    if (UnityEngine.Random.Range(.0f, 10.0f) < 3) {
 
 
+                        // vinci updgrade
+                        // vinci una skin
 
-                    if (UnityEngine.Random.Range(.0f, 10.0f) > 6) {
 
-                        premio_vinto = 5;
+                        // controlla se hai tuttte le skin
+
+                        int ok_skin = 0;
+
+                        for (int n = 0; n <= 7; n++) {
+                            if (script_struttura_dati.astronave_skin_comprate[n] == 0) {
+                                ok_skin = 1;
+                            }
+
+                        }
+
+
+                        int valore_rnd = (int)(UnityEngine.Random.Range(.0f, 10.0f));
+
+
+                        if (valore_rnd <= 2 && ok_skin == 1) {
+                            premio_vinto = 1;
+
+                        }
+
+
+                        if (ok_skin == 0 || valore_rnd >= 3)  // vinci upgrade
+                        {
+                            premio_vinto = 2;
+
+
+                            if (valore_rnd >= 5 && valore_rnd <= 7) {
+                                premio_vinto = 4;
+
+                            }
+
+                            if (valore_rnd >= 7) {
+                                premio_vinto = 6;
+
+                            }
+
+                        }
+
+                    }
+                    else {
+
+                        // vinci monete
+
+                        premio_vinto = 3;
+
+
+
+                        if (UnityEngine.Random.Range(.0f, 10.0f) > 6) {
+
+                            premio_vinto = 5;
+                        }
+
+
+                    }
+
+                }
+
+
+
+
+                ricerca_skin();
+
+
+                rotazione_ruota_arrivo = premio_vinto * 60 - 30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
+
+                // 30 monete 1
+                // 90 barriera 2
+                // 150 monete 3
+                //210 energia 4
+                //270 monete 5
+                //330 spin rotazione 6
+
+
+                rotazione_ruota_tick = 0;
+                somma_rotazione = 0;
+
+                if (pulsante[31].GetComponent<timer_reward>() != null) {
+                    pulsante[31].GetComponent<timer_reward>().Click();
+                }
+
+            }
+
+
+
+            if (num == 100) {
+                indice_shop_corrente = 1;
+                crea_popup(1);
+            }
+            if (num == 101) {
+                indice_shop_corrente = 2;
+                crea_popup(1);
+            }
+            if (num == 102) {
+                indice_shop_corrente = 3;
+                crea_popup(1);
+            }
+            if (num == 103) {
+                indice_shop_corrente = 4;
+                crea_popup(1);
+            }
+
+            if (num == 104) {
+                indice_shop_corrente = 5;
+                crea_popup(1);
+            }
+            if (num == 105) {
+                indice_shop_corrente = 6;
+                crea_popup(1);
+            }
+            if (num == 106) {
+                indice_shop_corrente = 7;
+                crea_popup(1);
+            }
+            if (num == 107) {
+                indice_shop_corrente = 8;
+                crea_popup(1);
+            }
+            if (num == 108) {
+                indice_shop_corrente = 9;
+                crea_popup(1);
+            }
+            if (num == 109) {
+                indice_shop_corrente = 10;
+                crea_popup(1);
+            }
+
+            if (num == 170) {
+                crea_popup_upgrade(2);
+            }
+
+            if (num == 150) {
+                indice_upgrade_corrente = 1;
+                crea_popup_upgrade(2);
+            }
+            if (num == 151) {
+                indice_upgrade_corrente = 2;
+                crea_popup_upgrade(2);
+            }
+            if (num == 152) {
+                indice_upgrade_corrente = 3;
+                crea_popup_upgrade(2);
+            }
+
+            if (num == 153) {
+                indice_upgrade_corrente = 4;
+                crea_popup_upgrade(2);
+            }
+            if (num == 154) {
+                indice_upgrade_corrente = 5;
+                crea_popup_upgrade(2);
+            }
+
+            if (num == 155) {
+                indice_upgrade_corrente = 6;
+                crea_popup_upgrade(2);
+            }
+
+            if (num == 160) {
+                crea_popup_info(6);
+            }
+
+
+
+
+
+            if (num == 200) {
+                if (attivo_popup == 1) {
+                    acquista_shop();
+                }
+                else if (attivo_popup == 2) {
+                    if (script_struttura_dati.livello_upgrade[indice_upgrade_corrente] != 10) {
+                        acquista_upgrade(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
+                    }
+                }
+
+            }
+
+            if (num == 201) {
+                distruggi_menu_popup();
+            }
+
+
+
+            if (script_struttura_dati != null && attivo_popup == 3) {
+                if (num == 206) {
+                    script_struttura_dati.disattiva_musica = 1 - script_struttura_dati.disattiva_musica;
+                    cambio_colore_musiche_tasto();
+                }
+
+                if (num == 207) {
+                    script_struttura_dati.disattiva_effetti = 1 - script_struttura_dati.disattiva_effetti;
+                    cambio_colore_sfx_tasto();
+                }
+
+            }
+
+
+
+
+
+            for (int n = 0; n < 100; n++) {
+                if (num == 300 + n) {
+                    riscatta_premio_battle_pass_free(n);
+                }
+            }
+
+            for (int n = 0; n < 100; n++) {
+                if (num == 400 + n) {
+                    riscatta_premio_battle_pass_premium(n);
+                }
+            }
+
+            if (attivo_popup == 4 &&  grafica[200] != null) {
+                for (int n = 0; n < 5; n++) {
+                    if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 5 - (5 - (n + 1)))) {
+                        if (num == 202 + n) {
+                            script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 5 - (5 - (n + 1));
+                            PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
+                            grafica_testo[20].GetComponent<TextMeshProUGUI>().text = "Level " + script_struttura_dati.livello_in_uso;
+                            reset_colori_testo_selezionati();
+                            pulsante[202 + n].GetComponent<Image>().color = Color.green;
+                            SceneManager.LoadScene("gioco");
+                        }
+                    }
+                    else {
+                        pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.gray;
+                        pulsante[202 + n].GetComponent<Button>().interactable = false;
                     }
 
 
                 }
-
             }
 
-
-
-
-            ricerca_skin();
-
-
-            rotazione_ruota_arrivo = premio_vinto * 60 - 30 + UnityEngine.Random.Range(-27.0f, 27.0f); // qua metti angolo vincente monete
-
-            // 30 monete 1
-            // 90 barriera 2
-            // 150 monete 3
-            //210 energia 4
-            //270 monete 5
-            //330 spin rotazione 6
-
-
-            rotazione_ruota_tick = 0;
-            somma_rotazione = 0;
-
-            if (pulsante[31].GetComponent<timer_reward>() != null) {
-                pulsante[31].GetComponent<timer_reward>().Click();
-            }
-
-        }
-
-
-
-        if (num == 100) {
-            indice_shop_corrente = 1;
-            crea_popup(1);
-        }
-        if (num == 101) {
-            indice_shop_corrente = 2;
-            crea_popup(1);
-        }
-        if (num == 102) {
-            indice_shop_corrente = 3;
-            crea_popup(1);
-        }
-        if (num == 103) {
-            indice_shop_corrente = 4;
-            crea_popup(1);
-        }
-
-        if (num == 104) {
-            indice_shop_corrente = 5;
-            crea_popup(1);
-        }
-        if (num == 105) {
-            indice_shop_corrente = 6;
-            crea_popup(1);
-        }
-        if (num == 106) {
-            indice_shop_corrente = 7;
-            crea_popup(1);
-        }
-        if (num == 107) {
-            indice_shop_corrente = 8;
-            crea_popup(1);
-        }
-        if (num == 108) {
-            indice_shop_corrente = 9;
-            crea_popup(1);
-        }
-        if (num == 109) {
-            indice_shop_corrente = 10;
-            crea_popup(1);
-        }
-
-        if (num == 170) {
-            crea_popup_upgrade(2);
-        }
-
-        if (num == 150) {
-            indice_upgrade_corrente = 1;
-            crea_popup_upgrade(2);
-        }
-        if (num == 151) {
-            indice_upgrade_corrente = 2;
-            crea_popup_upgrade(2);
-        }
-        if (num == 152) {
-            indice_upgrade_corrente = 3;
-            crea_popup_upgrade(2);
-        }
-
-        if (num == 153) {
-            indice_upgrade_corrente = 4;
-            crea_popup_upgrade(2);
-        }
-        if (num == 154) {
-            indice_upgrade_corrente = 5;
-            crea_popup_upgrade(2);
-        }
-
-        if (num == 155) {
-            indice_upgrade_corrente = 6;
-            crea_popup_upgrade(2);
-        }
-
-        if (num == 160) {
-            crea_popup_info(6);
-        }
-
-
-
-
-
-        if (num == 200) {
-            if (attivo_popup == 1) {
-                acquista_shop();
-            }
-            else if (attivo_popup == 2) {
-                if (script_struttura_dati.livello_upgrade[indice_upgrade_corrente] != 10) {
-                    acquista_upgrade(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
+            if (num == 215) { //pulsante seleziona livello destra
+                if (indice_pagina_livello_corrente != 40) {
+                    indice_pagina_livello_corrente++;
+                    aggiorna_grafica_testo_menu_selezionato();
+                    aggiorna_grafica_stelle();
+                    aggiorna_nome_livello();
                 }
             }
 
-        }
-
-        if (num == 201) {
-            distruggi_menu_popup();
-        }
-
-
-
-        if (script_struttura_dati != null && attivo_popup == 3) {
-            if (num == 206) {
-                script_struttura_dati.disattiva_musica = 1 - script_struttura_dati.disattiva_musica;
-                cambio_colore_musiche_tasto();
-            }
-
-            if (num == 207) {
-                script_struttura_dati.disattiva_effetti = 1 - script_struttura_dati.disattiva_effetti;
-                cambio_colore_sfx_tasto();
-            }
-
-        }
-
-
-
-
-
-        for (int n = 0; n < 100; n++) {
-            if (num == 300 + n) {
-                riscatta_premio_battle_pass_free(n);
+            if (num == 216) {//pulsante seleziona livello sinistra
+                if (indice_pagina_livello_corrente != 1) {
+                    indice_pagina_livello_corrente--;
+                    aggiorna_grafica_testo_menu_selezionato();
+                    aggiorna_grafica_stelle();
+                    aggiorna_nome_livello();
+                }
             }
         }
+        else if (click_navicella == 1) {
+            if (num == 11) {
 
-        for (int n = 0; n < 100; n++) {
-            if (num == 400 + n) {
-                riscatta_premio_battle_pass_premium(n);
+                crea_popup_seleziona_livelli(4);
             }
-        }
-
-        if (attivo_popup == 4) {
-            for (int n = 0; n < 5; n++) {
-                if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 5 - (5 - (n + 1)))) {
-                    if (num == 202 + n) {
-                        script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 5 - (5 - (n + 1));
-                        PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
-                        grafica_testo[20].GetComponent<TextMeshProUGUI>().text = "Level " + script_struttura_dati.livello_in_uso;
-                        reset_colori_testo_selezionati();
-                        pulsante[202 + n].GetComponent<Image>().color = Color.green;
-                        SceneManager.LoadScene("gioco");
+            if (attivo_popup == 4) {
+                for (int n = 0; n < 5; n++) {
+                    if (script_struttura_dati.livello_massimo_raggiunto >= (indice_pagina_livello_corrente * 5 - (5 - (n + 1)))) {
+                        if (num == 202 + n) {
+                            script_struttura_dati.livello_in_uso = indice_pagina_livello_corrente * 5 - (5 - (n + 1));
+                            PlayerPrefs.SetInt("livello_in_uso", script_struttura_dati.livello_in_uso);
+                            grafica_testo[20].GetComponent<TextMeshProUGUI>().text = "Level " + script_struttura_dati.livello_in_uso;
+                            reset_colori_testo_selezionati();
+                            pulsante[202 + n].GetComponent<Image>().color = Color.green;
+                            PlayerPrefs.SetInt("tutorial_seleziona_menu", 1);
+                            SceneManager.LoadScene("gioco");
+                        }
                     }
+                    else {
+                        pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.gray;
+                        pulsante[202 + n].GetComponent<Button>().interactable = false;
+                    }
+
+
                 }
-                else {
-                    pulsante_testo[202 + n].GetComponent<TextMeshProUGUI>().color = Color.gray;
-                    pulsante[202 + n].GetComponent<Button>().interactable = false;
+            }
+
+            if (num == 215) { //pulsante seleziona livello destra
+                if (indice_pagina_livello_corrente != 40) {
+                    indice_pagina_livello_corrente++;
+                    aggiorna_grafica_testo_menu_selezionato();
+                    aggiorna_grafica_stelle();
+                    aggiorna_nome_livello();
+                }
+            }
+
+            if (num == 216) {//pulsante seleziona livello sinistra
+                if (indice_pagina_livello_corrente != 1) {
+                    indice_pagina_livello_corrente--;
+                    aggiorna_grafica_testo_menu_selezionato();
+                    aggiorna_grafica_stelle();
+                    aggiorna_nome_livello();
                 }
 
 
             }
+
         }
-
-        if (num == 215) { //pulsante seleziona livello destra
-            if (indice_pagina_livello_corrente != 40) {
-                indice_pagina_livello_corrente++;
-                aggiorna_grafica_testo_menu_selezionato();
-                aggiorna_grafica_stelle();
-                aggiorna_nome_livello();
-            }
-        }
-
-        if (num == 216) {//pulsante seleziona livello sinistra
-            if (indice_pagina_livello_corrente != 1) {
-                indice_pagina_livello_corrente--;
-                aggiorna_grafica_testo_menu_selezionato();
-                aggiorna_grafica_stelle();
-                aggiorna_nome_livello();
-            }
-        }
-
-
     }
 
     private void cambio_colore_sfx_tasto() {
