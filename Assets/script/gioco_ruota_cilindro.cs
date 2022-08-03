@@ -2597,6 +2597,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                             c_save.crea_bonus[num_bonus].attivo = 1;
 
                             attiva_barriera = tempo_barriera*3;
+                            attivazione_barriera_infinity = 1;
+
 
                           //  Debug.Log("attiva_barriera "+ attiva_barriera);
 
@@ -3394,11 +3396,94 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             rotazione_ruota = 3600;
 
 
+            int player_vinto_skin_prima_volta = PlayerPrefs.GetInt("player_vinto_skin_prima_volta");
+
+            if (player_vinto_skin_prima_volta == 0)
+            {
+
+                premio_vinto = 1;
+
+            }
+            else
+            {
+
+                if (UnityEngine.Random.Range(.0f, 10.0f) < 3)
+                {
+
+
+                    // vinci updgrade
+                    // vinci una skin
+
+
+                    // controlla se hai tuttte le skin
+
+                    int ok_skin = 0;
+
+                    for (int n = 0; n <= 7; n++)
+                    {
+                        if (script_struttura_dati.astronave_skin_comprate[n] == 0)
+                        {
+                            ok_skin = 1;
+                        }
+
+                    }
+
+
+                    int valore_rnd = (int)(UnityEngine.Random.Range(.0f, 10.0f));
+
+
+                    if (valore_rnd<=2 && ok_skin==1)
+                    {
+                        premio_vinto = 1;
+
+                    }
+
+
+                    if (ok_skin==0 || valore_rnd>=3)  // vinci upgrade
+                    {
+                        premio_vinto = 2;
+
+
+                        if (valore_rnd >= 5 && valore_rnd <= 7)
+                        {
+                            premio_vinto = 4;
+
+                        }
+
+                        if (valore_rnd >= 7 )
+                        {
+                            premio_vinto = 6;
+
+                        }
+
+                    }
 
 
 
 
-            premio_vinto = 1;
+                    }
+                    else
+                {
+
+                    // vinci monete
+
+                    premio_vinto = 3;
+
+
+
+                    if (UnityEngine.Random.Range(.0f, 10.0f) > 6)
+                    {
+
+                        premio_vinto = 5;
+                    }
+
+
+            }
+
+
+
+
+
 
             ricerca_skin(); // a cosa serve questo metodo se non ritorna un valore? e non c'è neanche un setting dei playerPrefs 
 
@@ -3604,12 +3689,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (aum_skin > -1)
         {
-            skin_vinta = (int)(UnityEngine.Random.Range(aum_skin, aum_skin+.99f));
+           int  skin_vinta_calcoolo = (int)(UnityEngine.Random.Range(aum_skin, aum_skin+.99f));
 
-            if (skin_vinta > 7)
+
+
+            if (skin_vinta_calcoolo > 7)
             {
-                skin_vinta = 7;
+                skin_vinta_calcoolo = 7;
             }
+
+          skin_vinta=  skin_v[skin_vinta_calcoolo] ;
+
 
         }
 
@@ -4757,7 +4847,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             {
                 nome_premio = "skin "+ skin_vinta;
 
+                script_struttura_dati.astronave_skin_comprate[skin_vinta] = 1;
+                PlayerPrefs.SetInt($"astronave_skin_comprate{skin_vinta}", 1);
+
             }
+
+
 
             crea_grafica_text(262, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/"+ nome_premio); //pannello shop
 
@@ -4768,10 +4863,26 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_grafica_text(265, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
 
 
+            if (premio_vinto == 2)
+            {
+
+                script_struttura_dati.livello_upgrade[0] = script_struttura_dati.livello_upgrade[0] + 1;
+                PlayerPrefs.SetInt($"LivelloUpgrade{0}", (script_struttura_dati.livello_upgrade[0]));
+
+            }
+
             if (premio_vinto == 3)
             {
                 script_struttura_dati.monete = script_struttura_dati.monete + 100;
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            }
+
+            if (premio_vinto == 4)
+            {
+
+                script_struttura_dati.livello_upgrade[1] = script_struttura_dati.livello_upgrade[1] + 1;
+                PlayerPrefs.SetInt($"LivelloUpgrade{1}", (script_struttura_dati.livello_upgrade[1]));
+
             }
 
 
@@ -4779,6 +4890,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             {
                 script_struttura_dati.monete = script_struttura_dati.monete + 200;
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
+            }
+
+            if (premio_vinto == 6)
+            {
+
+                script_struttura_dati.livello_upgrade[2] = script_struttura_dati.livello_upgrade[2] + 1;
+                PlayerPrefs.SetInt($"LivelloUpgrade{2}", (script_struttura_dati.livello_upgrade[2]));
+
             }
 
         }
@@ -6155,7 +6274,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 
-                    string testo = ""+ "UPGRADE SHIELD";
+                    string testo = "" + "UPGRADE BARRIER";
 
                     if (premio_vinto == 4)
                     {
@@ -6164,10 +6283,10 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                     if (premio_vinto == 6)
                     {
-                        testo = "" + "UPGRADE non mi ricordo";
+                        testo = "" + "UPGRADE ENERGY";
                     }
 
-  
+
                     grafica_testo[263].GetComponent<TextMeshProUGUI>().text = testo;
                     grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x/14.0f;
 

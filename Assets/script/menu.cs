@@ -135,6 +135,7 @@ public class menu : MonoBehaviour {
     float[] particles_scale_dx = new float[num_particles];
     float[] particles_alpha = new float[num_particles];
 
+    float tempo_click_premio = 0;
 
 
 
@@ -147,7 +148,13 @@ public class menu : MonoBehaviour {
         canvas_popup = GameObject.Find("Canvas_popup/Panel");
         cam0 = GameObject.Find("Main Camera");
         canvas_premio = GameObject.Find("Canvas_premio/Panel");
+
         carica_effetto_UI(1, "audio/Prefabs/click");
+        carica_effetto_UI(5, "audio/Prefabs/success");
+        carica_effetto_UI(6, "audio/Prefabs/lose");
+        carica_effetto_UI(7, "audio/Prefabs/monete");
+
+
         carica_musica("audio/Prefabs/musicaMenu");
 
         canvas_popup.SetActive(false);
@@ -173,7 +180,9 @@ public class menu : MonoBehaviour {
     }
 
     int skin_vinta = -1;
-    void ricerca_skin() {
+
+    void ricerca_skin()
+    {
 
         skin_vinta = -1;
 
@@ -182,8 +191,10 @@ public class menu : MonoBehaviour {
         int aum_skin = -1;
 
 
-        for (int n = 0; n <= 7; n++) {
-            if (script_struttura_dati.astronave_skin_comprate[n] == 0) {
+        for (int n = 0; n <= 7; n++)
+        {
+            if (script_struttura_dati.astronave_skin_comprate[n] == 0)
+            {
                 aum_skin = aum_skin + 1;
                 skin_v[aum_skin] = n;
             }
@@ -191,12 +202,19 @@ public class menu : MonoBehaviour {
         }
 
 
-        if (aum_skin > -1) {
-            skin_vinta = (int)(UnityEngine.Random.Range(aum_skin, aum_skin + .99f));
+        if (aum_skin > -1)
+        {
+            int skin_vinta_calcoolo = (int)(UnityEngine.Random.Range(aum_skin, aum_skin + .99f));
 
-            if (skin_vinta > 7) {
-                skin_vinta = 7;
+
+
+            if (skin_vinta_calcoolo > 7)
+            {
+                skin_vinta_calcoolo = 7;
             }
+
+            skin_vinta = skin_v[skin_vinta_calcoolo];
+
 
         }
 
@@ -290,6 +308,14 @@ public class menu : MonoBehaviour {
 
 
         }
+
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+
+            crea_popup_ruota(7);
+
+        }
+
 
 #endif
 
@@ -2306,6 +2332,9 @@ public class menu : MonoBehaviour {
         crea_button_text(160, "", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/info_icon_menu"); //info
 
     }
+
+
+
     void crea_popup_opzioni(int num = 3) {
 
         attivo_popup = num;
@@ -2338,6 +2367,9 @@ public class menu : MonoBehaviour {
 
         cambio_colore_sfx_tasto();
     }
+
+
+
     void crea_popup_seleziona_livelli(int num = 4) {
 
         attivo_popup = num;
@@ -2369,6 +2401,8 @@ public class menu : MonoBehaviour {
 
         aggiorna_nome_livello();
     }
+
+
     void crea_popup_info(int num = 5) {
 
         attivo_popup = num;
@@ -2424,8 +2458,13 @@ public class menu : MonoBehaviour {
 
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton");
     }
-    float tempo_click_premio = 0;
-    void crea_popup_premio(int num = 8) {
+
+
+ 
+
+
+    void crea_popup_premio(int num = 8)
+    {
 
 
 
@@ -2440,7 +2479,8 @@ public class menu : MonoBehaviour {
 
         suona_effetto_UI(5, 1);
 
-        if (num == 1) {
+        if (num == 8)
+        {
 
             crea_grafica_text(260, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/sfondo_popUP_premio"); //pannello shop
 
@@ -2448,10 +2488,16 @@ public class menu : MonoBehaviour {
 
             string nome_premio = "premio " + premio_vinto;
 
-            if (premio_vinto == 1) {
+            if (premio_vinto == 1)
+            {
                 nome_premio = "skin " + skin_vinta;
 
+                script_struttura_dati.astronave_skin_comprate[skin_vinta] = 1;
+                PlayerPrefs.SetInt($"astronave_skin_comprate{skin_vinta}", 1);
+
             }
+
+
 
             crea_grafica_text(262, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/" + nome_premio); //pannello shop
 
@@ -2462,23 +2508,56 @@ public class menu : MonoBehaviour {
             crea_grafica_text(265, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //pannello shop
 
 
-            if (premio_vinto == 3) {
+            if (premio_vinto == 2)
+            {
+
+                script_struttura_dati.livello_upgrade[0] = script_struttura_dati.livello_upgrade[0] + 1;
+                PlayerPrefs.SetInt($"LivelloUpgrade{0}", (script_struttura_dati.livello_upgrade[0]));
+
+            }
+
+            if (premio_vinto == 3)
+            {
                 script_struttura_dati.monete = script_struttura_dati.monete + 100;
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
             }
 
+            if (premio_vinto == 4)
+            {
 
-            if (premio_vinto == 5) {
+                script_struttura_dati.livello_upgrade[1] = script_struttura_dati.livello_upgrade[1] + 1;
+                PlayerPrefs.SetInt($"LivelloUpgrade{1}", (script_struttura_dati.livello_upgrade[1]));
+
+            }
+
+
+            if (premio_vinto == 5)
+            {
                 script_struttura_dati.monete = script_struttura_dati.monete + 200;
                 PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
             }
 
+            if (premio_vinto == 6)
+            {
+
+                script_struttura_dati.livello_upgrade[2] = script_struttura_dati.livello_upgrade[2] + 1;
+                PlayerPrefs.SetInt($"LivelloUpgrade{2}", (script_struttura_dati.livello_upgrade[2]));
+
+            }
+
         }
+
+
+
+
+
 
     }
 
 
-    void aggiorna_menu_popup_premio() {
+
+    void aggiorna_menu_popup_premio()
+    {
 
 
         float dy = risoluzione_y;
@@ -2492,12 +2571,15 @@ public class menu : MonoBehaviour {
 
 
 
-        for (int n = 0; n <= 30; n++) {
-            if (grafica[260 + n] != null) {
+        for (int n = 0; n <= 30; n++)
+        {
+            if (grafica[260 + n] != null)
+            {
                 grafica[260 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
 
-            if (pulsante[260 + n] != null) {
+            if (pulsante[260 + n] != null)
+            {
                 pulsante[260 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
             }
         }
@@ -2510,10 +2592,11 @@ public class menu : MonoBehaviour {
 
         if (attivo_popup_premio == 1) //
         {
-            if (grafica[260] != null) {
+            if (grafica[260] != null)
+            {
 
                 float dx2 = dx * .7f;
-                float dy2 = dx * .7f;
+                float dy2 = dx * .85f;
 
 
 
@@ -2530,35 +2613,109 @@ public class menu : MonoBehaviour {
 
 
                 grafica[261].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .8f, dime_panel_x * .8f);
-                grafica[261].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+                grafica[261].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
                 grafica[261].transform.localEulerAngles = new Vector3(0, 0, rotazione_effetto_premio);
 
                 grafica[262].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .6f, dime_panel_x * .6f);
-                grafica[262].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+                grafica[262].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
                 aggiorna_particles(dime_panel_x);
 
 
-                if (premio_vinto == 2) {
+
+                if (premio_vinto == 1)
+                {
 
                     grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
+                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_y * .315f);
 
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "UPGRADE\nSHIELD";
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12.0f;
+
+                    string nome_skin = "RED SKIN";
+
+                    if (skin_vinta == 2)
+                    {
+                        nome_skin = "YELLOW SKIN";
+                    }
+
+                    if (skin_vinta == 3)
+                    {
+                        nome_skin = "GREEN SKIN";
+                    }
+
+                    if (skin_vinta == 4)
+                    {
+                        nome_skin = "BLACK SKIN";
+                    }
+
+                    if (skin_vinta == 5)
+                    {
+                        nome_skin = "GRAY SKIN";
+                    }
+
+                    if (skin_vinta == 6)
+                    {
+                        nome_skin = "LIGHT BLUE SKIN";
+                    }
+
+                    if (skin_vinta == 7)
+                    {
+                        nome_skin = "ORANGE SKIN";
+                    }
+
+
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = nome_skin;
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 14.0f;
+
+
+                }
+
+
+
+                if (premio_vinto == 2 || premio_vinto == 4 || premio_vinto == 6)
+                {
+
+                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_y * .315f);
+
+
+
+                    string testo = "" + "UPGRADE BARRIER";
+
+                    if (premio_vinto == 4)
+                    {
+                        testo = "" + "UPGRADE AGILITY";
+                    }
+
+                    if (premio_vinto == 6)
+                    {
+                        testo = "" + "UPGRADE ENERGY";
+                    }
+
+
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = testo;
+                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 14.0f;
 
                     grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
+                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
                     grafica_testo[264].GetComponent<TextMeshProUGUI>().text = "3";
                     grafica_testo[264].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 6.0f;
                     grafica_testo[264].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
 
+
+                    grafica[265].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
+                    grafica[265].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .315f);
+
+                    grafica_testo[265].GetComponent<TextMeshProUGUI>().text = "LEVEL UP";
+                    grafica_testo[265].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12.0f;
+                    grafica_testo[265].GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1);
+
                 }
 
 
-                if (premio_vinto == 3) {
+                if (premio_vinto == 3)
+                {
 
                     grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
                     grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
@@ -2566,27 +2723,17 @@ public class menu : MonoBehaviour {
                     grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "100";
                     grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 8.0f;
 
+
+
+
+
                 }
 
 
-                if (premio_vinto == 4) {
 
-                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
 
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "UPGRADE\nENERGY";
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12.0f;
-
-                    grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
-
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().text = "3";
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 6.0f;
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
-
-                }
-
-                if (premio_vinto == 5) {
+                if (premio_vinto == 5)
+                {
 
                     grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
                     grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
@@ -2597,29 +2744,28 @@ public class menu : MonoBehaviour {
                 }
 
 
-                if (premio_vinto == 6) {
 
-                    grafica[263].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[263].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, dime_panel_x * .3f);
-
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "UPGRADE\nAGILITY";
-                    grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12.0f;
-
-                    grafica[264].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x * .9f, dime_panel_y * .2f);
-                    grafica[264].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -dime_panel_y * .1f);
-
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().text = "3";
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 6.0f;
-                    grafica_testo[264].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
-
-                }
 
             }
+
+            tempo_click_premio = tempo_click_premio - Time.deltaTime;
+
+            if (tempo_click_premio < 0 && Input.GetMouseButtonUp(0))
+            {
+
+                distruggi_menu_popup();
+                distruggi_menu_popup_premio();
+            }
+
 
         }
 
 
     }
+
+
+
+
     void distruggi_menu_popup_premio() {
 
 
@@ -3353,10 +3499,12 @@ public class menu : MonoBehaviour {
         if (script_struttura_dati != null) {
             if (script_struttura_dati.disattiva_effetti == 0) {
 
+                if (effetto_source_UI[tipologia] != null)
+                {
 
-                effetto_source_UI[tipologia].Play();
-                effetto_source_UI[tipologia].volume = volume;
-
+                    effetto_source_UI[tipologia].Play();
+                    effetto_source_UI[tipologia].volume = volume;
+                }
             }
         }
 
