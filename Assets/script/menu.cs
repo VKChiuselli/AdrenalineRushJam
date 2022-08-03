@@ -2044,6 +2044,7 @@ public class menu : MonoBehaviour {
             pulsante[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
         }
+
         if (grafica[31] != null) {
 
 
@@ -2056,10 +2057,16 @@ public class menu : MonoBehaviour {
             grafica[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 10f, dy2 * 10f);
             grafica[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
             grafica_testo[31].GetComponent<TextMeshProUGUI>().fontSize = font_size * 2.5f;
-            if (!pulsante[31].GetComponent<Button>().interactable)
-                grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "" + espositore_data(pulsante[31].GetComponent<timer_reward>().GetTimeLeft());
-            else {
+
+            if (script_struttura_dati.livelli_completati_per_sbloccare_cassa == 5 && pulsante[31].GetComponent<Button>().interactable) {
                 grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "";
+            }
+            else if (!pulsante[31].GetComponent<Button>().interactable) {
+                grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "" + espositore_data(pulsante[31].GetComponent<timer_reward>().GetTimeLeft());
+            }
+            else if(pulsante[31].GetComponent<Button>().interactable && script_struttura_dati.livelli_completati_per_sbloccare_cassa != 5) {
+                grafica_testo[31].GetComponent<TextMeshProUGUI>().text = $"{script_struttura_dati.livelli_completati_per_sbloccare_cassa}/5";
+                grafica_testo[31].GetComponent<TextMeshProUGUI>().color = Color.black;
             }
         }
 
@@ -3047,7 +3054,7 @@ public class menu : MonoBehaviour {
             SceneManager.LoadScene("gioco");
         }
 
-        if (num == 31) {
+        if (num == 31 && script_struttura_dati.livelli_completati_per_sbloccare_cassa==5) {
 
             crea_popup_ruota(7);
             //script_struttura_dati.monete += shop_quantita_monete[indice_shop_corrente];
@@ -3102,6 +3109,8 @@ public class menu : MonoBehaviour {
 
         if (num == 205) {
 
+            script_struttura_dati.livelli_completati_per_sbloccare_cassa = 0;
+            PlayerPrefs.SetInt("livelli_completati_per_sbloccare_cassa", 0);
             attiva_rotazione_ruota = 1;
 
             rotazione_ruota = 3600;
