@@ -1740,7 +1740,7 @@ public class menu : MonoBehaviour {
 
 
                         crea_popup_premio(8);
-
+                        attivo_popup = 8;
                     }
 
                 }
@@ -2613,7 +2613,7 @@ public class menu : MonoBehaviour {
 
 
 
-        if (attivo_popup_premio == 1) //
+        if (attivo_popup_premio == 8) //
         {
             if (grafica[260] != null)
             {
