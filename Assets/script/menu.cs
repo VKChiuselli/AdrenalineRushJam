@@ -141,7 +141,8 @@ public class menu : MonoBehaviour {
 
     float tempo_click_premio = 0;
 
-
+    float slider_time = 0;
+    int slider_avaiable = 0;
 
     float tempo_generatore_particles = 0;
 
@@ -772,9 +773,14 @@ public class menu : MonoBehaviour {
         int aumento_pos_x = -1;
         int aumento_pos_y = 0;
 
+        scroll_verticale_dx = 0;
+
         for (int n = 0; n < 4; n++) {
 
-            float dx2 = risoluzione_x * .44f;
+            float dx2 = risoluzione_x * (.37f+spostamento_sx2*-.33f);
+
+           
+
             float dy2 = dx2 * (650 / 470.0f);
 
             float dx_image = dx2 * .8f;
@@ -790,10 +796,13 @@ public class menu : MonoBehaviour {
 
             pos_x = risoluzione_x - risoluzione_x * .25f + aumento_pos_x * risoluzione_x * .5f;
 
+            if (n == 2)
+            {
+                pos_x = risoluzione_x;
+            }
 
 
-
-            pos_y = risoluzione_y * .1f - aumento_pos_y * dy2 * 1.05f;
+            pos_y = risoluzione_y * .2f - aumento_pos_y * dy2 * 1.05f;
 
             if (pulsante[150 + n] != null) {
 
@@ -828,7 +837,7 @@ public class menu : MonoBehaviour {
             if (grafica[170 + n] != null) {
 
                 grafica[170 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2 * .1f);
-                grafica[170 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x * 1.15f, pos_y + scroll_verticale_dx + dy2 * 0.37f);
+                grafica[170 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+ spostamento_x + dx2*-.345f, pos_y + scroll_verticale_dx + dy2 * 0.37f);
                 grafica_testo[170 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
 
 
@@ -838,15 +847,16 @@ public class menu : MonoBehaviour {
         }
 
     }
-    float silder_time = 0;
-    int slider_avaiable = 0;
+
+
+
     public void controllo_risoluzione() {
 
         controllo_mobile = 0;
 
 
-        if (silder_time > 0.5f) {
-            silder_time = silder_time - Time.deltaTime;
+        if (slider_time > 0.5f) {
+            slider_time = slider_time - Time.deltaTime;
             slider_avaiable = 1;
         }
         else {
@@ -1361,7 +1371,7 @@ public class menu : MonoBehaviour {
                 if (click_navicella == 0) {
                     if (diff_xm < -risoluzione_x / 75f && slider_avaiable == 0) {
                         if (indice_pagina_livello_corrente != 40) {
-                            silder_time = 1f;
+                            slider_time = 1f;
                             indice_pagina_livello_corrente++;
                             aggiorna_grafica_testo_menu_selezionato();
                             aggiorna_grafica_stelle();
@@ -1371,7 +1381,7 @@ public class menu : MonoBehaviour {
                     else
 if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
                         if (indice_pagina_livello_corrente != 1) {
-                            silder_time = 1f;
+                            slider_time = 1f;
                             indice_pagina_livello_corrente--;
                             aggiorna_grafica_testo_menu_selezionato();
                             aggiorna_grafica_stelle();
