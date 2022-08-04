@@ -5101,7 +5101,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                 float dx2 = dx * 0.1f;
                 float dy2 = dy * 0.1f;
-                pos_x = risoluzione_x * 0.45f;
+                pos_x = risoluzione_x * 0.4f;
                 pos_y = risoluzione_y * 0.38f;
 
                 grafica[103].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 0.85f, dy2);
