@@ -1094,7 +1094,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1506944643
 RectTransform:
@@ -1720,6 +1720,7 @@ MonoBehaviour:
   skin_scrittura: {fileID: 11400000, guid: 9e5e221bf7ecd62448cd10305abd894a, type: 2}
   crea_popup_finale: 0
   numero_spari: 3
+  attiva_barriera: 0
 --- !u!114 &7450251571877793397
 MonoBehaviour:
   m_ObjectHideFlags: 0
