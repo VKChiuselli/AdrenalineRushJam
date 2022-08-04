@@ -5271,8 +5271,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             if (grafica[200] != null)  //pannello
             {
 
-                float dx2 = dx * .9f;
-                float dy2 = dy * .9f;
+                float dx2 = dx * .93f;
+                float dy2 = dy * .93f;
 
                 float dx_stelle = dx2 * .25f;
 
@@ -5445,7 +5445,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                                 float dx_stella_base = dx_stelle;
 
                                 if (n == 8) {
-                                    dx_stella_base = dx_stelle * 1.25f;
+                                    dx_stella_base = dx_stelle * 1.15f;
                                 }
 
                                 grafica[200 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx_stella_base, dx_stella_base);
@@ -5494,7 +5494,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                             pos_y = dime_panel_y * grafica_pos[n];
 
-                            float dxp = dime_panel_x * .2f;
+                            float dxp = dime_panel_x * (.18f+spostamento_sx2*-.15f);
                             float dyp = dxp * (199.0f / 165.0f);
 
                             if (n == 19) {
@@ -5546,8 +5546,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             if (grafica[200] != null)  //pannello
             {
 
-                float dx2 = dx * .9f;
-                float dy2 = dy * .9f;
+                float dx2 = dx * .93f;
+                float dy2 = dy * .93f;
 
                 float dx_stelle = dx2 * .25f;
 
@@ -6071,7 +6071,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                         aum_upgrade = aum_upgrade + 1;
 
-                        float dime_x = dime_panel_x * .395f;
+                        float dime_x = dime_panel_x * (.33f+spostamento_sx2*.4f);
                         float dime_y = dime_x * (650.0f / 450.0f);
 
                         if (aum_upgrade > 1)
@@ -6082,12 +6082,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                             if (aum_upgrade == 0)
                             {
-                                pos_x = dime_panel_x * -.2f;
+                                pos_x = dime_panel_x * -.22f;
                             }
 
                             if (aum_upgrade == 1)
                             {
-                                pos_x = dime_panel_x * +.2f;
+                                pos_x = dime_panel_x * +.22f;
 
                             }
                        
