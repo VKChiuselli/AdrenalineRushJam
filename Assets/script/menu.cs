@@ -3694,12 +3694,17 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
                 script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
+            if (pulsante[150 + indice_upgrade_corrente -1] != null) {
+
+                pulsante[150 + indice_upgrade_corrente -1].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(indice_upgrade_corrente)}");
+            }
+
             grafica_testo[170 + indice_upgrade_corrente - 1].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.livello_upgrade[indice_upgrade_corrente];
             Debug.Log("Oggetto acquistato");
         }
 
     }
-
+    
     void pressione_input_text(int num, InputField tog) {
 
 
