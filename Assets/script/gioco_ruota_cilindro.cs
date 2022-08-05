@@ -6065,7 +6065,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
                         aum_upgrade = aum_upgrade + 1;
 
-                        float dime_x = dime_panel_x * (.33f+spostamento_sx2*.4f);
+                        float dime_x = dime_panel_x * (.33f+spostamento_sx2*-.4f);
                         float dime_y = dime_x * (650.0f / 450.0f);
 
                         if (aum_upgrade > 1)
