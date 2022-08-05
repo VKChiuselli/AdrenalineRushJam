@@ -3610,13 +3610,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 266)
         {
-           
-                if (script_struttura_dati.livello_upgrade[indice_upgrade_corrente] != 10)
-                {
                     acquista_upgrade(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
-                }
-            
-
         }
 
 
