@@ -49,7 +49,7 @@ public class struttura_dati : MonoBehaviour {
             livello_upgrade[i] = PlayerPrefs.GetInt($"LivelloUpgrade{i}");
         }
 
-        for (int i = 1; i < 11; i++) {
+        for (int i = 0; i < 11; i++) {
             costo_livello[i] = PlayerPrefs.GetInt($"Livello{i}");
         }
         for (int i = 0; i < 400; i++) {
@@ -97,6 +97,7 @@ public class struttura_dati : MonoBehaviour {
 
     private static void inizializzazione_dati() {
 
+        PlayerPrefs.SetInt("Livello0", 12000);
         PlayerPrefs.SetInt("Livello1", 100);
         PlayerPrefs.SetInt("Livello2", 200);
         PlayerPrefs.SetInt("Livello3", 400);

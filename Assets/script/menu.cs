@@ -1127,7 +1127,10 @@ public class menu : MonoBehaviour {
                 grafica[203].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
                 grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
-                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]];
+
+                int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10;
+
+                grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.costo_livello[costo_upgrade];
 
             }
 
@@ -2355,7 +2358,9 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             if (n == 3) {
                 break;
             }
-            crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
+
+           
+            crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", $"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(n+1)}");
             crea_grafica_text(150 + n, new Color(1, 1, 1, 0), "" + upgrade_titolo[n + 1], canvas, "Canvas", "");
             crea_grafica_text(160 + n, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/upgrade_carta " + (n + 1));
             crea_grafica_text(170 + n, new Color(1, 1, 1, 0), "" + script_struttura_dati.livello_upgrade[n + 1], canvas, "Canvas", "");
@@ -2417,6 +2422,11 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
 
     }
 
+    private int calcolo_livello_upgrade(int indice_upgrade) {
+        return (script_struttura_dati.livello_upgrade[indice_upgrade] / 10 + 1);
+     //    script_struttura_dati.livello_upgrade[indice_upgrade];
+    }
+
     void crea_popup(int num = 1) {
 
         attivo_popup = num;
@@ -2467,15 +2477,9 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         crea_grafica_text(201, new Color(1, 1, 1, 0), "titolo", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
         crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_carta " + indice_upgrade_corrente); //immagine upgrade
         crea_grafica_text(203, new Color(1, 1, 1, 0), "prezzo", canvas_popup, "Canvas_popup/Panel", ""); //testo/prezzo oggetto upgrade
-        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
+        crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
-        if (script_struttura_dati.livello_upgrade[indice_upgrade_corrente] == 10) {
-            crea_button_text(200, "MAXED", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
-            pulsante[200].GetComponent<Button>().interactable = false;
-        }
-        else {
-            crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
-        }
+        crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
         crea_button_text(160, "", new Color(1, 1, 1, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/info_icon_menu"); //info
 
@@ -3409,9 +3413,8 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
                     acquista_shop();
                 }
                 else if (attivo_popup == 2) {
-                    if (script_struttura_dati.livello_upgrade[indice_upgrade_corrente] != 10) {
-                        acquista_upgrade(script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]]);
-                    }
+                    int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10;
+                    acquista_upgrade(script_struttura_dati.costo_livello[costo_upgrade]);
                 }
 
             }
@@ -3688,7 +3691,8 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
                 Destroy(grafica[204]);
             }
 
-            crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
+            crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
+                script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
             grafica_testo[170 + indice_upgrade_corrente - 1].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.livello_upgrade[indice_upgrade_corrente];
             Debug.Log("Oggetto acquistato");
