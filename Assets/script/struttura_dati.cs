@@ -9,12 +9,15 @@ public class struttura_dati : MonoBehaviour {
     public int gemme;
     public int livello_massimo_raggiunto;
     public int[] livello_upgrade = new int[20];
-    public int[] costo_livello = new int[50];
+    public int[] costo_livello = new int[150];
     public string[] stelle_livello = new string[400];
     public int stelle_battle_pass;
     public int astronave_skin;
 
     public int[] astronave_skin_comprate = new int[20];
+
+    public Color[] colore_bg_image = new Color[10];
+
 
     public float energia;
     public string battle_pass_reward_free;
@@ -54,8 +57,14 @@ public class struttura_dati : MonoBehaviour {
             livello_upgrade[i] = PlayerPrefs.GetInt($"LivelloUpgrade{i}");
         }
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 100; i++) {
             costo_livello[i] = PlayerPrefs.GetInt($"Livello{i}");
+
+            if (costo_livello[i] == 0)
+            {
+                costo_livello[i] = 12000 + i * 1000;
+            }
+
         }
         for (int i = 0; i < 400; i++) {
             stelle_livello[i] = PlayerPrefs.GetString($"stelle_livello{i}");
@@ -102,7 +111,7 @@ public class struttura_dati : MonoBehaviour {
 
     private static void inizializzazione_dati() {
 
-        PlayerPrefs.SetInt("Livello0", 12000);
+        PlayerPrefs.SetInt("Livello0", 50);
         PlayerPrefs.SetInt("Livello1", 100);
         PlayerPrefs.SetInt("Livello2", 200);
         PlayerPrefs.SetInt("Livello3", 400);
@@ -114,7 +123,14 @@ public class struttura_dati : MonoBehaviour {
         PlayerPrefs.SetInt("Livello9", 11000);
         PlayerPrefs.SetInt("Livello10", 12000);
 
-        for (int i = 1; i < 7; i++) {
+        for (int i = 11; i < 100; i++)
+        {
+            PlayerPrefs.SetInt("Livello"+i, (13000+(i-11)*1000));
+
+        }
+
+
+            for (int i = 1; i < 7; i++) {
             PlayerPrefs.SetInt($"LivelloUpgrade{i}", 1);
             PlayerPrefs.SetString($"path_sprite{i}", $"UI/grafica_UI/upgrade_carta {i}");
             PlayerPrefs.SetInt($"Costo_Upgrade{i}", PlayerPrefs.GetInt($"Livello{PlayerPrefs.GetInt($"LivelloUpgrade{i}")}"));

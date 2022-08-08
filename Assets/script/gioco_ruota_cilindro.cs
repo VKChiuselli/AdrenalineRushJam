@@ -3242,6 +3242,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         //    Debug.Log("entratooo");
 
 
+        if (grafica[num] != null)
+        {
+            DestroyImmediate(grafica[num]);
+        }
+
+
         grafica[num] = Instantiate(Resources.Load("UI/Image_text", typeof(GameObject))) as GameObject;
 
         grafica[num].name = "grafica_text" + num;
@@ -3610,7 +3616,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 266)
         {
-            int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10;
+            int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] ;
             acquista_upgrade(script_struttura_dati.costo_livello[costo_upgrade]);
         }
 
@@ -3640,29 +3646,33 @@ public class gioco_ruota_cilindro : MonoBehaviour {
     {
         if (script_struttura_dati.monete >= costoUpgrade)
         {
+            int num_upgrade = (int)(script_struttura_dati.livello_upgrade[indice_upgrade_corrente] / 10);
+
 
             script_struttura_dati.monete = script_struttura_dati.monete - costoUpgrade;
             PlayerPrefs.SetInt("monete", script_struttura_dati.monete);
             script_struttura_dati.livello_upgrade[indice_upgrade_corrente] = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] + 1;
             PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (script_struttura_dati.livello_upgrade[indice_upgrade_corrente]));
 
+            crea_grafica_text(260, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP " + (num_upgrade)); //pannello upgrade
+
+
             if (grafica[264] != null)
             {
                 Destroy(grafica[264]);
             }
 
-            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
+            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
              script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
-            if (pulsante[240 + indice_upgrade_corrente - 1] != null) {
 
-                pulsante[240 + indice_upgrade_corrente - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/grafica_UI/frame_carta_upgrade_1");
-            }
+          
+            crea_grafica_text(215 + indice_upgrade_corrente, new Color(1, 1, 1, 1), "" + script_struttura_dati.livello_upgrade[indice_upgrade_corrente ], canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_levelUP " + num_upgrade);
 
-            if (grafica[210 + indice_upgrade_corrente - 1] != null) {
 
-                grafica[210 + indice_upgrade_corrente - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/grafica_UI/frame_carta_upgrade_1");
-            }
+            crea_grafica_text(265, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_level " + num_upgrade); //immagine valuta
+
+
 
             Debug.Log("Oggetto acquistato da modificare");
         }
@@ -4808,7 +4818,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 crea_grafica_text(219 + n, new Color(1, 1, 1, 0), ""+ upgrade_titolo[n+1], canvas_popup, "Canvas_popup/Panel", "");
 
 
-                crea_button_text(240+n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(n+1)}");
+                crea_button_text(240+n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_1");
                 pulsante[240 + n].GetComponent<Image>().color = new Color(1, 1, 1, 0);
             }
 
@@ -4941,10 +4951,11 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         if (num == 2)
         {
+            int num_upgrade = (int)(script_struttura_dati.livello_upgrade[indice_upgrade_corrente] / 10);
 
 
 
-            crea_grafica_text(260, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello upgrade
+            crea_grafica_text(260, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP "+(num_upgrade)); //pannello upgrade
             crea_grafica_text(261, new Color(1, 1, 1, 0), "titolo", canvas_premio, "Canvas_premio/Panel", ""); //testo/titolo oggetto upgrade
             crea_grafica_text(262, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_carta "+ indice_upgrade_corrente); //immagine upgrade
             crea_grafica_text(263, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //testo/prezzo oggetto upgrade
@@ -4953,8 +4964,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
              script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
-            int num_upgrade = (int)(script_struttura_dati.livello_upgrade[indice_upgrade_corrente] / 10);
-
+          
 
             crea_grafica_text(265, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_level " + num_upgrade); //immagine valuta
 
@@ -6134,6 +6144,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                         grafica[210 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x, dime_y);
                         grafica[210 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
+
+                        int num_upgrade = (int)(script_struttura_dati.livello_upgrade[n + 1] / 10);
+
+                        grafica[210 + n].GetComponent<Image>().color = script_struttura_dati.colore_bg_image[num_upgrade + 1];
+
+
                         grafica[213 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x*.8f, dime_x*.8f);
                         grafica[213 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
@@ -6456,7 +6472,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
 
 
-                int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10;
+                int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] ;
 
                 grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.costo_livello[costo_upgrade];
             }

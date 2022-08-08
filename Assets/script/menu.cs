@@ -147,6 +147,7 @@ public class menu : MonoBehaviour {
     float tempo_generatore_particles = 0;
 
 
+
     void Start() {
 
         canvas = GameObject.Find("Canvas");
@@ -775,6 +776,10 @@ public class menu : MonoBehaviour {
 
         scroll_verticale_dx = 0;
 
+
+      
+
+
         for (int n = 0; n < 4; n++) {
 
             float dx2 = risoluzione_x * (.37f+spostamento_sx2*-.33f);
@@ -809,6 +814,9 @@ public class menu : MonoBehaviour {
                 pulsante[150 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
                 pulsante[150 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y + scroll_verticale_dx);
 
+                int num_upgrade = (int)(script_struttura_dati.livello_upgrade[n+1 ] / 10);
+
+                pulsante[150 + n].GetComponent<Image>().color = script_struttura_dati.colore_bg_image[num_upgrade+1];
 
                 limite_verticale_dx = pos_y - dy2 * .15f;
             }
@@ -1128,7 +1136,7 @@ public class menu : MonoBehaviour {
 
                 grafica_testo[203].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
 
-                int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10;
+                int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] ;
 
                 grafica_testo[203].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.costo_livello[costo_upgrade];
 
@@ -2271,6 +2279,10 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
 
     void crea_menu() {
 
+
+
+
+
         distruggi_menu();
 
         //layout top fisso
@@ -2282,8 +2294,6 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/sfondo_menu");
         crea_grafica_text(2, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/sfondo_menu");
         crea_grafica_text(5, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/sfondo_menu"); //battlepass sfondo
-
-
 
 
 
@@ -2409,7 +2419,6 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         crea_button_text(1, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Setting");
 
 
-        crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
         crea_button_text(29, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/info_icon_menu");
         //  crea_button_text(30, "BATTLEPASS", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/battlepass");
         crea_button_text(31, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/chest_main_page_1");
@@ -2417,6 +2426,9 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         crea_grafica_text(31, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
         crea_grafica_text(20, new Color(1, 1, 1, 0), "Level " + script_struttura_dati.livello_in_uso, canvas, "Canvas", "");
         crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/icon_seleziona_livello" ); //pulsante seleziona livelli
+
+        crea_button_text(0, "PLAY", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_Blue");
+
 
         crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
         crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
@@ -2489,14 +2501,16 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
 
         canvas_popup.SetActive(true);
 
-        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello upgrade
+        int num_upgrade = (int)(script_struttura_dati.livello_upgrade[indice_upgrade_corrente] / 10);
+
+
+        crea_grafica_text(200, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP "+ (num_upgrade)); //pannello upgrade
         crea_grafica_text(201, new Color(1, 1, 1, 0), "titolo", canvas_popup, "Canvas_popup/Panel", ""); //testo/titolo oggetto upgrade
         crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_carta " + indice_upgrade_corrente); //immagine upgrade
         crea_grafica_text(203, new Color(1, 1, 1, 0), "prezzo", canvas_popup, "Canvas_popup/Panel", ""); //testo/prezzo oggetto upgrade
         crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
-        int num_upgrade = (int)(script_struttura_dati.livello_upgrade[indice_upgrade_corrente] / 10);
-
+       
 
         crea_grafica_text(205, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_level " + num_upgrade); //immagine valuta
 
@@ -3136,6 +3150,10 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
 
         //    Debug.Log("entratooo");
 
+        if (grafica[num] != null)
+        {
+            DestroyImmediate(grafica[num]);
+        }
 
         grafica[num] = Instantiate(Resources.Load("UI/Image_text", typeof(GameObject))) as GameObject;
 
@@ -3441,7 +3459,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
                     acquista_shop();
                 }
                 else if (attivo_popup == 2) {
-                    int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10;
+                    int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] ;
                     acquista_upgrade(script_struttura_dati.costo_livello[costo_upgrade]);
                 }
 
@@ -3720,17 +3738,29 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             script_struttura_dati.livello_upgrade[indice_upgrade_corrente] = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] + 1;
             PlayerPrefs.SetInt($"LivelloUpgrade{indice_upgrade_corrente}", (script_struttura_dati.livello_upgrade[indice_upgrade_corrente]));
 
-            if (grafica[204] != null) {
-                Destroy(grafica[204]);
-            }
+            int num_upgrade = (int)(script_struttura_dati.livello_upgrade[indice_upgrade_corrente] / 10);
 
-            crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
-                script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
-            if (pulsante[150 + indice_upgrade_corrente -1] != null) {
 
-                pulsante[150 + indice_upgrade_corrente -1].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(indice_upgrade_corrente)}");
-            }
+            grafica[200].GetComponent<Image>().sprite = Resources.Load<Sprite>( "UI/grafica_UI/frame_carta_upgrade_popUP " + (num_upgrade));
+
+
+            grafica[204].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/grafica_UI/upgrade_popUP_barra " +
+                script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10);
+
+
+           
+
+            crea_grafica_text(205, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_level " + num_upgrade); //immagine valuta
+
+            crea_grafica_text(169 + indice_upgrade_corrente, new Color(1, 1, 1, 1), "" + script_struttura_dati.livello_upgrade[indice_upgrade_corrente], canvas, "Canvas", "UI/grafica_UI/upgrade_levelUP " + num_upgrade);
+
+
+
+            //    if (pulsante[150 + indice_upgrade_corrente -1] != null) {
+
+            //      pulsante[150 + indice_upgrade_corrente -1].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/grafica_UI/frame_carta_upgrade_1");
+            //   }
 
             grafica_testo[170 + indice_upgrade_corrente - 1].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.livello_upgrade[indice_upgrade_corrente];
             Debug.Log("Oggetto acquistato");
