@@ -975,8 +975,8 @@ public class menu : MonoBehaviour {
     void aggiorna_menu_popup() {
 
 
-        float dy = risoluzione_y;
         float dx = risoluzione_x;
+        float dy = risoluzione_y;
 
         float pos_x = 0;
         float pos_y = 0;
@@ -1347,7 +1347,7 @@ public class menu : MonoBehaviour {
 
             uscita_popup(dime_panel_x, dime_panel_y);
 
-        } //popup opzioni
+        } 
         else if (attivo_popup == 4)//popup seleziona livelli
         {
       
@@ -1534,7 +1534,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
 
             uscita_popup(dime_panel_x, dime_panel_y);
 
-        } //popup opzioni
+        } 
         else if (attivo_popup == 5)//popup info battlepass
       {
             if (grafica[200] != null) {
@@ -1869,6 +1869,37 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         else if (attivo_popup == 8) {
             aggiorna_menu_popup_premio();
         }
+        else if (attivo_popup == 9) {
+            if (grafica[200] != null) {
+
+                float dx2 = dx * 0.65f;
+                float dy2 = dy * 0.25f;
+
+
+
+                dime_panel_x = dx2;
+                dime_panel_y = dy2;
+
+                grafica[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
+                grafica[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
+            if (grafica[201] != null)  //titolo info descrizione quest
+     {
+
+
+                float posx1 = 0;
+                float posx2 = 0;
+                grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_panel_x, dime_panel_y);
+                grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(posx1, posx2);
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = dime_panel_y / 5f;
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "Complete 5 levels to open the chest";
+
+            }
+
+
+            uscita_popup(dime_panel_x, dime_panel_y);
+        }
 
     }
 
@@ -2135,7 +2166,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             float dx2 = dy2 * (133.0f / 124.0f);
 
 
-            pos_y = risoluzione_y * -0.33f;
+            pos_y = risoluzione_y * -0.27f;
             pulsante[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             pulsante[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
         }
@@ -2148,10 +2179,10 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             float dx2 = dy2 * (133.0f / 124.0f);
 
 
-            pos_y = risoluzione_y * -0.33f;
+            pos_y = risoluzione_y * -0.35f;
             grafica[31].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * 10f, dy2 * 10f);
             grafica[31].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x + spostamento_x, pos_y);
-            grafica_testo[31].GetComponent<TextMeshProUGUI>().fontSize = font_size * 2.5f;
+            grafica_testo[31].GetComponent<TextMeshProUGUI>().fontSize = font_size * 1.95f;
 
             if (script_struttura_dati.livelli_completati_per_sbloccare_cassa == 5 && pulsante[31].GetComponent<Button>().interactable) {
                 grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "";
@@ -2161,7 +2192,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             }
             else if (pulsante[31].GetComponent<Button>().interactable && script_struttura_dati.livelli_completati_per_sbloccare_cassa != 5) {
                 grafica_testo[31].GetComponent<TextMeshProUGUI>().text = $"{script_struttura_dati.livelli_completati_per_sbloccare_cassa}/5";
-                grafica_testo[31].GetComponent<TextMeshProUGUI>().color = Color.black;
+                grafica_testo[31].GetComponent<TextMeshProUGUI>().color = Color.white;
             }
         }
 
@@ -3168,6 +3199,9 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
 
 
 
+            }
+            else if(num == 31  && script_struttura_dati.livelli_completati_per_sbloccare_cassa != 5) {
+                crea_popup_info(9);
             }
 
 
