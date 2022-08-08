@@ -3651,8 +3651,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 Destroy(grafica[264]);
             }
 
-            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
-
+            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
+             script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
             Debug.Log("Oggetto acquistato da modificare");
         }
@@ -4930,9 +4930,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_grafica_text(260, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/frame_carta_upgrade_popUP_1"); //pannello upgrade
             crea_grafica_text(261, new Color(1, 1, 1, 0), "titolo", canvas_premio, "Canvas_premio/Panel", ""); //testo/titolo oggetto upgrade
             crea_grafica_text(262, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_carta "+ indice_upgrade_corrente); //immagine upgrade
-            crea_grafica_text(263, new Color(1, 1, 1, 0), "prezzo", canvas_premio, "Canvas_premio/Panel", ""); //testo/prezzo oggetto upgrade
-            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente]); //immagine valuta
-
+            crea_grafica_text(263, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //testo/prezzo oggetto upgrade
+            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
+             script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
             crea_button_text(266, "UPGRADE", new Color(0, 0, 0, 1), canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
 
@@ -6417,8 +6417,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica_testo[263].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 12;
 
 
-            grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.costo_livello[script_struttura_dati.livello_upgrade[indice_upgrade_corrente]];
+                int costo_upgrade = script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10;
 
+                grafica_testo[263].GetComponent<TextMeshProUGUI>().text = "" + script_struttura_dati.costo_livello[costo_upgrade];
             }
 
         if (grafica[264] != null)  //immagine valuta
