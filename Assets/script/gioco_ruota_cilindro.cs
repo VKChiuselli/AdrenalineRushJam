@@ -3656,12 +3656,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             if (pulsante[240 + indice_upgrade_corrente - 1] != null) {
 
-                pulsante[240 + indice_upgrade_corrente - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(indice_upgrade_corrente)}");
+                pulsante[240 + indice_upgrade_corrente - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/grafica_UI/frame_carta_upgrade_1");
             }
 
             if (grafica[210 + indice_upgrade_corrente - 1] != null) {
 
-                grafica[210 + indice_upgrade_corrente - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(indice_upgrade_corrente)}");
+                grafica[210 + indice_upgrade_corrente - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/grafica_UI/frame_carta_upgrade_1");
             }
 
             Debug.Log("Oggetto acquistato da modificare");

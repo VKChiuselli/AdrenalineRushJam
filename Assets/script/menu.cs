@@ -836,7 +836,7 @@ public class menu : MonoBehaviour {
 
             if (grafica[170 + n] != null) {
 
-                grafica[170 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2 * .1f);
+                grafica[170 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .3f, dx2 * .3f);
                 grafica[170 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x+ spostamento_x + dx2*-.345f, pos_y + scroll_verticale_dx + dy2 * 0.37f);
                 grafica_testo[170 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 18f;
 
@@ -1145,6 +1145,17 @@ public class menu : MonoBehaviour {
 
             }
 
+
+            if (grafica[205] != null)  //immagine simbolo
+            {
+                float dx2 = dx * .18f;
+                float dy2 = dx2 ;
+                pos_x = dx * .8f * -.4f;
+                pos_y = dime_panel_y * -0.18f;
+                grafica[205].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dx2);
+                grafica[205].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
+
+            }
 
 
             if (pulsante[200] != null)  //buy tasto
@@ -2326,16 +2337,19 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         shop_quantita_gemme[5] = 120;
 
 
-        for (int n = 0; n < 4; n++) {
-            if (n == 3) {
-                break;
-            }
+        for (int n = 0; n < 3; n++) {
+           
 
            
-            crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", $"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(n+1)}");
+            crea_button_text(150 + n, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/frame_carta_upgrade_1");
             crea_grafica_text(150 + n, new Color(1, 1, 1, 0), "" + upgrade_titolo[n + 1], canvas, "Canvas", "");
             crea_grafica_text(160 + n, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/upgrade_carta " + (n + 1));
-            crea_grafica_text(170 + n, new Color(1, 1, 1, 0), "" + script_struttura_dati.livello_upgrade[n + 1], canvas, "Canvas", "");
+
+            int num_upgrade = (int)(script_struttura_dati.livello_upgrade[n] / 10);
+
+            Debug.Log("num_upgrade "+ num_upgrade+"  "+ script_struttura_dati.livello_upgrade[n]);
+
+            crea_grafica_text(170 + n, new Color(1, 1, 1, 1), "" + script_struttura_dati.livello_upgrade[n + 1], canvas, "Canvas", "UI/grafica_UI/upgrade_levelUP "+num_upgrade);
 
 
 
@@ -2450,6 +2464,15 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         crea_grafica_text(202, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_carta " + indice_upgrade_corrente); //immagine upgrade
         crea_grafica_text(203, new Color(1, 1, 1, 0), "prezzo", canvas_popup, "Canvas_popup/Panel", ""); //testo/prezzo oggetto upgrade
         crea_grafica_text(204, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " + script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
+
+        int num_upgrade = (int)(script_struttura_dati.livello_upgrade[indice_upgrade_corrente] / 10);
+
+
+        crea_grafica_text(205, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_level " + num_upgrade); //immagine valuta
+
+
+
+       
 
         crea_button_text(200, "UPGRADE", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
         crea_button_text(201, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/ExitButton"); //Exitbutton
