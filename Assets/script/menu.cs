@@ -1206,57 +1206,38 @@ public class menu : MonoBehaviour {
             if (grafica[201] != null)  //txt musica
             {
                 float dx2 = dy * .8f;
-                float dy2 = dx2 * (76f / 72f);
-                pos_x = dx2 * -0.5f + dy2 * 0.333f;
-                pos_y = risoluzione_y * 0.5f - dy2 * .25f;
+                float dy2 = dx2 ;
+                pos_x = dime_panel_x * -.25f;
+                pos_y = dime_panel_y * .4f;
 
                 grafica[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "Musica";
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 30 ;
+                grafica_testo[201].GetComponent<TextMeshProUGUI>().text = "MUSIC";
 
 
             }
 
-            if (pulsante[200] != null)  //musica tasto
-            {
-                float dx2 = risoluzione_x * 0.333f / 2;
-                float dy2 = risoluzione_y * 0.1f / 2;
-                pos_x = dy * .8f * -0.5f + dy * .8f * (76f / 72f) * 0.333f;
-                pos_y = dy2 * 0.5f + dx * 0.8f / 2;
-                pulsante[200].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-                pulsante[200].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                pulsante_testo[200].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-            }
+          
 
             if (grafica[202] != null)  //txt sfx
             {
 
                 float dx2 = dy * .8f;
                 float dy2 = dx2 * (76f / 72f);
-                pos_x = dx2 * 0.5f - dy2 * 0.333f;
-                pos_y = risoluzione_y * 0.5f - dy2 * .25f;
+                pos_x = dime_panel_x * .25f;
+                pos_y = dime_panel_y * .4f;
 
                 grafica[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 grafica[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-                grafica_testo[202].GetComponent<TextMeshProUGUI>().fontSize = font_size;
+                grafica_testo[202].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 30;
                 grafica_testo[202].GetComponent<TextMeshProUGUI>().text = "SFX";
 
 
             }
 
-            if (pulsante[201] != null)  //tasto old sfx
-            {
-                float dx2 = risoluzione_x * 0.333f / 2;
-                float dy2 = risoluzione_y * 0.1f / 2;
-                pos_x = dy * .8f * +0.5f - dy * .8f * (76f / 72f) * 0.333f;
-                pos_y = dy2 * 0.5f + dx * 0.8f / 2;
-                pulsante[201].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-                pulsante[201].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                pulsante_testo[201].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-            }
 
 
             if (grafica[203] != null)  //txt facebook
@@ -1276,16 +1257,7 @@ public class menu : MonoBehaviour {
 
             }
 
-            if (pulsante[202] != null)  //tasto old facebook
-            {
-                float dx2 = dime_panel_x * .7f;
-                float dy2 = risoluzione_y * 0.1f;
-                pos_x = 0;
-                pos_y = risoluzione_y * 0.5f - dy * .8f * (76f / 72f) * 0.50f;
-                pulsante[202].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
-                pulsante[202].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
-                pulsante_testo[202].GetComponent<TextMeshProUGUI>().fontSize = font_size;
-            }
+          
 
             if (grafica[204] != null)  //txt credits
             {
@@ -1331,8 +1303,8 @@ public class menu : MonoBehaviour {
             {
                 float dx2 = risoluzione_x * 0.333f / 2;
                 float dy2 = risoluzione_y * 0.1f / 2;
-                pos_x = dy * .8f * -0.5f + dy * .8f * (76f / 72f) * 0.333f;
-                pos_y = dy2 * 0.5f + dx * 0.8f / 2;
+                pos_x = dime_panel_x * -.25f;
+                pos_y = dime_panel_y * .3f;
                 pulsante[206].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[206].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[206].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -1341,8 +1313,8 @@ public class menu : MonoBehaviour {
             {
                 float dx2 = risoluzione_x * 0.333f / 2;
                 float dy2 = risoluzione_y * 0.1f / 2;
-                pos_x = dy * .8f * +0.5f - dy * .8f * (76f / 72f) * 0.333f;
-                pos_y = dy2 * 0.5f + dx * 0.8f / 2;
+                pos_x = dime_panel_x * .25f;
+                pos_y = dime_panel_y * .3f;
                 pulsante[207].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
                 pulsante[207].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
                 pulsante_testo[207].GetComponent<TextMeshProUGUI>().fontSize = font_size;
@@ -1700,7 +1672,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             if (grafica[200] != null) {
 
                 float dx2 = dx * .8f;
-                float dy2 = dy * .8f;
+                float dy2 = dx2;
 
                 dime_panel_x = dx2;
                 dime_panel_y = dy2;
