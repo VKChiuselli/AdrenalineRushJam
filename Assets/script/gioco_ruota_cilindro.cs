@@ -3654,11 +3654,24 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
              script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
+            if (pulsante[240 + indice_upgrade_corrente - 1] != null) {
+
+                pulsante[240 + indice_upgrade_corrente - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(indice_upgrade_corrente)}");
+            }
+
+            if (grafica[210 + indice_upgrade_corrente - 1] != null) {
+
+                grafica[210 + indice_upgrade_corrente - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>($"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(indice_upgrade_corrente)}");
+            }
+
             Debug.Log("Oggetto acquistato da modificare");
         }
 
     }
 
+    private int calcolo_livello_upgrade(int indice_upgrade) {
+        return (script_struttura_dati.livello_upgrade[indice_upgrade] / 10 + 1);
+    }
 
     void ricerca_skin()
     {
@@ -4784,14 +4797,14 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
             for (int n = 0; n <= 2; n++)
             {
-                crea_grafica_text(210 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/frame_carta_upgrade_1");
+               crea_grafica_text(210 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(n + 1)}");
                 crea_grafica_text(213 + n, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_carta "+(n+1));
 
                 crea_grafica_text(216 + n, new Color(1, 1, 1, 0), ""+script_struttura_dati.livello_upgrade[n + 1], canvas_popup, "Canvas_popup/Panel", "");
                 crea_grafica_text(219 + n, new Color(1, 1, 1, 0), ""+ upgrade_titolo[n+1], canvas_popup, "Canvas_popup/Panel", "");
 
 
-                crea_button_text(240+n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", "");
+                crea_button_text(240+n, "", new Color(0, 0, 0, 1), canvas_popup, "Canvas_popup/Panel", $"UI/grafica_UI/frame_carta_upgrade_{calcolo_livello_upgrade(n+1)}");
                 pulsante[240 + n].GetComponent<Image>().color = new Color(1, 1, 1, 0);
             }
 
