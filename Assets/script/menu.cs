@@ -2345,10 +2345,9 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             crea_grafica_text(150 + n, new Color(1, 1, 1, 0), "" + upgrade_titolo[n + 1], canvas, "Canvas", "");
             crea_grafica_text(160 + n, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/upgrade_carta " + (n + 1));
 
-            int num_upgrade = (int)(script_struttura_dati.livello_upgrade[n] / 10);
+            int num_upgrade = (int)(script_struttura_dati.livello_upgrade[n+1] / 10);
 
-            Debug.Log("num_upgrade "+ num_upgrade+"  "+ script_struttura_dati.livello_upgrade[n]);
-
+          
             crea_grafica_text(170 + n, new Color(1, 1, 1, 1), "" + script_struttura_dati.livello_upgrade[n + 1], canvas, "Canvas", "UI/grafica_UI/upgrade_levelUP "+num_upgrade);
 
 
