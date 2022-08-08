@@ -2335,9 +2335,9 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         upgrade_titolo[2] = "BARRIER";
         upgrade_titolo[3] = "ENERGY";
         upgrade_titolo[4] = "SHIELD";
-        upgrade_descrittore[1] = "Description AGILITY coming soon";
-        upgrade_descrittore[2] = "Description BARRIER coming soon ";
-        upgrade_descrittore[3] = "Description ENERGY coming soon ";
+        upgrade_descrittore[1] = "Improve rotation of airship";
+        upgrade_descrittore[2] = "Increase time of barrier when it trigger";
+        upgrade_descrittore[3] = "Increase health's airship, in order to resist more collision";
         upgrade_descrittore[4] = "Description SHIELD coming soon ";
         upgrade_titolo[5] = "AMMO";
         upgrade_titolo[6] = "CALAMITY";
