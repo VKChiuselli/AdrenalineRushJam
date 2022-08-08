@@ -2194,7 +2194,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         if (pulsante[11] != null) { //pulsante seleziona livelli
 
 
-            float dy2 = risoluzione_y * 0.3f;
+            float dy2 = risoluzione_y * (.6f);
             float dx2 = dy2;
 
 
@@ -2400,7 +2400,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
         pulsante[31].AddComponent<timer_reward>();
         crea_grafica_text(31, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
         crea_grafica_text(20, new Color(1, 1, 1, 0), "Level " + script_struttura_dati.livello_in_uso, canvas, "Canvas", "");
-        crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/skinc " + script_struttura_dati.astronave_skin); //pulsante seleziona livelli
+        crea_button_text(11, "", new Color(1, 1, 1, 1), canvas, "Canvas", "UI/grafica_UI/icon_seleziona_livello" ); //pulsante seleziona livelli
 
         crea_button_text(2, "SHOP", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
         crea_button_text(3, "MAIN", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
@@ -3429,11 +3429,16 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
                 if (num == 206) {
                     script_struttura_dati.disattiva_musica = 1 - script_struttura_dati.disattiva_musica;
                     cambio_colore_musiche_tasto();
+
+                    PlayerPrefs.SetInt("disattiva_musica", script_struttura_dati.disattiva_musica);
                 }
 
                 if (num == 207) {
                     script_struttura_dati.disattiva_effetti = 1 - script_struttura_dati.disattiva_effetti;
                     cambio_colore_sfx_tasto();
+
+                  PlayerPrefs.SetInt("disattiva_effetti", script_struttura_dati.disattiva_effetti);
+
                 }
 
             }

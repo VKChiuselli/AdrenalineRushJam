@@ -3775,7 +3775,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         crea_button_text(5, "PRESS TO START", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Btn_MainButton_White");
 
-        crea_button_text(6, "", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/menu");
+        crea_button_text(6, "", new Color(0, 0, 0, 1), canvas, "Canvas", "UI/grafica_UI/Icon_PictoIcon_Home");
 
 
 
@@ -4076,7 +4076,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         if (pulsante[6] != null && fade_intro == 0)  //press to start
         {
             float dx2 = risoluzione_x * (.15f );
-            float dy2 = dx2 ;
+            float dy2 =dx2 *(73.0f/64.0f) ;
             pos_x = 0;
 
             pulsante[6].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
@@ -4944,7 +4944,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             crea_grafica_text(261, new Color(1, 1, 1, 0), "titolo", canvas_premio, "Canvas_premio/Panel", ""); //testo/titolo oggetto upgrade
             crea_grafica_text(262, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_carta "+ indice_upgrade_corrente); //immagine upgrade
             crea_grafica_text(263, new Color(1, 1, 1, 0), "", canvas_premio, "Canvas_premio/Panel", ""); //testo/prezzo oggetto upgrade
-            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_popup, "Canvas_popup/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
+            crea_grafica_text(264, new Color(1, 1, 1, 1), "", canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/upgrade_popUP_barra " +
              script_struttura_dati.livello_upgrade[indice_upgrade_corrente] % 10); //immagine valuta
 
             crea_button_text(266, "UPGRADE", new Color(0, 0, 0, 1), canvas_premio, "Canvas_premio/Panel", "UI/grafica_UI/Btn_MainButton_White"); //tasto UPGRADE
@@ -5372,20 +5372,32 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                 }
 
 
-                if (numero_spari > 0 && energia > 0) { // se finisce il livello con almeno 1 sparo
+                if (numero_spari > 0 && energia > 0 ) { // se finisce il livello con almeno 1 sparo
 
 
                     grafica_pos[9] = grafica_pos[6];
                     grafica_pos[12] = .145f + sposta_grafica_y;
                     ok_spari_completi = 1;
 
-                    //   Debug.Log("ok_spari_completi "+numero_spari);
+                   
+                }
+
+
+                if (script_struttura_dati.livello_in_uso <= 2)
+                {
+                    ok_energia_completa = 1;
+                    ok_spari_completi = 1;
+                    grafica_pos[9] = grafica_pos[6];
+                    grafica_pos[12] = .145f + sposta_grafica_y;
+
                 }
 
 
 
                 if (ok_fine_livello == 0) {
                     ok_fine_livello = 1;
+
+
 
                     salva_le_stelle();
                 }
@@ -6112,9 +6124,9 @@ public class gioco_ruota_cilindro : MonoBehaviour {
                         grafica[213 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
 
-                        grafica[216 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x*.2f , dime_x * .2f);
+                        grafica[216 + n].GetComponent<RectTransform>().sizeDelta = new Vector2(dime_x*.4f , dime_x * .2f);
                         grafica[216 + n].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x-dime_x*.35f, pos_y+dime_y*.37f);
-                        grafica_testo[216 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 20;
+                        grafica_testo[216 + n].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / (25+spostamento_sx2*40);
                         grafica_testo[216 + n].GetComponent<TextMeshProUGUI>().text = ""+script_struttura_dati.livello_upgrade[n + 1];
 
 

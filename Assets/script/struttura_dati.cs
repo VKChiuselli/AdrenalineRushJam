@@ -32,6 +32,9 @@ public class struttura_dati : MonoBehaviour {
             primo_login();
         }
 
+
+
+
         livello_in_uso = PlayerPrefs.GetInt("livello_in_uso");
         monete = PlayerPrefs.GetInt("monete");
         gemme = PlayerPrefs.GetInt("gemme");
@@ -44,6 +47,8 @@ public class struttura_dati : MonoBehaviour {
         battle_pass_reward_free = PlayerPrefs.GetString("battle_pass_reward_free");
         battle_pass_reward_premium = PlayerPrefs.GetString("battle_pass_reward_premium");
 
+        disattiva_musica = PlayerPrefs.GetInt("disattiva_musica");
+        disattiva_effetti = PlayerPrefs.GetInt("disattiva_effetti");
 
         for (int i = 1; i < 7; i++) {
             livello_upgrade[i] = PlayerPrefs.GetInt($"LivelloUpgrade{i}");
