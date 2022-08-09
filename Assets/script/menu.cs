@@ -1871,6 +1871,8 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
 
                 }
 
+                uscita_popup(dime_panel_x, dime_panel_y);
+
             }
 
         }
@@ -2193,7 +2195,7 @@ if (diff_xm > risoluzione_x / 75f && slider_avaiable == 0) {
             grafica_testo[31].GetComponent<TextMeshProUGUI>().fontSize = font_size * 1.95f;
 
             if (script_struttura_dati.livelli_completati_per_sbloccare_cassa == 5 && pulsante[31].GetComponent<Button>().interactable) {
-                grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "";
+                grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "Open the Chest!";
             }
             else if (!pulsante[31].GetComponent<Button>().interactable) {
                 grafica_testo[31].GetComponent<TextMeshProUGUI>().text = "" + espositore_data(pulsante[31].GetComponent<timer_reward>().GetTimeLeft());
