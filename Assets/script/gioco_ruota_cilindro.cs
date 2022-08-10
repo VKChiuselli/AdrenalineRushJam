@@ -319,6 +319,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
     int indice_upgrade_corrente;
 
+    int num_shot = 0;
+
     void Start() {
 
         controllo_risoluzione();
@@ -588,6 +590,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
 #if UNITY_EDITOR
+
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+
+            num_shot = num_shot + 1;
+
+            ScreenCapture.CaptureScreenshot("Assets/DownloadedAssets/Store/shot_" + num_shot + ".png", 4);
+
+        }
+
 
         if (Input.GetKeyUp(KeyCode.M)) {
 

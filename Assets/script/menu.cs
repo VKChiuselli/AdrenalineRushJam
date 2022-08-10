@@ -146,6 +146,7 @@ public class menu : MonoBehaviour {
 
     float tempo_generatore_particles = 0;
 
+    int num_shot = 0;
 
 
     void Start() {
@@ -318,6 +319,15 @@ public class menu : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.Alpha2)) {
 
             crea_popup_ruota(7);
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+
+            num_shot = num_shot + 1;
+
+            ScreenCapture.CaptureScreenshot("Assets/DownloadedAssets/Store/shot_"+num_shot+".png",4);
 
         }
 
