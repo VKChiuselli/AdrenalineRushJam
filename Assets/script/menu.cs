@@ -525,7 +525,7 @@ public class menu : MonoBehaviour {
             grafica[51].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2 * .97f, dy2);
             grafica[51].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos_x, pos_y);
 
-            grafica_testo[51].GetComponent<TextMeshProUGUI>().text = "CLICK THE AIRSHIP TO SELECT WHICH LEVEL TO PLAY";
+            grafica_testo[51].GetComponent<TextMeshProUGUI>().text = "CLICK HERE TO SELECT WHICH LEVEL TO PLAY";
             grafica_testo[51].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x / 26f;
 
         }
