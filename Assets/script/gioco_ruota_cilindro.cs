@@ -3779,8 +3779,8 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         crea_grafica_text(9, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
 
 
-        crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
-
+        crea_grafica_text(11, new Color(2 / 255.0f, 94 / 255.0f, 158.0f / 255.0f, 1), "", canvas, "Canvas", "");
+    
         crea_grafica_text(14, new Color(1, 1, 1, 1), "\n\n\nLOADING", canvas, "Canvas", "UI/grafica_UI/icon_load");
 
         grafica_testo[14].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
