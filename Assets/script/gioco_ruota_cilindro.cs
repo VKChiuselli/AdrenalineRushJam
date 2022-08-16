@@ -3761,8 +3761,7 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
         crea_grafica_text(0, new Color(0, 0, 0, .5f), "", canvas, "Canvas", "");
 
-
-
+       
 
         crea_grafica_text(1, new Color(1, 1, 1, 1), "", canvas, "Canvas", "UI/grafica_UI/gemme_game");
         crea_grafica_text(2, new Color(1, 1, 1, 0), "", canvas, "Canvas", "");
@@ -3781,6 +3780,12 @@ public class gioco_ruota_cilindro : MonoBehaviour {
 
 
         crea_grafica_text(11, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
+
+        crea_grafica_text(14, new Color(1, 1, 1, 1), "\n\n\nLOADING", canvas, "Canvas", "UI/grafica_UI/icon_load");
+
+        grafica_testo[14].GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+
+
         crea_grafica_text(10, new Color(1, 1, 1, 1), "", canvas, "Canvas", "");
 
 
@@ -3824,7 +3829,17 @@ public class gioco_ruota_cilindro : MonoBehaviour {
             grafica[11].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2, dy2);
             grafica[11].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
+
+
+            grafica[14].GetComponent<RectTransform>().sizeDelta = new Vector2(dx2*.75f, dx2 * .75f);
+            grafica[14].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+          
+            grafica_testo[14].GetComponent<TextMeshProUGUI>().fontSize = risoluzione_x/10;
+
         }
+
+
 
 
     }
@@ -3882,6 +3897,15 @@ public class gioco_ruota_cilindro : MonoBehaviour {
         spostamento_ui_verticale = Mathf.Lerp(spostamento_ui_verticale, valore_yy, Time.deltaTime * 2);
         spostamento_ui_verticale_coin = Mathf.Lerp(spostamento_ui_verticale_coin, valore_yy_coin, Time.deltaTime * 2);
 
+
+        if (grafica[14] != null)  //top
+        {
+
+
+            grafica[14].GetComponent<RectTransform>().sizeDelta = new Vector2(5, 5);
+            grafica[14].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, risoluzione_y);
+
+        }
 
 
         float dy = risoluzione_y * .125f;
